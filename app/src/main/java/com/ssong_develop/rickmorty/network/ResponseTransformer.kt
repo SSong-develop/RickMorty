@@ -9,7 +9,7 @@ import retrofit2.Response
  */
 
 /** transform [Call] to [ApiResponse] via enqueueing response callback. */
-fun <T> Call<T>.transform(onResult : (response : ApiResponse<T>) -> Unit){
+fun <T> Call<T>.transform(onResult: (response: ApiResponse<T>) -> Unit) {
     enqueue(object : Callback<T> {
         override fun onResponse(call: Call<T>, response: Response<T>) {
             onResult(ApiResponse.of { response })

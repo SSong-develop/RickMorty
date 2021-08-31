@@ -6,11 +6,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CharacterInfo(
     @SerialName("count")
-    val count : Int,
+    val count: Int,
     @SerialName("pages")
-    val pages : Int,
+    val pages: Int,
     @SerialName("next")
-    val next : String,
+    val next: String,
     @SerialName("prev")
-    val prev : String?
+    val prev: String?
 )

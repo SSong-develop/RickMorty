@@ -18,7 +18,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     private val json by lazy {
-        Json { coerceInputValues = true}
+        Json { coerceInputValues = true }
     }
 
     @Provides
