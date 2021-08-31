@@ -10,8 +10,9 @@ class CharacterClient @Inject constructor(
     private val service: CharacterService
 ) {
     fun fetchCharacters(
+        page : Int,
         onResult: (response: ApiResponse<WrapperCharacter>) -> Unit
     ) {
-        service.fetchCharacters().transform(onResult)
+        service.fetchCharacters(page).transform(onResult)
     }
 }

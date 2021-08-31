@@ -1,14 +1,11 @@
 package com.ssong_develop.rickmorty.repository
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ssong_develop.rickmorty.entities.Character
+import com.ssong_develop.rickmorty.entities.WrapperCharacter
 import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.message
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,10 +18,10 @@ class CharacterRepository @Inject constructor(
         Timber.d("Injection CharacterRepository")
     }
 
-    fun loadCharacter(error: (String) -> Unit): MutableLiveData<List<Character>> {
+    fun loadCharacters(page: Int, error: (String) -> Unit): MutableLiveData<List<Character>> {
         val liveData = MutableLiveData<List<Character>>()
         isLoading = true
-        characterClient.fetchCharacters { response ->
+        characterClient.fetchCharacters(page) { response ->
             isLoading = false
             when (response) {
                 is ApiResponse.Success -> {
