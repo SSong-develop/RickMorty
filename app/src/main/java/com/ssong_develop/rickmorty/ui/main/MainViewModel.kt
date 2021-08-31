@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.entities.Character
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,6 +23,8 @@ class MainViewModel @Inject constructor(
         get() = _characters
 
     init {
-        _characters = characterRepository.loadCharacter { toastLiveData.postValue(it) }
+        viewModelScope.launch {
+            _characters = characterRepository.loadCharacter { toastLiveData.postValue(it) }
+        }
     }
 }

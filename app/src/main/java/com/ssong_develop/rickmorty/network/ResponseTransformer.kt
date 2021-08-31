@@ -4,6 +4,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * @author skydoves
+ */
+
 /** transform [Call] to [ApiResponse] via enqueueing response callback. */
 fun <T> Call<T>.transform(onResult : (response : ApiResponse<T>) -> Unit){
     enqueue(object : Callback<T> {

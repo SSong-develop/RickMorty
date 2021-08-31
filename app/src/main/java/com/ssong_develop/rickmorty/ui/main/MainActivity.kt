@@ -1,14 +1,15 @@
 package com.ssong_develop.rickmorty.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityMainBinding
+import com.ssong_develop.rickmorty.extensions.setUpSnackBar
+import com.ssong_develop.rickmorty.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -20,5 +21,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        viewModel.characters.observe(this){
+            toast(it.toString())
+        }
     }
 }

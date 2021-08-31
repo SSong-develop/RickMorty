@@ -3,6 +3,9 @@ package com.ssong_develop.rickmorty.network
 import okhttp3.ResponseBody
 import retrofit2.Response
 
+/**
+ * @author skydoves
+ */
 @Suppress("unused")
 sealed class ApiResponse<out T> {
 

@@ -39,5 +39,4 @@ class CharacterRepository @Inject constructor(
 
         return liveData
     }
-
 }
