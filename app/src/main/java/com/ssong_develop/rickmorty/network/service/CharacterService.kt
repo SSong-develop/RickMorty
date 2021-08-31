@@ -11,4 +11,9 @@ interface CharacterService {
 
     @GET("character")
     fun fetchCharacters() : Call<WrapperCharacter>
+
+    @GET("character")
+    fun fetchCharactersMore(
+        @Query("page") page : Int
+    ) : Call<WrapperCharacter>
 }
