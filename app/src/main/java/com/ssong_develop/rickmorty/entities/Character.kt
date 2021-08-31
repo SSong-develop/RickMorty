@@ -1,8 +1,11 @@
 package com.ssong_develop.rickmorty.entities
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Parcelize
 @Serializable
 data class Character(
     @SerialName("id")
@@ -29,21 +32,23 @@ data class Character(
     val url: String,
     @SerialName("created")
     val created: String
-) {
+) : Parcelable {
 
+    @Parcelize
     @Serializable
     data class Origin(
         @SerialName("name")
         val name: String,
         @SerialName("url")
         val url: String
-    )
+    ) : Parcelable
 
+    @Parcelize
     @Serializable
     data class Location(
         @SerialName("name")
         val name: String,
         @SerialName("url")
         val url: String
-    )
+    ) : Parcelable
 }
