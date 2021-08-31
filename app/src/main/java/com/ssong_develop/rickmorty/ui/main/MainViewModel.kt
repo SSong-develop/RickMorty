@@ -1,5 +1,6 @@
 package com.ssong_develop.rickmorty.ui.main
 
+import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
@@ -13,6 +14,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : LiveCoroutinesViewModel() {
+
+    var testValue = 1
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
@@ -28,4 +31,10 @@ class MainViewModel @Inject constructor(
     }
 
     fun isLoading() = characterRepository.isLoading
+
+    @MainThread
+    fun refresh() {
+        characterPageLiveData.value = testValue
+        testValue++
+    }
 }

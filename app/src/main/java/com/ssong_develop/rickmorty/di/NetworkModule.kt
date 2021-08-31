@@ -17,13 +17,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    @Provides
-    @Singleton
-    fun provideJsonObject(): Json = Json { coerceInputValues = true }
+    private val json by lazy {
+        Json { coerceInputValues = true}
+    }
 
     @Provides
     @Singleton
-    fun provideRetrofit(json : Json): Retrofit {
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))

@@ -25,5 +25,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.characters.observe(this){
             toast(it.toString())
         }
+
+        binding.testBtn.setOnClickListener {
+            viewModel.refresh()
+        }
     }
 }
