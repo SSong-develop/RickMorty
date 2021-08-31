@@ -1,10 +1,10 @@
-package com.ssong_develop.rickmorty.entities
+package com.ssong_develop.rickmorty.entities.base
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CharacterInfo(
+data class Info(
     @SerialName("count")
     val count: Int,
     @SerialName("pages")

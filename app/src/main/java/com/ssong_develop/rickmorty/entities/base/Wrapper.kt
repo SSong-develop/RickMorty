@@ -1,12 +1,12 @@
-package com.ssong_develop.rickmorty.entities
+package com.ssong_develop.rickmorty.entities.base
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WrapperCharacter(
+data class Wrapper<T, V>(
     @SerialName("info")
-    val info: CharacterInfo,
+    val info: T,
     @SerialName("results")
-    val character: List<Character>
+    val results: List<V>
 )

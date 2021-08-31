@@ -1,16 +1,16 @@
 package com.ssong_develop.rickmorty.network.service
 
-import com.ssong_develop.rickmorty.entities.Character
+import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.entities.base.Info
 import com.ssong_develop.rickmorty.entities.base.Wrapper
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface CharacterService {
+interface LocationService {
 
-    @GET("character")
-    fun fetchCharacters(
+    @GET("location")
+    fun fetchLocations(
         @Query("page") page: Int
-    ): Call<Wrapper<Info, Character>>
+    ): Call<Wrapper<Info, Location>>
 }

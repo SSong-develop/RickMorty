@@ -24,6 +24,14 @@ class MainActivity : AppCompatActivity() {
             toast(it.toString())
         }
 
+        viewModel.locations.observe(this) {
+            toast(it.toString())
+        }
+
+        viewModel.episodes.observe(this) {
+            toast(it.toString())
+        }
+
         binding.testBtn.setOnClickListener {
             viewModel.refresh()
         }

@@ -1,21 +1,21 @@
 package com.ssong_develop.rickmorty.repository
 
 import androidx.lifecycle.MutableLiveData
-import com.ssong_develop.rickmorty.entities.Character
+import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.network.ApiResponse
-import com.ssong_develop.rickmorty.network.client.CharacterClient
+import com.ssong_develop.rickmorty.network.client.EpisodeClient
 import com.ssong_develop.rickmorty.network.message
 import javax.inject.Inject
 
-class CharacterRepository @Inject constructor(
-    private val characterClient: CharacterClient
+class EpisodeRepository @Inject constructor(
+    private val client: EpisodeClient
 ) : Repository {
-    override var isLoading: Boolean = false
+    override var isLoading = false
 
-    fun loadCharacters(page: Int, error: (String) -> Unit): MutableLiveData<List<Character>> {
-        val liveData = MutableLiveData<List<Character>>()
+    fun loadEpisodes(page: Int, error: (String) -> Unit): MutableLiveData<List<Episode>> {
+        val liveData = MutableLiveData<List<Episode>>()
         isLoading = true
-        characterClient.fetchCharacters(page) { response ->
+        client.fetchEpisode(page) { response ->
             isLoading = false
             when (response) {
                 is ApiResponse.Success -> {
@@ -27,7 +27,6 @@ class CharacterRepository @Inject constructor(
                 is ApiResponse.Failure.Exception -> error(response.message())
             }
         }
-
         return liveData
     }
 }
