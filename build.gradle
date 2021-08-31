@@ -9,6 +9,8 @@ buildscript {
         version_glide = "4.12.0"
         version_material_design = "1.2.1"
         version_coroutine = "1.4.3"
+        version_hilt="2.38.1"
+        version_room = "2.3.0"
     }
     repositories {
         google()
