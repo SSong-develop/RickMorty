@@ -31,9 +31,5 @@ class MainActivity : AppCompatActivity() {
         viewModel.episodes.observe(this) {
             toast(it.toString())
         }
-
-        binding.testBtn.setOnClickListener {
-            viewModel.refresh()
-        }
     }
 }

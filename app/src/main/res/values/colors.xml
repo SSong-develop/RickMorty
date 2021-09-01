@@ -11,4 +11,8 @@
     <color name="rick_hair_color">#62a4ab</color>
     <color name="morty_hair_color">#7c3e1d</color>
     <color name="morty_clothes_color">#f9bf1e</color>
+
+    <color name="app_logo_text_color">#04C4D9</color>
+    <color name="app_logo_background_color">#010D0D</color>
+    <color name="app_logo_text_shadow_color">#E2F263</color>
 </resources>
