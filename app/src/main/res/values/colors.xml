@@ -6,6 +6,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="light1_black">#111111</color>
     <color name="white">#FFFFFFFF</color>
 
     <color name="rick_hair_color">#62a4ab</color>
@@ -13,6 +14,7 @@
     <color name="morty_clothes_color">#f9bf1e</color>
 
     <color name="app_logo_text_color">#04C4D9</color>
-    <color name="app_logo_background_color">#010D0D</color>
+    <color name="app_background_color">#010D0D</color>
+    <color name="app_logo_background_color">#2B3240</color>
     <color name="app_logo_text_shadow_color">#E2F263</color>
 </resources>
