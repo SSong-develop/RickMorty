@@ -6,12 +6,20 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 
-/**
- * @author skydoves
+/*
+ * Copyright by 2019 skydoves (Jaewoong Eum)
  *
- * SSong-develop
- * Coroutine Builder 함수인 launch는 LiveData를 반환하지 않는다.
- * switchMap을 통해서 통신한 값을 LiveData로 반환하고 싶을 때 이와 같은 방법을 사용한다.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 abstract class LiveCoroutinesViewModel : ViewModel() {
