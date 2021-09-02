@@ -16,12 +16,11 @@ import com.ssong_develop.rickmorty.repository.EpisodeRepository
 import com.ssong_develop.rickmorty.repository.LocationRepository
 import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val app : Application,
+    private val app: Application,
     private val characterRepository: CharacterRepository,
     private val locationRepository: LocationRepository,
     private val episodeRepository: EpisodeRepository
@@ -31,10 +30,10 @@ class MainViewModel @Inject constructor(
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    val dummy = listOf(
-        Theme(ContextCompat.getDrawable(app,R.drawable.ic_launcher_foreground)!!,"test1"),
-        Theme(ContextCompat.getDrawable(app,R.drawable.ic_launcher_foreground)!!,"test2"),
-        Theme(ContextCompat.getDrawable(app,R.drawable.ic_launcher_foreground)!!,"test3")
+    private val defaultThemeList = listOf(
+        Theme(ContextCompat.getDrawable(app, R.drawable.rick)!!, app.getString(R.string.character)),
+        Theme(ContextCompat.getDrawable(app, R.drawable.location)!!, app.getString(R.string.location)),
+        Theme(ContextCompat.getDrawable(app, R.drawable.episode)!!, app.getString(R.string.episode))
     )
 
     private val characterPageLiveData: MutableLiveData<Int> = MutableLiveData()
@@ -61,9 +60,12 @@ class MainViewModel @Inject constructor(
     fun isLoading() =
         characterRepository.isLoading || locationRepository.isLoading || episodeRepository.isLoading
 
+    fun getDefaultThemeList() = defaultThemeList
+
     @MainThread
     fun refresh() {
         locationPageLiveData.value = testValue
         testValue++
     }
+
 }

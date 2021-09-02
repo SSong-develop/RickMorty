@@ -5,11 +5,13 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.viewpager2.widget.ViewPager2
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityMainBinding
 import com.ssong_develop.rickmorty.entities.Theme
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.ThemeListAdapter
+import com.ssong_develop.rickmorty.ui.adapters.setPageTranslation
 import com.ssong_develop.rickmorty.ui.viewholders.ThemeListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,9 +43,10 @@ class MainActivity : AppCompatActivity(),ThemeListViewHolder.Delegate {
 
     private fun initializeUI() {
         adapterMainTheme = ThemeListAdapter(this)
-        adapterMainTheme.submitList(viewModel.dummy)
-        binding.apply {
-            pagerMain.adapter = adapterMainTheme
+        with(binding.pagerMain){
+            adapter = adapterMainTheme
+            adapterMainTheme.submitList(viewModel.getDefaultThemeList())
+            setPageTranslation()
         }
     }
 

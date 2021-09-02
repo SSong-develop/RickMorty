@@ -16,6 +16,9 @@ class ThemeListViewHolder(
     init {
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)
+        binding.root.apply {
+            scaleX = 0.9f
+        }
     }
 
     interface Delegate {

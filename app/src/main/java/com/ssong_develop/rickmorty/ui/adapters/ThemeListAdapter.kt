@@ -3,13 +3,16 @@ package com.ssong_develop.rickmorty.ui.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.Px
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ItemMainThemeBinding
 import com.ssong_develop.rickmorty.entities.Theme
 import com.ssong_develop.rickmorty.ui.viewholders.ThemeListViewHolder
+import java.lang.Math.abs
 
 class ThemeListAdapter(
     private val delegate: ThemeListViewHolder.Delegate
@@ -42,5 +45,14 @@ class ThemeListAdapter(
 fun RecyclerView.setThemeItem(items : List<Theme>){
     (adapter as? ThemeListAdapter)?.run {
         submitList(items)
+    }
+}
+
+fun ViewPager2.setPageTranslation() {
+    @Px
+    val nextItemVisiblePx = 4
+    setPageTransformer { page, position ->
+        page.translationX = -nextItemVisiblePx + position
+        page.scaleY = 1 - (0.2f * abs(position))
     }
 }
