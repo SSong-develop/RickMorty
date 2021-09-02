@@ -4,4 +4,6 @@
     <string name="character">Character</string>
     <string name="location">Location</string>
     <string name="episode">Episode</string>
+
+    <string name="transition_theme">transition_theme</string>
 </resources>

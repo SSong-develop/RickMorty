@@ -20,15 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val app: Application,
-    private val characterRepository: CharacterRepository,
-    private val locationRepository: LocationRepository,
-    private val episodeRepository: EpisodeRepository
 ) : LiveCoroutinesViewModel() {
-
-    private var _pagePosition: Int = 0
-    val pagePosition = _pagePosition
-
-    val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val defaultThemeList = listOf(
         Theme(ContextCompat.getDrawable(app, R.drawable.rick)!!, app.getString(R.string.character)),
@@ -39,33 +31,5 @@ class MainViewModel @Inject constructor(
         Theme(ContextCompat.getDrawable(app, R.drawable.episode)!!, app.getString(R.string.episode))
     )
 
-    private val characterPageLiveData: MutableLiveData<Int> = MutableLiveData()
-    val characters: LiveData<List<Character>> = characterPageLiveData.switchMap { page ->
-        launchOnViewModelScope {
-            characterRepository.loadCharacters(page) { toastLiveData.postValue(it) }
-        }
-    }
-
-    private val locationPageLiveData: MutableLiveData<Int> = MutableLiveData()
-    val locations: LiveData<List<Location>> = locationPageLiveData.switchMap { page ->
-        launchOnViewModelScope {
-            locationRepository.loadLocations(page) { toastLiveData.postValue(it) }
-        }
-    }
-
-    private val episodePageLiveData: MutableLiveData<Int> = MutableLiveData()
-    val episodes: LiveData<List<Episode>> = episodePageLiveData.switchMap { page ->
-        launchOnViewModelScope {
-            episodeRepository.loadEpisodes(page) { toastLiveData.postValue(it) }
-        }
-    }
-
-    fun isLoading() =
-        characterRepository.isLoading || locationRepository.isLoading || episodeRepository.isLoading
-
     fun getDefaultThemeList() = defaultThemeList
-
-    fun setPagePosition(position : Int){
-        _pagePosition = position
-    }
 }

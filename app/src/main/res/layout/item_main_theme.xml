@@ -13,6 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="@string/transition_theme"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="24dp">
 

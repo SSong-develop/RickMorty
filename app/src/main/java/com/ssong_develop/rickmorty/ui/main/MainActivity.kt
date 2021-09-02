@@ -1,17 +1,13 @@
 package com.ssong_develop.rickmorty.ui.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.viewpager2.widget.ViewPager2
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityMainBinding
 import com.ssong_develop.rickmorty.entities.Theme
-import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.ThemeListAdapter
 import com.ssong_develop.rickmorty.ui.adapters.setPageTranslation
 import com.ssong_develop.rickmorty.ui.details.character.CharacterActivity
@@ -19,7 +15,6 @@ import com.ssong_develop.rickmorty.ui.details.episode.EpisodeActivity
 import com.ssong_develop.rickmorty.ui.details.location.LocationActivity
 import com.ssong_develop.rickmorty.ui.viewholders.ThemeListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.IllegalStateException
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), ThemeListViewHolder.Delegate {
@@ -48,21 +43,10 @@ class MainActivity : AppCompatActivity(), ThemeListViewHolder.Delegate {
 
     override fun onItemClick(view: View, theme: Theme) {
         when (binding.pagerMain.currentItem) {
-            0 -> {
-                val intent = Intent(this,CharacterActivity::class.java)
-                startActivity(intent)
-            }
-            1 -> {
-                val intent = Intent(this,LocationActivity::class.java)
-                startActivity(intent)
-            }
-            2 -> {
-                val intent = Intent(this,EpisodeActivity::class.java)
-                startActivity(intent)
-            }
-            else -> {
-                throw IllegalStateException("No such Position in here")
-            }
+            0 -> CharacterActivity.startActivity(this, 1, view)
+            1 -> LocationActivity.startActivity(this, 1, view)
+            2 -> EpisodeActivity.startActivity(this, 1, view)
+            else -> throw IllegalStateException("No such Position in here")
         }
     }
 }
