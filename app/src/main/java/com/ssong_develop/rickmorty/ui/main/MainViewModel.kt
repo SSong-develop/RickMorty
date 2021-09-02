@@ -1,7 +1,6 @@
 package com.ssong_develop.rickmorty.ui.main
 
 import android.app.Application
-import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,13 +25,17 @@ class MainViewModel @Inject constructor(
     private val episodeRepository: EpisodeRepository
 ) : LiveCoroutinesViewModel() {
 
-    var testValue = 1
+    private var _pagePosition: Int = 0
+    val pagePosition = _pagePosition
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val defaultThemeList = listOf(
         Theme(ContextCompat.getDrawable(app, R.drawable.rick)!!, app.getString(R.string.character)),
-        Theme(ContextCompat.getDrawable(app, R.drawable.location)!!, app.getString(R.string.location)),
+        Theme(
+            ContextCompat.getDrawable(app, R.drawable.location)!!,
+            app.getString(R.string.location)
+        ),
         Theme(ContextCompat.getDrawable(app, R.drawable.episode)!!, app.getString(R.string.episode))
     )
 
@@ -62,10 +65,7 @@ class MainViewModel @Inject constructor(
 
     fun getDefaultThemeList() = defaultThemeList
 
-    @MainThread
-    fun refresh() {
-        locationPageLiveData.value = testValue
-        testValue++
+    fun setPagePosition(position : Int){
+        _pagePosition = position
     }
-
 }
