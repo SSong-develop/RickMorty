@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp
+import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityEpisodeBinding
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.details.location.LocationActivity
@@ -30,9 +31,6 @@ class EpisodeActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vm = viewModel
         viewModel.initialFetchEpisodes(intent.getIntExtra("episodePage", 0))
-        viewModel.episodes.observe(this){
-            toast(it.toString())
-        }
     }
 
     companion object {
@@ -40,7 +38,7 @@ class EpisodeActivity : AppCompatActivity() {
         fun startActivity(activity : Activity?, episodePage : Int, view : View) {
             if(activity != null){
                 val intent = Intent(activity, EpisodeActivity::class.java).apply { putExtra("episodePage",episodePage) }
-                if(RickMortyApp.versionCheckUtils.checkIsMaterialVersion()){
+                if(versionCheckUtils.checkIsMaterialVersion()){
                     ViewCompat.getTransitionName(view)?.let {
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,view,it)
                         activity.startActivity(intent,options.toBundle())

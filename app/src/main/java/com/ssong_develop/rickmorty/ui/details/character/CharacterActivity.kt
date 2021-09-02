@@ -11,11 +11,13 @@ import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp
+import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.details.location.LocationActivity
 import com.ssong_develop.rickmorty.utils.AutoClearedValue
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CharacterActivity : AppCompatActivity() {
@@ -32,7 +34,7 @@ class CharacterActivity : AppCompatActivity() {
         binding.vm = viewModel
         viewModel.initialFetchCharacters(intent.getIntExtra("characterPage",0))
         viewModel.characters.observe(this){
-            toast(it.toString())
+            Timber.d("message",it.toString())
         }
     }
 
@@ -41,7 +43,7 @@ class CharacterActivity : AppCompatActivity() {
         fun startActivity(activity : Activity?, characterPage : Int, view : View) {
             if(activity != null){
                 val intent = Intent(activity, CharacterActivity::class.java).apply { putExtra("characterPage",characterPage) }
-                if(RickMortyApp.versionCheckUtils.checkIsMaterialVersion()){
+                if(versionCheckUtils.checkIsMaterialVersion()){
                     ViewCompat.getTransitionName(view)?.let {
                         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,view,it)
                         activity.startActivity(intent,options.toBundle())

@@ -29,9 +29,7 @@ class LocationActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.vm = viewModel
         viewModel.initialFetchLocations(intent.getIntExtra("locationPage", 0))
-        viewModel.locations.observe(this){
-            toast(it.toString())
-        }
+
     }
 
     companion object {
