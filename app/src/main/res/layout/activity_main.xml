@@ -15,7 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_background_color"
+        android:background="@drawable/background"
         tools:context=".ui.main.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -55,6 +55,7 @@
             android:id="@+id/pager_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:overScrollMode="never"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
