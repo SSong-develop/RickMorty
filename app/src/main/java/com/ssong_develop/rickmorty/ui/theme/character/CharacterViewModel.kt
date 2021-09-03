@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.ui.details.character
+package com.ssong_develop.rickmorty.ui.theme.character
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="com.ssong_develop.rickmorty.ui.details.character.CharacterViewModel" />
+            type="com.ssong_develop.rickmorty.ui.theme.character.CharacterViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionName="@string/transition_theme"
-        tools:context=".ui.details.character.CharacterActivity">
+        tools:context=".ui.theme.character.CharacterActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_character"

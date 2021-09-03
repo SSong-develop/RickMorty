@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RickMorty">
         <activity
-            android:name=".ui.details.location.LocationActivity"
+            android:name=".ui.theme.location.LocationActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.details.episode.EpisodeActivity"
+            android:name=".ui.theme.episode.EpisodeActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.details.character.CharacterActivity"
+            android:name=".ui.theme.character.CharacterActivity"
             android:exported="true" />
         <activity
             android:name=".ui.main.MainActivity"

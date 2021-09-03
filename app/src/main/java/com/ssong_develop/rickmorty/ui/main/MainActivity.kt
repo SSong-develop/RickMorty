@@ -10,9 +10,9 @@ import com.ssong_develop.rickmorty.databinding.ActivityMainBinding
 import com.ssong_develop.rickmorty.entities.Theme
 import com.ssong_develop.rickmorty.ui.adapters.ThemeListAdapter
 import com.ssong_develop.rickmorty.ui.adapters.setPageTranslation
-import com.ssong_develop.rickmorty.ui.details.character.CharacterActivity
-import com.ssong_develop.rickmorty.ui.details.episode.EpisodeActivity
-import com.ssong_develop.rickmorty.ui.details.location.LocationActivity
+import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
+import com.ssong_develop.rickmorty.ui.theme.episode.EpisodeActivity
+import com.ssong_develop.rickmorty.ui.theme.location.LocationActivity
 import com.ssong_develop.rickmorty.ui.viewholders.ThemeListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.ui.details.location
+package com.ssong_develop.rickmorty.ui.theme.location
 
 import android.app.Activity
 import android.content.Intent
@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityLocationBinding
-import com.ssong_develop.rickmorty.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

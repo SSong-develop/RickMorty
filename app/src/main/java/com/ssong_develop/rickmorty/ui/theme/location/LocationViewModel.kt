@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.ui.details.location
+package com.ssong_develop.rickmorty.ui.theme.location
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

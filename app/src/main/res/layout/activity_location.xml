@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="com.ssong_develop.rickmorty.ui.details.location.LocationViewModel" />
+            type="com.ssong_develop.rickmorty.ui.theme.location.LocationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:transitionName="@string/transition_theme"
-        tools:context=".ui.details.location.LocationActivity">
+        tools:context=".ui.theme.location.LocationActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_location"
