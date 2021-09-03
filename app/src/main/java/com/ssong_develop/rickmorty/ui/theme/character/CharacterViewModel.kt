@@ -3,7 +3,7 @@ package com.ssong_develop.rickmorty.ui.theme.character
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-import com.ssong_develop.rickmorty.entities.Character
+import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ class CharacterViewModel @Inject constructor(
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val characterPageLiveData: MutableLiveData<Int> = MutableLiveData()
-    val characters: LiveData<List<Character>> = characterPageLiveData.switchMap { page ->
+    val characters: LiveData<List<Characters>> = characterPageLiveData.switchMap { page ->
         launchOnViewModelScope {
             characterRepository.loadCharacters(page) { toastLiveData.postValue(it) }
         }
@@ -29,5 +29,7 @@ class CharacterViewModel @Inject constructor(
         characterPageLiveData.value = value
     }
 
-    fun morePage() = characterPageLiveData.value?.plus(1)
+    fun morePage(){
+        characterPageLiveData.value = characterPageLiveData.value!!.plus(1)
+    }
 }

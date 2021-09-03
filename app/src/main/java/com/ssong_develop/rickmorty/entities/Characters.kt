@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-data class Character(
+data class Characters(
     @SerialName("id")
     val id: Int,
     @SerialName("name")
