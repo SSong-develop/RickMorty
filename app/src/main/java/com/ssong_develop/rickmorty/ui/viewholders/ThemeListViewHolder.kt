@@ -34,7 +34,7 @@ class ThemeListViewHolder(
     }
 
     override fun onClick(v: View?) {
-        delegate.onItemClick(binding.root,theme)
+        delegate.onItemClick(binding.tvMain,theme)
     }
 
     override fun onLongClick(v: View?): Boolean = false

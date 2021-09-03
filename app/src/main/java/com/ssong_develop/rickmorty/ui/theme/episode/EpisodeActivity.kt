@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityEpisodeBinding
+import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +33,7 @@ class EpisodeActivity : AppCompatActivity() {
 
     companion object {
 
-        fun startActivity(activity : Activity?, episodePage : Int, view : View) {
+        fun startActivityTransition(activity : Activity?, episodePage : Int, view : View) {
             if(activity != null){
                 val intent = Intent(activity, EpisodeActivity::class.java).apply { putExtra("episodePage",episodePage) }
                 if(versionCheckUtils.checkIsMaterialVersion()){
@@ -43,6 +44,13 @@ class EpisodeActivity : AppCompatActivity() {
                 }else{
                     activity.startActivity(intent)
                 }
+            }
+        }
+
+        fun startActivity(activity : Activity? , episodePage : Int) {
+            if(activity != null){
+                val intent = Intent(activity, EpisodeActivity::class.java).apply { putExtra("episodePage",episodePage) }
+                activity.startActivity(intent)
             }
         }
     }

@@ -13,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="@string/transition_theme"
         tools:context=".ui.theme.episode.EpisodeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -35,14 +34,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:fontFamily="@font/rickandmorty"
-                    android:shadowColor="@color/app_logo_text_shadow_color"
-                    android:shadowDx="5.0"
-                    android:shadowDy="5.0"
-                    android:shadowRadius="4.0"
                     android:text="@string/episode"
-                    android:textColor="@color/app_logo_text_color"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold"
+                    android:transitionName="@string/transition_theme"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

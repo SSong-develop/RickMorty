@@ -36,7 +36,7 @@ class CharacterActivity : AppCompatActivity() {
 
     companion object {
 
-        fun startActivity(activity : Activity?, characterPage : Int, view : View) {
+        fun startActivityTransition(activity : Activity?, characterPage : Int, view : View) {
             if(activity != null){
                 val intent = Intent(activity, CharacterActivity::class.java).apply { putExtra("characterPage",characterPage) }
                 if(versionCheckUtils.checkIsMaterialVersion()){
@@ -47,6 +47,13 @@ class CharacterActivity : AppCompatActivity() {
                 }else{
                     activity.startActivity(intent)
                 }
+            }
+        }
+
+        fun startActivity(activity : Activity? , characterPage : Int){
+            if(activity != null){
+                val intent = Intent(activity,CharacterActivity::class.java).apply { putExtra("characterPage",characterPage) }
+                activity.startActivity(intent)
             }
         }
     }
