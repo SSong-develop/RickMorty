@@ -2,11 +2,10 @@ package com.ssong_develop.rickmorty.ui.theme.character
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
@@ -20,18 +19,17 @@ import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate {
 
-    private val binding : ActivityCharacterBinding by lazy {
-        DataBindingUtil.setContentView(this,R.layout.activity_character)
+    private val binding: ActivityCharacterBinding by lazy {
+        DataBindingUtil.setContentView(this, R.layout.activity_character)
     }
 
-    private val viewModel : CharacterViewModel by viewModels()
+    private val viewModel: CharacterViewModel by viewModels()
 
-    private lateinit var characterAdapter : CharacterListAdapter
+    private lateinit var characterAdapter: CharacterListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,20 +39,22 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     }
 
     private fun initializeUI() {
-        viewModel.initialFetchCharacters(intent.getIntExtra("characterPage",0))
+        viewModel.initialFetchCharacters(intent.getIntExtra("characterPage", 0))
         characterAdapter = CharacterListAdapter(this)
         binding.rvCharacter.apply {
-            layoutManager = GridLayoutManager(this@CharacterActivity,2)
+            layoutManager = GridLayoutManager(this@CharacterActivity, GRID_SPAN_COUNT)
             adapter = characterAdapter
-            addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
 
                     val layoutManager = binding.rvCharacter.layoutManager
 
-                    val lastVisibleItem = (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
+                    val lastVisibleItem =
+                        (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
-                    if(layoutManager.itemCount <= lastVisibleItem + 2) {
+                    // GridLayout SpanCount가 2이기 때문에 2개 모자란 경우에 loadMore하도록 함
+                    if (layoutManager.itemCount <= lastVisibleItem + GRID_SPAN_COUNT) {
                         viewModel.morePage()
                     }
                 }
@@ -67,23 +67,33 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     }
 
     companion object {
-        fun startActivityTransition(activity : Activity?, characterPage : Int, view : View) {
-            if(activity != null){
-                val intent = Intent(activity, CharacterActivity::class.java).apply { putExtra("characterPage",characterPage) }
-                if(versionCheckUtils.checkIsMaterialVersion()){
+
+        const val GRID_SPAN_COUNT = 2
+
+        fun startActivityTransition(activity: Activity?, characterPage: Int, view: View) {
+            if (activity != null) {
+                val intent = Intent(
+                    activity,
+                    CharacterActivity::class.java
+                ).apply { putExtra("characterPage", characterPage) }
+                if (versionCheckUtils.checkIsMaterialVersion()) {
                     ViewCompat.getTransitionName(view)?.let {
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,view,it)
-                        activity.startActivity(intent,options.toBundle())
+                        val options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, it)
+                        activity.startActivity(intent, options.toBundle())
                     }
-                }else{
+                } else {
                     activity.startActivity(intent)
                 }
             }
         }
 
-        fun startActivity(activity : Activity? , characterPage : Int){
-            if(activity != null){
-                val intent = Intent(activity,CharacterActivity::class.java).apply { putExtra("characterPage",characterPage) }
+        fun startActivity(activity: Activity?, characterPage: Int) {
+            if (activity != null) {
+                val intent = Intent(
+                    activity,
+                    CharacterActivity::class.java
+                ).apply { putExtra("characterPage", characterPage) }
                 activity.startActivity(intent)
             }
         }

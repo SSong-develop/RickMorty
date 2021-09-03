@@ -34,7 +34,7 @@ class ThemeListAdapter(
     override fun getItemCount(): Int = data.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(itemList : List<Theme>){
+    fun submitList(itemList: List<Theme>) {
         data.clear()
         data.addAll(itemList)
         notifyDataSetChanged()
@@ -42,7 +42,7 @@ class ThemeListAdapter(
 }
 
 @BindingAdapter("theme_item")
-fun RecyclerView.setThemeItem(items : List<Theme>){
+fun RecyclerView.setThemeItem(items: List<Theme>) {
     (adapter as? ThemeListAdapter)?.run {
         submitList(items)
     }

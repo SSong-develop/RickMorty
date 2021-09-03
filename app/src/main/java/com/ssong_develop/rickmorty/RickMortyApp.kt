@@ -23,6 +23,6 @@ class RickMortyApp : Application() {
     }
 
     companion object {
-        lateinit var versionCheckUtils : VersionCheckUtils
+        lateinit var versionCheckUtils: VersionCheckUtils
     }
 }

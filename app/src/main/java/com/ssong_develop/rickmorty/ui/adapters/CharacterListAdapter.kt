@@ -26,9 +26,9 @@ class CharacterListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding : ItemCharacterBinding =
-            DataBindingUtil.inflate(layoutInflater, R.layout.item_character,parent,false)
-        return CharacterListViewHolder(binding,delegate)
+        val binding: ItemCharacterBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
+        return CharacterListViewHolder(binding, delegate)
     }
 
     override fun onBindViewHolder(holder: CharacterListViewHolder, position: Int) {
@@ -37,7 +37,7 @@ class CharacterListAdapter(
 }
 
 @BindingAdapter("characters_item")
-fun RecyclerView.setCharacterItems(list : List<Characters>?){
+fun RecyclerView.setCharacterItems(list: List<Characters>?) {
     (adapter as CharacterListAdapter)?.run {
         submitList(list)
     }

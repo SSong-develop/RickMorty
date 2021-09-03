@@ -3,6 +3,7 @@ package com.ssong_develop.rickmorty.network
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 /*
  * Copyright by 2019 skydoves (Jaewoong Eum)
  *

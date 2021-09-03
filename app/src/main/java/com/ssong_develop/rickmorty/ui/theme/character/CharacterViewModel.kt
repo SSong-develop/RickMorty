@@ -29,7 +29,7 @@ class CharacterViewModel @Inject constructor(
         characterPageLiveData.value = value
     }
 
-    fun morePage(){
+    fun morePage() {
         characterPageLiveData.value = characterPageLiveData.value!!.plus(1)
     }
 }

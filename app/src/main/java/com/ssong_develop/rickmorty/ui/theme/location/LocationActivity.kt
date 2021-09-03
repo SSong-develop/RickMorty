@@ -12,7 +12,6 @@ import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityLocationBinding
-import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,23 +33,34 @@ class LocationActivity : AppCompatActivity() {
 
     companion object {
 
-        fun startActivityTransition(activity : Activity?, locationPage : Int , view : View) {
-            if(activity != null){
-                val intent = Intent(activity,LocationActivity::class.java).apply { putExtra("locationPage",locationPage) }
-                if(versionCheckUtils.checkIsMaterialVersion()){
+        fun startActivityTransition(activity: Activity?, locationPage: Int, view: View) {
+            if (activity != null) {
+                val intent = Intent(activity, LocationActivity::class.java).apply {
+                    putExtra(
+                        "locationPage",
+                        locationPage
+                    )
+                }
+                if (versionCheckUtils.checkIsMaterialVersion()) {
                     ViewCompat.getTransitionName(view)?.let {
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,view,it)
-                        activity.startActivity(intent,options.toBundle())
+                        val options =
+                            ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, it)
+                        activity.startActivity(intent, options.toBundle())
                     }
-                }else{
+                } else {
                     activity.startActivity(intent)
                 }
             }
         }
 
-        fun startActivity(activity : Activity? , locationPage : Int){
-            if(activity != null){
-                val intent = Intent(activity, LocationActivity::class.java).apply { putExtra("locationPage",locationPage) }
+        fun startActivity(activity: Activity?, locationPage: Int) {
+            if (activity != null) {
+                val intent = Intent(activity, LocationActivity::class.java).apply {
+                    putExtra(
+                        "locationPage",
+                        locationPage
+                    )
+                }
                 activity.startActivity(intent)
             }
         }
