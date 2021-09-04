@@ -12,7 +12,7 @@ import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 
-val characterDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {
+private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {
     override fun areItemsTheSame(oldItem: Characters, newItem: Characters): Boolean =
         oldItem.id == newItem.id
 

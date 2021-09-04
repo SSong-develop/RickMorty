@@ -35,14 +35,18 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.vm = viewModel
+        initializePage()
         initializeUI()
     }
 
-    private fun initializeUI() {
+    private fun initializePage() {
         viewModel.initialFetchCharacters(intent.getIntExtra("characterPage", 0))
+    }
+
+    private fun initializeUI() {
         characterAdapter = CharacterListAdapter(this)
         binding.rvCharacter.apply {
-            layoutManager = GridLayoutManager(this@CharacterActivity, GRID_SPAN_COUNT)
+            layoutManager = GridLayoutManager(this@CharacterActivity, SPAN_COUNT)
             adapter = characterAdapter
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -54,7 +58,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                         (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
                     // GridLayout SpanCount가 2이기 때문에 2개 모자란 경우에 loadMore하도록 함
-                    if (layoutManager.itemCount <= lastVisibleItem + GRID_SPAN_COUNT) {
+                    if (layoutManager.itemCount <= lastVisibleItem + SPAN_COUNT) {
                         viewModel.morePage()
                     }
                 }
@@ -68,7 +72,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     companion object {
 
-        const val GRID_SPAN_COUNT = 2
+        const val SPAN_COUNT = 2
 
         fun startActivityTransition(activity: Activity?, characterPage: Int, view: View) {
             if (activity != null) {
