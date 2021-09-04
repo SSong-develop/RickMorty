@@ -5,10 +5,12 @@ import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.client.EpisodeClient
 import com.ssong_develop.rickmorty.network.message
+import com.ssong_develop.rickmorty.persistence.EpisodeDao
 import javax.inject.Inject
 
 class EpisodeRepository @Inject constructor(
-    private val client: EpisodeClient
+    private val client: EpisodeClient,
+    private val episodeDao : EpisodeDao
 ) : Repository {
     override var isLoading = false
 

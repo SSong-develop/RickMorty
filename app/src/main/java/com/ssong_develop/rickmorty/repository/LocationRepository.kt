@@ -5,10 +5,12 @@ import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.client.LocationClient
 import com.ssong_develop.rickmorty.network.message
+import com.ssong_develop.rickmorty.persistence.LocationDao
 import javax.inject.Inject
 
 class LocationRepository @Inject constructor(
-    private val client: LocationClient
+    private val client: LocationClient,
+    private val locationDao : LocationDao
 ) : Repository {
     override var isLoading = false
 

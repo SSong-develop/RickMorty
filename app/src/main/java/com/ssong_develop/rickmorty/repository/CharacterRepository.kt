@@ -5,10 +5,12 @@ import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.message
+import com.ssong_develop.rickmorty.persistence.CharacterDao
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
-    private val characterClient: CharacterClient
+    private val characterClient: CharacterClient,
+    private val characterDao : CharacterDao
 ) : Repository {
     override var isLoading: Boolean = false
 

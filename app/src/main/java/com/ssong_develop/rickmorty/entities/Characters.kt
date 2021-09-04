@@ -1,16 +1,18 @@
 package com.ssong_develop.rickmorty.entities
 
 import android.os.Parcelable
+import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Parcelize
 @Serializable
-@Entity(tableName = "characters")
+@Entity(tableName = "characters_table")
 data class Characters(
     @SerialName("id")
+    @PrimaryKey
     val id: Int,
     @SerialName("name")
     val name: String,
@@ -23,9 +25,11 @@ data class Characters(
     @SerialName("gender")
     val gender: String,
     @SerialName("origin")
-    val origin: Origin,
+    @Embedded
+    var origin: Origin? = null,
     @SerialName("location")
-    val location: Location,
+    @Embedded
+    var location: Location? = null,
     @SerialName("image")
     val image: String,
     @SerialName("episode")
@@ -34,23 +38,21 @@ data class Characters(
     val url: String,
     @SerialName("created")
     val created: String
-) : Parcelable {
+) {
 
-    @Parcelize
     @Serializable
     data class Origin(
         @SerialName("name")
-        val name: String,
+        val originName: String,
         @SerialName("url")
-        val url: String
-    ) : Parcelable
+        val originUrl: String
+    )
 
-    @Parcelize
     @Serializable
     data class Location(
         @SerialName("name")
-        val name: String,
+        val locationName: String,
         @SerialName("url")
-        val url: String
-    ) : Parcelable
+        val locationUrl: String
+    )
 }

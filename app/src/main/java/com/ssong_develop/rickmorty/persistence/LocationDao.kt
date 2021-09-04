@@ -12,6 +12,6 @@ interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLocationList(locations: List<Location>)
 
-    @Query("SELECT * FROM location")
+    @Query("SELECT * FROM location_table")
     fun getLocations(): List<Location>
 }

@@ -7,6 +7,9 @@ import com.ssong_develop.rickmorty.network.client.LocationClient
 import com.ssong_develop.rickmorty.network.service.CharacterService
 import com.ssong_develop.rickmorty.network.service.EpisodeService
 import com.ssong_develop.rickmorty.network.service.LocationService
+import com.ssong_develop.rickmorty.persistence.CharacterDao
+import com.ssong_develop.rickmorty.persistence.EpisodeDao
+import com.ssong_develop.rickmorty.persistence.LocationDao
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.repository.EpisodeRepository
 import com.ssong_develop.rickmorty.repository.LocationRepository
@@ -67,13 +70,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCharacterRepository(client: CharacterClient) = CharacterRepository(client)
+    fun provideCharacterRepository(client: CharacterClient, dao: CharacterDao) =
+        CharacterRepository(client, dao)
 
     @Provides
     @Singleton
-    fun provideLocationRepository(client: LocationClient) = LocationRepository(client)
+    fun provideLocationRepository(client: LocationClient, dao: LocationDao) =
+        LocationRepository(client, dao)
 
     @Provides
     @Singleton
-    fun provideEpisodeRepository(client: EpisodeClient) = EpisodeRepository(client)
+    fun provideEpisodeRepository(client: EpisodeClient, dao: EpisodeDao) =
+        EpisodeRepository(client, dao)
 }

@@ -17,6 +17,7 @@ import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
+import com.ssong_develop.rickmorty.ui.main.MainActivity
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 
