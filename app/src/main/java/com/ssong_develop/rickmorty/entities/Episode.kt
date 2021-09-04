@@ -1,12 +1,14 @@
 package com.ssong_develop.rickmorty.entities
 
 import android.os.Parcelable
+import androidx.room.Entity
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
+@Entity(tableName = "episode")
 data class Episode(
     @SerialName("id")
     val id: Int,
