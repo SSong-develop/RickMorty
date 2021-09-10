@@ -11,12 +11,14 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityLocationBinding
 import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.LocationListAdapter
+import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
 import com.ssong_develop.rickmorty.ui.viewholders.LocationListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -44,6 +46,21 @@ class LocationActivity : AppCompatActivity() , LocationListViewHolder.Delegate {
         binding.rvLocation.apply {
             adapter = locationAdapter
             layoutManager = GridLayoutManager(this@LocationActivity, SPAN_COUNT)
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+
+                    val layoutManager = binding.rvLocation.layoutManager
+
+                    val lastVisibleItem =
+                        (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
+
+                    // GridLayout SpanCount가 2이기 때문에 2개 모자란 경우에 loadMore하도록 함
+                    if (layoutManager.itemCount <= lastVisibleItem + CharacterActivity.SPAN_COUNT) {
+                        viewModel.morePage()
+                    }
+                }
+            })
         }
     }
 

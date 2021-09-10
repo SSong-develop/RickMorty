@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.ssong_develop.rickmorty.ui.theme.episode.EpisodeViewModel" />
@@ -55,5 +57,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar_episode" />
 
+        <ProgressBar
+            android:id="@+id/pb_episode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{vm.isLoading() ? View.VISIBLE : View.GONE }"
+            app:layout_constraintBottom_toBottomOf="@id/rv_episode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/rv_episode" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -29,5 +29,5 @@ class EpisodeViewModel @Inject constructor(
         episodePageLiveData.value = value
     }
 
-    fun morePage() = episodePageLiveData.value?.plus(1)
+    fun morePage() = episodePageLiveData.value!!.plus(1)
 }

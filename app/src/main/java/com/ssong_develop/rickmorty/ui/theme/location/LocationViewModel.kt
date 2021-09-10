@@ -29,5 +29,5 @@ class LocationViewModel @Inject constructor(
         locationPageLiveData.value = value
     }
 
-    fun morePage() = locationPageLiveData.value?.plus(1)
+    fun morePage() = locationPageLiveData.value!!.plus(1)
 }
