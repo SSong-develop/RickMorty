@@ -2,6 +2,7 @@ package com.ssong_develop.rickmorty.ui.theme.episode
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.switchMap
 import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.repository.EpisodeRepository
@@ -14,7 +15,7 @@ class EpisodeViewModel @Inject constructor(
     private val episodeRepository: EpisodeRepository
 ) : LiveCoroutinesViewModel() {
 
-    val toastLiveData: MutableLiveData<String> = MutableLiveData()
+    private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val episodePageLiveData: MutableLiveData<Int> = MutableLiveData()
     val episodes: LiveData<List<Episode>> = episodePageLiveData.switchMap { page ->
@@ -23,11 +24,13 @@ class EpisodeViewModel @Inject constructor(
         }
     }
 
-    fun isLoading() = episodeRepository.isLoading
+    val loading = MutableLiveData<Boolean>(episodeRepository.isLoading)
 
     fun initialFetchEpisodes(value: Int) {
         episodePageLiveData.value = value
     }
 
-    fun morePage() = episodePageLiveData.value!!.plus(1)
+    fun morePage(){
+        episodePageLiveData.value = episodePageLiveData.value!!.plus(1)
+    }
 }

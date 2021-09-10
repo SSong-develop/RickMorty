@@ -58,8 +58,7 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
                     val lastVisibleItem =
                         (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
-                    // GridLayout SpanCount가 2이기 때문에 2개 모자란 경우에 loadMore하도록 함
-                    if (layoutManager.itemCount <= lastVisibleItem + CharacterActivity.SPAN_COUNT) {
+                    if (layoutManager.itemCount <= lastVisibleItem + SPAN_COUNT) {
                         viewModel.morePage()
                     }
                 }

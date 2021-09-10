@@ -2,6 +2,7 @@ package com.ssong_develop.rickmorty.ui.theme.location
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.switchMap
 import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.repository.LocationRepository
@@ -14,7 +15,7 @@ class LocationViewModel @Inject constructor(
     private val locationRepository: LocationRepository
 ) : LiveCoroutinesViewModel() {
 
-    val toastLiveData: MutableLiveData<String> = MutableLiveData()
+    private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val locationPageLiveData: MutableLiveData<Int> = MutableLiveData()
     val locations: LiveData<List<Location>> = locationPageLiveData.switchMap { page ->
@@ -23,11 +24,13 @@ class LocationViewModel @Inject constructor(
         }
     }
 
-    fun isLoading() = locationRepository.isLoading
+    val loading = MutableLiveData<Boolean>(locationRepository.isLoading)
 
     fun initialFetchLocations(value: Int) {
         locationPageLiveData.value = value
     }
 
-    fun morePage() = locationPageLiveData.value!!.plus(1)
+    fun morePage(){
+        locationPageLiveData.value = locationPageLiveData.value!!.plus(1)
+    }
 }

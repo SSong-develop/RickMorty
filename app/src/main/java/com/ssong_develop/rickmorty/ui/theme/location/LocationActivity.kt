@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
@@ -18,12 +17,11 @@ import com.ssong_develop.rickmorty.databinding.ActivityLocationBinding
 import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.LocationListAdapter
-import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
 import com.ssong_develop.rickmorty.ui.viewholders.LocationListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LocationActivity : AppCompatActivity() , LocationListViewHolder.Delegate {
+class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
 
     private val binding: ActivityLocationBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_location)
@@ -31,7 +29,7 @@ class LocationActivity : AppCompatActivity() , LocationListViewHolder.Delegate {
 
     private val viewModel: LocationViewModel by viewModels()
 
-    private lateinit var locationAdapter : LocationListAdapter
+    private lateinit var locationAdapter: LocationListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +53,7 @@ class LocationActivity : AppCompatActivity() , LocationListViewHolder.Delegate {
                     val lastVisibleItem =
                         (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
-                    // GridLayout SpanCount가 2이기 때문에 2개 모자란 경우에 loadMore하도록 함
-                    if (layoutManager.itemCount <= lastVisibleItem + CharacterActivity.SPAN_COUNT) {
+                    if (layoutManager.itemCount <= lastVisibleItem + SPAN_COUNT) {
                         viewModel.morePage()
                     }
                 }

@@ -1,6 +1,7 @@
 package com.ssong_develop.rickmorty.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.ssong_develop.rickmorty.AppExecutors
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.client.EpisodeClient
 import com.ssong_develop.rickmorty.network.client.LocationClient
@@ -70,16 +71,24 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCharacterRepository(client: CharacterClient, dao: CharacterDao) =
-        CharacterRepository(client, dao)
+    fun provideCharacterRepository(
+        client: CharacterClient,
+        dao: CharacterDao,
+        executors: AppExecutors
+    ) =
+        CharacterRepository(client, dao, executors)
 
     @Provides
     @Singleton
-    fun provideLocationRepository(client: LocationClient, dao: LocationDao) =
-        LocationRepository(client, dao)
+    fun provideLocationRepository(
+        client: LocationClient,
+        dao: LocationDao,
+        executors: AppExecutors
+    ) =
+        LocationRepository(client, dao, executors)
 
     @Provides
     @Singleton
-    fun provideEpisodeRepository(client: EpisodeClient, dao: EpisodeDao) =
-        EpisodeRepository(client, dao)
+    fun provideEpisodeRepository(client: EpisodeClient, dao: EpisodeDao, executors: AppExecutors) =
+        EpisodeRepository(client, dao, executors)
 }

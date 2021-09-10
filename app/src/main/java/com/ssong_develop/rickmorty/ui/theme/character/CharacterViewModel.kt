@@ -2,6 +2,7 @@ package com.ssong_develop.rickmorty.ui.theme.character
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.switchMap
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.repository.CharacterRepository
@@ -14,7 +15,7 @@ class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : LiveCoroutinesViewModel() {
 
-    val toastLiveData: MutableLiveData<String> = MutableLiveData()
+    private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
     private val characterPageLiveData: MutableLiveData<Int> = MutableLiveData()
     val characters: LiveData<List<Characters>> = characterPageLiveData.switchMap { page ->
@@ -23,7 +24,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    fun isLoading() = characterRepository.isLoading
+    val loading  = MutableLiveData<Boolean>(characterRepository.isLoading)
 
     fun initialFetchCharacters(value: Int) {
         characterPageLiveData.value = value
