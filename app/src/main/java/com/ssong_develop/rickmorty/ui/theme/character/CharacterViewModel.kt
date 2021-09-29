@@ -28,10 +28,6 @@ class CharacterViewModel @Inject constructor(
         it.isEmpty()
     }
 
-    fun initialFetchCharacters(value: Int) {
-        characterPageLiveData.value = value
-    }
-
     fun morePage() {
         characterPageLiveData.value = characterPageLiveData.value!!.plus(1)
     }
