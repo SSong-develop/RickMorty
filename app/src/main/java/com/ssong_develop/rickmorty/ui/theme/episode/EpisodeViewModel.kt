@@ -1,34 +1,36 @@
 package com.ssong_develop.rickmorty.ui.theme.episode
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.switchMap
+import androidx.lifecycle.*
 import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.repository.EpisodeRepository
 import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class EpisodeViewModel @Inject constructor(
     private val episodeRepository: EpisodeRepository
-) : LiveCoroutinesViewModel() {
-
+) : ViewModel() {
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val episodePageLiveData: MutableLiveData<Int> = MutableLiveData(0)
-    val episodes: LiveData<List<Episode>> = episodePageLiveData.switchMap { page ->
-        launchOnViewModelScope {
-            episodeRepository.loadEpisodes(page) { toastLiveData.postValue(it) }
-        }
-    }
+    private val episodePage: MutableStateFlow<Int> = MutableStateFlow(0)
 
-    val loading: LiveData<Boolean> = Transformations.map(episodes) {
+    @ExperimentalCoroutinesApi
+    val episodes: Flow<List<Episode>> = episodePage.flatMapLatest { page ->
+        episodeRepository.loadEpisodes(episodePage.value) { toastLiveData.postValue(it) }
+    }.catch {
+        toastLiveData.postValue(it.toString())
+    }.flowOn(Dispatchers.Main)
+
+    @ExperimentalCoroutinesApi
+    val loading: Flow<Boolean> = episodes.map {
         it.isEmpty()
     }
 
     fun morePage() {
-        episodePageLiveData.value = episodePageLiveData.value!!.plus(1)
+        episodePage.value += 1
     }
 }

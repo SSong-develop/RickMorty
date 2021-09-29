@@ -18,6 +18,7 @@ import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.LocationListAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.LocationListViewHolder
+import com.ssong_develop.rickmorty.utils.observeOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +37,7 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
         binding.lifecycleOwner = this
         binding.vm = viewModel
         initializeUI()
+        initializeCollect()
     }
 
     private fun initializeUI() {
@@ -57,6 +59,19 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
                     }
                 }
             })
+        }
+    }
+
+    private fun initializeCollect() {
+        viewModel.locations.observeOnLifecycle(this){
+            locationAdapter.submitList(it)
+        }
+
+        viewModel.loading.observeOnLifecycle(this){
+            binding.pbLocation.run {
+                if (it) this.visibility = View.VISIBLE
+                else this.visibility = View.GONE
+            }
         }
     }
 

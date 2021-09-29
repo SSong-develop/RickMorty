@@ -7,22 +7,31 @@ import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.message
 import com.ssong_develop.rickmorty.persistence.CharacterDao
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
     private val characterClient: CharacterClient,
-    private val characterDao : CharacterDao,
+    private val characterDao: CharacterDao,
     private val appExecutors: AppExecutors
 ) : Repository {
-    fun loadCharacters(page: Int, error: (String) -> Unit): MutableLiveData<List<Characters>> {
-        val liveData = MutableLiveData<List<Characters>>()
-        var characters = characterDao.getCharacters()
+
+    fun loadCharacters(page: Int, error: (String) -> Unit): MutableStateFlow<List<Characters>> {
+        var characters = emptyList<Characters>()
+        appExecutors.diskIO().execute {
+            characters = characterDao.getCharacters()
+        }
+        val stateFlow = MutableStateFlow<List<Characters>>(characters)
         characterClient.fetchCharacters(page) { response ->
             when (response) {
                 is ApiResponse.Success -> {
                     response.data?.let { data ->
                         characters = data.results
-                        liveData.postValue(data.results)
+                        appExecutors.mainThread().execute {
+                            stateFlow.value = data.results
+                        }
                         appExecutors.diskIO().execute {
                             characterDao.insertCharacterList(characters)
                         }
@@ -32,7 +41,7 @@ class CharacterRepository @Inject constructor(
                 is ApiResponse.Failure.Exception -> error(response.message())
             }
         }
-        liveData.postValue(characters)
-        return liveData
+        stateFlow.value = characters
+        return stateFlow
     }
 }

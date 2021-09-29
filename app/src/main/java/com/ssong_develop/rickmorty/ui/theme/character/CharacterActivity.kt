@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.rickmorty.R
@@ -17,10 +18,14 @@ import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
-import com.ssong_develop.rickmorty.ui.main.MainActivity
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
+import com.ssong_develop.rickmorty.utils.observeOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate {
 
@@ -37,6 +42,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
         binding.lifecycleOwner = this
         binding.vm = viewModel
         initializeUI()
+        initializeCollect()
     }
 
     private fun initializeUI() {
@@ -58,6 +64,19 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                     }
                 }
             })
+        }
+    }
+
+    private fun initializeCollect() {
+        viewModel.characters.observeOnLifecycle(this){
+            characterAdapter.submitList(it)
+        }
+
+        viewModel.loading.observeOnLifecycle(this){
+            binding.pbCharacter.run {
+                if (it) this.visibility = View.VISIBLE
+                else this.visibility = View.GONE
+            }
         }
     }
 

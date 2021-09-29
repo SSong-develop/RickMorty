@@ -19,8 +19,11 @@ import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.EpisodeListAdapter
 import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
 import com.ssong_develop.rickmorty.ui.viewholders.EpisodeListViewHolder
+import com.ssong_develop.rickmorty.utils.observeOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
 
@@ -37,6 +40,7 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
         binding.lifecycleOwner = this
         binding.vm = viewModel
         initializeUI()
+        initializeCollect()
     }
 
     private fun initializeUI() {
@@ -58,6 +62,19 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
                     }
                 }
             })
+        }
+    }
+
+    private fun initializeCollect() {
+        viewModel.episodes.observeOnLifecycle(this){
+            episodeAdapter.submitList(it)
+        }
+
+        viewModel.loading.observeOnLifecycle(this){
+            binding.pbEpisode.run {
+                if (it) this.visibility = View.VISIBLE
+                else this.visibility = View.GONE
+            }
         }
     }
 
