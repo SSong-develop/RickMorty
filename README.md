@@ -25,3 +25,8 @@ RickMorty is a App based on Android application tech-stack and MVVM architecture
   - Glide [Link](https://github.com/bumptech/glide)
   - Gson for Room Converter
 
+## Options
+
+In Progress..
+
+I Make this App in difference tech skills and versions like MVP, Flow , etc. So check branches and Comment!!!! Thanks for comming
