@@ -36,12 +36,7 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.vm = viewModel
-        initializePage()
         initializeUI()
-    }
-
-    private fun initializePage() {
-        viewModel.initialFetchEpisodes(intent.getIntExtra("episodePage", 0))
     }
 
     private fun initializeUI() {
@@ -73,14 +68,9 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
     companion object {
 
         private const val SPAN_COUNT = 2
-        fun startActivityTransition(activity: Activity?, episodePage: Int, view: View) {
+        fun startActivityTransition(activity: Activity?, view: View) {
             if (activity != null) {
-                val intent = Intent(activity, EpisodeActivity::class.java).apply {
-                    putExtra(
-                        "episodePage",
-                        episodePage
-                    )
-                }
+                val intent = Intent(activity, EpisodeActivity::class.java)
                 if (versionCheckUtils.checkIsMaterialVersion()) {
                     ViewCompat.getTransitionName(view)?.let {
                         val options =

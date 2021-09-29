@@ -36,12 +36,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.vm = viewModel
-        initializePage()
         initializeUI()
-    }
-
-    private fun initializePage() {
-        viewModel.initialFetchCharacters(intent.getIntExtra("characterPage", 0))
     }
 
     private fun initializeUI() {
@@ -58,7 +53,6 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                     val lastVisibleItem =
                         (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
-                    // GridLayout SpanCount가 2이기 때문에 2개 모자란 경우에 loadMore하도록 함
                     if (layoutManager.itemCount <= lastVisibleItem + SPAN_COUNT) {
                         viewModel.morePage()
                     }
@@ -72,15 +66,14 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     }
 
     companion object {
-
         const val SPAN_COUNT = 2
 
-        fun startActivityTransition(activity: Activity?, characterPage: Int, view: View) {
+        fun startActivityTransition(activity: Activity?, view: View) {
             if (activity != null) {
                 val intent = Intent(
                     activity,
                     CharacterActivity::class.java
-                ).apply { putExtra("characterPage", characterPage) }
+                )
                 if (versionCheckUtils.checkIsMaterialVersion()) {
                     ViewCompat.getTransitionName(view)?.let {
                         val options =

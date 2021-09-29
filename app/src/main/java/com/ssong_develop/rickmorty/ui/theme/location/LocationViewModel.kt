@@ -17,7 +17,7 @@ class LocationViewModel @Inject constructor(
 
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val locationPageLiveData: MutableLiveData<Int> = MutableLiveData()
+    private val locationPageLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val locations: LiveData<List<Location>> = locationPageLiveData.switchMap { page ->
         launchOnViewModelScope {
             locationRepository.loadLocations(page) { toastLiveData.postValue(it) }
@@ -26,10 +26,6 @@ class LocationViewModel @Inject constructor(
 
     val loading : LiveData<Boolean> = Transformations.map(locations){
         it.isEmpty()
-    }
-
-    fun initialFetchLocations(value: Int) {
-        locationPageLiveData.value = value
     }
 
     fun morePage(){

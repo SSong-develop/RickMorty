@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity(), ThemeListViewHolder.Delegate {
 
     override fun onItemClick(view: View, theme: Theme) {
         when (binding.pagerMain.currentItem) {
-            0 -> CharacterActivity.startActivityTransition(this, 1, view)
-            1 -> LocationActivity.startActivityTransition(this, 1, view)
-            2 -> EpisodeActivity.startActivityTransition(this, 1, view)
+            0 -> CharacterActivity.startActivityTransition(this, view)
+            1 -> LocationActivity.startActivityTransition(this, view)
+            2 -> EpisodeActivity.startActivityTransition(this, view)
             else -> throw IllegalStateException("No such Position in here")
         }
     }

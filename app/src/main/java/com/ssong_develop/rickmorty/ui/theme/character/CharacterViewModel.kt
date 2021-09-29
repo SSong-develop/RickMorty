@@ -17,7 +17,7 @@ class CharacterViewModel @Inject constructor(
 
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val characterPageLiveData: MutableLiveData<Int> = MutableLiveData()
+    private val characterPageLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val characters: LiveData<List<Characters>> = characterPageLiveData.switchMap { page ->
         launchOnViewModelScope {
             characterRepository.loadCharacters(page) { toastLiveData.postValue(it) }

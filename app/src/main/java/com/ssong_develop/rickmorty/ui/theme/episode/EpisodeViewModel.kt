@@ -17,7 +17,7 @@ class EpisodeViewModel @Inject constructor(
 
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val episodePageLiveData: MutableLiveData<Int> = MutableLiveData()
+    private val episodePageLiveData: MutableLiveData<Int> = MutableLiveData(0)
     val episodes: LiveData<List<Episode>> = episodePageLiveData.switchMap { page ->
         launchOnViewModelScope {
             episodeRepository.loadEpisodes(page) { toastLiveData.postValue(it) }
@@ -26,10 +26,6 @@ class EpisodeViewModel @Inject constructor(
 
     val loading: LiveData<Boolean> = Transformations.map(episodes) {
         it.isEmpty()
-    }
-
-    fun initialFetchEpisodes(value: Int) {
-        episodePageLiveData.value = value
     }
 
     fun morePage() {

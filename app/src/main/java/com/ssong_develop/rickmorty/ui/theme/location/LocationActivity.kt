@@ -35,7 +35,6 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
         super.onCreate(savedInstanceState)
         binding.lifecycleOwner = this
         binding.vm = viewModel
-        initializePage()
         initializeUI()
     }
 
@@ -61,10 +60,6 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
         }
     }
 
-    private fun initializePage() {
-        viewModel.initialFetchLocations(intent.getIntExtra("locationPage", 0))
-    }
-
     override fun onItemClick(view: View, location: Location) {
         toast("hello!")
     }
@@ -73,14 +68,9 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
 
         private const val SPAN_COUNT = 2
 
-        fun startActivityTransition(activity: Activity?, locationPage: Int, view: View) {
+        fun startActivityTransition(activity: Activity?, view: View) {
             if (activity != null) {
-                val intent = Intent(activity, LocationActivity::class.java).apply {
-                    putExtra(
-                        "locationPage",
-                        locationPage
-                    )
-                }
+                val intent = Intent(activity, LocationActivity::class.java)
                 if (versionCheckUtils.checkIsMaterialVersion()) {
                     ViewCompat.getTransitionName(view)?.let {
                         val options =
