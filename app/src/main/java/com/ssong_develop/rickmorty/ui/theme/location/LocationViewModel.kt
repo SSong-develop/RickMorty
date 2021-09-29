@@ -24,7 +24,9 @@ class LocationViewModel @Inject constructor(
         }
     }
 
-    val loading = MutableLiveData<Boolean>(locationRepository.isLoading)
+    val loading : LiveData<Boolean> = Transformations.map(locations){
+        it.isEmpty()
+    }
 
     fun initialFetchLocations(value: Int) {
         locationPageLiveData.value = value

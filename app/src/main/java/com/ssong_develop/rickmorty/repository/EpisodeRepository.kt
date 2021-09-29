@@ -14,14 +14,11 @@ class EpisodeRepository @Inject constructor(
     private val episodeDao : EpisodeDao,
     private val appExecutors : AppExecutors
 ) : Repository {
-    override var isLoading = false
 
     fun loadEpisodes(page: Int, error: (String) -> Unit): MutableLiveData<List<Episode>> {
         val liveData = MutableLiveData<List<Episode>>()
         var episodes = episodeDao.getEpisodes()
-        isLoading = true
         client.fetchEpisode(page) { response ->
-            isLoading = false
             when (response) {
                 is ApiResponse.Success -> {
                     response.data?.let { data ->

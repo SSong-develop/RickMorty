@@ -24,13 +24,15 @@ class EpisodeViewModel @Inject constructor(
         }
     }
 
-    val loading = MutableLiveData<Boolean>(episodeRepository.isLoading)
+    val loading: LiveData<Boolean> = Transformations.map(episodes) {
+        it.isEmpty()
+    }
 
     fun initialFetchEpisodes(value: Int) {
         episodePageLiveData.value = value
     }
 
-    fun morePage(){
+    fun morePage() {
         episodePageLiveData.value = episodePageLiveData.value!!.plus(1)
     }
 }

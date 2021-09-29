@@ -24,7 +24,9 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    val loading  = MutableLiveData<Boolean>(characterRepository.isLoading)
+    val loading: LiveData<Boolean> = Transformations.map(characters) {
+        it.isEmpty()
+    }
 
     fun initialFetchCharacters(value: Int) {
         characterPageLiveData.value = value
