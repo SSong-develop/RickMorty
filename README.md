@@ -4,6 +4,10 @@ RickMorty is a App based on Android application tech-stack and MVVM architecture
 
 ## Preview
 
+<div>
+<img src="https://github.com/SSong-develop/RickAndMorty/blob/origin/art/preview.gif" width="300" height="650"/>
+</div>
+
 
 
 ## Tech Stack & Open-source libraries
