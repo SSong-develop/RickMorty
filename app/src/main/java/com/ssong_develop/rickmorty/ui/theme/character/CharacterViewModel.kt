@@ -24,7 +24,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    val loading: LiveData<Boolean> = Transformations.map(characters) {
+    var loading: LiveData<Boolean> = Transformations.map(characters) {
         it.isEmpty()
     }
 

@@ -24,7 +24,7 @@ class LocationViewModel @Inject constructor(
         }
     }
 
-    val loading : LiveData<Boolean> = Transformations.map(locations){
+    var loading : LiveData<Boolean> = Transformations.map(locations){
         it.isEmpty()
     }
 

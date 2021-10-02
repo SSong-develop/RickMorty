@@ -24,7 +24,7 @@ class EpisodeViewModel @Inject constructor(
         }
     }
 
-    val loading: LiveData<Boolean> = Transformations.map(episodes) {
+    var loading: LiveData<Boolean> = Transformations.map(episodes) {
         it.isEmpty()
     }
 
