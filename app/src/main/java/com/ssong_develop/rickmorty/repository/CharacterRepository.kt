@@ -20,12 +20,12 @@ class CharacterRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Characters>> = flow {
-            val response = characterClient.suspendFetchCharacters(page).results
+        val response = characterClient.suspendFetchCharacters(page).results
 /*            characterDao.insertCharacterList(response)
             val characters = characterDao.getCharacters()*/
-            emit(response)
-        }.catch {
-            onError("Api Response Error")
-            emit(emptyList())
-        }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+        emit(response)
+    }.catch {
+        onError("Api Response Error")
+        emit(emptyList())
+    }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 }

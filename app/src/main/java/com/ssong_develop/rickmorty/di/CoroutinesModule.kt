@@ -26,13 +26,13 @@ object CoroutinesModule {
 
     @DefaultDispatcher
     @Provides
-    fun provideDefaultDispatcher() : CoroutineDispatcher = Dispatchers.Default
+    fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
     @IoDispatcher
     @Provides
-    fun provideIoDispatcher() : CoroutineDispatcher = Dispatchers.IO
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 
     @MainDispatcher
     @Provides
-    fun provideMainDispatcher() : CoroutineDispatcher = Dispatchers.Main
+    fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 }

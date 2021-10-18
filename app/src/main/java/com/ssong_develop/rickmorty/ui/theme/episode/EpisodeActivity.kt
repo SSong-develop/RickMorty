@@ -17,15 +17,13 @@ import com.ssong_develop.rickmorty.databinding.ActivityEpisodeBinding
 import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.EpisodeListAdapter
-import com.ssong_develop.rickmorty.ui.theme.character.CharacterActivity
 import com.ssong_develop.rickmorty.ui.viewholders.EpisodeListViewHolder
-import com.ssong_develop.rickmorty.utils.observeOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
+class EpisodeActivity : AppCompatActivity(), EpisodeListViewHolder.Delegate {
 
     private val binding: ActivityEpisodeBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_episode)
@@ -33,11 +31,11 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
 
     private val viewModel: EpisodeViewModel by viewModels()
 
-    private lateinit var episodeAdapter : EpisodeListAdapter
+    private lateinit var episodeAdapter: EpisodeListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(binding){
+        with(binding) {
             lifecycleOwner = this@EpisodeActivity
             vm = viewModel
         }

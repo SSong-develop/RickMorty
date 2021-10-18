@@ -1,6 +1,5 @@
 package com.ssong_develop.rickmorty.repository
 
-import com.ssong_develop.rickmorty.AppExecutors
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.network.client.LocationClient
@@ -18,7 +17,7 @@ class LocationRepository @Inject constructor(
     fun loadLocations(
         page: Int,
         onStart: () -> Unit,
-        onComplete : () -> Unit,
+        onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Location>> = flow {
         val response = client.fetchLocation(page).results

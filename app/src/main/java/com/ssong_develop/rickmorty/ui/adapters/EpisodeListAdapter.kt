@@ -12,7 +12,7 @@ import com.ssong_develop.rickmorty.databinding.ItemEpisodeBinding
 import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.ui.viewholders.EpisodeListViewHolder
 
-private val episodeItemDiffItemCallback = object : DiffUtil.ItemCallback<Episode>(){
+private val episodeItemDiffItemCallback = object : DiffUtil.ItemCallback<Episode>() {
     override fun areItemsTheSame(oldItem: Episode, newItem: Episode): Boolean =
         oldItem.id == newItem.id
 
@@ -21,13 +21,14 @@ private val episodeItemDiffItemCallback = object : DiffUtil.ItemCallback<Episode
 }
 
 class EpisodeListAdapter(
-    private val delegate : EpisodeListViewHolder.Delegate
-) : ListAdapter<Episode,EpisodeListViewHolder>(episodeItemDiffItemCallback) {
+    private val delegate: EpisodeListViewHolder.Delegate
+) : ListAdapter<Episode, EpisodeListViewHolder>(episodeItemDiffItemCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EpisodeListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding : ItemEpisodeBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_episode,parent,false)
-        return EpisodeListViewHolder(binding,delegate)
+        val binding: ItemEpisodeBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_episode, parent, false)
+        return EpisodeListViewHolder(binding, delegate)
     }
 
     override fun onBindViewHolder(holder: EpisodeListViewHolder, position: Int) {
@@ -36,7 +37,7 @@ class EpisodeListAdapter(
 }
 
 @BindingAdapter("episode_item")
-fun RecyclerView.setEpisodeItem(list : List<Episode>?){
+fun RecyclerView.setEpisodeItem(list: List<Episode>?) {
     (adapter as EpisodeListAdapter)?.run {
         submitList(list)
     }

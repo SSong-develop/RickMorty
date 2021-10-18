@@ -25,12 +25,12 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun provideCharactersDao(database : AppDatabase) = database.characterDao()
+    fun provideCharactersDao(database: AppDatabase) = database.characterDao()
 
     @Provides
     @Singleton
-    fun provideEpisodeDao(database : AppDatabase) = database.episodeDao()
+    fun provideEpisodeDao(database: AppDatabase) = database.episodeDao()
 
     @Provides
-    fun provideLocationDao(database : AppDatabase) = database.locationDao()
+    fun provideLocationDao(database: AppDatabase) = database.locationDao()
 }

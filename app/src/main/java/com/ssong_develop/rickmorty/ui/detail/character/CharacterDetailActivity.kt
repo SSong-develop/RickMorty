@@ -1,7 +1,7 @@
 package com.ssong_develop.rickmorty.ui.detail.character
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.ssong_develop.rickmorty.R
 
 class CharacterDetailActivity : AppCompatActivity() {

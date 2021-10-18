@@ -25,8 +25,9 @@ class LocationListAdapter(
 ) : ListAdapter<Location, LocationListViewHolder>(locationDiffItemCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding : ItemLocationBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_location,parent,false)
-        return LocationListViewHolder(binding,delegate)
+        val binding: ItemLocationBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_location, parent, false)
+        return LocationListViewHolder(binding, delegate)
     }
 
     override fun onBindViewHolder(holder: LocationListViewHolder, position: Int) {
@@ -35,7 +36,7 @@ class LocationListAdapter(
 }
 
 @BindingAdapter("location_item")
-fun RecyclerView.setLocationItem(list : List<Location>?){
+fun RecyclerView.setLocationItem(list: List<Location>?) {
     (adapter as LocationListAdapter)?.run {
         submitList(list)
     }

@@ -18,7 +18,6 @@ import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.LocationListAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.LocationListViewHolder
-import com.ssong_develop.rickmorty.utils.observeOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +33,7 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(binding){
+        with(binding) {
             lifecycleOwner = this@LocationActivity
             vm = viewModel
         }

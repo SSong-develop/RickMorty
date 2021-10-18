@@ -6,11 +6,11 @@ import com.ssong_develop.rickmorty.databinding.ItemLocationBinding
 import com.ssong_develop.rickmorty.entities.Location
 
 class LocationListViewHolder(
-    private val binding : ItemLocationBinding,
-    private val delegate : Delegate
-) : RecyclerView.ViewHolder(binding.root),View.OnClickListener,View.OnLongClickListener {
+    private val binding: ItemLocationBinding,
+    private val delegate: Delegate
+) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    lateinit var location : Location
+    lateinit var location: Location
 
     init {
         binding.root.setOnClickListener(this)
@@ -18,10 +18,10 @@ class LocationListViewHolder(
     }
 
     interface Delegate {
-        fun onItemClick(view : View, location : Location)
+        fun onItemClick(view: View, location: Location)
     }
 
-    fun bind(data : Location) {
+    fun bind(data: Location) {
         location = data
         binding.apply {
             location = data
@@ -30,7 +30,7 @@ class LocationListViewHolder(
     }
 
     override fun onClick(view: View) {
-        delegate.onItemClick(view,location)
+        delegate.onItemClick(view, location)
     }
 
     override fun onLongClick(v: View?): Boolean = false

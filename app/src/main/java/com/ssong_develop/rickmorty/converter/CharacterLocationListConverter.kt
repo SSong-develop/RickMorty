@@ -8,13 +8,13 @@ import com.ssong_develop.rickmorty.entities.Characters
 class CharacterLocationListConverter {
 
     @TypeConverter
-    fun fromString(value : String) : List<Characters.Location>? {
+    fun fromString(value: String): List<Characters.Location>? {
         val listType = object : TypeToken<Characters.Location>() {}.type
-        return Gson().fromJson<List<Characters.Location>>(value,listType)
+        return Gson().fromJson<List<Characters.Location>>(value, listType)
     }
 
     @TypeConverter
-    fun fromList(location : List<Characters.Location>?) : String {
+    fun fromList(location: List<Characters.Location>?): String {
         val gson = Gson()
         return gson.toJson(location)
     }
