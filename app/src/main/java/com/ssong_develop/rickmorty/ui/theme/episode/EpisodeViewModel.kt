@@ -1,13 +1,17 @@
 package com.ssong_develop.rickmorty.ui.theme.episode
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.repository.EpisodeRepository
-import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,19 +20,29 @@ class EpisodeViewModel @Inject constructor(
 ) : ViewModel() {
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
+    val loading = MutableStateFlow(true)
+
     private val episodePage: MutableStateFlow<Int> = MutableStateFlow(0)
 
     @ExperimentalCoroutinesApi
-    val episodes: Flow<List<Episode>> = episodePage.flatMapLatest { page ->
-        episodeRepository.loadEpisodes(episodePage.value) { toastLiveData.postValue(it) }
-    }.catch {
-        toastLiveData.postValue(it.toString())
-    }.flowOn(Dispatchers.Main)
+    private val episodeFlow: Flow<List<Episode>> = episodePage.flatMapLatest { page ->
+        episodeRepository.loadEpisodes(
+            page = page,
+            onStart = { loading.value = true },
+            onComplete = { loading.value = false },
+            onError = {
+                loading.value = true
+                toastLiveData.postValue(it)
+            }
+        )
+    }
 
     @ExperimentalCoroutinesApi
-    val loading: Flow<Boolean> = episodes.map {
-        it.isEmpty()
-    }
+    val episodeStateFlow = episodeFlow.stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
 
     fun morePage() {
         episodePage.value += 1

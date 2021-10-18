@@ -39,10 +39,11 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
+        with(binding){
+            lifecycleOwner = this@CharacterActivity
+            vm = viewModel
+        }
         initializeUI()
-        initializeCollect()
     }
 
     private fun initializeUI() {
@@ -67,25 +68,12 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
         }
     }
 
-    private fun initializeCollect() {
-        viewModel.characters.observeOnLifecycle(this){
-            characterAdapter.submitList(it)
-        }
-
-        viewModel.loading.observeOnLifecycle(this){
-            binding.pbCharacter.run {
-                if (it) this.visibility = View.VISIBLE
-                else this.visibility = View.GONE
-            }
-        }
-    }
-
     override fun onItemClick(view: View, characters: Characters) {
         toast("hello!")
     }
 
     companion object {
-        const val SPAN_COUNT = 2
+        private const val SPAN_COUNT = 2
 
         fun startActivityTransition(activity: Activity?, view: View) {
             if (activity != null) {
@@ -102,16 +90,6 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                 } else {
                     activity.startActivity(intent)
                 }
-            }
-        }
-
-        fun startActivity(activity: Activity?, characterPage: Int) {
-            if (activity != null) {
-                val intent = Intent(
-                    activity,
-                    CharacterActivity::class.java
-                ).apply { putExtra("characterPage", characterPage) }
-                activity.startActivity(intent)
             }
         }
     }

@@ -37,10 +37,11 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
+        with(binding){
+            lifecycleOwner = this@EpisodeActivity
+            vm = viewModel
+        }
         initializeUI()
-        initializeCollect()
     }
 
     private fun initializeUI() {
@@ -65,26 +66,13 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
         }
     }
 
-    private fun initializeCollect() {
-        viewModel.episodes.observeOnLifecycle(this){
-            episodeAdapter.submitList(it)
-        }
-
-        viewModel.loading.observeOnLifecycle(this){
-            binding.pbEpisode.run {
-                if (it) this.visibility = View.VISIBLE
-                else this.visibility = View.GONE
-            }
-        }
-    }
-
     override fun onItemClick(view: View, episode: Episode) {
         toast("hello!")
     }
 
     companion object {
-
         private const val SPAN_COUNT = 2
+
         fun startActivityTransition(activity: Activity?, view: View) {
             if (activity != null) {
                 val intent = Intent(activity, EpisodeActivity::class.java)
@@ -97,18 +85,6 @@ class EpisodeActivity : AppCompatActivity() , EpisodeListViewHolder.Delegate {
                 } else {
                     activity.startActivity(intent)
                 }
-            }
-        }
-
-        fun startActivity(activity: Activity?, episodePage: Int) {
-            if (activity != null) {
-                val intent = Intent(activity, EpisodeActivity::class.java).apply {
-                    putExtra(
-                        "episodePage",
-                        episodePage
-                    )
-                }
-                activity.startActivity(intent)
             }
         }
     }

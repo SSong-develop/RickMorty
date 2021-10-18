@@ -11,10 +11,5 @@ import javax.inject.Inject
 class CharacterClient @Inject constructor(
     private val service: CharacterService
 ) {
-    fun fetchCharacters(
-        page: Int,
-        onResult: (response: ApiResponse<Wrapper<Info, Characters>>) -> Unit
-    ) {
-        service.fetchCharacters(page).transform(onResult)
-    }
+    suspend fun suspendFetchCharacters(page: Int) = service.fetchCharacters(page)
 }

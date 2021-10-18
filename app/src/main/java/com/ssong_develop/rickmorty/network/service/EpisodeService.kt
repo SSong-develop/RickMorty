@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface EpisodeService {
 
     @GET("episode")
-    fun fetchEpisodes(
+    suspend fun fetchEpisodes(
         @Query("page") page: Int
-    ): Call<Wrapper<Info, Episode>>
+    ): Wrapper<Info, Episode>
 }

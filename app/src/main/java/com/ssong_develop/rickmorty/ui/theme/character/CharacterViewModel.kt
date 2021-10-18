@@ -2,14 +2,14 @@ package com.ssong_develop.rickmorty.ui.theme.character
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ssong_develop.rickmorty.entities.Characters
+import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.repository.CharacterRepository
-import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,17 +20,27 @@ class CharacterViewModel @Inject constructor(
 
     private val characterPage: MutableStateFlow<Int> = MutableStateFlow(0)
 
-    @ExperimentalCoroutinesApi
-    val characters: Flow<List<Characters>> = characterPage.flatMapLatest { page ->
-        characterRepository.loadCharacters(page) { toastLiveData.postValue(it) }
-    }.catch {
-        toastLiveData.postValue(it.toString())
-    }.flowOn(Dispatchers.Main)
+    val loading = MutableStateFlow(true)
 
     @ExperimentalCoroutinesApi
-    val loading: Flow<Boolean> = characters.map {
-        it.isEmpty()
+    private val charactersFlow = characterPage.flatMapLatest { page ->
+        characterRepository.loadCharacters(
+            page = page,
+            onStart = { loading.value = true },
+            onComplete = { loading.value = false },
+            onError = {
+                loading.value = true
+                toastLiveData.postValue(it)
+            }
+        )
     }
+
+    @ExperimentalCoroutinesApi
+    val characterStateFlow = charactersFlow.stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(5000),
+        initialValue = emptyList()
+    )
 
     fun morePage() {
         characterPage.value += 1

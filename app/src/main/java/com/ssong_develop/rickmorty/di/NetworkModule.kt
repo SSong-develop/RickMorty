@@ -1,7 +1,6 @@
 package com.ssong_develop.rickmorty.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.ssong_develop.rickmorty.AppExecutors
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.client.EpisodeClient
 import com.ssong_develop.rickmorty.network.client.LocationClient
@@ -18,6 +17,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -74,21 +74,25 @@ object NetworkModule {
     fun provideCharacterRepository(
         client: CharacterClient,
         dao: CharacterDao,
-        executors: AppExecutors
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        CharacterRepository(client, dao, executors)
+        CharacterRepository(client, dao, ioDispatcher)
 
     @Provides
     @Singleton
     fun provideLocationRepository(
         client: LocationClient,
         dao: LocationDao,
-        executors: AppExecutors
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        LocationRepository(client, dao, executors)
+        LocationRepository(client, dao, ioDispatcher)
 
     @Provides
     @Singleton
-    fun provideEpisodeRepository(client: EpisodeClient, dao: EpisodeDao, executors: AppExecutors) =
-        EpisodeRepository(client, dao, executors)
+    fun provideEpisodeRepository(
+        client: EpisodeClient,
+        dao: EpisodeDao,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) =
+        EpisodeRepository(client, dao, ioDispatcher)
 }

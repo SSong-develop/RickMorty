@@ -34,10 +34,11 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.lifecycleOwner = this
-        binding.vm = viewModel
+        with(binding){
+            lifecycleOwner = this@LocationActivity
+            vm = viewModel
+        }
         initializeUI()
-        initializeCollect()
     }
 
     private fun initializeUI() {
@@ -62,25 +63,11 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
         }
     }
 
-    private fun initializeCollect() {
-        viewModel.locations.observeOnLifecycle(this){
-            locationAdapter.submitList(it)
-        }
-
-        viewModel.loading.observeOnLifecycle(this){
-            binding.pbLocation.run {
-                if (it) this.visibility = View.VISIBLE
-                else this.visibility = View.GONE
-            }
-        }
-    }
-
     override fun onItemClick(view: View, location: Location) {
         toast("hello!")
     }
 
     companion object {
-
         private const val SPAN_COUNT = 2
 
         fun startActivityTransition(activity: Activity?, view: View) {
@@ -95,18 +82,6 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
                 } else {
                     activity.startActivity(intent)
                 }
-            }
-        }
-
-        fun startActivity(activity: Activity?, locationPage: Int) {
-            if (activity != null) {
-                val intent = Intent(activity, LocationActivity::class.java).apply {
-                    putExtra(
-                        "locationPage",
-                        locationPage
-                    )
-                }
-                activity.startActivity(intent)
             }
         }
     }

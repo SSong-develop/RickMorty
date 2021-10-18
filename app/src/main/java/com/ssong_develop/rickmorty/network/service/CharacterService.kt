@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface CharacterService {
 
     @GET("character")
-    fun fetchCharacters(
+    suspend fun fetchCharacters(
         @Query("page") page: Int
-    ): Call<Wrapper<Info, Characters>>
+    ): Wrapper<Info, Characters>
 }

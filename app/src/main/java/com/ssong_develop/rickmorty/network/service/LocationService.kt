@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface LocationService {
 
     @GET("location")
-    fun fetchLocations(
+    suspend fun fetchLocations(
         @Query("page") page: Int
-    ): Call<Wrapper<Info, Location>>
+    ): Wrapper<Info, Location>
 }
