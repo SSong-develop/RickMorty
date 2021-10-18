@@ -1,20 +1,23 @@
 package com.ssong_develop.rickmorty.ui.theme.location
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.entities.Location
 import com.ssong_develop.rickmorty.repository.LocationRepository
-import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     private val locationRepository: LocationRepository
-) : LiveCoroutinesViewModel() {
+) : ViewModel() {
 
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
@@ -23,7 +26,7 @@ class LocationViewModel @Inject constructor(
     val loading = MutableStateFlow(true)
 
     @ExperimentalCoroutinesApi
-    private val locationFlow : Flow<List<Location>> = locationPage.flatMapLatest { page ->
+    private val locationFlow: Flow<List<Location>> = locationPage.flatMapLatest { page ->
         locationRepository.loadLocations(
             page = page,
             onStart = { loading.value = true },
@@ -42,7 +45,7 @@ class LocationViewModel @Inject constructor(
         initialValue = emptyList()
     )
 
-    fun morePage(){
+    fun morePage() {
         locationPage.value += 1
     }
 }

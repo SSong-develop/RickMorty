@@ -2,16 +2,16 @@ package com.ssong_develop.rickmorty.ui.main
 
 import android.app.Application
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.entities.Theme
-import com.ssong_develop.rickmorty.ui.LiveCoroutinesViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val app: Application,
-) : LiveCoroutinesViewModel() {
+) : ViewModel() {
 
     private val defaultThemeList = listOf(
         Theme(ContextCompat.getDrawable(app, R.drawable.rick)!!, app.getString(R.string.character)),

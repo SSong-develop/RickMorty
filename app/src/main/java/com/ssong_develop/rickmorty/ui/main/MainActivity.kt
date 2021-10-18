@@ -15,6 +15,7 @@ import com.ssong_develop.rickmorty.ui.theme.episode.EpisodeActivity
 import com.ssong_develop.rickmorty.ui.theme.location.LocationActivity
 import com.ssong_develop.rickmorty.ui.viewholders.ThemeListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), ThemeListViewHolder.Delegate {
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity(), ThemeListViewHolder.Delegate {
         }
     }
 
+    @ExperimentalCoroutinesApi
     override fun onItemClick(view: View, theme: Theme) {
         when (binding.pagerMain.currentItem) {
             0 -> CharacterActivity.startActivityTransition(this, view)
