@@ -31,8 +31,6 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private val viewModel: CharacterViewModel by viewModels()
 
-    private lateinit var characterAdapter: CharacterListAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
@@ -43,10 +41,9 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     }
 
     private fun initializeUI() {
-        characterAdapter = CharacterListAdapter(this)
-        binding.rvCharacter.apply {
+        with(binding.rvCharacter){
             layoutManager = GridLayoutManager(this@CharacterActivity, SPAN_COUNT)
-            adapter = characterAdapter
+            adapter = CharacterListAdapter(this@CharacterActivity)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)

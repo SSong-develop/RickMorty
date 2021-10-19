@@ -29,8 +29,6 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
 
     private val viewModel: LocationViewModel by viewModels()
 
-    private lateinit var locationAdapter: LocationListAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
@@ -41,10 +39,9 @@ class LocationActivity : AppCompatActivity(), LocationListViewHolder.Delegate {
     }
 
     private fun initializeUI() {
-        locationAdapter = LocationListAdapter(this)
-        binding.rvLocation.apply {
-            adapter = locationAdapter
+        with(binding.rvLocation){
             layoutManager = GridLayoutManager(this@LocationActivity, SPAN_COUNT)
+            adapter = LocationListAdapter(this@LocationActivity)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)

@@ -31,8 +31,6 @@ class EpisodeActivity : AppCompatActivity(), EpisodeListViewHolder.Delegate {
 
     private val viewModel: EpisodeViewModel by viewModels()
 
-    private lateinit var episodeAdapter: EpisodeListAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
@@ -43,10 +41,9 @@ class EpisodeActivity : AppCompatActivity(), EpisodeListViewHolder.Delegate {
     }
 
     private fun initializeUI() {
-        episodeAdapter = EpisodeListAdapter(this)
-        binding.rvEpisode.apply {
-            adapter = episodeAdapter
+        with(binding.rvEpisode){
             layoutManager = GridLayoutManager(this@EpisodeActivity, SPAN_COUNT)
+            adapter = EpisodeListAdapter(this@EpisodeActivity)
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
