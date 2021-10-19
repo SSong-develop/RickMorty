@@ -35,10 +35,3 @@ class CharacterListAdapter(
         holder.bind(getItem(position))
     }
 }
-
-@BindingAdapter("characters_item")
-fun RecyclerView.setCharacterItems(list: List<Characters>?) {
-    (adapter as CharacterListAdapter)?.run {
-        submitList(list)
-    }
-}

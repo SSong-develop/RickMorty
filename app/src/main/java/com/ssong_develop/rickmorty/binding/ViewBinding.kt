@@ -8,7 +8,7 @@ import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
 
-object BindingAdapter {
+object ViewBinding {
     @JvmStatic
     @BindingAdapter("set_image_url")
     fun setImageUrl(imageView: AppCompatImageView, url: String) {

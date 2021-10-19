@@ -36,54 +36,11 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
         with(binding) {
             lifecycleOwner = this@CharacterActivity
             vm = viewModel
-        }
-        initializeUI()
-    }
-
-    private fun initializeUI() {
-        with(binding.rvCharacter){
-            layoutManager = GridLayoutManager(this@CharacterActivity, SPAN_COUNT)
             adapter = CharacterListAdapter(this@CharacterActivity)
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-
-                    val layoutManager = binding.rvCharacter.layoutManager
-
-                    val lastVisibleItem =
-                        (layoutManager as GridLayoutManager).findLastCompletelyVisibleItemPosition()
-
-                    if (layoutManager.itemCount <= lastVisibleItem + SPAN_COUNT) {
-                        viewModel.morePage()
-                    }
-                }
-            })
         }
     }
 
     override fun onItemClick(view: View, characters: Characters) {
         toast("hello!")
-    }
-
-    companion object {
-        private const val SPAN_COUNT = 2
-
-        fun startActivityTransition(activity: Activity?, view: View) {
-            if (activity != null) {
-                val intent = Intent(
-                    activity,
-                    CharacterActivity::class.java
-                )
-                if (versionCheckUtils.checkIsMaterialVersion()) {
-                    ViewCompat.getTransitionName(view)?.let {
-                        val options =
-                            ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, it)
-                        activity.startActivity(intent, options.toBundle())
-                    }
-                } else {
-                    activity.startActivity(intent)
-                }
-            }
-        }
     }
 }
