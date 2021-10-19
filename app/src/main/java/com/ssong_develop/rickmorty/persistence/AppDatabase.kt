@@ -7,11 +7,9 @@ import com.ssong_develop.rickmorty.converter.CharacterLocationListConverter
 import com.ssong_develop.rickmorty.converter.OriginListConverter
 import com.ssong_develop.rickmorty.converter.StringListConverter
 import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.entities.Location
 
 @Database(
-    entities = [Characters::class, Episode::class, Location::class],
+    entities = [Characters::class],
     version = 3,
     exportSchema = true
 )
@@ -25,6 +23,4 @@ import com.ssong_develop.rickmorty.entities.Location
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharacterDao
-    abstract fun episodeDao(): EpisodeDao
-    abstract fun locationDao(): LocationDao
 }

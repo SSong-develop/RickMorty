@@ -14,5 +14,4 @@ object AppExecutorsModule {
     @Provides
     @Singleton
     fun provideAppExecutors() = AppExecutors()
-
 }

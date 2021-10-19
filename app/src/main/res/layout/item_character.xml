@@ -19,7 +19,8 @@
         android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/white_12"
         app:cardCornerRadius="14dp"
-        app:cardElevation="4dp">
+        app:cardElevation="4dp"
+        tools:backgroundTint="@color/background800">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,26 +32,31 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
-                app:paletteCard="@{cardView}"
-                app:paletteImage="@{character.image}"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:paletteCard="@{cardView}"
+                app:paletteImage="@{character.image}" />
 
             <TextView
                 android:id="@+id/tv_character_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:maxLines="2"
                 android:text="@{character.name}"
-                android:fontFamily="@font/rickandmorty"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                tools:text="Rick"
-                app:layout_constraintStart_toStartOf="@id/iv_character_image"
-                app:layout_constraintEnd_toEndOf="@id/iv_character_image"
+                android:textColor="@color/white_12"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_character_image"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                tools:text="Rick" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

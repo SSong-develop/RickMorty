@@ -9,19 +9,20 @@
 
         <variable
             name="vm"
-            type="com.ssong_develop.rickmorty.ui.theme.character.CharacterViewModel" />
+            type="com.ssong_develop.rickmorty.ui.character.CharacterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background800"
         tools:context=".ui.theme.episode.EpisodeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_character"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/app_logo_background_color"
+            android:backgroundTint="@color/app_bar_color"
             android:padding="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,16 +32,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:fontFamily="@font/rickandmorty"
-                    android:text="@string/character"
-                    android:textColor="@color/black"
-                    android:textSize="24sp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white_12"
+                    android:textSize="18sp"
                     android:textStyle="bold"
-                    android:transitionName="@string/transition_theme"
+                    android:layout_marginStart="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -61,6 +60,7 @@
             android:id="@+id/pb_character"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="@color/app_bar_color"
             android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/rv_character"
             app:layout_constraintEnd_toEndOf="parent"
