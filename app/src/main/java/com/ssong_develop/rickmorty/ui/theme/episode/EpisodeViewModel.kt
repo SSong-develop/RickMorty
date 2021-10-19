@@ -22,7 +22,7 @@ class EpisodeViewModel @Inject constructor(
 
     val loading = MutableStateFlow(true)
 
-    private val episodePage: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val episodePage: MutableStateFlow<Int> = MutableStateFlow(1)
 
     @ExperimentalCoroutinesApi
     private val episodeFlow: Flow<List<Episode>> = episodePage.flatMapLatest { page ->

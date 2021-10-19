@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Entity(tableName = "location_table")
 data class Location(
+    var page : Int = 0,
     @SerialName("id")
     @PrimaryKey
     val id: Int,

@@ -20,8 +20,15 @@ class EpisodeRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Episode>> = flow {
-        val response = client.fetchEpisode(page).results
-        emit(response)
+        val episodes = episodeDao.getEpisodes(page)
+        if(episodes.isEmpty()){
+            val response = client.fetchEpisode(page).results
+            response.forEach { it.page = page }
+            episodeDao.insertEpisodeList(response)
+            emit(response)
+        }else {
+            emit(episodes)
+        }
     }.catch {
         onError("Api Response Error")
         emit(emptyList())

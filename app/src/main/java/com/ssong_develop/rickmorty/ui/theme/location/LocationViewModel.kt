@@ -21,7 +21,7 @@ class LocationViewModel @Inject constructor(
 
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val locationPage: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val locationPage: MutableStateFlow<Int> = MutableStateFlow(1)
 
     val loading = MutableStateFlow(true)
 

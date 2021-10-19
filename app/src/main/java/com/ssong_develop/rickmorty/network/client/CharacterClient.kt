@@ -6,5 +6,5 @@ import javax.inject.Inject
 class CharacterClient @Inject constructor(
     private val service: CharacterService
 ) {
-    suspend fun suspendFetchCharacters(page: Int) = service.fetchCharacters(page)
+    suspend fun fetchCharacters(page: Int) = service.fetchCharacters(page)
 }

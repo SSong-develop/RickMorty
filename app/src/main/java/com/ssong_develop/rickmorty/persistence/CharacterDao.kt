@@ -12,6 +12,6 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCharacterList(characters: List<Characters>)
 
-    @Query("SELECT * FROM characters_table")
-    fun getCharacters(): List<Characters>
+    @Query("SELECT * FROM characters_table WHERE page = :page_")
+    fun getCharacters(page_: Int): List<Characters>
 }

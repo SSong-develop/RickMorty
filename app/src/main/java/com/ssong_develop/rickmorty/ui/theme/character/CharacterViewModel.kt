@@ -18,7 +18,7 @@ class CharacterViewModel @Inject constructor(
 ) : ViewModel() {
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val characterPage: MutableStateFlow<Int> = MutableStateFlow(0)
+    private val characterPage: MutableStateFlow<Int> = MutableStateFlow(1)
 
     val loading = MutableStateFlow(true)
 

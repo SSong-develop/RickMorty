@@ -1,5 +1,6 @@
 package com.ssong_develop.rickmorty.repository
 
+import android.util.Log
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.network.client.CharacterClient
@@ -20,10 +21,15 @@ class CharacterRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Characters>> = flow {
-        val response = characterClient.suspendFetchCharacters(page).results
-/*            characterDao.insertCharacterList(response)
-            val characters = characterDao.getCharacters()*/
-        emit(response)
+        val characters = characterDao.getCharacters(page)
+        if(characters.isEmpty()){
+            val response = characterClient.fetchCharacters(page).results
+            response.forEach { it.page = page }
+            characterDao.insertCharacterList(response)
+            emit(response)
+        }else {
+            emit(characters)
+        }
     }.catch {
         onError("Api Response Error")
         emit(emptyList())

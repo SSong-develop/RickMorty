@@ -20,8 +20,15 @@ class LocationRepository @Inject constructor(
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Location>> = flow {
-        val response = client.fetchLocation(page).results
-        emit(response)
+        val locations = locationDao.getLocations(page)
+        if (locations.isEmpty()) {
+            val response = client.fetchLocation(page).results
+            response.forEach { it.page = page }
+            locationDao.insertLocationList(response)
+            emit(response)
+        } else {
+            emit(locations)
+        }
     }.catch {
         onError("Api Response Error")
         emit(emptyList())
