@@ -1,6 +1,5 @@
 package com.ssong_develop.rickmorty.repository
 
-import android.util.Log
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.network.client.CharacterClient
