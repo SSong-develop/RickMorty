@@ -19,4 +19,7 @@
     <color name="app_background_color">#010D0D</color>
     <color name="app_logo_background_color">#2B3240</color>
     <color name="app_logo_text_shadow_color">#E2F263</color>
+
+    <color name="white_12">#fafafa</color>
+    <color name="background800">#424242</color>
 </resources>

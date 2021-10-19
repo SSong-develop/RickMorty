@@ -10,35 +10,48 @@
             type="com.ssong_develop.rickmorty.entities.Characters" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="8dp">
+        android:layout_margin="6dp"
+        android:background="@color/background800"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white_12"
+        app:cardCornerRadius="14dp"
+        app:cardElevation="4dp">
 
-        <ImageView
-            android:id="@+id/iv_character_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            set_image_url="@{character.image}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_character_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{character.name}"
-            android:fontFamily="@font/rickandmorty"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            tools:text="Rick"
-            app:layout_constraintStart_toStartOf="@id/iv_character_image"
-            app:layout_constraintEnd_toEndOf="@id/iv_character_image"
-            app:layout_constraintTop_toBottomOf="@id/iv_character_image"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:paddingBottom="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_character_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                app:paletteCard="@{cardView}"
+                app:paletteImage="@{character.image}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_character_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{character.name}"
+                android:fontFamily="@font/rickandmorty"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                tools:text="Rick"
+                app:layout_constraintStart_toStartOf="@id/iv_character_image"
+                app:layout_constraintEnd_toEndOf="@id/iv_character_image"
+                app:layout_constraintTop_toBottomOf="@id/iv_character_image"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

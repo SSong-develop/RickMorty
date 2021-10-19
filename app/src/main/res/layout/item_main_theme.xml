@@ -10,21 +10,24 @@
             type="com.ssong_develop.rickmorty.entities.Theme" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="24dp">
+        android:layout_margin="6dp"
+        android:background="@color/background800"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardBackgroundColor="@color/white_12"
+        app:cardCornerRadius="24dp"
+        android:elevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_main"
                 android:layout_width="wrap_content"
                 android:layout_height="300dp"
-                android:src="@{theme.themeImageDrawable}"
                 android:layout_marginTop="24dp"
                 android:scaleType="centerInside"
                 app:layout_constraintBottom_toTopOf="@id/tv_main"
@@ -32,10 +35,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.5"
-                app:layout_constraintVertical_chainStyle="packed"
-                tools:src="@drawable/rick" />
+                app:layout_constraintVertical_chainStyle="packed"/>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,5 +55,5 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_main"
                 tools:text="Episode" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

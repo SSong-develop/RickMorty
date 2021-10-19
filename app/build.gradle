@@ -91,6 +91,9 @@ dependencies {
 
     // gson-converter
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+    // glidePalette
+    implementation "com.github.florent37:glidepalette:2.1.2"
 }
 dependencies {
     testImplementation 'junit:junit:4.13.2'

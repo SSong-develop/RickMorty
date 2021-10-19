@@ -1,7 +1,6 @@
 package com.ssong_develop.rickmorty.ui.main
 
 import android.app.Application
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.entities.Theme
@@ -14,12 +13,9 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val defaultThemeList = listOf(
-        Theme(ContextCompat.getDrawable(app, R.drawable.rick)!!, app.getString(R.string.character)),
-        Theme(
-            ContextCompat.getDrawable(app, R.drawable.location)!!,
-            app.getString(R.string.location)
-        ),
-        Theme(ContextCompat.getDrawable(app, R.drawable.episode)!!, app.getString(R.string.episode))
+        Theme(app.getString(R.string.character)),
+        Theme(app.getString(R.string.location)),
+        Theme(app.getString(R.string.episode))
     )
 
     fun getDefaultThemeList() = defaultThemeList
