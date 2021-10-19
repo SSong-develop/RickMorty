@@ -18,12 +18,11 @@ import javax.inject.Inject
 class LocationViewModel @Inject constructor(
     private val locationRepository: LocationRepository
 ) : ViewModel() {
-
     private val toastLiveData: MutableLiveData<String> = MutableLiveData()
 
-    private val locationPage: MutableStateFlow<Int> = MutableStateFlow(1)
-
     val loading = MutableStateFlow(true)
+
+    private val locationPage: MutableStateFlow<Int> = MutableStateFlow(1)
 
     @ExperimentalCoroutinesApi
     private val locationFlow: Flow<List<Location>> = locationPage.flatMapLatest { page ->
