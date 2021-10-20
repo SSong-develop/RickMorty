@@ -16,7 +16,7 @@ import javax.inject.Inject
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : ViewModel() {
-    private val toastLiveData: MutableLiveData<String> = MutableLiveData()
+    val toastMessage: MutableLiveData<String> = MutableLiveData()
 
     val loading = MutableStateFlow(true)
 
@@ -30,7 +30,7 @@ class CharacterViewModel @Inject constructor(
             onComplete = { loading.value = false },
             onError = {
                 loading.value = true
-                toastLiveData.postValue(it)
+                toastMessage.postValue(it)
             }
         )
     }
