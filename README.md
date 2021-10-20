@@ -1,6 +1,6 @@
 # RickMorty
 
-**RickMorty** is a simple app that information from [The Rick and Morty Api]("https://rickandmortyapi.com/") 
+**RickMorty** is a simple app that information from [The Rick and Morty Api]("https://rickandmortyapi.com/")
 
 ## Preview
 
