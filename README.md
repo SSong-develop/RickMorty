@@ -1,6 +1,6 @@
-# RickAndMorty
+# RickMorty
 
-RickMorty is a App based on Android application tech-stack and MVVM architecture
+**RickMorty** is a simple app that information from [The Rick and Morty Api]("https://rickandmortyapi.com/") 
 
 ## Preview
 
@@ -11,16 +11,16 @@ RickMorty is a App based on Android application tech-stack and MVVM architecture
 
 ## Tech Stack & Open-source libraries
 
-- Kotlin based, Coroutines + Flow 
-- Hilt 
-- JetPack
+- **Kotlin based,** **Coroutines** + **Flow** 
+- **Hilt** 
+- **JetPack**
   - Lifecycle
   - ViewModel
   - Room
-- Architecture
+- **Architecture**
   - MVVM
-- OpenSourceLibraries
+- **OpenSourceLibraries**
   - retrofit2 (with Serialization-converter) [Link](https://github.com/JakeWharton/retrofit2-kotlinx-serialization-converter)
-  - Glide [Link](https://github.com/bumptech/glide)
+  - Glide , GlidePalette [Link](https://github.com/bumptech/glide)
   - Gson for Room Converter
 
