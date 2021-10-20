@@ -6,4 +6,7 @@
     <string name="episode">Episode</string>
 
     <string name="transition_theme">transition_theme</string>
+
+    <string name="transition_image">transition_image</string>
+    <string name="transition_name">transition_name</string>
 </resources>

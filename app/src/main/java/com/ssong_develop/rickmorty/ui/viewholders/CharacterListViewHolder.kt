@@ -30,7 +30,7 @@ class CharacterListViewHolder(
     }
 
     override fun onClick(view: View) {
-        delegate.onItemClick(view, characters)
+        delegate.onItemClick(binding.ivCharacterImage, characters)
     }
 
     override fun onLongClick(v: View?): Boolean = false

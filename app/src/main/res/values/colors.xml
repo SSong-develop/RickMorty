@@ -11,6 +11,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
     <color name="white_12">#fafafa</color>
+    <color name="background">#2B292B</color>
     <color name="background800">#424242</color>
     <color name="app_bar_color">#a63641</color>
 </resources>

@@ -19,7 +19,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background800"
+        android:background="@color/background"
         tools:context=".ui.theme.episode.EpisodeActivity">
 
         <com.google.android.material.appbar.AppBarLayout
