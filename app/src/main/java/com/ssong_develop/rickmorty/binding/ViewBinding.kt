@@ -22,15 +22,6 @@ object ViewBinding {
         message?.let { view.context.toast(it) }
     }
 
-
-    @JvmStatic
-    @BindingAdapter("set_image_url")
-    fun setImageUrl(imageView: AppCompatImageView, url: String) {
-        Glide.with(imageView)
-            .load(url)
-            .into(imageView)
-    }
-
     @JvmStatic
     @BindingAdapter("bind_dot_color")
     fun bindDotColor(view : TextView , status : String){
