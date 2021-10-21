@@ -9,4 +9,6 @@
 
     <string name="transition_image">transition_image</string>
     <string name="transition_name">transition_name</string>
+
+    <string name="bullet">●</string>
 </resources>
