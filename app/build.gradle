@@ -94,6 +94,9 @@ dependencies {
 
     // glidePalette
     implementation "com.github.florent37:glidepalette:2.1.2"
+
+    // swipeRefreshLayout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }
 dependencies {
     testImplementation 'junit:junit:4.13.2'

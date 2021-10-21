@@ -45,4 +45,8 @@ class CharacterViewModel @Inject constructor(
     fun morePage() {
         characterPage.value += 1
     }
+
+    fun refreshPage() {
+        characterPage.value = 1
+    }
 }

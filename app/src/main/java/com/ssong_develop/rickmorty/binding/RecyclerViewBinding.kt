@@ -2,6 +2,7 @@ package com.ssong_develop.rickmorty.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.character.CharacterViewModel
@@ -23,6 +24,15 @@ object RecyclerViewBinding {
     fun RecyclerView.setCharacterItems(list: List<Characters>?) {
         (adapter as? CharacterListAdapter)?.run {
             submitList(list)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("refresh")
+    fun refresh(view : SwipeRefreshLayout , viewModel : CharacterViewModel){
+        view.setOnRefreshListener {
+            viewModel.refreshPage()
+            view.isRefreshing = false
         }
     }
 }

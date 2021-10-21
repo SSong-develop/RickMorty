@@ -50,22 +50,29 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_character"
-            paginationCharacterList="@{vm}"
-            submitList="@{vm.characterStateFlow}"
-            toast="@{vm.toastMessage}"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:adapter="@{adapter}"
-            android:scrollbarStyle="outsideOverlay"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            refresh="@{vm}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_character"
-            app:spanCount="2"
-            tools:listitem="@layout/item_character" />
+            app:layout_constraintTop_toBottomOf="@id/appbar_character">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_character"
+                paginationCharacterList="@{vm}"
+                submitList="@{vm.characterStateFlow}"
+                toast="@{vm.toastMessage}"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:adapter="@{adapter}"
+                android:scrollbarStyle="outsideOverlay"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_character" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/pb_character"
@@ -73,9 +80,9 @@
             android:layout_height="wrap_content"
             android:indeterminateTint="@color/app_bar_color"
             android:visibility="@{vm.loading ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@id/rv_character"
+            app:layout_constraintBottom_toBottomOf="@id/swipe_refresh"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/rv_character" />
+            app:layout_constraintTop_toTopOf="@id/swipe_refresh" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
