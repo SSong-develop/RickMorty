@@ -1,13 +1,17 @@
 package com.ssong_develop.rickmorty.binding
 
+import android.graphics.Color
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
+import com.ssong_develop.rickmorty.entities.Status
 import com.ssong_develop.rickmorty.extensions.toast
 
 object ViewBinding {
@@ -25,6 +29,12 @@ object ViewBinding {
         Glide.with(imageView)
             .load(url)
             .into(imageView)
+    }
+
+    @JvmStatic
+    @BindingAdapter("bind_dot_color")
+    fun bindDotColor(view : TextView , status : String){
+        view.setTextColor(ContextCompat.getColor(view.context, Status.color(status)!!))
     }
 
     @JvmStatic

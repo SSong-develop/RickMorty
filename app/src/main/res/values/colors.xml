@@ -14,4 +14,6 @@
     <color name="background">#2B292B</color>
     <color name="background800">#424242</color>
     <color name="app_bar_color">#a63641</color>
+    <color name="alive">#008000</color>
+    <color name="dead">#ff0000</color>
 </resources>

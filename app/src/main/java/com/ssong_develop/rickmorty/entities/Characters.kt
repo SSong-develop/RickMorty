@@ -1,9 +1,11 @@
 package com.ssong_develop.rickmorty.entities
 
 import android.os.Parcelable
+import androidx.annotation.ColorRes
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ssong_develop.rickmorty.R
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -12,7 +14,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Entity(tableName = "characters_table")
 data class Characters(
-    var page : Int = 0,
+    var page: Int = 0,
     @SerialName("id")
     @PrimaryKey
     val id: Int,
@@ -59,4 +61,12 @@ data class Characters(
         @SerialName("url")
         val locationUrl: String
     ) : Parcelable
+}
+
+enum class Status(val status: String, @ColorRes val colorString: Int) {
+    ALIVE("Alive", R.color.alive), DEAD("Dead", R.color.dead), UNKNOWN("unknown", R.color.gray);
+
+    companion object {
+        fun color(status: String) : Int? = values().find { it.status == status }?.colorString
+    }
 }
