@@ -31,6 +31,7 @@ data class Characters(
     @SerialName("origin")
     @Embedded
     var origin: Origin? = null,
+    /** Last Known location */
     @SerialName("location")
     @Embedded
     var location: Location? = null,
