@@ -1,23 +1,20 @@
 package com.ssong_develop.rickmorty.ui.detail
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.entities.getEpisodeNumber
+import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.entities.getEpisodeNumbers
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+// TODO : SharedFlow를 어떻게 써야할 지 공부좀 해야할 거 같음
+// TODO : 내가 궁금했던 거에 대한 답변을 찾을 수 있을 거 같아요!
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
@@ -30,9 +27,11 @@ class CharacterDetailViewModel @Inject constructor(
 
     val character = MutableStateFlow(Characters())
 
-    val characterEpisodesFlow = character.flatMapLatest { character ->
+    private val characterSharedFlow: MutableSharedFlow<Characters> = MutableSharedFlow(replay = 2)
+
+    private val characterEpisodesFlow = characterSharedFlow.flatMapLatest { character ->
         repository.loadEpisodes(
-            character.episode[0].getEpisodeNumber(),
+            character.episode.getEpisodeNumbers(),
             onStart = { loading.value = true },
             onComplete = { loading.value = false },
             onError = {
@@ -42,7 +41,13 @@ class CharacterDetailViewModel @Inject constructor(
         )
     }
 
+    val characterEpisodeStateFlow = characterEpisodesFlow.stateIn(
+        viewModelScope, WhileSubscribed(5000),
+        emptyList()
+    )
+
     fun postCharacter(character_: Characters) {
+        characterSharedFlow.tryEmit(character_)
         character.value = character_
     }
 }

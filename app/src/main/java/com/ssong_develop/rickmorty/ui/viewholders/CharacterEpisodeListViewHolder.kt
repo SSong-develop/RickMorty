@@ -24,7 +24,7 @@ class CharacterEpisodeListViewHolder(
     fun bind(_episode : Episode){
         episode = _episode
         binding.apply {
-            episode = episode
+            episode = _episode
             executePendingBindings()
         }
     }

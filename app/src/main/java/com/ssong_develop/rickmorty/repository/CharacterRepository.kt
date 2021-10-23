@@ -37,15 +37,22 @@ class CharacterRepository @Inject constructor(
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
     fun loadEpisodes(
-        episodeNumber: Int,
+        episodeNumbers: List<Int>,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit
-    ): Flow<Episode> = flow {
-        val response = characterClient.fetchEpisodesCharacters(episodeNumber)
-        emit(response)
+    ): Flow<List<Episode>> = flow {
+        try {
+            val response = mutableListOf<Episode>()
+            episodeNumbers.forEach {
+                response.add(characterClient.fetchEpisodesCharacters(it))
+            }
+            emit(response)
+        } catch (exception: Exception) {
+            Log.d("fuck","$exception")
+        }
     }.catch {
         onError("Api Response Error")
-        emit(Episode())
+        emit(mutableListOf())
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 }
