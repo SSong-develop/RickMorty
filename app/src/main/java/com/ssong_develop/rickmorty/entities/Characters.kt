@@ -15,19 +15,26 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "characters_table")
 data class Characters(
     var page: Int = 0,
+    /** The id of the character */
     @SerialName("id")
     @PrimaryKey
-    val id: Int,
+    val id: Int = -1,
+    /** The name of the character */
     @SerialName("name")
-    val name: String,
+    val name: String = "",
+    /** The status of the character('Alive','Dead','unknown') */
     @SerialName("status")
-    val status: String,
+    val status: String = "",
+    /** The species of the character */
     @SerialName("species")
-    val species: String,
+    val species: String = "",
+    /** The type or subspecies of the character */
     @SerialName("type")
-    val type: String,
+    val type: String = "",
+    /** The gender of the character */
     @SerialName("gender")
-    val gender: String,
+    val gender: String = "",
+    /** Name and link to the character's origin location */
     @SerialName("origin")
     @Embedded
     var origin: Origin? = null,
@@ -35,14 +42,18 @@ data class Characters(
     @SerialName("location")
     @Embedded
     var location: Location? = null,
+    /** Link to the character's image. */
     @SerialName("image")
-    val image: String,
+    val image: String = "",
+    /** List of episodes in which this character appeared*/
     @SerialName("episode")
-    val episode: List<String>,
+    val episode: List<String> = emptyList(),
+    /** Link to the character's own URL endpoint */
     @SerialName("url")
-    val url: String,
+    val url: String = "",
+    /** Time at which the character was created in the database */
     @SerialName("created")
-    val created: String
+    val created: String = ""
 ) : Parcelable {
 
     @Serializable
@@ -68,6 +79,10 @@ enum class Status(val status: String, @ColorRes val colorString: Int) {
     ALIVE("Alive", R.color.alive), DEAD("Dead", R.color.dead), UNKNOWN("unknown", R.color.gray);
 
     companion object {
-        fun color(status: String) : Int? = values().find { it.status == status }?.colorString
+        fun color(status: String): Int? = values().find { it.status == status }?.colorString
     }
 }
+
+fun String.getEpisodeNumber() = this[this.lastIndex].digitToInt()
+
+fun List<String>.getEpisodeNumbers(): List<Int> = map { it.getEpisodeNumber() }.distinct()
