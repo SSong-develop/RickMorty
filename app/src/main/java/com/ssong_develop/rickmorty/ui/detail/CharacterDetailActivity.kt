@@ -10,22 +10,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterDetailBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.entities.getEpisodeNumbers
 import com.ssong_develop.rickmorty.extensions.toast
-import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeListAdapter
-import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeListViewHolder
-import com.ssong_develop.rickmorty.utils.observeOnLifecycle
+import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
+import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeListViewHolder.Delegate {
+class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.Delegate {
 
     private val binding: ActivityCharacterDetailBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_character_detail)
@@ -35,18 +36,16 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeListViewHol
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.postCharacter(intent.getParcelableExtra(CHARACTER)!!)
         with(binding) {
-            vm = viewModel
+            lifecycleOwner = this@CharacterDetailActivity
             activity = this@CharacterDetailActivity
+            vm = viewModel.apply { postCharacter(intent.getParcelableExtra(CHARACTER)!!) }
+            episodeAdapter = CharacterEpisodeAdapter(this@CharacterDetailActivity)
         }
+    }
 
-        binding.episodeList.apply {
-            adapter = CharacterEpisodeListAdapter(this@CharacterDetailActivity)
-        }
-        viewModel.toast.observe(this) {
-            toast(it)
-        }
+    override fun onItemClick(view: View, episode: Episode) {
+        Timber.d("What todo??")
     }
 
     companion object {
@@ -68,9 +67,5 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeListViewHol
                 }
             }
         }
-    }
-
-    override fun onItemClick(view: View, episode: Episode) {
-        toast("hello")
     }
 }

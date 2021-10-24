@@ -13,41 +13,43 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import javax.inject.Inject
 
-// TODO : SharedFlow를 어떻게 써야할 지 공부좀 해야할 거 같음
-// TODO : 내가 궁금했던 거에 대한 답변을 찾을 수 있을 거 같아요!
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val repository: CharacterRepository
 ) : ViewModel() {
-
     val toast = MutableLiveData<String>()
 
     val loading = MutableStateFlow(true)
 
     val character = MutableStateFlow(Characters())
 
-    private val characterSharedFlow: MutableSharedFlow<Characters> = MutableSharedFlow(replay = 2)
+    private val characterEpisodeSharedFlow: MutableSharedFlow<List<String>> =
+        MutableSharedFlow(replay = 1)
 
-    private val characterEpisodesFlow = characterSharedFlow.flatMapLatest { character ->
-        repository.loadEpisodes(
-            character.episode.getEpisodeNumbers(),
-            onStart = { loading.value = true },
-            onComplete = { loading.value = false },
-            onError = {
-                toast.postValue(it)
-                loading.value = true
+    private val characterEpisodesFlow: Flow<List<Episode>> =
+        characterEpisodeSharedFlow.flatMapLatest { episode ->
+            episode.run {
+                repository.loadEpisodes(
+                    episode.getEpisodeNumbers(),
+                    onStart = { loading.value = true },
+                    onComplete = { loading.value = false },
+                    onError = {
+                        loading.value = true
+                        toast.postValue(it)
+                    }
+                )
             }
-        )
-    }
+        }
 
-    val characterEpisodeStateFlow = characterEpisodesFlow.stateIn(
-        viewModelScope, WhileSubscribed(5000),
-        emptyList()
+    val characterEpisodeStateFlow: StateFlow<List<Episode>> = characterEpisodesFlow.stateIn(
+        scope = viewModelScope,
+        started = WhileSubscribed(5000),
+        initialValue = emptyList()
     )
 
     fun postCharacter(character_: Characters) {
-        characterSharedFlow.tryEmit(character_)
+        characterEpisodeSharedFlow.tryEmit(character_.episode)
         character.value = character_
     }
 }

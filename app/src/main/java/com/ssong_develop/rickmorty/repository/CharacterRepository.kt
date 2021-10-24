@@ -1,6 +1,6 @@
 package com.ssong_develop.rickmorty.repository
 
-import android.util.Log
+import androidx.annotation.WorkerThread
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
@@ -16,6 +16,7 @@ class CharacterRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
+    @WorkerThread
     fun loadCharacters(
         page: Int,
         onStart: () -> Unit,
@@ -36,21 +37,19 @@ class CharacterRepository @Inject constructor(
         emit(emptyList())
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
 
+    @WorkerThread
     fun loadEpisodes(
         episodeNumbers: List<Int>,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Episode>> = flow {
-        try {
-            val response = mutableListOf<Episode>()
-            episodeNumbers.forEach {
-                response.add(characterClient.fetchEpisodesCharacters(it))
-            }
-            emit(response)
-        } catch (exception: Exception) {
-            Log.d("fuck","$exception")
+        val response = mutableListOf<Episode>()
+        episodeNumbers.filter { it > 0 }.forEach {
+            val data = characterClient.fetchEpisodesCharacters(it)
+            response.add(data)
         }
+        emit(response)
     }.catch {
         onError("Api Response Error")
         emit(mutableListOf())

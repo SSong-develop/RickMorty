@@ -5,12 +5,24 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeListAdapter
+import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.character.CharacterViewModel
 import com.ssong_develop.rickmorty.utils.RecyclerViewPaginator
 
 object RecyclerViewBinding {
+
+    @JvmStatic
+    @BindingAdapter("episodeAdapter")
+    fun bindEpisodeAdapter(view : RecyclerView, adapter : CharacterEpisodeAdapter){
+        view.adapter = adapter
+    }
+
+    @JvmStatic
+    @BindingAdapter("submitEpisodes")
+    fun bindEpisodes(view : RecyclerView , items : List<Episode>){
+        (view.adapter as? CharacterEpisodeAdapter)?.submitEpisodes(items)
+    }
 
     @JvmStatic
     @BindingAdapter("paginationCharacterList")
@@ -35,14 +47,6 @@ object RecyclerViewBinding {
         view.setOnRefreshListener {
             viewModel.refreshPage()
             view.isRefreshing = false
-        }
-    }
-
-    @JvmStatic
-    @BindingAdapter("submitEpisode")
-    fun RecyclerView.setCharacterEpisodeItem(list: List<Episode>?) {
-        (adapter as? CharacterEpisodeListAdapter)?.run {
-            submitList(list)
         }
     }
 }

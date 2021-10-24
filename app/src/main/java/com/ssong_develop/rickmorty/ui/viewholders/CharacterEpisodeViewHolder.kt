@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.rickmorty.databinding.ItemCharacterEpisodeBinding
 import com.ssong_develop.rickmorty.entities.Episode
 
-class CharacterEpisodeListViewHolder(
-    private val binding : ItemCharacterEpisodeBinding,
+class CharacterEpisodeViewHolder(
+    val binding : ItemCharacterEpisodeBinding,
     private val delegate : Delegate
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
