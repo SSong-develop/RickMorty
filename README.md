@@ -5,9 +5,10 @@
 ## Preview
 
 <div>
-<img src="https://github.com/SSong-develop/RickAndMorty/blob/stateflow/art/preview1.gif" width="400" height="650"/>
-<img src="https://github.com/SSong-develop/RickAndMorty/blob/stateflow/art/preview2.gif" width="400" height="650"/>
+<img src="https://github.com/SSong-develop/RickAndMorty/blob/stateflow/art/preview1.gif" width="300" height="650"/>
+<img src="https://github.com/SSong-develop/RickAndMorty/blob/stateflow/art/preview2.gif" width="300" height="650"/>
 </div>
+
 
 
 
