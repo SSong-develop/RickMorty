@@ -1,6 +1,5 @@
 package com.ssong_develop.rickmorty.binding
 
-import android.graphics.Color
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +23,7 @@ object ViewBinding {
 
     @JvmStatic
     @BindingAdapter("bind_dot_color")
-    fun bindDotColor(view : TextView , status : String){
+    fun bindDotColor(view: TextView, status: String) {
         view.setTextColor(ContextCompat.getColor(view.context, Status.color(status)!!))
     }
 
