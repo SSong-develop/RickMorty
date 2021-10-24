@@ -40,13 +40,4 @@ object RecyclerViewBinding {
             submitList(list)
         }
     }
-
-    @JvmStatic
-    @BindingAdapter("refresh")
-    fun refresh(view: SwipeRefreshLayout, viewModel: CharacterViewModel) {
-        view.setOnRefreshListener {
-            viewModel.refreshPage()
-            view.isRefreshing = false
-        }
-    }
 }
