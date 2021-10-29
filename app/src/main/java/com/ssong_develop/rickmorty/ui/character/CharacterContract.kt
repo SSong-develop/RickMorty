@@ -2,18 +2,29 @@ package com.ssong_develop.rickmorty.ui.character
 
 import com.ssong_develop.rickmorty.network.client.Characters
 
-// TODO : divide business logics , and appropriate function names
 interface CharacterContract {
 
     interface View {
-        fun showCharacters(list : List<Characters>)
+
+        fun showCharacters(list: List<Characters>)
+
+        fun showLoading()
+
+        fun hideLoading()
+
     }
 
     interface Presenter {
 
-        var currentPage : Int
+        var currentPage: Int
 
         fun loadCharacters()
+
+        fun morePage()
+
+        fun resetPage()
+
+        fun setPage(page: Int)
 
     }
 }

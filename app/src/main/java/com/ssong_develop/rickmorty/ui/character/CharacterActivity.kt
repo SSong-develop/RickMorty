@@ -8,45 +8,74 @@ import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.network.client.Characters
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
+import com.ssong_develop.rickmorty.utils.RecyclerViewPaginator
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate , CharacterContract.View {
+class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate,
+    CharacterContract.View {
 
-    private lateinit var binding: ActivityCharacterBinding
+    private var binding: ActivityCharacterBinding? = null
 
-    private var adapter : CharacterListAdapter? = null
+    private var characterListAdapter: CharacterListAdapter? = null
 
     @Inject
-    lateinit var presenter : CharacterPresenter
+    lateinit var presenter: CharacterPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCharacterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
 
+        savedInstanceState?.let {
+            presenter.setPage(it.getInt(LAST_PAGE))
+        }
         presenter.loadCharacters()
         initializeView()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState.apply {
-            putInt(LAST_PAGE,presenter.currentPage)
+            putInt(LAST_PAGE, presenter.currentPage)
         })
-    }
-
-    private fun initializeView() {
-        adapter = CharacterListAdapter(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        adapter = null
+        characterListAdapter = null
+        binding = null
+    }
+
+    private fun initializeView() {
+        characterListAdapter = CharacterListAdapter(this)
+        binding?.rvCharacter?.let {
+            it.adapter = characterListAdapter
+            RecyclerViewPaginator(
+                it,
+                loadMore = { presenter.morePage() }
+            )
+        }
+        binding?.swipeRefresh?.let {
+            it.setOnRefreshListener {
+                presenter.resetPage()
+                it.isRefreshing = false
+            }
+        }
     }
 
     override fun showCharacters(list: List<Characters>) {
+        showLoading()
+        characterListAdapter?.submitList(list)
+        hideLoading()
+    }
 
+    override fun showLoading() {
+        binding?.pbCharacter?.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        binding?.pbCharacter?.visibility = View.GONE
     }
 
     override fun onItemClick(view: View, characters: Characters) {

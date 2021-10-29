@@ -2,7 +2,10 @@ package com.ssong_develop.rickmorty.ui.character
 
 import com.ssong_develop.rickmorty.di.MainDispatcher
 import com.ssong_develop.rickmorty.repository.CharacterRepository
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharacterPresenter @Inject constructor(
@@ -11,7 +14,7 @@ class CharacterPresenter @Inject constructor(
     private val view: CharacterContract.View
 ) : CharacterContract.Presenter {
 
-    override var currentPage: Int = 0
+    override var currentPage: Int = 1
 
     private var job: Job? = null
 
@@ -21,7 +24,7 @@ class CharacterPresenter @Inject constructor(
         job = Job()
         val uiScope = CoroutineScope(mainDispatcher + job!!)
         uiScope.launch {
-            val characters = repository.loadCharacters(0,
+            val characters = repository.loadCharacters(currentPage,
                 onStart = { loading = true },
                 onComplete = { loading = false }
             )
@@ -29,4 +32,18 @@ class CharacterPresenter @Inject constructor(
         }
     }
 
+    override fun morePage() {
+        currentPage++
+        loadCharacters()
+    }
+
+    override fun resetPage() {
+        currentPage = 1
+        loadCharacters()
+    }
+
+    override fun setPage(page: Int) {
+        currentPage = page
+        loadCharacters()
+    }
 }
