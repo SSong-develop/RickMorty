@@ -1,6 +1,6 @@
 package com.ssong_develop.rickmorty.ui.character
 
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 
 interface CharacterContract {
 

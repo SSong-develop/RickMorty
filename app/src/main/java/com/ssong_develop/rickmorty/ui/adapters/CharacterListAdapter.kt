@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 
 private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {

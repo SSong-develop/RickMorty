@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.ssong_develop.rickmorty.converter.CharacterLocationListConverter
 import com.ssong_develop.rickmorty.converter.OriginListConverter
 import com.ssong_develop.rickmorty.converter.StringListConverter
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 
 @Database(
     entities = [Characters::class],

@@ -2,7 +2,7 @@ package com.ssong_develop.rickmorty.repository
 
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.network.client.CharacterClient
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.persistence.CharacterDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

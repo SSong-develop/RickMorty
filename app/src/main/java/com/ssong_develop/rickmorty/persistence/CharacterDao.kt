@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 
 @Dao
 interface CharacterDao {

@@ -3,7 +3,7 @@ package com.ssong_develop.rickmorty.converter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 
 class OriginListConverter {
 

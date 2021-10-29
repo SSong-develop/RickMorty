@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.network.client
+package com.ssong_develop.rickmorty.entities
 
 import android.os.Parcelable
 import androidx.annotation.ColorRes

@@ -41,7 +41,7 @@
             android:maxLines="2"
             android:transitionName="@string/transition_name"
             android:textColor="@color/white_12"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:elevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"

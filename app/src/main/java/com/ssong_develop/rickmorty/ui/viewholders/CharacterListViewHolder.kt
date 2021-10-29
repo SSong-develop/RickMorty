@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
-import com.ssong_develop.rickmorty.network.client.Characters
+import com.ssong_develop.rickmorty.entities.Characters
 
 class CharacterListViewHolder(
     private val binding: ItemCharacterBinding,
