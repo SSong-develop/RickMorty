@@ -3,25 +3,21 @@ package com.ssong_develop.rickmorty.ui.detail
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.lifecycleScope
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterDetailBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import timber.log.Timber
 
 @ExperimentalCoroutinesApi
