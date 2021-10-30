@@ -11,15 +11,19 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterDetailBinding
 import com.ssong_develop.rickmorty.entities.Characters
+import javax.inject.Inject
 
-class CharacterDetailActivity : AppCompatActivity() {
+class CharacterDetailActivity : AppCompatActivity() , CharacterDetailContract.CharacterDetailView {
 
-    private lateinit var binding: ActivityCharacterDetailBinding
+    private var binding: ActivityCharacterDetailBinding? = null
+
+    @Inject
+    lateinit var presenter : CharacterDetailPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCharacterDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(binding?.root)
     }
 
     companion object {
@@ -41,5 +45,13 @@ class CharacterDetailActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun showEpisodeLoading() {
+        binding?.pbEpisodeLoading?.visibility = View.VISIBLE
+    }
+
+    override fun hideEpisodeLoading() {
+        binding?.pbEpisodeLoading?.visibility = View.GONE
     }
 }

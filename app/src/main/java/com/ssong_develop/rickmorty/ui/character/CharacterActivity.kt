@@ -79,11 +79,12 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate,
     }
 
     override fun showCharacterDetail(itemView: View, character: Characters) {
-        CharacterDetailActivity.startActivity(this,itemView,character)
+        CharacterDetailActivity.startActivity(this, itemView, character)
     }
 
+
     override fun onItemClick(view: View, characters: Characters) {
-        presenter.openCharacterDetail(view,characters)
+        presenter.openCharacterDetail(view, characters)
     }
 
     companion object {
