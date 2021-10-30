@@ -45,7 +45,7 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.
     }
 
     override fun onItemClick(view: View, episode: Episode) {
-        Timber.d("What todo??")
+        Timber.d("todo!")
     }
 
     companion object {
