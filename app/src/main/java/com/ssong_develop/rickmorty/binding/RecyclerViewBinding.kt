@@ -2,7 +2,6 @@ package com.ssong_develop.rickmorty.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
@@ -34,9 +33,15 @@ object RecyclerViewBinding {
     }
 
     @JvmStatic
-    @BindingAdapter("submitList")
-    fun RecyclerView.setCharacterItems(list: List<Characters>?) {
-        (adapter as? CharacterListAdapter)?.run {
+    @BindingAdapter("charactersAdapter")
+    fun bindCharacterAdapter(view : RecyclerView, adapter : CharacterListAdapter){
+        view.adapter = adapter
+    }
+
+    @JvmStatic
+    @BindingAdapter("submitCharacters")
+    fun bindCharacters(view : RecyclerView, list: List<Characters>) {
+        (view.adapter as? CharacterListAdapter)?.run {
             submitList(list)
         }
     }

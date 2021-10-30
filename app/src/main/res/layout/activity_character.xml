@@ -52,9 +52,9 @@
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
+            refresh="@{vm}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            refresh="@{vm}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_character"
                 paginationCharacterList="@{vm}"
-                submitList="@{vm.characterStateFlow}"
+                submitCharacters="@{vm.characterStateFlow}"
                 toast="@{vm.toastMessage}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

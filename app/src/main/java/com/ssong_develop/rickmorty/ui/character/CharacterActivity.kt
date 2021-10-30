@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.extensions.toast
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
@@ -35,6 +34,6 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     }
 
     override fun onItemClick(view: View, characters: Characters) {
-        CharacterDetailActivity.startActivity(this,view,characters)
+        CharacterDetailActivity.startActivity(this, view, characters)
     }
 }
