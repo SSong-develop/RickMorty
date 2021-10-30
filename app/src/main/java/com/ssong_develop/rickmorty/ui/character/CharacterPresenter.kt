@@ -1,6 +1,8 @@
 package com.ssong_develop.rickmorty.ui.character
 
+import android.view.View
 import com.ssong_develop.rickmorty.di.MainDispatcher
+import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -11,8 +13,8 @@ import javax.inject.Inject
 class CharacterPresenter @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
     private val repository: CharacterRepository,
-    private val view: CharacterContract.View
-) : CharacterContract.Presenter {
+    private val view: CharacterContract.CharactersView
+) : CharacterContract.CharactersPresenter {
 
     override var currentPage: Int = 1
 
@@ -46,4 +48,9 @@ class CharacterPresenter @Inject constructor(
         currentPage = page
         loadCharacters()
     }
+
+    override fun openCharacterDetail(itemView: View, character: Characters) {
+        view.showCharacterDetail(itemView,character)
+    }
+
 }

@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate,
-    CharacterContract.View {
+    CharacterContract.CharactersView {
 
     private var binding: ActivityCharacterBinding? = null
 
@@ -78,8 +78,12 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate,
         binding?.pbCharacter?.visibility = View.GONE
     }
 
+    override fun showCharacterDetail(itemView: View, character: Characters) {
+        CharacterDetailActivity.startActivity(this,itemView,character)
+    }
+
     override fun onItemClick(view: View, characters: Characters) {
-        CharacterDetailActivity.startActivity(this, view, characters)
+        presenter.openCharacterDetail(view,characters)
     }
 
     companion object {

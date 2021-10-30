@@ -1,10 +1,11 @@
 package com.ssong_develop.rickmorty.ui.character
 
+import android.view.View
 import com.ssong_develop.rickmorty.entities.Characters
 
 interface CharacterContract {
 
-    interface View {
+    interface CharactersView {
 
         fun showCharacters(list: List<Characters>)
 
@@ -12,9 +13,11 @@ interface CharacterContract {
 
         fun hideLoading()
 
+        fun showCharacterDetail(itemView : View, character : Characters)
+
     }
 
-    interface Presenter {
+    interface CharactersPresenter {
 
         var currentPage: Int
 
@@ -25,6 +28,8 @@ interface CharacterContract {
         fun resetPage()
 
         fun setPage(page: Int)
+
+        fun openCharacterDetail(itemView : View, character : Characters)
 
     }
 }

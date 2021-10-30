@@ -24,7 +24,7 @@ object NetworkModule {
     @ExperimentalSerializationApi
     @Provides
     @Singleton
-    fun provideRetrofit() : Retrofit {
+    fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
@@ -33,9 +33,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCharacterService(retrofit : Retrofit) : CharacterService = retrofit.create(CharacterService::class.java)
+    fun provideCharacterService(retrofit: Retrofit): CharacterService =
+        retrofit.create(CharacterService::class.java)
 
     @Provides
     @Singleton
-    fun provideCharacterClient(service : CharacterService) : CharacterClient = CharacterClient(service)
+    fun provideCharacterClient(service: CharacterService): CharacterClient =
+        CharacterClient(service)
 }

@@ -12,8 +12,8 @@ import dagger.hilt.android.components.ActivityComponent
 @Module
 abstract class PresentationModule {
     @Binds
-    abstract fun bindCharacterActivity(activity : CharacterActivity) : CharacterContract.View
+    abstract fun bindCharacterActivity(activity : CharacterActivity) : CharacterContract.CharactersView
 
     @Binds
-    abstract fun bindCharacterPresenter(presenter : CharacterPresenter) : CharacterContract.Presenter
+    abstract fun bindCharacterPresenter(presenter : CharacterPresenter) : CharacterContract.CharactersPresenter
 }
