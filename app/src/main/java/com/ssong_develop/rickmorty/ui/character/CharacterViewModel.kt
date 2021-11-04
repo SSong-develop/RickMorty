@@ -1,5 +1,6 @@
 package com.ssong_develop.rickmorty.ui.character
 
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
-) : ViewModel() {
+) : ViewModel(), LifecycleObserver {
+
     val toastMessage: MutableLiveData<String> = MutableLiveData()
 
     val loading = MutableStateFlow(true)
