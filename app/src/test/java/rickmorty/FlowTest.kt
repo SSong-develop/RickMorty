@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty
+package com.ssong_develop.rickmorty.rickmorty
 
 import app.cash.turbine.test
 import junit.framework.Assert.assertEquals

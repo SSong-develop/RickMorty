@@ -43,6 +43,10 @@ android {
         viewBinding = true
         dataBinding = true
     }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
 }
 
 dependencies {
@@ -103,6 +107,7 @@ dependencies {
 
 }
 dependencies {
+
     testImplementation "junit:junit:$version_Junit"
     testImplementation "app.cash.turbine:turbine:$version_turbine"
     testImplementation "androidx.test:core:$version_androidxTest"

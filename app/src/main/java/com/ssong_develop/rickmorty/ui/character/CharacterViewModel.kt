@@ -1,5 +1,6 @@
 package com.ssong_develop.rickmorty.ui.character
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,9 @@ import javax.inject.Inject
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : ViewModel(), LifecycleObserver {
+
+    @VisibleForTesting
+    val testValue = 1
 
     val toastMessage: MutableLiveData<String> = MutableLiveData()
 

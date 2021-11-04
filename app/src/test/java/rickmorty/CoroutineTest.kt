@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty
+package com.ssong_develop.rickmorty.rickmorty
 
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.*
@@ -12,7 +12,6 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class CoroutineTest {
 
-    // Thread.currentThread().name will be UI thread but, name is changed like UI thread [ @Coroutine#2]
     private val mainThreadSurrogate = newSingleThreadContext("UI thread")
 
     @Before
