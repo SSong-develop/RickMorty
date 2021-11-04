@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.entities.getEpisodeNumbers
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,7 +30,7 @@ class CharacterDetailViewModel @Inject constructor(
         characterEpisodeSharedFlow.flatMapLatest { episode ->
             episode.run {
                 repository.loadEpisodes(
-                    episode.getEpisodeNumbers(),
+                    this,
                     onStart = { loading.value = true },
                     onComplete = { loading.value = false },
                     onError = {

@@ -1,6 +1,7 @@
 package com.ssong_develop.rickmorty.ui.character
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity

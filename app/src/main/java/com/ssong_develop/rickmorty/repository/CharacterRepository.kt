@@ -39,13 +39,13 @@ class CharacterRepository @Inject constructor(
 
     @WorkerThread
     fun loadEpisodes(
-        episodeNumbers: List<Int>,
+        episodeUrls: List<String>,
         onStart: () -> Unit,
         onComplete: () -> Unit,
         onError: (String) -> Unit
     ): Flow<List<Episode>> = flow {
         val response = mutableListOf<Episode>()
-        episodeNumbers.filter { it > 0 }.forEach {
+        episodeUrls.forEach {
             val data = characterClient.fetchEpisodesCharacters(it)
             response.add(data)
         }

@@ -1,6 +1,7 @@
 package com.ssong_develop.rickmorty.entities
 
 import android.os.Parcelable
+import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -82,7 +83,3 @@ enum class Status(val status: String, @ColorRes val colorString: Int) {
         fun color(status: String): Int? = values().find { it.status == status }?.colorString
     }
 }
-
-fun String.getEpisodeNumber() = this[this.lastIndex].digitToInt()
-
-fun List<String>.getEpisodeNumbers(): List<Int> = map { it.getEpisodeNumber() }.distinct()
