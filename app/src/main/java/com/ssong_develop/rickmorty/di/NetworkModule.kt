@@ -13,6 +13,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -24,6 +26,14 @@ object NetworkModule {
         Json { coerceInputValues = true }
     }
 
+    private val loggingInterceptor
+        get() = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+
+    private fun provideOkHttpClient() =
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+
     @ExperimentalSerializationApi
     @Provides
     @Singleton
@@ -31,6 +41,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
+            .client(provideOkHttpClient())
             .build()
     }
 
