@@ -19,6 +19,7 @@ class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
 ) : ViewModel(), LifecycleObserver {
 
+    // FIXME : Test value for initialize instance
     @VisibleForTesting
     val testValue = 1
 

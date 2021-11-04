@@ -1,5 +1,6 @@
 package com.ssong_develop.rickmorty.repository
 
+import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Characters
@@ -15,6 +16,10 @@ class CharacterRepository @Inject constructor(
     private val characterDao: CharacterDao,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
+
+    // FIXME : Test value for initialize instance
+    @VisibleForTesting
+    val testValue = 1
 
     @WorkerThread
     fun loadCharacters(
