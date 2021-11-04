@@ -1,9 +1,9 @@
 package com.ssong_develop.rickmorty.rickmorty
 
 import app.cash.turbine.test
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import kotlin.time.ExperimentalTime
 

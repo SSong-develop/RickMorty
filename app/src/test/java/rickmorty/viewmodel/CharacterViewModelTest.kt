@@ -6,8 +6,8 @@ import com.ssong_develop.rickmorty.network.service.CharacterService
 import com.ssong_develop.rickmorty.persistence.CharacterDao
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.ui.character.CharacterViewModel
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
