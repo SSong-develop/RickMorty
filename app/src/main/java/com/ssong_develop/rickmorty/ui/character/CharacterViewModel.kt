@@ -1,7 +1,6 @@
 package com.ssong_develop.rickmorty.ui.character
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
-) : ViewModel(), LifecycleObserver {
+) : ViewModel() {
 
     // FIXME : Test value for initialize instance
     @VisibleForTesting

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import java.util.concurrent.atomic.AtomicBoolean
 
+/** hanling Event on Presentation layer Ex. LifecycleEvent */
 interface EventFlow<out T> : Flow<T> {
 
     companion object {
