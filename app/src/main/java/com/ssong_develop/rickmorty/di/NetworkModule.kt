@@ -5,6 +5,8 @@ import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.service.CharacterService
 import com.ssong_develop.rickmorty.persistence.CharacterDao
 import com.ssong_develop.rickmorty.repository.CharacterRepository
+import com.ssong_develop.rickmorty.utils.LiveDataCallAdapter
+import com.ssong_develop.rickmorty.utils.LiveDataCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,6 +43,7 @@ object NetworkModule {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
+            .addCallAdapterFactory(LiveDataCallAdapterFactory())
             .client(provideOkHttpClient())
             .build()
     }

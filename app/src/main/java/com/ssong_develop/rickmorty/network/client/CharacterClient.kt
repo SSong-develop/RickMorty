@@ -8,5 +8,7 @@ class CharacterClient @Inject constructor(
 ) {
     suspend fun fetchCharacters(page: Int) = service.fetchCharacters(page)
 
+    suspend fun testFetchCharacters(page : Int) = service.testFetchCharacters(page)
+
     suspend fun fetchEpisodesCharacters(episodeUrl : String) = service.fetchEpisodesCharacters(episodeUrl)
 }

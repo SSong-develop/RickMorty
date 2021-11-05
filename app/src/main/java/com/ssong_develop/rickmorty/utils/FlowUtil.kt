@@ -1,12 +1,14 @@
 package com.ssong_develop.rickmorty.utils
 
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class FlowObserver<T>(
@@ -41,3 +43,12 @@ inline fun <reified T> Flow<T>.observeOnLifecycle(
     lifecycleOwner: LifecycleOwner,
     noinline collector: suspend (T) -> Unit
 ) = FlowObserver(lifecycleOwner, this, collector)
+
+@ExperimentalCoroutinesApi
+fun <T> LiveData<T>.asFlow(): Flow<T> = callbackFlow {
+    val observer = Observer<T> { value -> this.trySend(value).isSuccess }
+    observeForever(observer)
+    awaitClose{
+        removeObserver(observer)
+    }
+}.flowOn(Dispatchers.Main.immediate)

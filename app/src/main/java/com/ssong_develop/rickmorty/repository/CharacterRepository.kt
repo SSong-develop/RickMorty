@@ -10,6 +10,7 @@ import com.ssong_develop.rickmorty.network.ApiErrorResponse
 import com.ssong_develop.rickmorty.network.ApiSuccessResponse
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.persistence.CharacterDao
+import com.ssong_develop.rickmorty.utils.asFlow
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
