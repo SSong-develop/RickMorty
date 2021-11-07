@@ -4,15 +4,16 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssong_develop.rickmorty.entities.Characters
+import com.ssong_develop.rickmorty.network.Resource
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository
@@ -24,32 +25,27 @@ class CharacterViewModel @Inject constructor(
 
     val toastMessage: MutableLiveData<String> = MutableLiveData()
 
-    val loading = MutableStateFlow(true)
-
     private val characterPage: MutableStateFlow<Int> = MutableStateFlow(1)
 
-    @ExperimentalCoroutinesApi
-    private val charactersFlow = characterPage.flatMapLatest { page ->
-        characterRepository.loadCharacters(
-            page = page,
-            onStart = { loading.value = true },
-            onComplete = { loading.value = false },
-            onError = {
-                loading.value = true
-                toastMessage.postValue(it)
-            }
-        )
-    }
+    private val characterFlow: Flow<Resource<List<Characters>>> =
+        characterPage.flatMapLatest { page ->
+            characterRepository.loadCharacters(
+                page = page
+            )
+        }
 
-    @ExperimentalCoroutinesApi
-    val characterStateFlow = charactersFlow.stateIn(
+    val characterStateFlow: StateFlow<Resource<List<Characters>>> = characterFlow.stateIn(
         scope = viewModelScope,
         started = WhileSubscribed(5000),
-        initialValue = emptyList()
+        initialValue = Resource(Resource.Status.LOADING, emptyList(), null)
     )
 
+    // TODO : This Method is Calling twice
+    // TODO : So, characterPage StateFlow Value change event overwritten
+    // TODO : This Fucking Method called when swipeRefreshLayout is Called
+    // TODO : This is very fucking huge bug. must fix it!
     fun morePage() {
-        characterPage.value += 1
+        characterPage.value++
     }
 
     fun refreshPage() {

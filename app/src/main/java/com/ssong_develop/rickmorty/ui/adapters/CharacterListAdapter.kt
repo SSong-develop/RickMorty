@@ -2,11 +2,9 @@ package com.ssong_develop.rickmorty.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters

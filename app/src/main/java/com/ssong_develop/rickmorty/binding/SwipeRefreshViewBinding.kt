@@ -3,7 +3,9 @@ package com.ssong_develop.rickmorty.binding
 import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ssong_develop.rickmorty.ui.character.CharacterViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 object SwipeRefreshViewBinding {
     @JvmStatic
     @BindingAdapter("refresh")

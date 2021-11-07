@@ -1,14 +1,11 @@
 package rickmorty.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.ssong_develop.rickmorty.di.NetworkModule
 import com.ssong_develop.rickmorty.network.service.CharacterService
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import org.junit.Before
-import org.junit.Test
 import retrofit2.Retrofit
 
 @ExperimentalSerializationApi

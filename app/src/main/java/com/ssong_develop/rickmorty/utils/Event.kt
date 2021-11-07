@@ -1,6 +1,6 @@
 package com.ssong_develop.rickmorty.utils
 
-open class Event<out T>(private val content: T) {
+open class Event<out T>(private var content: T) {
 
     @Suppress("MemberVisibilityCanBePrivate")
     var hasBeenHandled = false

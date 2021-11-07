@@ -48,7 +48,7 @@ inline fun <reified T> Flow<T>.observeOnLifecycle(
 fun <T> LiveData<T>.asFlow(): Flow<T> = callbackFlow {
     val observer = Observer<T> { value -> this.trySend(value).isSuccess }
     observeForever(observer)
-    awaitClose{
+    awaitClose {
         removeObserver(observer)
     }
 }.flowOn(Dispatchers.Main.immediate)

@@ -11,7 +11,7 @@ import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeViewHolder
 
 class CharacterEpisodeAdapter(
-    private val delegate : CharacterEpisodeViewHolder.Delegate
+    private val delegate: CharacterEpisodeViewHolder.Delegate
 ) : RecyclerView.Adapter<CharacterEpisodeViewHolder>() {
 
     private val items: MutableList<Episode> = arrayListOf()
@@ -20,7 +20,7 @@ class CharacterEpisodeAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemCharacterEpisodeBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_character_episode, parent, false)
-        return CharacterEpisodeViewHolder(binding,delegate)
+        return CharacterEpisodeViewHolder(binding, delegate)
     }
 
     override fun onBindViewHolder(holder: CharacterEpisodeViewHolder, position: Int) {
@@ -31,7 +31,7 @@ class CharacterEpisodeAdapter(
     override fun getItemCount(): Int = items.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitEpisodes(episodes : List<Episode>){
+    fun submitEpisodes(episodes: List<Episode>) {
         items.clear()
         items.addAll(episodes)
         notifyDataSetChanged()

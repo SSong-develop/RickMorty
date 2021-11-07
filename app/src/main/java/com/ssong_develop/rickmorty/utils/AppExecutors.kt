@@ -7,10 +7,10 @@ import java.util.concurrent.Executors
 import javax.inject.Inject
 
 class AppExecutors(
-    private val diskIO : Executor,
-    private val networkIO : Executor,
-    private val mainThread : Executor
-){
+    private val diskIO: Executor,
+    private val networkIO: Executor,
+    private val mainThread: Executor
+) {
 
     @Inject
     constructor() : this(
@@ -19,15 +19,15 @@ class AppExecutors(
         MainThreadExecutor()
     )
 
-    fun diskIO() : Executor {
+    fun diskIO(): Executor {
         return diskIO
     }
 
-    fun networkIO() : Executor {
+    fun networkIO(): Executor {
         return networkIO
     }
 
-    fun mainThread() : Executor {
+    fun mainThread(): Executor {
         return mainThread
     }
 

@@ -6,9 +6,9 @@ import javax.inject.Inject
 class CharacterClient @Inject constructor(
     private val service: CharacterService
 ) {
-    suspend fun fetchCharacters(page: Int) = service.fetchCharacters(page)
 
-    suspend fun testFetchCharacters(page : Int) = service.testFetchCharacters(page)
+    fun fetchCharactersByFlow(page: Int) = service.fetchCharacters(page)
 
-    suspend fun fetchEpisodesCharacters(episodeUrl : String) = service.fetchEpisodesCharacters(episodeUrl)
+    suspend fun fetchEpisodesCharacters(episodeUrl: String) =
+        service.fetchEpisodesCharacters(episodeUrl)
 }

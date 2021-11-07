@@ -11,17 +11,17 @@ import org.junit.Test
 
 class CharacterRepositoryTest {
 
-    private lateinit var repository : CharacterRepository
-    private val client : CharacterClient = mock()
-    private val characterDao : CharacterDao = mock()
+    private lateinit var repository: CharacterRepository
+    private val client: CharacterClient = mock()
+    private val characterDao: CharacterDao = mock()
 
     @Before
-    fun setup(){
-        repository = CharacterRepository(client,characterDao, Dispatchers.IO)
+    fun setup() {
+        repository = CharacterRepository(client, characterDao, Dispatchers.IO)
     }
 
     @Test
-    fun repositoryTest(){
-        assertEquals(repository.testValue,1)
+    fun repositoryTest() {
+        assertEquals(repository.testValue, 1)
     }
 }
