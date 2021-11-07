@@ -40,10 +40,6 @@ class CharacterViewModel @Inject constructor(
         initialValue = Resource(Resource.Status.LOADING, emptyList(), null)
     )
 
-    // TODO : This Method is Calling twice
-    // TODO : So, characterPage StateFlow Value change event overwritten
-    // TODO : This Fucking Method called when swipeRefreshLayout is Called
-    // TODO : This is very fucking huge bug. must fix it!
     fun morePage() {
         characterPage.value++
     }

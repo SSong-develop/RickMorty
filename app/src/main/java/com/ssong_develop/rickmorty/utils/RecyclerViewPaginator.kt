@@ -20,7 +20,7 @@ class RecyclerViewPaginator(
             val lastVisibleItemPosition =
                 (it as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
-            if ((SPAN_COUNT + lastVisibleItemPosition) >= totalItemCount) {
+            if ((SPAN_COUNT + lastVisibleItemPosition) >= totalItemCount && dy > 0) {
                 loadMore()
             }
         }
