@@ -3,6 +3,9 @@ package com.ssong_develop.rickmorty.network
 import com.ssong_develop.rickmorty.vo.Resource
 import kotlinx.coroutines.flow.*
 
+/**
+ * Created by SSong-develop on 2021.11.07
+ */
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
     private fun loadResource() = flow {
