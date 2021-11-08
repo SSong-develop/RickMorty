@@ -1,5 +1,6 @@
 package com.ssong_develop.rickmorty.network
 
+import com.ssong_develop.rickmorty.vo.Resource
 import kotlinx.coroutines.flow.*
 
 abstract class NetworkBoundResource<ResultType, RequestType> {

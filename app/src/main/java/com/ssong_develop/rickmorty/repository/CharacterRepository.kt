@@ -9,7 +9,7 @@ import com.ssong_develop.rickmorty.entities.base.Info
 import com.ssong_develop.rickmorty.entities.base.Wrapper
 import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.NetworkBoundResource
-import com.ssong_develop.rickmorty.network.Resource
+import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.persistence.CharacterDao
 import kotlinx.coroutines.CoroutineDispatcher

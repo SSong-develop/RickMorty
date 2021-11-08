@@ -4,7 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.network.Resource
+import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.character.CharacterViewModel

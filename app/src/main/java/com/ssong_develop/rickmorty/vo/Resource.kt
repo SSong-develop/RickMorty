@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.network
+package com.ssong_develop.rickmorty.vo
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 
