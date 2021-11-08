@@ -42,9 +42,9 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate,
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         characterListAdapter = null
         binding = null
+        super.onDestroy()
     }
 
     private fun initializeView() {
