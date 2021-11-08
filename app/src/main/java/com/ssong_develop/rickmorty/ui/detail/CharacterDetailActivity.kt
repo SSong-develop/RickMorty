@@ -11,6 +11,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterDetailBinding
 import com.ssong_develop.rickmorty.entities.Characters
+import com.ssong_develop.rickmorty.entities.Episode
 import javax.inject.Inject
 
 class CharacterDetailActivity : AppCompatActivity() , CharacterDetailContract.CharacterDetailView {
@@ -45,6 +46,10 @@ class CharacterDetailActivity : AppCompatActivity() , CharacterDetailContract.Ch
                 }
             }
         }
+    }
+
+    override fun showEpisodes(list: List<Episode>) {
+        TODO("Not yet implemented")
     }
 
     override fun showEpisodeLoading() {
