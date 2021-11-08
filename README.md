@@ -40,4 +40,5 @@
 
 ------------------
 
-**Please press star button** **at upside!!!!**👍
+**Please press star button at upside!!!!👍**
+
