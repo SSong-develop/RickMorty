@@ -30,7 +30,10 @@ class CharacterViewModel @Inject constructor(
     private val characterFlow: Flow<Resource<List<Characters>>> =
         characterPage.flatMapLatest { page ->
             characterRepository.loadCharacters(
-                page = page
+                page = page,
+                onFetchFailed = {
+                    toastMessage.postValue(it)
+                }
             )
         }
 

@@ -8,7 +8,9 @@ import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.entities.base.Info
 import com.ssong_develop.rickmorty.entities.base.Wrapper
 import com.ssong_develop.rickmorty.network.ApiResponse
+import com.ssong_develop.rickmorty.network.ApiSuccessResponse
 import com.ssong_develop.rickmorty.network.NetworkBoundResource
+import com.ssong_develop.rickmorty.network.NetworkResource
 import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.persistence.CharacterDao
@@ -28,7 +30,8 @@ class CharacterRepository @Inject constructor(
 
     @WorkerThread
     fun loadCharacters(
-        page: Int
+        page: Int,
+        onFetchFailed : (String) -> Unit
     ): Flow<Resource<List<Characters>>> {
         val networkBoundResource =
             object : NetworkBoundResource<List<Characters>, Wrapper<Info, Characters>>() {
@@ -45,7 +48,15 @@ class CharacterRepository @Inject constructor(
                     characterDao.getCharacters(page)
 
                 override suspend fun fetchFromNetwork(): Flow<ApiResponse<Wrapper<Info, Characters>>> =
-                    characterClient.fetchCharactersByFlow(page)
+                    characterClient.fetchCharacters(page)
+
+                override suspend fun onFetchFailed(errorBody: String?, statusCode: Int) {
+                    errorBody?.let { onFetchFailed(it) }
+                }
+
+                override suspend fun processResponse(response: ApiSuccessResponse<Wrapper<Info, Characters>>) {
+                    super.processResponse(response)
+                }
             }.asFlow()
                 .map {
                     when (it.status) {

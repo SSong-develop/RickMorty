@@ -4,6 +4,7 @@ import com.ssong_develop.rickmorty.vo.Resource
 import kotlinx.coroutines.flow.*
 
 /**
+ * Local Database & Network
  * Created by SSong-develop on 2021.11.07
  */
 abstract class NetworkBoundResource<ResultType, RequestType> {

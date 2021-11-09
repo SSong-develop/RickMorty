@@ -7,7 +7,7 @@ class CharacterClient @Inject constructor(
     private val service: CharacterService
 ) {
 
-    fun fetchCharactersByFlow(page: Int) = service.fetchCharacters(page)
+    fun fetchCharacters(page: Int) = service.fetchCharacters(page)
 
     suspend fun fetchEpisodesCharacters(episodeUrl: String) =
         service.fetchEpisodesCharacters(episodeUrl)
