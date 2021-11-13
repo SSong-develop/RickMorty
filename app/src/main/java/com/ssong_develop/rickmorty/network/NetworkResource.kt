@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 /**
- * Network
+ * Network without Local Cache
  * Created by SSong-develop on 2021.11.09
  */
 abstract class NetworkResource<RequestType> {
