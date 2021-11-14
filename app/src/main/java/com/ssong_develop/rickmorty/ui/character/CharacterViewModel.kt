@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.repository.CharacterRepository
+import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
