@@ -64,6 +64,7 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$version_fragment_ktx"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
     kapt "androidx.room:room-compiler:$version_room"
     implementation "androidx.room:room-runtime:$version_room"
     implementation "androidx.room:room-ktx:$version_room"
