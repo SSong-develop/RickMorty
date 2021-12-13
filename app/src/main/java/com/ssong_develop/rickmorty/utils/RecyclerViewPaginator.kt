@@ -5,8 +5,12 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerViewPaginator(
     recyclerView: RecyclerView,
-    private val loadMore: () -> Unit
+    private val resetPage : () -> Unit,
+    private val loadMore: (Int) -> Unit,
+    private val onLast: () -> Boolean
 ) : RecyclerView.OnScrollListener() {
+
+    var currentPage = 1
 
     init {
         recyclerView.addOnScrollListener(this)
@@ -21,9 +25,18 @@ class RecyclerViewPaginator(
                 (it as GridLayoutManager).findLastCompletelyVisibleItemPosition()
 
             if ((SPAN_COUNT + lastVisibleItemPosition) >= totalItemCount && dy > 0) {
-                loadMore()
+                if(onLast()){
+                    resetPage()
+                    resetCurrentPage()
+                } else {
+                    loadMore(++currentPage)
+                }
             }
         }
+    }
+
+    private fun resetCurrentPage() {
+        this.currentPage = 1
     }
 
     companion object {

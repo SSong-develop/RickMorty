@@ -25,6 +25,8 @@ class CharacterViewModel @Inject constructor(
 
     val toastMessage: MutableLiveData<String> = MutableLiveData()
 
+    private val maxPage = MutableStateFlow(0)
+
     private val characterPage: MutableStateFlow<Int> = MutableStateFlow(1)
 
     private val characterFlow: Flow<Resource<List<Characters>>> =
@@ -47,7 +49,11 @@ class CharacterViewModel @Inject constructor(
         characterPage.value++
     }
 
-    fun refreshPage() {
+    fun resetPage() {
         characterPage.value = 1
+    }
+
+    fun onLastPage(): Boolean {
+        return maxPage.value == characterPage.value
     }
 }

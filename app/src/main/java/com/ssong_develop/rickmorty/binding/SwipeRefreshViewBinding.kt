@@ -11,7 +11,7 @@ object SwipeRefreshViewBinding {
     @BindingAdapter("refresh")
     fun refresh(view: SwipeRefreshLayout, viewModel: CharacterViewModel) {
         view.setOnRefreshListener {
-            viewModel.refreshPage()
+            viewModel.resetPage()
             view.isRefreshing = false
         }
     }

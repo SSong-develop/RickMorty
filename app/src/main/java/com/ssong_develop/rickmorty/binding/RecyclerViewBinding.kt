@@ -4,20 +4,14 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.character.CharacterViewModel
 import com.ssong_develop.rickmorty.utils.RecyclerViewPaginator
+import com.ssong_develop.rickmorty.vo.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 object RecyclerViewBinding {
-
-    @JvmStatic
-    @BindingAdapter("episodeAdapter")
-    fun bindEpisodeAdapter(view: RecyclerView, adapter: CharacterEpisodeAdapter) {
-        view.adapter = adapter
-    }
 
     @JvmStatic
     @BindingAdapter("submitEpisodes")
@@ -37,13 +31,10 @@ object RecyclerViewBinding {
     fun paginationCharacterList(view: RecyclerView, viewModel: CharacterViewModel) {
         RecyclerViewPaginator(
             recyclerView = view,
-            loadMore = { viewModel.morePage() }
+            onLast = { viewModel.onLastPage() },
+            loadMore = { viewModel.morePage() },
+            resetPage = { viewModel.resetPage() }
         )
     }
 
-    @JvmStatic
-    @BindingAdapter("charactersAdapter")
-    fun bindCharacterAdapter(view: RecyclerView, adapter: CharacterListAdapter) {
-        view.adapter = adapter
-    }
 }
