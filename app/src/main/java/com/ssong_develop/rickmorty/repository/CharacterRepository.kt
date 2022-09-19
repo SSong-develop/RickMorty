@@ -24,10 +24,6 @@ class CharacterRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
-    // FIXME : Test value for initialize instance
-    @VisibleForTesting
-    val testValue = 1
-
     @WorkerThread
     fun loadCharacters(
         page: Int,

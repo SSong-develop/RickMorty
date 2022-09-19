@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.utils
+package com.ssong_develop.core_ui
 
 open class Event<out T>(private var content: T) {
 

@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "RickMorty"
 include ':app'
+include ':core-ui'
+include ':core-common'

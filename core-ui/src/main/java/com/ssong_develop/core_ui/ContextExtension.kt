@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.extensions
+package com.ssong_develop.core_ui
 
 import android.content.Context
 import android.content.Intent

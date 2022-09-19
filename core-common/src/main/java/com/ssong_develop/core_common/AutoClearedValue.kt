@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.utils
+package com.ssong_develop.core_common
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver

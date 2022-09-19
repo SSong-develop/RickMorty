@@ -1,10 +1,9 @@
-package com.ssong_develop.rickmorty.extensions
+package com.ssong_develop.core_ui
 
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.snackbar.Snackbar
-import com.ssong_develop.rickmorty.utils.Event
 
 fun View.showSnackBar(snackBarText: String, timeLength: Int) {
     Snackbar.make(this, snackBarText, timeLength).show()
