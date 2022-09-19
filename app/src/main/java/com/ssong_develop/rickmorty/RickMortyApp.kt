@@ -2,7 +2,6 @@ package com.ssong_develop.rickmorty
 
 import android.app.Application
 import androidx.viewbinding.BuildConfig
-import com.ssong_develop.rickmorty.utils.VersionCheckUtils
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 

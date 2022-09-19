@@ -6,15 +6,15 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.30'
 }
-apply from: '../dependencies.gradle'
+apply from: "$rootDir/dependencies.gradle"
 
 android {
     compileSdk 31
 
     defaultConfig {
         applicationId "com.ssong_develop.rickmorty"
-        minSdk 21
-        targetSdk 30
+        minSdk 26
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -53,70 +53,74 @@ android {
 dependencies {
 
     // android support
-    implementation "com.google.android.material:material:$version_material"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$version_swipe_refresh_layout"
-    implementation "androidx.core:core-ktx:$version_coreKtx"
-    implementation "androidx.appcompat:appcompat:$version_appCompat"
-    implementation "androidx.constraintlayout:constraintlayout:$version_constraint"
-    implementation 'androidx.lifecycle:lifecycle-common-java8:2.4.0'
+    implementation "com.google.android.material:material:$versions.materialVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.androidXSwipeRefreshLayoutVersion"
+    implementation "androidx.core:core-ktx:$versions.androidXCoreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.androidXConstraintLayoutVersion"
 
     // architecture component
-    implementation "androidx.activity:activity-ktx:$version_activity_ktx"
-    implementation "androidx.fragment:fragment-ktx:$version_fragment_ktx"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$version_lifecycle"
-    kapt "androidx.room:room-compiler:$version_room"
-    implementation "androidx.room:room-runtime:$version_room"
-    implementation "androidx.room:room-ktx:$version_room"
-    testImplementation "androidx.arch.core:core-testing:$version_archComponent"
+    implementation "androidx.activity:activity-ktx:$versions.androidXActivityKtxVersion"
+    implementation "androidx.fragment:fragment-ktx:$versions.androidXFragmentKtxVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidXLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidXLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidXLifecycleVersion"
+
+    // room
+    kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
+    implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
+    implementation "androidx.room:room-ktx:$versions.androidXRoomVersion"
+    implementation("androidx.room:room-paging:2.5.0-alpha03")
+
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:$versions.androidXDataStoreVersion"
+
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:$versions.androidXAsyncLayoutInflater"
 
     // network
-    implementation "com.squareup.retrofit2:retrofit:$version_retrofit"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$version_serialization_converter"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$version_serialization_json"
-    implementation "com.squareup.okhttp3:logging-interceptor:$version_okhttp"
-    testImplementation "com.squareup.okhttp3:mockwebserver:$version_okhttp"
-
-    // okHttp
-    implementation "com.squareup.okhttp3:okhttp:$version_okhttp"
-    implementation "com.squareup.okhttp3:logging-interceptor:$version_okhttp"
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.serializationConverterVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.serializationJsonVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okHttpVersion"
 
     // coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version_coroutine"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutineVersion"
 
     // glide
-    implementation "com.github.bumptech.glide:glide:$version_glide"
-    implementation "com.github.florent37:glidepalette:$version_glide_palette"
+    implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
+    implementation "com.github.florent37:glidepalette:$versions.glidePaletteVersion"
 
     // recyclerview
-    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+    implementation "androidx.recyclerview:recyclerview:$versions.recycleViewVersion"
 
     // hilt
-    implementation "com.google.dagger:hilt-android:$version_hilt_core"
-    kapt "com.google.dagger:hilt-android-compiler:$version_hilt_core"
-    kapt "androidx.hilt:hilt-compiler:$version_hilt"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$version_hilt_core"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:$version_hilt_core"
+    implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hiltCoreVersion"
+    kapt "androidx.hilt:hilt-compiler:$versions.hiltVersion"
 
     // timber
-    implementation "com.jakewharton.timber:timber:$version_timber"
+    implementation "com.jakewharton.timber:timber:$versions.timberVersion"
 
     // gson-converter
-    implementation "com.squareup.retrofit2:converter-gson:$version_gson"
-
+    implementation "com.squareup.retrofit2:converter-gson:$versions.gsonVersion"
 }
 dependencies {
 
-    testImplementation "junit:junit:$version_Junit"
-    testImplementation "app.cash.turbine:turbine:$version_turbine"
-    testImplementation "androidx.test:core:$version_androidxTest"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$version_mockitoKotlin"
-    testImplementation "org.mockito:mockito-inline:$version_mockitoInline"
-    androidTestImplementation "androidx.test.ext:junit:$version_androidxTestJunit"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$version_espresso"
-    androidTestImplementation "com.google.truth:truth:$version_truth"
-    androidTestImplementation "com.android.support.test:runner:$version_androidTestRunner"
+    testImplementation "junit:junit:$versions.jUnitVersion"
+    testImplementation "app.cash.turbine:turbine:$versions.turbinVersion"
+    testImplementation "androidx.test:core:$versions.androidxTestVersion"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockitoKotlinVersion"
+    testImplementation "org.mockito:mockito-inline:$versions.mockitoInlineVersion"
+    androidTestImplementation "androidx.test.ext:junit:$versions.androidxTestJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoVersion"
+    androidTestImplementation "com.google.truth:truth:$versions.truthVersion"
+    androidTestImplementation "com.android.support.test:runner:$versions.androidTestRunnerVersion"
+    testImplementation "androidx.arch.core:core-testing:$versions.archComponentVersion"
+
+    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okHttpVersion"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hiltCoreVersion"
+    kaptAndroidTest "com.google.dagger:hilt-compiler:$versions.hiltCoreVersion"
 }

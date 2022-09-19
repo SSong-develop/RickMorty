@@ -52,14 +52,10 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.
                 val intent = Intent(activity, CharacterDetailActivity::class.java).apply {
                     putExtra(CHARACTER, character)
                 }
-                if (versionCheckUtils.checkIsMaterialVersion()) {
-                    ViewCompat.getTransitionName(view)?.let {
-                        val options =
-                            ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, it)
-                        activity.startActivity(intent, options.toBundle())
-                    }
-                } else {
-                    activity.startActivity(intent)
+                ViewCompat.getTransitionName(view)?.let {
+                    val options =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, it)
+                    activity.startActivity(intent, options.toBundle())
                 }
             }
         }
