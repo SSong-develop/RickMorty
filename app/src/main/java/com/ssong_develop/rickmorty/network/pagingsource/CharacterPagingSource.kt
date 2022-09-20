@@ -8,18 +8,15 @@ import javax.inject.Inject
 
 class CharacterPagingSource @Inject constructor(
     private val characterService: CharacterService
-) : PagingSource<Int, List<Characters>>() {
-
+) : PagingSource<Int, Characters>() {
 
     companion object {
         private const val STARTING_KEY = 1
     }
 
-    override fun getRefreshKey(state: PagingState<Int, List<Characters>>): Int? {
-        TODO("Not yet implemented")
-    }
+    override fun getRefreshKey(state: PagingState<Int, Characters>): Int? = state.anchorPosition
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, List<Characters>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Characters> {
         val currentKey = params.key ?: STARTING_KEY
 
         val response = runCatching {
@@ -28,15 +25,16 @@ class CharacterPagingSource @Inject constructor(
             return LoadResult.Error(throwable)
         }
 
-        val prevKey = if (currentKey == STARTING_KEY) STARTING_KEY else currentKey - 1
+        val prevKey = if (currentKey == STARTING_KEY) null else currentKey - 1
 
         return runCatching {
             LoadResult.Page(
-                data = requireNotNull(response.results) {"response is null"},
+                data = response.results,
                 prevKey = prevKey,
                 nextKey = currentKey + 1
             )
-        }.getOrElse { LoadResult.Error(it) }
+        }.getOrElse { throwable ->
+            LoadResult.Error(throwable)
+        }
     }
-
 }

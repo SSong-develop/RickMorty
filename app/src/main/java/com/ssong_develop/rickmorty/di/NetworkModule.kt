@@ -3,6 +3,7 @@ package com.ssong_develop.rickmorty.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.ssong_develop.rickmorty.network.calladapter.FlowCallAdapterFactory
 import com.ssong_develop.rickmorty.network.client.CharacterClient
+import com.ssong_develop.rickmorty.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.rickmorty.network.service.CharacterService
 import com.ssong_develop.rickmorty.persistence.CharacterDao
 import com.ssong_develop.rickmorty.repository.CharacterRepository
@@ -61,7 +62,8 @@ object NetworkModule {
     fun provideCharacterRepository(
         client: CharacterClient,
         dao: CharacterDao,
+        pageDataSource: CharacterPagingSource,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        CharacterRepository(client, dao, ioDispatcher)
+        CharacterRepository(client, dao,pageDataSource, ioDispatcher)
 }

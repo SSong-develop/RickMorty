@@ -3,16 +3,17 @@ package com.ssong_develop.rickmorty.ui.character
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -40,6 +41,14 @@ class CharacterViewModel @Inject constructor(
             started = WhileSubscribed(5000),
             initialValue = Resource(Resource.Status.LOADING, emptyList(), null)
         )
+
+    val pagingCharacterFlow : Flow<PagingData<Characters>> = Pager(
+        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+        initialKey = 1,
+        pagingSourceFactory = { characterRepository.charactersPagingSource() }
+    )
+        .flow
+        .cachedIn(viewModelScope)
 
     fun morePage() {
         characterPage.value++

@@ -13,6 +13,7 @@ import com.ssong_develop.rickmorty.network.NetworkBoundResource
 import com.ssong_develop.rickmorty.network.NetworkResource
 import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.network.client.CharacterClient
+import com.ssong_develop.rickmorty.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.rickmorty.persistence.CharacterDao
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class CharacterRepository @Inject constructor(
     private val characterClient: CharacterClient,
     private val characterDao: CharacterDao,
+    private val pagingSource: CharacterPagingSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
@@ -88,4 +90,6 @@ class CharacterRepository @Inject constructor(
         onError("Api Response Error")
         emit(mutableListOf())
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    fun charactersPagingSource() = pagingSource
 }
