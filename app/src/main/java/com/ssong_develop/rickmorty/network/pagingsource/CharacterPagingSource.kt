@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.network.service.CharacterService
+import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CharacterPagingSource @Inject constructor(
@@ -18,6 +19,8 @@ class CharacterPagingSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Characters> {
         val currentKey = params.key ?: STARTING_KEY
+
+        if (currentKey != STARTING_KEY) delay(500L)
 
         val response = runCatching {
             characterService.getCharacters(currentKey)

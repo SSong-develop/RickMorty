@@ -62,9 +62,6 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_character"
-                paginationCharacterList="@{vm}"
-                submitCharacters="@{vm.characterFlow}"
-                toast="@{vm.toastMessage}"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scrollbarStyle="outsideOverlay"

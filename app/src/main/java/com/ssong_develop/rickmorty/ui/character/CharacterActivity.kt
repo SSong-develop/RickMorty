@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import androidx.paging.map
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
@@ -46,8 +48,15 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.pagingCharacterFlow.collectLatest {
-                    pagingAdapter.submitData(it)
+                launch {
+                    viewModel.pagingCharacterFlow.collectLatest {
+                        pagingAdapter.submitData(it)
+                    }
+                }
+                launch {
+                    pagingAdapter.loadStateFlow.collectLatest {
+                        binding.pbCharacter.isVisible = it.source.append is LoadState.Loading
+                    }
                 }
             }
         }

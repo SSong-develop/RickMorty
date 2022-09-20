@@ -46,9 +46,7 @@ class CharacterViewModel @Inject constructor(
         config = PagingConfig(pageSize = 20, enablePlaceholders = false),
         initialKey = 1,
         pagingSourceFactory = { characterRepository.charactersPagingSource() }
-    )
-        .flow
-        .cachedIn(viewModelScope)
+    ).flow.cachedIn(viewModelScope)
 
     fun morePage() {
         characterPage.value++
