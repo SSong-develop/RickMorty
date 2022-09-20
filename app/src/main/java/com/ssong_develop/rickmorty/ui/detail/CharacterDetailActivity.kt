@@ -2,6 +2,7 @@ package com.ssong_develop.rickmorty.ui.detail
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -10,7 +11,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
 import com.ssong_develop.rickmorty.R
-import com.ssong_develop.rickmorty.RickMortyApp.Companion.versionCheckUtils
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterDetailBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
@@ -35,7 +35,13 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.
         with(binding) {
             lifecycleOwner = this@CharacterDetailActivity
             activity = this@CharacterDetailActivity
-            vm = viewModel.apply { postCharacter(intent.getParcelableExtra(CHARACTER)!!) }
+            vm = viewModel.apply {
+                if (Build.VERSION.SDK_INT >= 33) {
+                    postCharacter(intent.getParcelableExtra(CHARACTER, Characters::class.java) ?: return)
+                } else {
+                    postCharacter(intent.getParcelableExtra(CHARACTER) ?: return)
+                }
+            }
             episodeAdapter = CharacterEpisodeAdapter(this@CharacterDetailActivity)
         }
     }

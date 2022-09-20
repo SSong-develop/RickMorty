@@ -10,8 +10,8 @@ import com.ssong_develop.rickmorty.entities.Characters
 
 @Database(
     entities = [Characters::class],
-    version = 3,
-    exportSchema = true
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(
     value = [

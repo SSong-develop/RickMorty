@@ -17,6 +17,11 @@ interface CharacterService {
         @Query("page") page: Int
     ): Flow<ApiResponse<Wrapper<Info, Characters>>>
 
+    @GET("character")
+    suspend fun getCharacters(
+        @Query("page") page: Int
+    ): Wrapper<Info, Characters>
+
     @GET
     suspend fun fetchEpisodesCharacters(
         @Url url: String

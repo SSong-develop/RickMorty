@@ -9,7 +9,7 @@ plugins {
 apply from: "$rootDir/dependencies.gradle"
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.ssong_develop.rickmorty"
@@ -68,12 +68,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidXLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidXLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidXLifecycleVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
 
     // room
     kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
     implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
     implementation "androidx.room:room-ktx:$versions.androidXRoomVersion"
-    implementation("androidx.room:room-paging:2.5.0-alpha03")
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:$versions.androidXDataStoreVersion"

@@ -3,7 +3,7 @@ ext.versions = [
         androidXActivityKtxVersion : '1.5.1',
         androidXFragmentKtxVersion : '1.5.2',
         androidXLifecycleVersion : '2.5.1',
-        androidXRoomVersion : '2.4.3',
+        androidXRoomVersion : '2.3.0',
 
         // android support Library
         androidXConstraintLayoutVersion : '2.1.4',
@@ -13,6 +13,7 @@ ext.versions = [
         materialVersion : '1.6.1',
         androidXSecurityVersion : '1.0.0',
         androidXDataStoreVersion : '1.0.0',
+        androidXPagingVersion: '3.1.1',
 
         // Lab Testing Implementation
         androidXAsyncLayoutInflater : '1.0.0',

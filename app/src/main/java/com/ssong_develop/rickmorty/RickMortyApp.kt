@@ -10,18 +10,9 @@ class RickMortyApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        initializeSingleton()
 
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-    }
-
-    private fun initializeSingleton() {
-        versionCheckUtils = VersionCheckUtils()
-    }
-
-    companion object {
-        lateinit var versionCheckUtils: VersionCheckUtils
     }
 }

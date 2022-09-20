@@ -10,8 +10,8 @@ import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
+import com.ssong_develop.core_ui.toast
 import com.ssong_develop.rickmorty.entities.Status
-import com.ssong_develop.rickmorty.extensions.toast
 
 object ViewBinding {
 
