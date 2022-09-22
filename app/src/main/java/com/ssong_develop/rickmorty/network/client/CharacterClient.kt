@@ -11,4 +11,6 @@ class CharacterClient @Inject constructor(
 
     suspend fun fetchEpisodesCharacters(episodeUrl: String) =
         service.fetchEpisodesCharacters(episodeUrl)
+
+    suspend fun fetchCharacter(id: Int) = service.getCharacter(id)
 }

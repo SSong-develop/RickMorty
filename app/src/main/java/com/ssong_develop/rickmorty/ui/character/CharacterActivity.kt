@@ -1,6 +1,7 @@
 package com.ssong_develop.rickmorty.ui.character
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.ssong_develop.rickmorty.ui.adapters.CharacterPagingAdapter
 import com.ssong_develop.rickmorty.ui.adapters.FooterAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
+import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -69,6 +71,22 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                             }
                             else -> {
                                 concatAdapter.removeAdapter(footerAdapter)
+                            }
+                        }
+                    }
+                }
+                // test Coroutine
+                launch {
+                    viewModel.favoriteCharacter.collectLatest {
+                        when(it.status) {
+                            Resource.Status.SUCCESS -> {
+                                Log.d("ssong-develop",it.data.toString())
+                            }
+                            Resource.Status.ERROR -> {
+                                Log.d("ssong-develop","error")
+                            }
+                            Resource.Status.LOADING -> {
+                                Log.d("ssong-develop","loading")
                             }
                         }
                     }

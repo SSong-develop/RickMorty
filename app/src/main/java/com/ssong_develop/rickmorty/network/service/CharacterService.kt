@@ -7,6 +7,7 @@ import com.ssong_develop.rickmorty.entities.base.Wrapper
 import com.ssong_develop.rickmorty.network.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -21,6 +22,11 @@ interface CharacterService {
     suspend fun getCharacters(
         @Query("page") page: Int
     ): Wrapper<Info, Characters>
+
+    @GET("character/{id}")
+    suspend fun getCharacter(
+        @Path("id") characterId: Int
+    ): Characters
 
     @GET
     suspend fun fetchEpisodesCharacters(

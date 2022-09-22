@@ -1,6 +1,5 @@
 package com.ssong_develop.rickmorty.repository
 
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Characters
@@ -10,11 +9,10 @@ import com.ssong_develop.rickmorty.entities.base.Wrapper
 import com.ssong_develop.rickmorty.network.ApiResponse
 import com.ssong_develop.rickmorty.network.ApiSuccessResponse
 import com.ssong_develop.rickmorty.network.NetworkBoundResource
-import com.ssong_develop.rickmorty.network.NetworkResource
-import com.ssong_develop.rickmorty.vo.Resource
 import com.ssong_develop.rickmorty.network.client.CharacterClient
 import com.ssong_develop.rickmorty.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.rickmorty.persistence.CharacterDao
+import com.ssong_develop.rickmorty.vo.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -90,6 +88,16 @@ class CharacterRepository @Inject constructor(
         onError("Api Response Error")
         emit(mutableListOf())
     }.onStart { onStart() }.onCompletion { onComplete() }.flowOn(ioDispatcher)
+
+    suspend fun getCharacter(
+        characterId: Int
+    ): Resource<Characters> = runCatching {
+        characterClient.fetchCharacter(characterId)
+    }.mapCatching {
+        Resource.success(it)
+    }.recoverCatching { throwable ->
+        Resource.error("${throwable.message}",null)
+    }.getOrElse { throwable ->  Resource.error("${throwable.message}",null) }
 
     fun charactersPagingSource() = pagingSource
 }

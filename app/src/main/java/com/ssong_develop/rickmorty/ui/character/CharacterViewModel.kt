@@ -8,19 +8,23 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ssong_develop.rickmorty.entities.Characters
+import com.ssong_develop.rickmorty.persistence.datastore.RickMortyDataStore
 import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val characterRepository: CharacterRepository
-) : ViewModel() {
+    private val characterRepository: CharacterRepository,
+    private val rickMortyDataStore: RickMortyDataStore
+) : ViewModel(),
+    RickMortyDataStore by rickMortyDataStore {
 
     val toastMessage: MutableLiveData<String> = MutableLiveData()
 
@@ -42,11 +46,22 @@ class CharacterViewModel @Inject constructor(
             initialValue = Resource(Resource.Status.LOADING, emptyList(), null)
         )
 
-    val pagingCharacterFlow : Flow<PagingData<Characters>> = Pager(
+    val pagingCharacterFlow: Flow<PagingData<Characters>> = Pager(
         config = PagingConfig(pageSize = 20, enablePlaceholders = false),
         initialKey = 1,
         pagingSourceFactory = { characterRepository.charactersPagingSource() }
     ).flow.cachedIn(viewModelScope)
+
+    val favoriteCharacter = favoriteCharacterIdFlow
+        .filterNotNull()
+        .filter { id -> id != -2 }
+        .map { id ->
+            characterRepository.getCharacter(id)
+        }.stateIn(
+            scope = viewModelScope,
+            started = Eagerly,
+            initialValue = Resource.loading(null)
+        )
 
     fun morePage() {
         characterPage.value++
