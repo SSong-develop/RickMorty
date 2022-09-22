@@ -11,11 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.paging.map
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.adapters.CharacterPagingAdapter
+import com.ssong_develop.rickmorty.ui.adapters.FooterAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,16 +39,20 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private lateinit var pagingAdapter: CharacterPagingAdapter
 
+    private lateinit var footerAdapter: FooterAdapter
+
+    private val concatAdapter = ConcatAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pagingAdapter = CharacterPagingAdapter(this)
         with(binding) {
             lifecycleOwner = this@CharacterActivity
             vm = viewModel
             adapter = CharacterListAdapter(this@CharacterActivity)
         }
+        initAdapter()
 
-        binding.rvCharacter.adapter = pagingAdapter
+        binding.rvCharacter.adapter = concatAdapter
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -55,7 +63,14 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                 }
                 launch {
                     pagingAdapter.loadStateFlow.collectLatest {
-                        binding.pbCharacter.isVisible = it.source.append is LoadState.Loading
+                        when(it.source.append) {
+                            is LoadState.Loading -> {
+                                concatAdapter.addAdapter(footerAdapter)
+                            }
+                            else -> {
+                                concatAdapter.removeAdapter(footerAdapter)
+                            }
+                        }
                     }
                 }
             }
@@ -64,5 +79,12 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     override fun onItemClick(view: View, characters: Characters) {
         CharacterDetailActivity.startActivity(this, view, characters)
+    }
+
+    private fun initAdapter() {
+        pagingAdapter = CharacterPagingAdapter(this)
+        footerAdapter = FooterAdapter()
+
+        concatAdapter.addAdapter(pagingAdapter)
     }
 }

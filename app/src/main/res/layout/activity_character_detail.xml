@@ -234,6 +234,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="24dp"
+                android:layout_marginTop="12dp"
                 android:adapter="@{episodeAdapter}"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
