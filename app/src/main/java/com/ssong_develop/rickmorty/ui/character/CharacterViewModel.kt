@@ -46,11 +46,13 @@ class CharacterViewModel @Inject constructor(
             initialValue = Resource(Resource.Status.LOADING, emptyList(), null)
         )
 
-    val pagingCharacterFlow: Flow<PagingData<Characters>> = Pager(
-        config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-        initialKey = 1,
-        pagingSourceFactory = { characterRepository.charactersPagingSource() }
-    ).flow.cachedIn(viewModelScope)
+    val pagingCharacterFlow: Flow<PagingData<Characters>> = characterPage.flatMapLatest {
+        Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            initialKey = it,
+            pagingSourceFactory = { characterRepository.charactersPagingSource() }
+        ).flow.cachedIn(viewModelScope)
+    }
 
     val favoriteCharacter = favoriteCharacterIdFlow
         .filterNotNull()
