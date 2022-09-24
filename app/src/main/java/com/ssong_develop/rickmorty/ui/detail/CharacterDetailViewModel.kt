@@ -1,16 +1,19 @@
 package com.ssong_develop.rickmorty.ui.detail
 
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.persistence.datastore.RickMortyDataStore
 import com.ssong_develop.rickmorty.repository.CharacterRepository
+import com.ssong_develop.rickmorty.ui.delegate.FavoriteCharacterDelegate
+import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,72 +22,75 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val repository: CharacterRepository,
-    private val rickMortyDataStore: RickMortyDataStore
+    private val favoriteCharacterDelegate: FavoriteCharacterDelegate,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel(),
-    RickMortyDataStore by rickMortyDataStore {
-    val toast = MutableLiveData<String>()
+    FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    val loading = MutableStateFlow(true)
+    private val _selectCharacterSharedFlow: MutableSharedFlow<Characters> =
+        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
-    val character = MutableStateFlow(Characters())
+    val selectCharacterStateFlow: StateFlow<Characters?> =
+        _selectCharacterSharedFlow
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Eagerly,
+                initialValue = null
+            )
 
-    private val characterEpisodeSharedFlow: MutableSharedFlow<List<String>> =
-        MutableSharedFlow(replay = 1)
+    private val _characterEpisodeSharedFlow: MutableSharedFlow<List<String>> =
+        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
-    private val characterEpisodesFlow: Flow<List<Episode>> =
-        characterEpisodeSharedFlow.flatMapLatest { episode ->
+    val characterEpisodesFlow: StateFlow<List<Episode>> =
+        _characterEpisodeSharedFlow.flatMapLatest { episode ->
             episode.run {
                 repository.loadEpisodes(
                     this,
-                    onStart = { loading.value = true },
-                    onComplete = { loading.value = false },
-                    onError = {
-                        loading.value = true
-                        toast.postValue(it)
-                    }
+                    onStart = {},
+                    onComplete = {},
+                    onError = {}
                 )
             }
-        }
+        }.flowOn(ioDispatcher)
+            .stateIn(
+                scope = viewModelScope,
+                started = WhileSubscribed(5000),
+                initialValue = emptyList()
+            )
 
-    private val characterId: StateFlow<Int> = character
-        .filter {
-            it.id != -1
-        }.map {
-            it.id
-        }.stateIn(
+    val isFavoriteCharacterStateFlow: StateFlow<Boolean> = combine(
+        selectCharacterStateFlow,
+        favCharacterFlow
+    ) { selectCharacter, favCharacter ->
+        when (favCharacter.status) {
+            Resource.Status.SUCCESS -> {
+                selectCharacter?.id?.let {
+                    it == (favCharacter.data?.id ?: false)
+                } ?: false
+            }
+            else -> false
+        }
+    }
+        .stateIn(
             scope = viewModelScope,
-            started = Eagerly,
-            initialValue = -1
+            started = WhileSubscribed(5000L),
+            initialValue = false
         )
 
-    val isFavoriteCharacter: StateFlow<Boolean> = combine(
-        character.filter { it.id != -1 },
-        favoriteCharacterIdFlow
-    ) { character, id ->
-        character.id == id
-    }.stateIn(
-        scope = viewModelScope,
-        started = Eagerly,
-        initialValue = false
-    )
-
-    val characterEpisodeStateFlow: StateFlow<List<Episode>> = characterEpisodesFlow.stateIn(
-        scope = viewModelScope,
-        started = WhileSubscribed(5000),
-        initialValue = emptyList()
-    )
-
-    fun postCharacter(character_: Characters) {
-        characterEpisodeSharedFlow.tryEmit(character_.episode)
-        character.value = character_
+    fun postCharacter(character: Characters) {
+        _characterEpisodeSharedFlow.tryEmit(character.episode)
+        _selectCharacterSharedFlow.tryEmit(character)
     }
 
-    fun onClickFavorite() = viewModelScope.launch {
-        if (isFavoriteCharacter.value) {
-            clearFavoriteCharacterId()
-        } else {
-            if (characterId.value != -1) {
-                putFavoriteCharacterId(characterId.value)
+    // TODO(change to reactivly)
+    fun onClickFavorite() {
+        viewModelScope.launch {
+            if (isFavoriteCharacterStateFlow.value) {
+                clearFavCharacterId()
+            } else {
+                selectCharacterStateFlow.value?.let { favCharacter ->
+                    putFavCharacterId(favCharacter.id)
+                } ?: Log.d("ssong-develop", "문제 발생")
             }
         }
     }

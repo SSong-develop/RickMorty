@@ -41,7 +41,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private lateinit var pagingAdapter: CharacterPagingAdapter
 
-    private lateinit var footerAdapter: FooterAdapter
+    private val footerAdapter: FooterAdapter = FooterAdapter()
 
     private val concatAdapter = ConcatAdapter()
 
@@ -75,9 +75,8 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                         }
                     }
                 }
-                // test Coroutine
                 launch {
-                    viewModel.favoriteCharacter.collectLatest {
+                    viewModel.favCharacterFlow.collectLatest {
                         when(it.status) {
                             Resource.Status.SUCCESS -> {
                                 Log.d("ssong-develop",it.data.toString())
@@ -101,8 +100,6 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private fun initAdapter() {
         pagingAdapter = CharacterPagingAdapter(this)
-        footerAdapter = FooterAdapter()
-
         concatAdapter.addAdapter(pagingAdapter)
     }
 }

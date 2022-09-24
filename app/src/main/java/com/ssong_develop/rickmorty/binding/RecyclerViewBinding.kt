@@ -24,17 +24,4 @@ object RecyclerViewBinding {
     fun bindCharacters(view: RecyclerView, items: Resource<List<Characters>>) {
         (view.adapter as? CharacterListAdapter)?.submitList(items.data)
     }
-
-    @ExperimentalCoroutinesApi
-    @JvmStatic
-    @BindingAdapter("paginationCharacterList")
-    fun paginationCharacterList(view: RecyclerView, viewModel: CharacterViewModel) {
-        RecyclerViewPaginator(
-            recyclerView = view,
-            onLast = { viewModel.onLastPage() },
-            loadMore = { viewModel.morePage() },
-            resetPage = { viewModel.resetPage() }
-        )
-    }
-
 }
