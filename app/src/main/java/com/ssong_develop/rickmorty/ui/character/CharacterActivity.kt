@@ -41,7 +41,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private lateinit var pagingAdapter: CharacterPagingAdapter
 
-    private val footerAdapter: FooterAdapter = FooterAdapter()
+    private lateinit var footerAdapter: FooterAdapter
 
     private val concatAdapter = ConcatAdapter()
 
@@ -115,6 +115,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private fun initAdapter() {
         pagingAdapter = CharacterPagingAdapter(this)
+        footerAdapter = FooterAdapter(this)
         concatAdapter.addAdapter(pagingAdapter)
     }
 
