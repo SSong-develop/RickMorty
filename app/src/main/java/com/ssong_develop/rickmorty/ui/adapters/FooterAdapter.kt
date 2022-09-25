@@ -13,7 +13,6 @@ import com.ssong_develop.rickmorty.ui.viewholders.FooterViewHolder
 import java.util.*
 
 class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolder>() {
-
     companion object {
         private const val FOOTER_VIEW_COUNT = 2
     }
@@ -24,23 +23,13 @@ class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolde
 
     init {
         repeat(FOOTER_VIEW_COUNT) {
-            asyncLayoutInflater.inflate(
-                R.layout.item_loading_footer,
-                null
-            ) { view, layoutRes, viewGroup ->
-                cachedView.push(view)
-            }
+            createAsynchronousLoadingView()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FooterViewHolder {
         val binding = DataBindingUtil.bind<ItemLoadingFooterBinding>(cachedView.pop().also {
-            asyncLayoutInflater.inflate(
-                R.layout.item_loading_footer,
-                null
-            ) { view, layoutRes, viewGroup ->
-                cachedView.push(view)
-            }
+           createAsynchronousLoadingView()
         }) ?: DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_loading_footer,
@@ -55,4 +44,13 @@ class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolde
     }
 
     override fun getItemCount(): Int = 2
+
+    private fun createAsynchronousLoadingView() {
+        asyncLayoutInflater.inflate(
+            R.layout.item_loading_footer,
+            null
+        ) { view, _, _ ->
+            cachedView.push(view)
+        }
+    }
 }
