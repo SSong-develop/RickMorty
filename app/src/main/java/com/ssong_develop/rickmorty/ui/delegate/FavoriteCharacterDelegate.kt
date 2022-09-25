@@ -35,6 +35,11 @@ class FavoriteCharacterDelegateImpl @Inject constructor(
                 id?.let { characterRepository.getCharacter(id) } ?: Resource.error("Id is Invalide",null)
             }
             .flowOn(ioDispatcher)
+            .stateIn(
+                scope = applicationScope,
+                started = SharingStarted.Eagerly,
+                initialValue = Resource.loading(null)
+            )
 
     override val favCharacterSheetVisibilityFlow: StateFlow<Boolean> =
         favCharacterFlow.map { resource ->

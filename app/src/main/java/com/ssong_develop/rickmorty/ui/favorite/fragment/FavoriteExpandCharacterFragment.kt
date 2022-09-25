@@ -6,12 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
 import com.ssong_develop.core_common.AutoClearBinding
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.FragmentFavoriteExpandCharacterBinding
 import com.ssong_develop.rickmorty.ui.favorite.viewmodel.FavoriteExpandCharacterViewModel
 import com.ssong_develop.rickmorty.utils.PixelRatio
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -44,6 +50,20 @@ class FavoriteExpandCharacterFragment : Fragment() {
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.favoriteCharacter.collectLatest { character ->
+                    character?.let {
+                        binding.test.text = it.name
+                        Glide.with(binding.test1)
+                            .load(it.image)
+                            .into(binding.test1)
+                        binding.test1
+                    } ?: run {
+                        binding.test.text = "PLACE HOLDER"
+                    }
+                }
+            }
+        }
     }
 }
