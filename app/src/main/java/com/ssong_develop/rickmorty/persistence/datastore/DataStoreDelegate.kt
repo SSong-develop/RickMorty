@@ -26,7 +26,7 @@ class RickMortyDataStoreImpl @Inject constructor(
 
     companion object {
         private val PREFERENCES_FAVORITE_CHARACTER_ID = intPreferencesKey("favorite_character_id")
-        private const val INVALID_CHARACTER_ID = -1
+        private val INVALID_CHARACTER_ID = -1
     }
 
     private val Context.datastore : DataStore<Preferences> by preferencesDataStore(name = "rick_morty_data_store")
@@ -43,7 +43,7 @@ class RickMortyDataStoreImpl @Inject constructor(
 
     override suspend fun clearFavoriteCharacterId() {
         context.datastore.edit { mutablePreferences ->
-            mutablePreferences[PREFERENCES_FAVORITE_CHARACTER_ID] = INVALID_CHARACTER_ID
+            mutablePreferences[PREFERENCES_FAVORITE_CHARACTER_ID] = -1
         }
     }
 }

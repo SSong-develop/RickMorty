@@ -14,6 +14,8 @@ import javax.inject.Inject
 interface FavoriteCharacterDelegate {
     val favCharacterFlow: Flow<Resource<Characters>>
 
+    val favCharacterSheetVisibilityFlow: StateFlow<Boolean>
+
     suspend fun clearFavCharacterId()
 
     suspend fun putFavCharacterId(id: Int)
@@ -27,16 +29,24 @@ class FavoriteCharacterDelegateImpl @Inject constructor(
 ) : FavoriteCharacterDelegate,
     RickMortyDataStore by rickMortyDataStore {
 
-    companion object {
-        private const val INVALID_CHARACTER_ID = -1
-    }
-
     override val favCharacterFlow: Flow<Resource<Characters>> =
         favoriteCharacterIdFlow
-            .filterNotNull()
-            .filter { it != INVALID_CHARACTER_ID }
-            .map { id -> characterRepository.getCharacter(id) }
+            .map { id ->
+                id?.let { characterRepository.getCharacter(id) } ?: Resource.error("Id is Invalide",null)
+            }
             .flowOn(ioDispatcher)
+
+    override val favCharacterSheetVisibilityFlow: StateFlow<Boolean> =
+        favCharacterFlow.map { resource ->
+            when (resource.status) {
+                Resource.Status.SUCCESS -> true
+                else -> false
+            }
+        }.stateIn(
+            scope = applicationScope,
+            started = SharingStarted.Eagerly,
+            initialValue = false
+        )
 
     override suspend fun clearFavCharacterId() {
         rickMortyDataStore.clearFavoriteCharacterId()

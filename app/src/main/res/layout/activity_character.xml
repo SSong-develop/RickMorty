@@ -10,10 +10,6 @@
         <variable
             name="vm"
             type="com.ssong_develop.rickmorty.ui.character.CharacterViewModel" />
-
-        <variable
-            name="adapter"
-            type="com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background">
+
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar_character"
                 android:layout_width="match_parent"
@@ -77,15 +74,16 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fav_character_sheet"
-            android:name="com.ssong_develop.rickmorty.ui.favorite.FavoriteCharacterFragment"
+            android:name="com.ssong_develop.rickmorty.ui.favorite.fragment.FavoriteContractCharacterFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="?actionBarSize"
-            app:layout_behavior="@string/bottom_sheet_behavior"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="50dp"
-            app:behavior_skipCollapsed="true"/>
+            android:layout_marginBottom="?attr/actionBarSize"
+            android:visibility="@{vm.favCharacterSheetVisibilityFlow ? View.VISIBLE : View.GONE }"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="80dp"
+            app:behavior_skipCollapsed="true"
+            app:layout_behavior="@string/bottom_sheet_behavior" />
 
         <ProgressBar
             android:id="@+id/pb_character"

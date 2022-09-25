@@ -1,4 +1,4 @@
-package com.ssong_develop.core_ui
+package com.ssong_develop.core_common
 
 import android.content.Context
 import android.content.Intent

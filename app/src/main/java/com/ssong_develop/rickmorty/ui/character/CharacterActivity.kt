@@ -1,23 +1,18 @@
 package com.ssong_develop.rickmorty.ui.character
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.doOnLayout
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
-import androidx.paging.map
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
+import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
@@ -25,12 +20,15 @@ import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.adapters.CharacterPagingAdapter
 import com.ssong_develop.rickmorty.ui.adapters.FooterAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
+import com.ssong_develop.rickmorty.ui.favorite.fragment.FavoriteContractCharacterFragment
+import com.ssong_develop.rickmorty.ui.favorite.fragment.FavoriteExpandCharacterFragment
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
-import com.ssong_develop.rickmorty.vo.Resource
+import com.ssong_develop.rickmorty.utils.PixelRatio
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -50,17 +48,42 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private val concatAdapter = ConcatAdapter()
 
+    @Inject
+    lateinit var pixelRatio: PixelRatio
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(binding) {
             lifecycleOwner = this@CharacterActivity
             vm = viewModel
-            adapter = CharacterListAdapter(this@CharacterActivity)
         }
         initAdapter()
 
         binding.rvCharacter.adapter = concatAdapter
         behavior = BottomSheetBehavior.from(binding.favCharacterSheet)
+
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    STATE_EXPANDED -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                binding.favCharacterSheet.id,
+                                FavoriteExpandCharacterFragment.newInstance()
+                            ).commit()
+                    }
+                    else -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(
+                                binding.favCharacterSheet.id,
+                                FavoriteContractCharacterFragment.newInstance()
+                            ).commit()
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

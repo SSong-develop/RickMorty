@@ -14,6 +14,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -51,31 +52,32 @@ class CharacterDetailViewModel @Inject constructor(
                     onError = {}
                 )
             }
-        }.flowOn(ioDispatcher)
-            .stateIn(
-                scope = viewModelScope,
-                started = WhileSubscribed(5000),
-                initialValue = emptyList()
-            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = Eagerly,
+            initialValue = emptyList()
+        )
 
     val isFavoriteCharacterStateFlow: StateFlow<Boolean> = combine(
         selectCharacterStateFlow,
         favCharacterFlow
     ) { selectCharacter, favCharacter ->
-        when (favCharacter.status) {
-            Resource.Status.SUCCESS -> {
-                selectCharacter?.id?.let {
-                    it == (favCharacter.data?.id ?: false)
-                } ?: false
+        if (favCharacter.data == null) false
+        else {
+            when (favCharacter.status) {
+                Resource.Status.SUCCESS -> {
+                    selectCharacter?.id?.let {
+                        it == (favCharacter.data?.id ?: false)
+                    } ?: false
+                }
+                else -> false
             }
-            else -> false
         }
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = WhileSubscribed(5000L),
-            initialValue = false
-        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = Eagerly,
+        initialValue = false
+    )
 
     fun postCharacter(character: Characters) {
         _characterEpisodeSharedFlow.tryEmit(character.episode)
