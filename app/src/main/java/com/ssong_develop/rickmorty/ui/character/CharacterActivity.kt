@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -15,6 +16,8 @@ import androidx.paging.map
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.*
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.entities.Characters
@@ -39,6 +42,8 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
 
     private val viewModel: CharacterViewModel by viewModels()
 
+    private lateinit var behavior: BottomSheetBehavior<*>
+
     private lateinit var pagingAdapter: CharacterPagingAdapter
 
     private val footerAdapter: FooterAdapter = FooterAdapter()
@@ -55,6 +60,7 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
         initAdapter()
 
         binding.rvCharacter.adapter = concatAdapter
+        behavior = BottomSheetBehavior.from(binding.favCharacterSheet)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -65,27 +71,12 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                 }
                 launch {
                     pagingAdapter.loadStateFlow.collectLatest {
-                        when(it.source.append) {
+                        when (it.source.append) {
                             is LoadState.Loading -> {
                                 concatAdapter.addAdapter(footerAdapter)
                             }
                             else -> {
                                 concatAdapter.removeAdapter(footerAdapter)
-                            }
-                        }
-                    }
-                }
-                launch {
-                    viewModel.favCharacterFlow.collectLatest {
-                        when(it.status) {
-                            Resource.Status.SUCCESS -> {
-                                Log.d("ssong-develop",it.data.toString())
-                            }
-                            Resource.Status.ERROR -> {
-                                Log.d("ssong-develop","error")
-                            }
-                            Resource.Status.LOADING -> {
-                                Log.d("ssong-develop","loading")
                             }
                         }
                     }

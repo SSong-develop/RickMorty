@@ -16,4 +16,6 @@
     <string name="transition_name">transition_name</string>
 
     <string name="bullet">●</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

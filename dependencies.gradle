@@ -14,6 +14,7 @@ ext.versions = [
         androidXSecurityVersion : '1.0.0',
         androidXDataStoreVersion : '1.0.0',
         androidXPagingVersion: '3.1.1',
+        androidXNavigationVersion: '2.5.2',
 
         // Lab Testing Implementation
         androidXAsyncLayoutInflater : '1.0.0',
