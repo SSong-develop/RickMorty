@@ -20,7 +20,7 @@ interface RickMortyDataStore {
     suspend fun clearFavoriteCharacterId()
 }
 
-class RickMortyDataStoreImpl @Inject constructor(
+internal class RickMortyDataStoreImpl @Inject constructor(
     @ApplicationContext private val context : Context
 ) : RickMortyDataStore {
 

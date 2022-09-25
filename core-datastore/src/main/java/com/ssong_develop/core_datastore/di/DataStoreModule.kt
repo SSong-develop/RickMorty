@@ -14,5 +14,5 @@ abstract class DataStoreModule {
 
     @Binds
     @Singleton
-    abstract fun bindDataStore(rickMortyDataStoreImpl: RickMortyDataStoreImpl): RickMortyDataStore
+    internal abstract fun bindDataStore(rickMortyDataStoreImpl: RickMortyDataStoreImpl): RickMortyDataStore
 }

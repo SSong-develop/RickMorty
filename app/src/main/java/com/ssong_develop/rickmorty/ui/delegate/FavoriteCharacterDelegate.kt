@@ -22,7 +22,7 @@ interface FavoriteCharacterDelegate {
     fun putFavCharacterId(id: Int)
 }
 
-class FavoriteCharacterDelegateImpl @Inject constructor(
+internal class FavoriteCharacterDelegateImpl @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val rickMortyDataStore: RickMortyDataStore,
     @ApplicationScope private val applicationScope: CoroutineScope,
@@ -34,7 +34,7 @@ class FavoriteCharacterDelegateImpl @Inject constructor(
         favoriteCharacterIdFlow
             .map { id ->
                 id?.let { characterRepository.getCharacter(id) } ?: Resource.error(
-                    "Id is Invalide",
+                    "Id is Invalid",
                     null
                 )
             }
