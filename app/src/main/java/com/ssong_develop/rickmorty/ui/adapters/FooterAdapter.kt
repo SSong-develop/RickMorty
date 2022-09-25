@@ -19,7 +19,7 @@ class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolde
 
     private val asyncLayoutInflater = AsyncLayoutInflater(context)
 
-    private val cachedView = Stack<View>()
+    private val cachedLoadingView = Stack<View>()
 
     init {
         repeat(FOOTER_VIEW_COUNT) {
@@ -28,7 +28,7 @@ class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FooterViewHolder {
-        val binding = DataBindingUtil.bind<ItemLoadingFooterBinding>(cachedView.pop().also {
+        val binding = DataBindingUtil.bind<ItemLoadingFooterBinding>(cachedLoadingView.pop().also {
            createAsynchronousLoadingView()
         }) ?: DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -50,7 +50,7 @@ class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolde
             R.layout.item_loading_footer,
             null
         ) { view, _, _ ->
-            cachedView.push(view)
+            cachedLoadingView.push(view)
         }
     }
 }
