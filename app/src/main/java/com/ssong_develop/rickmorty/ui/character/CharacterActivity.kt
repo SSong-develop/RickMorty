@@ -119,6 +119,10 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     }
 
     private fun initRecyclerView() {
-        binding.rvCharacter.adapter = concatAdapter
+        binding.rvCharacter.adapter
+        binding.rvCharacter.apply {
+            adapter = concatAdapter
+            animation = null
+        }
     }
 }

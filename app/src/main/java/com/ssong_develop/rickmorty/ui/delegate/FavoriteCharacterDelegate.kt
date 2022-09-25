@@ -9,6 +9,7 @@ import com.ssong_develop.rickmorty.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface FavoriteCharacterDelegate {
@@ -16,9 +17,9 @@ interface FavoriteCharacterDelegate {
 
     val favCharacterSheetVisibilityFlow: StateFlow<Boolean>
 
-    suspend fun clearFavCharacterId()
+    fun clearFavCharacterId()
 
-    suspend fun putFavCharacterId(id: Int)
+    fun putFavCharacterId(id: Int)
 }
 
 class FavoriteCharacterDelegateImpl @Inject constructor(
@@ -56,11 +57,15 @@ class FavoriteCharacterDelegateImpl @Inject constructor(
             initialValue = false
         )
 
-    override suspend fun clearFavCharacterId() {
-        rickMortyDataStore.clearFavoriteCharacterId()
+    override fun clearFavCharacterId() {
+        applicationScope.launch {
+            rickMortyDataStore.clearFavoriteCharacterId()
+        }
     }
 
-    override suspend fun putFavCharacterId(id: Int) {
-        rickMortyDataStore.putFavoriteCharacterId(id)
+    override fun putFavCharacterId(id: Int) {
+        applicationScope.launch {
+            rickMortyDataStore.putFavoriteCharacterId(id)
+        }
     }
 }

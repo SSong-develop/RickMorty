@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewModel"
+            name="vm"
             type="com.ssong_develop.rickmorty.ui.favorite.viewmodel.FavoriteContractCharacterViewModel" />
     </data>
 
@@ -43,12 +43,28 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:maxLines="1"
+                android:ellipsize="marquee"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/iv_fav_thumbnail_contract"
                 app:layout_constraintStart_toEndOf="@id/iv_fav_thumbnail_contract"
                 app:layout_constraintTop_toTopOf="@id/iv_fav_thumbnail_contract"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_remove"
                 app:layout_constraintHorizontal_bias="0"
                 tools:text="Rick SanChez"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cancel"
+                android:layout_marginEnd="12dp"
+                android:onClick="@{() -> vm.clearFavCharacterId()}"
+                app:layout_constraintStart_toEndOf="@id/tv_fav_name_contract"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

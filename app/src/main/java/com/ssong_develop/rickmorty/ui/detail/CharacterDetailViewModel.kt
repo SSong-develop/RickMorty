@@ -85,14 +85,12 @@ class CharacterDetailViewModel @Inject constructor(
 
     // TODO(change to reactivly)
     fun onClickFavorite() {
-        viewModelScope.launch {
-            if (isFavoriteCharacterStateFlow.value) {
-                clearFavCharacterId()
-            } else {
-                selectCharacterStateFlow.value?.let { favCharacter ->
-                    putFavCharacterId(favCharacter.id)
-                } ?: Log.d("ssong-develop", "문제 발생")
-            }
+        if (isFavoriteCharacterStateFlow.value) {
+            clearFavCharacterId()
+        } else {
+            selectCharacterStateFlow.value?.let { favCharacter ->
+                putFavCharacterId(favCharacter.id)
+            } ?: Log.d("ssong-develop", "문제 발생")
         }
     }
 }

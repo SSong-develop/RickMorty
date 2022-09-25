@@ -44,6 +44,11 @@ class FavoriteContractCharacterFragment : Fragment() {
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        with(binding) {
+            vm = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favoriteCharacter.collectLatest { character ->
