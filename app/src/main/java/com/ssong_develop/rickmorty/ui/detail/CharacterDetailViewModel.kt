@@ -3,19 +3,18 @@ package com.ssong_develop.rickmorty.ui.detail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssong_develop.core_common.Resource
+import com.ssong_develop.core_data.repository.CharacterRepository
+import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.di.IoDispatcher
-import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.entities.Episode
-import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.ui.delegate.FavoriteCharacterDelegate
-import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
-import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

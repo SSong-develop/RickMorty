@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.ssong_develop.core_model.Characters
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
-import com.ssong_develop.rickmorty.entities.Characters
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 
 private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {

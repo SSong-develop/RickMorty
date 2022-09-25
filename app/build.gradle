@@ -55,6 +55,9 @@ dependencies {
 
     implementation(project(":core-ui"))
     implementation(project(":core-common"))
+    implementation(project(":core-data"))
+    implementation(project(":core-datastore"))
+    implementation(project(":core-model"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"
@@ -69,27 +72,13 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidXLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidXLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidXLifecycleVersion"
-    implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.androidXNavigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.androidXNavigationVersion"
 
-
-    // room
-    kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
-    implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
-    implementation "androidx.room:room-ktx:$versions.androidXRoomVersion"
-
-    // DataStore
-    implementation "androidx.datastore:datastore-preferences:$versions.androidXDataStoreVersion"
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
 
     implementation "androidx.asynclayoutinflater:asynclayoutinflater:$versions.androidXAsyncLayoutInflater"
-
-    // network
-    implementation "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.serializationConverterVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.serializationJsonVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttpVersion"
-    implementation "com.squareup.okhttp3:okhttp:$versions.okHttpVersion"
 
     // coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
@@ -110,9 +99,6 @@ dependencies {
 
     // timber
     implementation "com.jakewharton.timber:timber:$versions.timberVersion"
-
-    // gson-converter
-    implementation "com.squareup.retrofit2:converter-gson:$versions.gsonVersion"
 }
 dependencies {
 

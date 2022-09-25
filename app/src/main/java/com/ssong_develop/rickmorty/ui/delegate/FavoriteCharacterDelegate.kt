@@ -1,11 +1,11 @@
 package com.ssong_develop.rickmorty.ui.delegate
 
+import com.ssong_develop.core_common.Resource
+import com.ssong_develop.core_data.repository.CharacterRepository
+import com.ssong_develop.core_datastore.RickMortyDataStore
+import com.ssong_develop.core_model.Characters
 import com.ssong_develop.rickmorty.di.ApplicationScope
 import com.ssong_develop.rickmorty.di.IoDispatcher
-import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.persistence.datastore.RickMortyDataStore
-import com.ssong_develop.rickmorty.repository.CharacterRepository
-import com.ssong_develop.rickmorty.vo.Resource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
@@ -32,7 +32,10 @@ class FavoriteCharacterDelegateImpl @Inject constructor(
     override val favCharacterFlow: Flow<Resource<Characters>> =
         favoriteCharacterIdFlow
             .map { id ->
-                id?.let { characterRepository.getCharacter(id) } ?: Resource.error("Id is Invalide",null)
+                id?.let { characterRepository.getCharacter(id) } ?: Resource.error(
+                    "Id is Invalide",
+                    null
+                )
             }
             .flowOn(ioDispatcher)
             .stateIn(

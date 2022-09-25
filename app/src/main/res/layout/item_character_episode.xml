@@ -7,7 +7,7 @@
 
         <variable
             name="episode"
-            type="com.ssong_develop.rickmorty.entities.Episode" />
+            type="com.ssong_develop.core_model.Episode" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

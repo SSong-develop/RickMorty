@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.ssong_develop.core_common.AutoClearBinding
-import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.FragmentFavoriteExpandCharacterBinding
 import com.ssong_develop.rickmorty.ui.favorite.viewmodel.FavoriteExpandCharacterViewModel
 import com.ssong_develop.rickmorty.utils.PixelRatio

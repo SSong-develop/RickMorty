@@ -11,7 +11,7 @@ import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
 import com.ssong_develop.core_common.toast
-import com.ssong_develop.rickmorty.entities.Status
+import com.ssong_develop.rickmorty.utils.Status
 
 object ViewBinding {
 

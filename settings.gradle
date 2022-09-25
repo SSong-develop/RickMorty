@@ -10,3 +10,7 @@ rootProject.name = "RickMorty"
 include ':app'
 include ':core-ui'
 include ':core-common'
+include ':core-data'
+include ':core-datastore'
+include ':core-database'
+include ':core-model'

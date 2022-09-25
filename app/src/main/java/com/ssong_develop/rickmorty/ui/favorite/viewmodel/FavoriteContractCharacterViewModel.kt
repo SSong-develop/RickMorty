@@ -1,8 +1,8 @@
 package com.ssong_develop.rickmorty.ui.favorite.viewmodel
 
 import androidx.lifecycle.ViewModel
+import com.ssong_develop.core_common.Resource
 import com.ssong_develop.rickmorty.ui.delegate.FavoriteCharacterDelegate
-import com.ssong_develop.rickmorty.vo.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

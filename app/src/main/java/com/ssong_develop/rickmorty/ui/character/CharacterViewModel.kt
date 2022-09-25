@@ -6,9 +6,9 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.ssong_develop.core_data.repository.CharacterRepository
+import com.ssong_develop.core_model.Characters
 import com.ssong_develop.rickmorty.di.IoDispatcher
-import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.repository.CharacterRepository
 import com.ssong_develop.rickmorty.ui.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -31,6 +31,6 @@ class CharacterViewModel @Inject constructor(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
             pagingSourceFactory = { characterRepository.charactersPagingSource() }
         ).flow
-        .cachedIn(viewModelScope)
-        .flowOn(ioDispatcher)
+            .cachedIn(viewModelScope)
+            .flowOn(ioDispatcher)
 }

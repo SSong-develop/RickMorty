@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ItemCharacterEpisodeBinding
-import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeViewHolder
 
 class CharacterEpisodeAdapter(

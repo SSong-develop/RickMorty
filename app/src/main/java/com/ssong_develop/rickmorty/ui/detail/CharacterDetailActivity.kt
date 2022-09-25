@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterDetailBinding
-import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.entities.Episode
 import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeViewHolder
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +37,9 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.
             activity = this@CharacterDetailActivity
             vm = viewModel.apply {
                 if (Build.VERSION.SDK_INT >= 33) {
-                    postCharacter(intent.getParcelableExtra(CHARACTER, Characters::class.java) ?: return)
+                    postCharacter(
+                        intent.getParcelableExtra(CHARACTER, Characters::class.java) ?: return
+                    )
                 } else {
                     postCharacter(intent.getParcelableExtra(CHARACTER) ?: return)
                 }

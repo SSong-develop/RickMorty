@@ -1,34 +1,24 @@
 package com.ssong_develop.rickmorty.ui.character
 
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.ActivityNavigator
-import androidx.navigation.ActivityNavigatorExtras
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_COLLAPSED
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
+import com.ssong_develop.core_model.Characters
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
-import com.ssong_develop.rickmorty.entities.Characters
-import com.ssong_develop.rickmorty.ui.adapters.CharacterListAdapter
 import com.ssong_develop.rickmorty.ui.adapters.CharacterPagingAdapter
 import com.ssong_develop.rickmorty.ui.adapters.FooterAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
-import com.ssong_develop.rickmorty.ui.favorite.fragment.FavoriteContractCharacterFragment
-import com.ssong_develop.rickmorty.ui.favorite.fragment.FavoriteExpandCharacterFragment
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
 import com.ssong_develop.rickmorty.utils.PixelRatio
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,7 +63,8 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     STATE_EXPANDED -> {
-                        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fav_character_sheet) as NavHostFragment
+                        val navHostFragment =
+                            supportFragmentManager.findFragmentById(R.id.fav_character_sheet) as NavHostFragment
                         navHostFragment.navController.navigate(
                             resId = R.id.favoriteExpandCharacterFragment,
                             args = null,
@@ -81,7 +72,8 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
                         )
                     }
                     else -> {
-                        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fav_character_sheet) as NavHostFragment
+                        val navHostFragment =
+                            supportFragmentManager.findFragmentById(R.id.fav_character_sheet) as NavHostFragment
                         navHostFragment.navController.navigate(
                             resId = R.id.favoriteContractCharacterFragment,
                             args = null,

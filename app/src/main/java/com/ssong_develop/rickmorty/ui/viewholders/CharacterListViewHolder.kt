@@ -2,8 +2,8 @@ package com.ssong_develop.rickmorty.ui.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.ssong_develop.core_model.Characters
 import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
-import com.ssong_develop.rickmorty.entities.Characters
 
 class CharacterListViewHolder(
     private val binding: ItemCharacterBinding,

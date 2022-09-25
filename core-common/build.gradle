@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 apply from: "$rootDir/dependencies.gradle"
 
@@ -35,6 +37,14 @@ dependencies {
     implementation "androidx.core:core-ktx:$versions.androidXCoreKtxVersion"
     implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
     implementation "com.google.android.material:material:$versions.materialVersion"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hiltCoreVersion"
+    kapt "androidx.hilt:hilt-compiler:$versions.hiltVersion"
+
+    // coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
 }
 
 dependencies {

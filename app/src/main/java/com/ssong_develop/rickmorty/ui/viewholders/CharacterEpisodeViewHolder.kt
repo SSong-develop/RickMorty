@@ -2,8 +2,8 @@ package com.ssong_develop.rickmorty.ui.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.databinding.ItemCharacterEpisodeBinding
-import com.ssong_develop.rickmorty.entities.Episode
 
 class CharacterEpisodeViewHolder(
     val binding: ItemCharacterEpisodeBinding,
