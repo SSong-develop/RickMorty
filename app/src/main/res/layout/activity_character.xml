@@ -74,26 +74,19 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fav_character_sheet"
-            android:name="com.ssong_develop.rickmorty.ui.favorite.fragment.FavoriteContractCharacterFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="bottom"
             android:layout_marginBottom="?attr/actionBarSize"
+            android:clickable="true"
             android:visibility="@{vm.favCharacterSheetVisibilityFlow ? View.VISIBLE : View.GONE }"
             app:behavior_hideable="false"
             app:behavior_peekHeight="80dp"
             app:behavior_skipCollapsed="true"
-            app:layout_behavior="@string/bottom_sheet_behavior" />
-
-        <ProgressBar
-            android:id="@+id/pb_character"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/app_bar_color"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/swipe_refresh"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/swipe_refresh" />
+            app:defaultNavHost="true"
+            app:layout_behavior="@string/bottom_sheet_behavior"
+            app:navGraph="@navigation/sheet_nav_graph"
+            tools:visibility="gone"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

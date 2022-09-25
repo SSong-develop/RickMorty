@@ -1,13 +1,20 @@
 package com.ssong_develop.rickmorty.ui.character
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.ActivityNavigator
+import androidx.navigation.ActivityNavigatorExtras
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -58,26 +65,28 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
             vm = viewModel
         }
         initAdapter()
+        initRecyclerView()
 
-        binding.rvCharacter.adapter = concatAdapter
         behavior = BottomSheetBehavior.from(binding.favCharacterSheet)
 
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     STATE_EXPANDED -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                binding.favCharacterSheet.id,
-                                FavoriteExpandCharacterFragment.newInstance()
-                            ).commit()
+                        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fav_character_sheet) as NavHostFragment
+                        navHostFragment.navController.navigate(
+                            resId = R.id.favoriteExpandCharacterFragment,
+                            args = null,
+                            navOptions = null,
+                        )
                     }
                     else -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(
-                                binding.favCharacterSheet.id,
-                                FavoriteContractCharacterFragment.newInstance()
-                            ).commit()
+                        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fav_character_sheet) as NavHostFragment
+                        navHostFragment.navController.navigate(
+                            resId = R.id.favoriteContractCharacterFragment,
+                            args = null,
+                            navOptions = null
+                        )
                     }
                 }
             }
@@ -115,5 +124,9 @@ class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate 
     private fun initAdapter() {
         pagingAdapter = CharacterPagingAdapter(this)
         concatAdapter.addAdapter(pagingAdapter)
+    }
+
+    private fun initRecyclerView() {
+        binding.rvCharacter.adapter = concatAdapter
     }
 }

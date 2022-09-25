@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
 import com.ssong_develop.core_common.AutoClearBinding
+import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.FragmentFavoriteContractCharacterBinding
 import com.ssong_develop.rickmorty.ui.favorite.viewmodel.FavoriteContractCharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,9 +48,15 @@ class FavoriteContractCharacterFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favoriteCharacter.collectLatest { character ->
                     character?.let {
-                        binding.test.text = it.name
+                        binding.tvFavNameContract.text = it.name
+                        Glide.with(binding.ivFavThumbnailContract)
+                            .load(it.image)
+                            .into(binding.ivFavThumbnailContract)
                     } ?: run {
-                        binding.test.text = "PLACE HOLDER"
+                        Glide.with(binding.ivFavThumbnailContract)
+                            .load(R.drawable.ic_launcher_foreground)
+                            .into(binding.ivFavThumbnailContract)
+                        binding.tvFavNameContract.text = "PLACE HOLDER"
                     }
                 }
             }

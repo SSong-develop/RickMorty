@@ -13,26 +13,27 @@
         android:background="@color/white"
         tools:context=".ui.favorite.fragment.FavoriteExpandCharacterFragment">
 
-        <ImageView
-            android:id="@+id/test1"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_fav_expand_character"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:scaleType="centerCrop"
+            android:transitionName="test1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/test"
+            app:layout_constraintBottom_toTopOf="@id/tv_fav_expand_character_name"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/test"
+            android:id="@+id/tv_fav_expand_character_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:text="캐릭터 확대 상세 창"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="Rick SanChez"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

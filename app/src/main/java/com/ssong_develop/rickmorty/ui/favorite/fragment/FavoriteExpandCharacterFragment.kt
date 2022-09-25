@@ -54,13 +54,13 @@ class FavoriteExpandCharacterFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.favoriteCharacter.collectLatest { character ->
                     character?.let {
-                        binding.test.text = it.name
-                        Glide.with(binding.test1)
+                        binding.tvFavExpandCharacterName.text = it.name
+                        Glide.with(binding.ivFavExpandCharacter)
                             .load(it.image)
-                            .into(binding.test1)
-                        binding.test1
+                            .into(binding.ivFavExpandCharacter)
+                        binding.ivFavExpandCharacter
                     } ?: run {
-                        binding.test.text = "PLACE HOLDER"
+                        binding.tvFavExpandCharacterName.text = "PLACE HOLDER"
                     }
                 }
             }
