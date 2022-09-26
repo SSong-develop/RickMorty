@@ -8,6 +8,7 @@ class CharacterClient @Inject constructor(
     @ApiResponseFlowCharacterService private val service: CharacterService
 ) {
 
+    // TODO(do not use, we use paging Library)
     fun fetchCharacters(page: Int) = service.fetchCharacters(page)
 
     suspend fun fetchEpisodesCharacters(episodeUrl: String) =

@@ -105,7 +105,4 @@ class CharacterRepository @Inject constructor(
 
     fun charactersPagingSource() = pagingSource
 
-    suspend fun test(
-        page: Int
-    ) = characterDataSource.getCharacter(page)
 }

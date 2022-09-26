@@ -20,11 +20,6 @@ interface CharacterService {
     ): Flow<ApiResponse<Wrapper<Info, Characters>>>
 
     @GET("character")
-    suspend fun getCharacterNetworkResponse(
-        @Query("page") page: Int
-    ): NetworkResponse<Wrapper<Info, Characters>>
-
-    @GET("character")
     suspend fun getCharacters(
         @Query("page") page: Int
     ): Wrapper<Info, Characters>
@@ -38,4 +33,19 @@ interface CharacterService {
     suspend fun fetchEpisodesCharacters(
         @Url url: String
     ): Episode
+
+    @GET("character")
+    suspend fun getCharactersNetworkResponse(
+        @Query("page") page: Int
+    ): NetworkResponse<Wrapper<Info, Characters>>
+
+    @GET("character/{id}")
+    suspend fun getCharacterNetworkResponse(
+        @Path("id") characterId: Int
+    ): NetworkResponse<Characters>
+
+    @GET
+    suspend fun getEpisodesNetworkResponse(
+        @Url url: String
+    ): NetworkResponse<Episode>
 }
