@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.di
+package com.ssong_develop.core_common.di
 
 import javax.inject.Qualifier
 

@@ -37,6 +37,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                             )
                         })
                     }
+                    else -> {}
                 }
             }
         } else {

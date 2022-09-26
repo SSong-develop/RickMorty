@@ -1,13 +1,15 @@
 package com.ssong_develop.core_data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.ssong_develop.core_data.network.calladapter.FlowCallAdapterFactory
+import com.ssong_develop.core_common.di.IoDispatcher
+import com.ssong_develop.core_data.network.calladapter.common.NetworkResponseAdapterFactory
+import com.ssong_develop.core_data.network.calladapter.flow.FlowCallAdapterFactory
 import com.ssong_develop.core_data.network.client.CharacterClient
+import com.ssong_develop.core_data.network.datasource.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.core_data.network.service.CharacterService
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_database.CharacterDao
-import com.ssong_develop.rickmorty.di.IoDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,9 +40,10 @@ object NetworkModule {
             .build()
 
     @ExperimentalSerializationApi
+    @ApiResponseFlowRetrofit
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
+    fun provideApiResponseFlowRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
@@ -49,22 +52,55 @@ object NetworkModule {
             .build()
     }
 
+    @ExperimentalSerializationApi
+    @NetworkResponseRetrofit
     @Provides
     @Singleton
-    fun provideCharacterService(retrofit: Retrofit): CharacterService =
+    fun provideNetworkResponseRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://rickandmortyapi.com/api/")
+            .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .client(provideOkHttpClient())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @ApiResponseFlowCharacterService
+    fun provideApiResponseFlowCharacterService(
+        @ApiResponseFlowRetrofit retrofit: Retrofit
+    ): CharacterService =
         retrofit.create(CharacterService::class.java)
 
     @Provides
     @Singleton
-    fun provideCharacterClient(service: CharacterService) = CharacterClient(service)
+    @NetworkResponseCharacterService
+    fun provideNetworkResponseCharacterService(
+        @NetworkResponseRetrofit retrofit: Retrofit
+    ): CharacterService =
+        retrofit.create(CharacterService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideCharacterClient(
+        @ApiResponseFlowCharacterService service: CharacterService
+    ) = CharacterClient(service)
+
+    @Provides
+    @Singleton
+    fun provideCharacterDataSource(
+        @NetworkResponseCharacterService service: CharacterService
+    ) = CharacterDataSource(service)
 
     @Provides
     @Singleton
     fun provideCharacterRepository(
         client: CharacterClient,
+        dataSource: CharacterDataSource,
         dao: CharacterDao,
         pageDataSource: CharacterPagingSource,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        CharacterRepository(client, dao, pageDataSource, ioDispatcher)
+        CharacterRepository(client, dataSource, dao, pageDataSource, ioDispatcher)
 }

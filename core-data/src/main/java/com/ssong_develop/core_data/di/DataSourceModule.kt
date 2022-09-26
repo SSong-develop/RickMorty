@@ -15,6 +15,6 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideCharacterPagingSource(
-        characterService: CharacterService
+        @ApiResponseFlowCharacterService characterService: CharacterService
     ) = CharacterPagingSource(characterService)
 }

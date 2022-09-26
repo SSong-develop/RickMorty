@@ -1,8 +1,5 @@
 package com.ssong_develop.core_common.di
 
-import com.ssong_develop.rickmorty.di.DefaultDispatcher
-import com.ssong_develop.rickmorty.di.IoDispatcher
-import com.ssong_develop.rickmorty.di.MainDispatcher
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

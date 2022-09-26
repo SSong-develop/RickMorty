@@ -4,8 +4,8 @@ import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.RickMortyDataStore
 import com.ssong_develop.core_model.Characters
-import com.ssong_develop.rickmorty.di.ApplicationScope
-import com.ssong_develop.rickmorty.di.IoDispatcher
+import com.ssong_develop.core_common.di.ApplicationScope
+import com.ssong_develop.core_common.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*

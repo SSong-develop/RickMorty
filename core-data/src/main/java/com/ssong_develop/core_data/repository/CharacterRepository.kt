@@ -2,17 +2,18 @@ package com.ssong_develop.core_data.repository
 
 import androidx.annotation.WorkerThread
 import com.ssong_develop.core_common.Resource
+import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.ApiResponse
 import com.ssong_develop.core_data.ApiSuccessResponse
 import com.ssong_develop.core_data.NetworkBoundResource
 import com.ssong_develop.core_data.network.client.CharacterClient
+import com.ssong_develop.core_data.network.datasource.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.core_database.CharacterDao
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.core_model.base.Info
 import com.ssong_develop.core_model.base.Wrapper
-import com.ssong_develop.rickmorty.di.IoDispatcher
 import com.ssong_develop.rickmorty.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
     private val characterClient: CharacterClient,
+    private val characterDataSource: CharacterDataSource,
     private val characterDao: CharacterDao,
     private val pagingSource: CharacterPagingSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
@@ -102,4 +104,8 @@ class CharacterRepository @Inject constructor(
     }.getOrElse { throwable -> Resource.error("${throwable.message}", null) }
 
     fun charactersPagingSource() = pagingSource
+
+    suspend fun test(
+        page: Int
+    ) = characterDataSource.getCharacter(page)
 }

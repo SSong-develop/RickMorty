@@ -1,6 +1,7 @@
 package com.ssong_develop.core_data.network.service
 
 import com.ssong_develop.core_data.ApiResponse
+import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.core_model.base.Info
@@ -17,6 +18,11 @@ interface CharacterService {
     fun fetchCharacters(
         @Query("page") page: Int
     ): Flow<ApiResponse<Wrapper<Info, Characters>>>
+
+    @GET("character")
+    suspend fun getCharacterNetworkResponse(
+        @Query("page") page: Int
+    ): NetworkResponse<Wrapper<Info, Characters>>
 
     @GET("character")
     suspend fun getCharacters(
