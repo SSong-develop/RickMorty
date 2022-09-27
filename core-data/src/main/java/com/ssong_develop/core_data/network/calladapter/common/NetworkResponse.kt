@@ -5,24 +5,29 @@ import java.io.IOException
 /**
  * TODO(ERROR Handling)
  */
-sealed class NetworkResponse<out T: Any> {
+sealed class NetworkResponse<T> {
     /**
      * Success response with body
      */
-    data class Success<T : Any>(val body: T) : NetworkResponse<T>()
+    data class ApiSuccessResponse<T>(val body: T) : NetworkResponse<T>()
 
     /**
-     * Failure response with body
+     * empty response with body
      */
-    data class ApiError<T : Any>(val body: T, val code: Int) : NetworkResponse<Nothing>()
+    data class ApiEmptyResponse<T>(val body: T? = null) : NetworkResponse<T>()
 
     /**
-     * Network Error
+     * failed response with body
      */
-    data class NetworkError(val error: IOException): NetworkResponse<Nothing>()
+    data class ApiFailureResponse<T>(val errorMessage : String) : NetworkResponse<T>()
 
     /**
-     * For example, json parsing Error...
+     * Network Error , not good to get Any
      */
-    data class UnKnownError(val error: Throwable?): NetworkResponse<Nothing>()
+    data class NetworkError(val error: IOException) : NetworkResponse<Any>()
+
+    /**
+     * For example, json parsing Error... , not good to get Any
+     */
+    data class UnKnownError(val error: Throwable?) : NetworkResponse<Any>()
 }

@@ -20,7 +20,7 @@ ext.versions = [
         androidXAsyncLayoutInflater : '1.0.0',
 
         // network
-        gsonVersion : '2.9.0',
+        gsonVersion : '2.9.1',
         okHttpVersion : '4.10.0',
         retrofitVersion : '2.9.0',
         serializationConverterVersion : '0.8.0',

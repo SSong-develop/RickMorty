@@ -1,12 +1,13 @@
 package com.ssong_develop.core_data.network.calladapter.common
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.IOException
 import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.Converter
 import retrofit2.Response
 
 /**
@@ -20,50 +21,42 @@ internal class NetworkResponseCall<S : Any>(
         return delegate.enqueue(object : Callback<S> {
             override fun onResponse(call: Call<S>, response: Response<S>) {
                 val body = response.body()
-                val code = response.code()
-                val error = response.errorBody()
 
                 if (response.isSuccessful) {
                     if (body != null) {
                         callback.onResponse(
                             this@NetworkResponseCall,
-                            Response.success(NetworkResponse.Success(body))
+                            Response.success(NetworkResponse.ApiSuccessResponse(body))
                         )
                     } else {
                         // Response is successful but the body is null
                         callback.onResponse(
                             this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnKnownError(null))
+                            Response.success(NetworkResponse.ApiEmptyResponse(null))
                         )
                     }
                 } else {
-                    val errorBody = when {
-                        error == null -> null
-                        error.contentLength() == 0L -> null
-                        else -> try {
-                            "error"
-                        } catch (exception: Exception) {
-                            null
-                        }
-                    }
-                    if (errorBody != null) {
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.ApiError(errorBody, code))
-                        )
+                    val message = response.errorBody()?.string()
+                    val errorMessage = if (message.isNullOrEmpty()) {
+                        response.message()
                     } else {
-                        callback.onResponse(
-                            this@NetworkResponseCall,
-                            Response.success(NetworkResponse.UnKnownError(null))
-                        )
+                        message
                     }
+                    callback.onResponse(
+                        this@NetworkResponseCall,
+                        Response.success(NetworkResponse.ApiFailureResponse(errorMessage))
+                    )
                 }
             }
 
             override fun onFailure(call: Call<S>, throwable: Throwable) {
                 val networkResponse = when (throwable) {
-                    is IOException -> NetworkResponse.NetworkError(throwable)
-                    else -> NetworkResponse.UnKnownError(throwable)
+                    is IOException -> {
+                        NetworkResponse.NetworkError(throwable)
+                    }
+                    else -> {
+                        NetworkResponse.UnKnownError(throwable)
+                    }
                 }
                 callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))
             }

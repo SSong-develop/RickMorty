@@ -54,4 +54,6 @@ dependencies {
 
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
+
+    implementation "com.squareup.retrofit2:converter-gson:$versions.gsonVersion"
 }

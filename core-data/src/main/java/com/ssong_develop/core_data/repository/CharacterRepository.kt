@@ -5,7 +5,7 @@ import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.ApiResponse
 import com.ssong_develop.core_data.ApiSuccessResponse
-import com.ssong_develop.core_data.NetworkBoundResource
+import com.ssong_develop.core_data.network.calladapter.flow.NetworkBoundResource
 import com.ssong_develop.core_data.network.client.CharacterClient
 import com.ssong_develop.core_data.network.datasource.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
@@ -104,5 +104,4 @@ class CharacterRepository @Inject constructor(
     }.getOrElse { throwable -> Resource.error("${throwable.message}", null) }
 
     fun charactersPagingSource() = pagingSource
-
 }

@@ -41,13 +41,13 @@ class CharacterViewModel @Inject constructor(
         viewModelScope.launch {
             val response = characterRepository.test(1)
             when(response) {
-                is NetworkResponse.ApiError<*> -> {
+                is NetworkResponse.ApiEmptyResponse<*> -> {
                     Log.d("ssong-develop"," ApiError : ${response.body}")
                 }
                 is NetworkResponse.NetworkError -> {
                     Log.d("ssong-develop","NetworkError")
                 }
-                is NetworkResponse.Success -> {
+                is NetworkResponse.ApiSuccessResponse -> {
                     Log.d("ssong-develop","${response.body}")
                 }
                 is NetworkResponse.UnKnownError -> {
