@@ -6,6 +6,7 @@ import com.ssong_develop.core_datastore.RickMortyDataStore
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_common.di.ApplicationScope
 import com.ssong_develop.core_common.di.IoDispatcher
+import com.ssong_develop.core_data.repository.NetworkResourceCharacterRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
@@ -23,7 +24,7 @@ interface FavoriteCharacterDelegate {
 }
 
 internal class FavoriteCharacterDelegateImpl @Inject constructor(
-    private val characterRepository: CharacterRepository,
+    private val networkResourceCharacterRepository: NetworkResourceCharacterRepository,
     private val rickMortyDataStore: RickMortyDataStore,
     @ApplicationScope private val applicationScope: CoroutineScope,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
@@ -33,7 +34,7 @@ internal class FavoriteCharacterDelegateImpl @Inject constructor(
     override val favCharacterFlow: Flow<Resource<Characters>> =
         favoriteCharacterIdFlow
             .map { id ->
-                id?.let { characterRepository.getCharacter(id) } ?: Resource.error(
+                id?.let { networkResourceCharacterRepository.getCharacter(id) } ?: Resource.error(
                     "Id is Invalid",
                     null
                 )

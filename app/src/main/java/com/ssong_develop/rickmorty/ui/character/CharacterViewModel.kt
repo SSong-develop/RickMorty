@@ -11,6 +11,7 @@ import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
+import com.ssong_develop.core_data.repository.NetworkResourceCharacterRepository
 import com.ssong_develop.rickmorty.ui.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val characterRepository: CharacterRepository,
+    private val networkResourceCharacterRepository: NetworkResourceCharacterRepository,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel(),
@@ -32,28 +33,9 @@ class CharacterViewModel @Inject constructor(
     val pagingCharacterFlow: Flow<PagingData<Characters>> =
         Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            pagingSourceFactory = { characterRepository.charactersPagingSource() }
+            pagingSourceFactory = { networkResourceCharacterRepository.getCharacters() }
         ).flow
             .cachedIn(viewModelScope)
             .flowOn(ioDispatcher)
 
-    init {
-        viewModelScope.launch {
-            val response = characterRepository.test(1)
-            when(response) {
-                is NetworkResponse.ApiEmptyResponse<*> -> {
-                    Log.d("ssong-develop"," ApiError : ${response.body}")
-                }
-                is NetworkResponse.NetworkError -> {
-                    Log.d("ssong-develop","NetworkError")
-                }
-                is NetworkResponse.ApiSuccessResponse -> {
-                    Log.d("ssong-develop","${response.body}")
-                }
-                is NetworkResponse.UnKnownError -> {
-                    Log.d("ssong-develop","UnKnownError")
-                }
-            }
-        }
-    }
 }

@@ -9,6 +9,7 @@ import com.ssong_develop.core_data.network.datasource.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.core_data.network.service.CharacterService
 import com.ssong_develop.core_data.repository.CharacterRepository
+import com.ssong_develop.core_data.repository.NetworkResourceCharacterRepository
 import com.ssong_develop.core_database.CharacterDao
 import dagger.Module
 import dagger.Provides
@@ -97,10 +98,17 @@ object NetworkModule {
     @Singleton
     fun provideCharacterRepository(
         client: CharacterClient,
-        dataSource: CharacterDataSource,
         dao: CharacterDao,
         pageDataSource: CharacterPagingSource,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        CharacterRepository(client, dataSource, dao, pageDataSource, ioDispatcher)
+        CharacterRepository(client, dao, pageDataSource, ioDispatcher)
+
+    @Provides
+    @Singleton
+    fun provideNetworkResourceCharacterRepository(
+        dataSource: CharacterDataSource,
+        pageDataSource: CharacterPagingSource,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ) = NetworkResourceCharacterRepository(dataSource,pageDataSource,ioDispatcher)
 }

@@ -15,7 +15,12 @@ class CharacterPagingSource @Inject constructor(
         private const val STARTING_KEY = 1
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Characters>): Int? = state.anchorPosition
+    override fun getRefreshKey(state: PagingState<Int, Characters>): Int? {
+        return state.anchorPosition?.let { anchorPosition ->
+            val anchorPage = state.closestPageToPosition(anchorPosition)
+            anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
+        }
+    }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Characters> {
         val currentKey = params.key ?: STARTING_KEY

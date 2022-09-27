@@ -1,18 +1,11 @@
 package com.ssong_develop.core_data.network.calladapter.common
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import okhttp3.Request
-import okhttp3.ResponseBody
-import okio.IOException
 import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-/**
- * TODO(ERROR Handling)
- */
 internal class NetworkResponseCall<S : Any>(
     private val delegate: Call<S>
 ) : Call<NetworkResponse<S>> {
@@ -50,15 +43,14 @@ internal class NetworkResponseCall<S : Any>(
             }
 
             override fun onFailure(call: Call<S>, throwable: Throwable) {
-                val networkResponse = when (throwable) {
-                    is IOException -> {
-                        NetworkResponse.NetworkError(throwable)
-                    }
-                    else -> {
-                        NetworkResponse.UnKnownError(throwable)
-                    }
-                }
-                callback.onResponse(this@NetworkResponseCall, Response.success(networkResponse))
+                callback.onResponse(
+                    this@NetworkResponseCall,
+                    Response.success(
+                        NetworkResponse.ApiFailureResponse(
+                            throwable.message ?: "unknown Error"
+                        )
+                    )
+                )
             }
         })
     }

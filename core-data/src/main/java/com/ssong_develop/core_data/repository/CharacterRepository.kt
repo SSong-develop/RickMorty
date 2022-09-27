@@ -21,7 +21,6 @@ import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
     private val characterClient: CharacterClient,
-    private val characterDataSource: CharacterDataSource,
     private val characterDao: CharacterDao,
     private val pagingSource: CharacterPagingSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
