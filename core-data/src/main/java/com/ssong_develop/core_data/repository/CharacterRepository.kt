@@ -1,14 +1,19 @@
 package com.ssong_develop.core_data.repository
 
 import androidx.annotation.WorkerThread
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.ApiResponse
 import com.ssong_develop.core_data.ApiSuccessResponse
+import com.ssong_develop.core_data.di.ApiResponseFlowCharacterService
 import com.ssong_develop.core_data.network.calladapter.flow.NetworkBoundResource
 import com.ssong_develop.core_data.network.client.CharacterClient
 import com.ssong_develop.core_data.network.datasource.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
+import com.ssong_develop.core_data.network.service.CharacterService
 import com.ssong_develop.core_database.CharacterDao
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
@@ -22,7 +27,7 @@ import javax.inject.Inject
 class CharacterRepository @Inject constructor(
     private val characterClient: CharacterClient,
     private val characterDao: CharacterDao,
-    private val pagingSource: CharacterPagingSource,
+    @ApiResponseFlowCharacterService private val characterService: CharacterService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
@@ -102,5 +107,5 @@ class CharacterRepository @Inject constructor(
         Resource.error("${throwable.message}", null)
     }.getOrElse { throwable -> Resource.error("${throwable.message}", null) }
 
-    fun charactersPagingSource() = pagingSource
+    fun charactersPagingSource() = CharacterPagingSource(characterService = characterService)
 }

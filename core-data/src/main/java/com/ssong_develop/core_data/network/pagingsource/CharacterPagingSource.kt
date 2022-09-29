@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ssong_develop.core_data.network.service.CharacterService
 import com.ssong_develop.core_model.Characters
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
@@ -30,6 +31,10 @@ class CharacterPagingSource @Inject constructor(
             characterService.getCharacters(currentKey)
         }.getOrElse { throwable ->
             return LoadResult.Error(throwable)
+        }
+
+        coroutineScope {
+            delay(1000L)
         }
 
         val prevKey = if (currentKey == STARTING_KEY) null else currentKey - 1

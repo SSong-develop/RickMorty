@@ -32,7 +32,7 @@ class CharacterViewModel @Inject constructor(
 
     val pagingCharacterFlow: Flow<PagingData<Characters>> =
         Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 10, enablePlaceholders = true),
             pagingSourceFactory = { networkResourceCharacterRepository.getCharacters() }
         ).flow
             .cachedIn(viewModelScope)

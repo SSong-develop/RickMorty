@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.ui.adapters
+package com.ssong_develop.rickmorty.ui.adapters.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

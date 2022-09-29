@@ -43,6 +43,9 @@ ext.versions = [
         // recyclerView
         recycleViewVersion : '1.2.1',
 
+        // lottie
+        lottieVersion : '5.0.2',
+
         // Unit Test
         truthVersion : '1.0.1',
         jUnitVersion : '4.13.1',

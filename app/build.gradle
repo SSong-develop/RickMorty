@@ -99,6 +99,9 @@ dependencies {
 
     // timber
     implementation "com.jakewharton.timber:timber:$versions.timberVersion"
+
+    // lottie
+    implementation "com.airbnb.android:lottie:$versions.lottieVersion"
 }
 dependencies {
 

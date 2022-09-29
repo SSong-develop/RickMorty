@@ -2,20 +2,22 @@ package com.ssong_develop.core_data.repository
 
 import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.IoDispatcher
+import com.ssong_develop.core_data.di.ApiResponseFlowCharacterService
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
 import com.ssong_develop.core_data.network.datasource.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
+import com.ssong_develop.core_data.network.service.CharacterService
 import com.ssong_develop.core_model.Episode
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class NetworkResourceCharacterRepository @Inject constructor(
     private val dataSource: CharacterDataSource,
-    private val pagingSource: CharacterPagingSource,
+    @ApiResponseFlowCharacterService private val characterService: CharacterService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) {
     // Paging
-    fun getCharacters() = pagingSource
+    fun getCharacters() = CharacterPagingSource(characterService = characterService)
 
     suspend fun getCharacter(id: Int) = runCatching {
         dataSource.getCharacter(id)

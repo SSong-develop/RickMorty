@@ -6,7 +6,6 @@ import com.ssong_develop.core_data.network.calladapter.common.NetworkResponseAda
 import com.ssong_develop.core_data.network.calladapter.flow.FlowCallAdapterFactory
 import com.ssong_develop.core_data.network.client.CharacterClient
 import com.ssong_develop.core_data.network.datasource.CharacterDataSource
-import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.core_data.network.service.CharacterService
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_data.repository.NetworkResourceCharacterRepository
@@ -99,16 +98,16 @@ object NetworkModule {
     fun provideCharacterRepository(
         client: CharacterClient,
         dao: CharacterDao,
-        pageDataSource: CharacterPagingSource,
+        @ApiResponseFlowCharacterService characterService: CharacterService,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) =
-        CharacterRepository(client, dao, pageDataSource, ioDispatcher)
+        CharacterRepository(client, dao, characterService, ioDispatcher)
 
     @Provides
     @Singleton
     fun provideNetworkResourceCharacterRepository(
         dataSource: CharacterDataSource,
-        pageDataSource: CharacterPagingSource,
+        @ApiResponseFlowCharacterService characterService: CharacterService,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) = NetworkResourceCharacterRepository(dataSource,pageDataSource,ioDispatcher)
+    ) = NetworkResourceCharacterRepository(dataSource, characterService, ioDispatcher)
 }
