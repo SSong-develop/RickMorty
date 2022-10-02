@@ -23,5 +23,4 @@ class FavoriteExpandCharacterViewModel @Inject constructor(
             }
         }
     }
-
 }

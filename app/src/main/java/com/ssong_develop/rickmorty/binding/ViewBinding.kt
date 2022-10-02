@@ -16,12 +16,6 @@ import com.ssong_develop.rickmorty.utils.Status
 object ViewBinding {
 
     @JvmStatic
-    @BindingAdapter("toast")
-    fun bindToast(view: View, message: String?) {
-        message?.let { view.context.toast(it) }
-    }
-
-    @JvmStatic
     @BindingAdapter("bind_dot_color")
     fun bindDotColor(view: TextView, status: String) {
         view.setTextColor(ContextCompat.getColor(view.context, Status.color(status)!!))
@@ -65,11 +59,5 @@ object ViewBinding {
                         }
                     }.crossfade(true)
             ).into(view)
-    }
-
-    @JvmStatic
-    @BindingAdapter("visibleGone")
-    fun showHide(view: View, show: Boolean) {
-        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 }
