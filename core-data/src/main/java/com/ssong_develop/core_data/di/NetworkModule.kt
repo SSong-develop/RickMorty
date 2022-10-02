@@ -1,20 +1,14 @@
 package com.ssong_develop.core_data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponseAdapterFactory
 import com.ssong_develop.core_data.network.calladapter.flow.FlowCallAdapterFactory
-import com.ssong_develop.core_data.network.client.CharacterClient
-import com.ssong_develop.core_data.network.datasource.CharacterDataSource
-import com.ssong_develop.core_data.network.service.CharacterService
-import com.ssong_develop.core_data.repository.CharacterRepository
-import com.ssong_develop.core_data.repository.NetworkResourceCharacterRepository
-import com.ssong_develop.core_database.CharacterDao
+import com.ssong_develop.core_data.network.service.CharacterServiceWrapper
+import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -40,20 +34,19 @@ object NetworkModule {
             .build()
 
     @ExperimentalSerializationApi
-    @ApiResponseFlowRetrofit
+    @ResponseNoWrapperRetrofit
     @Provides
     @Singleton
     fun provideApiResponseFlowRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
-            .addCallAdapterFactory(FlowCallAdapterFactory.create())
             .client(provideOkHttpClient())
             .build()
     }
 
     @ExperimentalSerializationApi
-    @NetworkResponseRetrofit
+    @ResponseWrapperRetrofit
     @Provides
     @Singleton
     fun provideNetworkResponseRetrofit(): Retrofit {
@@ -61,53 +54,23 @@ object NetworkModule {
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
             .addCallAdapterFactory(NetworkResponseAdapterFactory())
+            .addCallAdapterFactory(FlowCallAdapterFactory.create())
             .client(provideOkHttpClient())
             .build()
     }
 
     @Provides
     @Singleton
-    @ApiResponseFlowCharacterService
-    fun provideApiResponseFlowCharacterService(
-        @ApiResponseFlowRetrofit retrofit: Retrofit
-    ): CharacterService =
-        retrofit.create(CharacterService::class.java)
+    fun provideResponseNoWrapperCharacterService(
+        @ResponseNoWrapperRetrofit retrofit: Retrofit
+    ): CharacterServiceNoWrapper =
+        retrofit.create(CharacterServiceNoWrapper::class.java)
 
     @Provides
     @Singleton
-    @NetworkResponseCharacterService
     fun provideNetworkResponseCharacterService(
-        @NetworkResponseRetrofit retrofit: Retrofit
-    ): CharacterService =
-        retrofit.create(CharacterService::class.java)
+        @ResponseWrapperRetrofit retrofit: Retrofit
+    ): CharacterServiceWrapper =
+        retrofit.create(CharacterServiceWrapper::class.java)
 
-    @Provides
-    @Singleton
-    fun provideCharacterClient(
-        @ApiResponseFlowCharacterService service: CharacterService
-    ) = CharacterClient(service)
-
-    @Provides
-    @Singleton
-    fun provideCharacterDataSource(
-        @NetworkResponseCharacterService service: CharacterService
-    ) = CharacterDataSource(service)
-
-    @Provides
-    @Singleton
-    fun provideCharacterRepository(
-        client: CharacterClient,
-        dao: CharacterDao,
-        @ApiResponseFlowCharacterService characterService: CharacterService,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) =
-        CharacterRepository(client, dao, characterService, ioDispatcher)
-
-    @Provides
-    @Singleton
-    fun provideNetworkResourceCharacterRepository(
-        dataSource: CharacterDataSource,
-        @ApiResponseFlowCharacterService characterService: CharacterService,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
-    ) = NetworkResourceCharacterRepository(dataSource, characterService, ioDispatcher)
 }

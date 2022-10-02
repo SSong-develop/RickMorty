@@ -10,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.R
@@ -18,6 +22,8 @@ import com.ssong_develop.rickmorty.ui.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.rickmorty.ui.viewholders.CharacterEpisodeViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 @ExperimentalCoroutinesApi
@@ -29,6 +35,8 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.
     }
 
     private val viewModel: CharacterDetailViewModel by viewModels()
+
+    private lateinit var episodeAdapter: CharacterEpisodeAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +52,38 @@ class CharacterDetailActivity : AppCompatActivity(), CharacterEpisodeViewHolder.
                     postCharacter(intent.getParcelableExtra(CHARACTER) ?: return)
                 }
             }
-            episodeAdapter = CharacterEpisodeAdapter(this@CharacterDetailActivity)
+        }
+        initAdapter()
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.characterEpisodesFlow.collectLatest { resources ->
+                    when (resources.status) {
+                        Resource.Status.SUCCESS -> {
+                            binding.pbEpisodeLoading.visibility = View.GONE
+                            episodeAdapter.submitEpisodes(resources.data ?: emptyList())
+                        }
+                        Resource.Status.ERROR -> {
+                            binding.pbEpisodeLoading.visibility = View.VISIBLE
+                        }
+                        Resource.Status.LOADING -> {
+                            binding.pbEpisodeLoading.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
         }
     }
 
     override fun onItemClick(view: View, episode: Episode) {
         Timber.d("todo!")
+    }
+
+    private fun initAdapter() {
+        episodeAdapter = CharacterEpisodeAdapter(this)
+        binding.episodeList.apply {
+            this.adapter = episodeAdapter
+        }
     }
 
     companion object {

@@ -4,8 +4,8 @@ import javax.inject.Qualifier
 
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
-annotation class ApiResponseFlowRetrofit
+annotation class ResponseWrapperRetrofit
 
 @Retention(AnnotationRetention.BINARY)
 @Qualifier
-annotation class NetworkResponseRetrofit
+annotation class ResponseNoWrapperRetrofit

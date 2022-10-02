@@ -12,33 +12,24 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface CharacterService {
+interface CharacterServiceWrapper {
 
+    /**
+     * use ApiResponse for google guide api response wrapper class
+     */
     @GET("character")
-    fun fetchCharacters(
+    fun fetchCharactersApiResponse(
         @Query("page") page: Int
     ): Flow<ApiResponse<Wrapper<Info, Characters>>>
 
-    @GET("character")
-    suspend fun getCharacters(
-        @Query("page") page: Int
-    ): Wrapper<Info, Characters>
-
-    @GET("character/{id}")
-    suspend fun getCharacter(
-        @Path("id") characterId: Int
-    ): Characters
-
     @GET
-    suspend fun fetchEpisodesCharacters(
+    suspend fun fetchEpisodesCharactersApiResponse(
         @Url url: String
-    ): Episode
+    ): Flow<ApiResponse<Episode>>
 
-    @GET("character")
-    suspend fun getCharactersNetworkResponse(
-        @Query("page") page: Int
-    ): NetworkResponse<Wrapper<Info, Characters>>
-
+    /**
+     * use NetworkResponse response wrapper class
+     */
     @GET("character/{id}")
     suspend fun getCharacterNetworkResponse(
         @Path("id") characterId: Int

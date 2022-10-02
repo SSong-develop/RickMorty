@@ -2,15 +2,15 @@ package com.ssong_develop.core_data.network.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ssong_develop.core_data.network.service.CharacterService
+import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
+import com.ssong_develop.core_data.network.service.CharacterServiceWrapper
 import com.ssong_develop.core_model.Characters
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import javax.inject.Inject
 
-// TODO( api가 디자인을 url로 디자인을 해서 url로 페이징을 하는게 좋아보입니다. )
 class CharacterPagingSource @Inject constructor(
-    private val characterService: CharacterService
+    private val characterServiceNoWrapper: CharacterServiceNoWrapper
 ) : PagingSource<Int, Characters>() {
 
     companion object {
@@ -28,19 +28,12 @@ class CharacterPagingSource @Inject constructor(
         val currentKey = params.key ?: STARTING_KEY
 
         val response = runCatching {
-            characterService.getCharacters(currentKey)
+            characterServiceNoWrapper.getCharacters(currentKey)
         }.getOrElse { throwable ->
             return LoadResult.Error(throwable)
         }
 
-        coroutineScope {
-            delay(1000L)
-        }
-
         val prevKey = if (currentKey == STARTING_KEY) null else currentKey - 1
-
-        // next로 다음에 볼 수 있는 url을 넘겨줍니다.
-        // url중 page 변수만 찾아다가 하면 될 거 같은데요??
 
         return runCatching {
             LoadResult.Page(
