@@ -1,5 +1,6 @@
 package com.ssong_develop.core_data.repository
 
+import androidx.paging.*
 import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
@@ -8,10 +9,14 @@ import com.ssong_develop.core_data.network.datasource.client.CharacterDataSource
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
 import com.ssong_develop.core_database.CharacterDao
+import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
+import com.ssong_develop.core_model.asDomainEntity
 import com.ssong_develop.rickmorty.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
@@ -22,10 +27,17 @@ class CharacterRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
+    companion object {
+        private const val CHARACTER_PAGE_SIZE = 10
+    }
+
     /**
      * PagingSource do not create by hilt, because we use refresh, then need to create new PagingSource
      */
-    fun characterPagingSource() = CharacterPagingSource(characterServiceNoWrapper)
+    fun getCharacterStream(): Flow<PagingData<Characters>> = Pager(
+        config = PagingConfig(pageSize = CHARACTER_PAGE_SIZE, enablePlaceholders = true),
+        pagingSourceFactory = { CharacterPagingSource(characterServiceNoWrapper) }
+    ).flow
 
     /**
      * NoWrapper Function Scope
