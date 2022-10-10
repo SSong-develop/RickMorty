@@ -35,6 +35,7 @@ android {
 dependencies {
     implementation(project(":core-model"))
 
+
     // room
     kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
     implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
@@ -47,4 +48,8 @@ dependencies {
 
     // gson
     implementation "com.google.code.gson:gson:$versions.gsonVersion"
+
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
+    implementation "androidx.paging:paging-common-ktx:$versions.androidXPagingVersion"
 }

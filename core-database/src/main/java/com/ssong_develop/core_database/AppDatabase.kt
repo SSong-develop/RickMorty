@@ -9,8 +9,8 @@ import com.ssong_develop.core_database.converter.OriginListConverter
 import com.ssong_develop.core_database.converter.StringListConverter
 
 @Database(
-    entities = [Characters::class],
-    version = 1,
+    entities = [Characters::class, RemoteKeys::class],
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(
@@ -23,4 +23,5 @@ import com.ssong_develop.core_database.converter.StringListConverter
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharacterDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
 }
