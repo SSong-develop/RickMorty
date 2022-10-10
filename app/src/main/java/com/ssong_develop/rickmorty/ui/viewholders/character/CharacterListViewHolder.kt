@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.ui.viewholders
+package com.ssong_develop.rickmorty.ui.viewholders.character
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -7,7 +7,7 @@ import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
 
 class CharacterListViewHolder(
     private val binding: ItemCharacterBinding,
-    private val delegate: Delegate
+    private val itemClickDelegate: ItemClickDelegate
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var characters: Characters
@@ -15,10 +15,6 @@ class CharacterListViewHolder(
     init {
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)
-    }
-
-    interface Delegate {
-        fun onItemClick(view: View, characters: Characters)
     }
 
     fun bind(data: Characters) {
@@ -30,7 +26,7 @@ class CharacterListViewHolder(
     }
 
     override fun onClick(view: View) {
-        delegate.onItemClick(binding.ivCharacterImage, characters)
+        itemClickDelegate.onItemClick(binding.ivCharacterImage, characters)
     }
 
     override fun onLongClick(v: View?): Boolean = false

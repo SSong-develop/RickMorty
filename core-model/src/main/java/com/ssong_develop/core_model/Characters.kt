@@ -71,4 +71,11 @@ data class Characters(
         @SerialName("url")
         val locationUrl: String
     ) : Parcelable
+
+    companion object {
+        const val DEAD_CHARACTER = 1
+        const val ALIVE_CHARACTER = 2
+        const val UNKNOWN_CHARACTER = 3
+        const val EXCEPTIONAL_CHARACTER = 4
+    }
 }

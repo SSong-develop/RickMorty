@@ -11,7 +11,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_EXPANDED
 import com.ssong_develop.core_model.Characters
@@ -20,7 +19,7 @@ import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.ui.adapters.FooterAdapter
 import com.ssong_develop.rickmorty.ui.adapters.paging.CharacterPagingAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
-import com.ssong_develop.rickmorty.ui.viewholders.CharacterListViewHolder
+import com.ssong_develop.rickmorty.ui.viewholders.character.CharacterListViewHolder
 import com.ssong_develop.rickmorty.utils.PixelRatio
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
