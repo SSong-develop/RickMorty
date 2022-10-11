@@ -11,7 +11,6 @@ import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
 import com.ssong_develop.core_database.CharacterDao
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
-import com.ssong_develop.core_model.asDomainEntity
 import com.ssong_develop.rickmorty.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

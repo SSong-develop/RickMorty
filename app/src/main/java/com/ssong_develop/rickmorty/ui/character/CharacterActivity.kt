@@ -19,7 +19,7 @@ import com.ssong_develop.rickmorty.databinding.ActivityCharacterBinding
 import com.ssong_develop.rickmorty.ui.adapters.FooterAdapter
 import com.ssong_develop.rickmorty.ui.adapters.paging.CharacterPagingAdapter
 import com.ssong_develop.rickmorty.ui.detail.CharacterDetailActivity
-import com.ssong_develop.rickmorty.ui.viewholders.character.CharacterListViewHolder
+import com.ssong_develop.rickmorty.ui.viewholders.character.ItemClickDelegate
 import com.ssong_develop.rickmorty.utils.PixelRatio
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CharacterActivity : AppCompatActivity(), CharacterListViewHolder.Delegate {
+class CharacterActivity : AppCompatActivity(), ItemClickDelegate {
 
     private val binding: ActivityCharacterBinding by lazy {
         DataBindingUtil.setContentView(this, R.layout.activity_character)

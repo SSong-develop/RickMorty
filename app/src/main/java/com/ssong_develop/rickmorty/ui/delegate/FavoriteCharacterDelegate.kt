@@ -7,6 +7,7 @@ import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.RickMortyDataStore
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
+import com.ssong_develop.rickmorty.utils.WhileViewSubscribed
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,7 +36,7 @@ internal class FavoriteCharacterDelegateImpl @Inject constructor(
 ) : FavoriteCharacterDelegate,
     RickMortyDataStore by rickMortyDataStore {
 
-    override val favCharacterFlow: Flow<Resource<Characters>> =
+    override val favCharacterFlow: SharedFlow<Resource<Characters>> =
         favoriteCharacterIdFlow
             .flatMapLatest { id ->
                 id?.let {
@@ -46,31 +47,48 @@ internal class FavoriteCharacterDelegateImpl @Inject constructor(
                         null
                     )
                 )
-            }.flowOn(ioDispatcher)
+            }
+            .flowOn(ioDispatcher)
+            .shareIn(
+                scope = applicationScope,
+                started = WhileViewSubscribed,
+                replay = 1
+            )
 
     override val favCharacterSheetVisibilityFlow: StateFlow<Boolean> =
-        favCharacterFlow.map { resource ->
-            when (resource.status) {
-                Resource.Status.SUCCESS -> true
-                else -> false
+        favCharacterFlow
+            .map { resource ->
+                when (resource.status) {
+                    Resource.Status.SUCCESS -> true
+                    else -> false
+                }
             }
-        }.stateIn(
-            scope = applicationScope,
-            started = SharingStarted.Eagerly,
-            initialValue = false
-        )
+            .stateIn(
+                scope = applicationScope,
+                started = WhileViewSubscribed,
+                initialValue = false
+            )
 
     override val favCharacterEpisodeFlow: Flow<List<Resource<Episode>>> =
-        favCharacterFlow.flatMapLatest { resource ->
-            when (resource.status) {
-                Resource.Status.SUCCESS -> {
-                    characterRepository.getEpisodesNetworkResponse(resource.data?.episode ?: emptyList())
-                }
-                else -> {
-                    flow{ emit(listOf(Resource.loading(null))) }
+        favCharacterFlow
+            .flatMapLatest { resource ->
+                when (resource.status) {
+                    Resource.Status.SUCCESS -> {
+                        characterRepository.getEpisodesNetworkResponse(
+                            resource.data?.episode ?: emptyList()
+                        )
+                    }
+                    else -> {
+                        flow { emit(listOf(Resource.loading(null))) }
+                    }
                 }
             }
-        }.flowOn(ioDispatcher)
+            .flowOn(ioDispatcher)
+            .shareIn(
+                scope = applicationScope,
+                started = WhileViewSubscribed,
+                replay = 1
+            )
 
     override fun clearFavCharacterId() {
         applicationScope.launch {

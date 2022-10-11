@@ -13,6 +13,7 @@ import com.ssong_develop.core_model.Characters.Companion.UNKNOWN_CHARACTER
 import com.ssong_develop.rickmorty.R
 import com.ssong_develop.rickmorty.databinding.ItemCharacterBinding
 import com.ssong_develop.rickmorty.ui.viewholders.character.CharacterListViewHolder
+import com.ssong_develop.rickmorty.ui.viewholders.character.ItemClickDelegate
 import com.ssong_develop.rickmorty.utils.Status
 
 private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {
@@ -24,38 +25,18 @@ private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Character
 }
 
 class CharacterPagingAdapter(
-    private val delegate: CharacterListViewHolder.Delegate
+    private val delegate: ItemClickDelegate
 ) : PagingDataAdapter<Characters, CharacterListViewHolder>(
     characterDiffItemCallback
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            DEAD_CHARACTER -> {
-                val binding: ItemCharacterBinding =
-                    DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
-                return CharacterListViewHolder(binding, delegate)
-            }
-            ALIVE_CHARACTER -> {
-                val binding: ItemCharacterBinding =
-                    DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
-                return CharacterListViewHolder(binding, delegate)
-            }
-            UNKNOWN_CHARACTER -> {
-                val binding: ItemCharacterBinding =
-                    DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
-                return CharacterListViewHolder(binding, delegate)
-            }
-            else -> {
-                throw IllegalArgumentException("No Type")
-            }
-        }
+        val binding: ItemCharacterBinding =
+            DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
+        return CharacterListViewHolder(binding, delegate)
     }
 
     override fun onBindViewHolder(holder: CharacterListViewHolder, position: Int) {
-        when (holder) {
-
-        }
         getItem(position)?.let {
             holder.bind(it)
         }
