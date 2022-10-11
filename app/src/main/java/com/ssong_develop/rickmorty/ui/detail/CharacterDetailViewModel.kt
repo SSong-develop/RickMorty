@@ -41,9 +41,10 @@ class CharacterDetailViewModel @Inject constructor(
         MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     val characterEpisodesFlow: StateFlow<Resource<List<Episode>>> =
-        _characterEpisodeSharedFlow.flatMapLatest { episode ->
-            repository.getEpisodes(episode)
-        }
+        _characterEpisodeSharedFlow
+            .flatMapLatest { episode ->
+                repository.getEpisodes(episode)
+            }
             .flowOn(ioDispatcher)
             .stateIn(
                 scope = viewModelScope,
