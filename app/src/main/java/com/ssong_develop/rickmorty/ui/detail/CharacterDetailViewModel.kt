@@ -9,6 +9,7 @@ import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.ui.delegate.FavoriteCharacterDelegate
+import com.ssong_develop.rickmorty.utils.WhileViewSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,18 +28,18 @@ class CharacterDetailViewModel @Inject constructor(
     FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
     private val _selectCharacterSharedFlow: MutableSharedFlow<Characters> =
-        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
+    private val _characterEpisodeSharedFlow: MutableSharedFlow<List<String>> =
+        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     val selectCharacterStateFlow: StateFlow<Characters?> =
         _selectCharacterSharedFlow
             .stateIn(
                 scope = viewModelScope,
-                started = SharingStarted.Eagerly,
+                started = Eagerly,
                 initialValue = null
             )
-
-    private val _characterEpisodeSharedFlow: MutableSharedFlow<List<String>> =
-        MutableSharedFlow(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     val characterEpisodesFlow: StateFlow<Resource<List<Episode>>> =
         _characterEpisodeSharedFlow
@@ -48,7 +49,7 @@ class CharacterDetailViewModel @Inject constructor(
             .flowOn(ioDispatcher)
             .stateIn(
                 scope = viewModelScope,
-                started = Eagerly,
+                started = WhileViewSubscribed,
                 initialValue = Resource.loading(emptyList())
             )
 
@@ -69,13 +70,13 @@ class CharacterDetailViewModel @Inject constructor(
         }
     }.stateIn(
         scope = viewModelScope,
-        started = Eagerly,
+        started = WhileViewSubscribed,
         initialValue = false
     )
 
     fun postCharacter(character: Characters) {
-        _characterEpisodeSharedFlow.tryEmit(character.episode)
         _selectCharacterSharedFlow.tryEmit(character)
+        _characterEpisodeSharedFlow.tryEmit(character.episode)
     }
 
     // TODO(change to reactivly)
