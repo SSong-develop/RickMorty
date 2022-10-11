@@ -1,7 +1,7 @@
 package com.ssong_develop.core_datastore.di
 
-import com.ssong_develop.core_datastore.RickMortyDataStore
-import com.ssong_develop.core_datastore.RickMortyDataStoreImpl
+import com.ssong_develop.core_datastore.DataStoreRepository
+import com.ssong_develop.core_datastore.DataStoreRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,5 +14,5 @@ abstract class DataStoreModule {
 
     @Binds
     @Singleton
-    internal abstract fun bindDataStore(rickMortyDataStoreImpl: RickMortyDataStoreImpl): RickMortyDataStore
+    internal abstract fun bindDataStore(rickMortyDataStoreImpl: DataStoreRepositoryImpl): DataStoreRepository
 }

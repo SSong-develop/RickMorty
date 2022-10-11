@@ -4,7 +4,7 @@ import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.ApplicationScope
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.repository.CharacterRepository
-import com.ssong_develop.core_datastore.RickMortyDataStore
+import com.ssong_develop.core_datastore.DataStoreRepository
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.rickmorty.utils.WhileViewSubscribed
@@ -30,11 +30,11 @@ interface FavoriteCharacterDelegate {
 @ExperimentalCoroutinesApi
 internal class FavoriteCharacterDelegateImpl @Inject constructor(
     private val characterRepository: CharacterRepository,
-    private val rickMortyDataStore: RickMortyDataStore,
+    private val dataStoreRepository: DataStoreRepository,
     @ApplicationScope private val applicationScope: CoroutineScope,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : FavoriteCharacterDelegate,
-    RickMortyDataStore by rickMortyDataStore {
+    DataStoreRepository by dataStoreRepository {
 
     override val favCharacterFlow: SharedFlow<Resource<Characters>> =
         favoriteCharacterIdFlow
@@ -92,13 +92,13 @@ internal class FavoriteCharacterDelegateImpl @Inject constructor(
 
     override fun clearFavCharacterId() {
         applicationScope.launch {
-            rickMortyDataStore.clearFavoriteCharacterId()
+            dataStoreRepository.clearFavoriteCharacterId()
         }
     }
 
     override fun putFavCharacterId(id: Int) {
         applicationScope.launch {
-            rickMortyDataStore.putFavoriteCharacterId(id)
+            dataStoreRepository.putFavoriteCharacterId(id)
         }
     }
 }

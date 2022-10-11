@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-interface RickMortyDataStore {
+interface DataStoreRepository {
 
     val favoriteCharacterIdFlow : Flow<Int?>
 
@@ -20,9 +20,9 @@ interface RickMortyDataStore {
     suspend fun clearFavoriteCharacterId()
 }
 
-internal class RickMortyDataStoreImpl @Inject constructor(
+internal class DataStoreRepositoryImpl @Inject constructor(
     @ApplicationContext private val context : Context
-) : RickMortyDataStore {
+) : DataStoreRepository {
 
     companion object {
         private val PREFERENCES_FAVORITE_CHARACTER_ID = intPreferencesKey("favorite_character_id")
