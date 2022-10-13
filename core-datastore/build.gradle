@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id ("com.google.protobuf") version "0.8.16"
 }
 
 android {
@@ -32,11 +33,33 @@ android {
     }
 }
 
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.19.4"
+    }
+
+    generateProtoTasks {
+        all().each { tasks ->
+            tasks.builtins {
+                java {
+                    "lite"
+                }
+                kotlin {
+                    "lite"
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(project(":core-common"))
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:$versions.androidXDataStoreVersion"
+
+    implementation("com.google.protobuf:protobuf-kotlin-lite:3.21.1")
+    implementation("androidx.datastore:datastore:1.0.0")
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
