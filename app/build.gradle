@@ -102,6 +102,8 @@ dependencies {
 
     // lottie
     implementation "com.airbnb.android:lottie:$versions.lottieVersion"
+
+    implementation "com.google.protobuf:protobuf-kotlin-lite:3.21.1"
 }
 dependencies {
 
