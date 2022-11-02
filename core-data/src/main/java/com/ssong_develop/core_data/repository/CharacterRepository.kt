@@ -15,6 +15,7 @@ import com.ssong_develop.rickmorty.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -36,7 +37,9 @@ class CharacterRepository @Inject constructor(
     fun getCharacterStream(): Flow<PagingData<Characters>> = Pager(
         config = PagingConfig(pageSize = CHARACTER_PAGE_SIZE, enablePlaceholders = true),
         pagingSourceFactory = { CharacterPagingSource(characterServiceNoWrapper) }
-    ).flow
+    )
+        .flow
+        .flowOn(ioDispatcher)
 
     /**
      * NoWrapper Function Scope
@@ -51,7 +54,7 @@ class CharacterRepository @Inject constructor(
                 Resource.error(msg = throwable.message.toString(), data = null)
             }
         )
-    }
+    }.flowOn(ioDispatcher)
 
     fun getEpisodes(urls: List<String>) = flow {
         emit(
@@ -63,7 +66,7 @@ class CharacterRepository @Inject constructor(
                 Resource.error(throwable.message.toString(), emptyList())
             }
         )
-    }
+    }.flowOn(ioDispatcher)
 
     /**
      * Wrapper Function Scope
@@ -88,7 +91,7 @@ class CharacterRepository @Inject constructor(
                 Resource.error(throwable.message.toString(), null)
             }
         )
-    }
+    }.flowOn(ioDispatcher)
 
     fun getEpisodesNetworkResponse(urls: List<String>) = flow {
         val apiSuccessEpisodes = mutableListOf<Resource<Episode>>()
@@ -119,5 +122,5 @@ class CharacterRepository @Inject constructor(
         } else {
             emit(apiSuccessEpisodes)
         }
-    }
+    }.flowOn(ioDispatcher)
 }

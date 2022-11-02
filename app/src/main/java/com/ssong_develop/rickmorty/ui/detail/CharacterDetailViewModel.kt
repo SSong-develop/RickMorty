@@ -22,8 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val repository: CharacterRepository,
-    private val favoriteCharacterDelegate: FavoriteCharacterDelegate,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(),
     FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
@@ -46,7 +45,6 @@ class CharacterDetailViewModel @Inject constructor(
             .flatMapLatest { episode ->
                 repository.getEpisodes(episode)
             }
-            .flowOn(ioDispatcher)
             .stateIn(
                 scope = viewModelScope,
                 started = WhileViewSubscribed,

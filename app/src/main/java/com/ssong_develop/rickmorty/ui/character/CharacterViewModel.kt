@@ -19,14 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository,
-    private val favoriteCharacterDelegate: FavoriteCharacterDelegate,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(),
     FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
     val pagingCharacterFlow: Flow<PagingData<Characters>> =
         characterRepository.getCharacterStream()
             .cachedIn(viewModelScope)
-            .flowOn(ioDispatcher)
 
 }
