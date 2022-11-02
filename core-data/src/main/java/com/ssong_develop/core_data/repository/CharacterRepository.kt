@@ -1,6 +1,8 @@
 package com.ssong_develop.core_data.repository
 
-import androidx.paging.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
@@ -16,7 +18,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
@@ -105,7 +106,7 @@ class CharacterRepository @Inject constructor(
                         apiSuccessEpisodes.add(Resource.success(it.body))
                     }
                     is NetworkResponse.ApiFailureResponse -> {
-                        apiErrorEpisodes.add(Resource.error("UnKnown Error",null))
+                        apiErrorEpisodes.add(Resource.error("UnKnown Error", null))
                     }
                     is NetworkResponse.ApiSuccessResponse -> {
                         apiSuccessEpisodes.add(Resource.success(it.body))

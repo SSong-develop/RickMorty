@@ -1,36 +1,27 @@
 plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
-    id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.30'
 }
 apply from: "$rootDir/dependencies.gradle"
 
 android {
+    namespace 'com.ssong_develop.feature_character'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.ssong_develop.rickmorty"
         minSdk 26
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-            returnDefaultValues = true
         }
     }
     compileOptions {
@@ -44,11 +35,6 @@ android {
         viewBinding = true
         dataBinding = true
     }
-    sourceSets {
-        androidTest.java.srcDirs += "src/test-common/java"
-        test.java.srcDirs += "src/test-common/java"
-    }
-    namespace 'com.ssong_develop.rickmorty'
 }
 
 dependencies {
@@ -58,7 +44,6 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-datastore"))
     implementation(project(":core-model"))
-    implementation(project(":feature-character"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"
@@ -79,12 +64,15 @@ dependencies {
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
 
-    implementation "androidx.asynclayoutinflater:asynclayoutinflater:$versions.androidXAsyncLayoutInflater"
-
     // coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$versions.coroutineVersion"
+
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:$versions.androidXAsyncLayoutInflater"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hiltCoreVersion"
+    kapt "androidx.hilt:hilt-compiler:$versions.hiltVersion"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
@@ -92,32 +80,4 @@ dependencies {
 
     // recyclerview
     implementation "androidx.recyclerview:recyclerview:$versions.recycleViewVersion"
-
-    // hilt
-    implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$versions.hiltCoreVersion"
-    kapt "androidx.hilt:hilt-compiler:$versions.hiltVersion"
-
-    // timber
-    implementation "com.jakewharton.timber:timber:$versions.timberVersion"
-
-    // lottie
-    implementation "com.airbnb.android:lottie:$versions.lottieVersion"
-}
-dependencies {
-
-    testImplementation "junit:junit:$versions.jUnitVersion"
-    testImplementation "app.cash.turbine:turbine:$versions.turbinVersion"
-    testImplementation "androidx.test:core:$versions.androidxTestVersion"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockitoKotlinVersion"
-    testImplementation "org.mockito:mockito-inline:$versions.mockitoInlineVersion"
-    androidTestImplementation "androidx.test.ext:junit:$versions.androidxTestJunitVersion"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoVersion"
-    androidTestImplementation "com.google.truth:truth:$versions.truthVersion"
-    androidTestImplementation "com.android.support.test:runner:$versions.androidTestRunnerVersion"
-    testImplementation "androidx.arch.core:core-testing:$versions.archComponentVersion"
-
-    testImplementation "com.squareup.okhttp3:mockwebserver:$versions.okHttpVersion"
-    androidTestImplementation "com.google.dagger:hilt-android-testing:$versions.hiltCoreVersion"
-    kaptAndroidTest "com.google.dagger:hilt-compiler:$versions.hiltCoreVersion"
 }

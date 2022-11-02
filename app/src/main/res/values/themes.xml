@@ -13,19 +13,4 @@
         <item name="android:statusBarColor" tools:targetApi="l">@color/app_bar_color</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="BlackColorTextView" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:fontFamily">@font/rickandmorty</item>
-    </style>
-
-    <style name="GrayColorTextView" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/gray</item>
-        <item name="android:fontFamily">@font/rickandmorty</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.CardView" parent="">
-        <item name="cornerFamilyTopRight">cut</item>
-        <item name="cornerSizeTopRight">30%</item>
-    </style>
 </resources>

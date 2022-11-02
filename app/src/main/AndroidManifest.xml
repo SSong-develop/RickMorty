@@ -15,7 +15,7 @@
             android:name=".ui.detail.CharacterDetailActivity"
             android:exported="true" />
         <activity
-            android:name=".ui.character.CharacterActivity"
+            android:name=".CharacterActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

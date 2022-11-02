@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/core-datastore" />
             <option value="$PROJECT_DIR$/core-model" />
             <option value="$PROJECT_DIR$/core-ui" />
+            <option value="$PROJECT_DIR$/feature-character" />
           </set>
         </option>
       </GradleProjectSettings>

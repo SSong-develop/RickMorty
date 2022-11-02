@@ -1,0 +1,20 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="character">Character</string>
+    <string name="location">Location</string>
+    <string name="episode">Episode</string>
+
+    <string name="location_title">Last known location</string>
+    <string name="gender_title">Gender</string>
+    <string name="species_title">Species</string>
+    <string name="episode_title">Episode</string>
+
+    <string name="transition_theme">transition_theme</string>
+
+    <string name="transition_image">transition_image</string>
+    <string name="transition_name">transition_name</string>
+
+    <string name="bullet">●</string>
+</resources>
