@@ -1,6 +1,7 @@
 package com.ssong_develop.feature_character.detail
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssong_develop.core_common.Resource
@@ -19,19 +20,18 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val repository: CharacterRepository,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(),
     FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val _selectCharacterSharedFlow: MutableSharedFlow<Characters> =
-        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val characterState = savedStateHandle.getStateFlow<Characters?>("character",null)
 
-    private val _characterEpisodeSharedFlow: MutableSharedFlow<List<String>> =
-        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val characterEpisodeState = characterState.filterNotNull().map { it.episode }
 
     val selectCharacterStateFlow: StateFlow<Characters?> =
-        _selectCharacterSharedFlow
+        characterState
             .stateIn(
                 scope = viewModelScope,
                 started = Eagerly,
@@ -39,7 +39,7 @@ class CharacterDetailViewModel @Inject constructor(
             )
 
     val characterEpisodesFlow: StateFlow<Resource<List<Episode>>> =
-        _characterEpisodeSharedFlow
+        characterEpisodeState
             .flatMapLatest { episode ->
                 repository.getEpisodes(episode)
             }
@@ -69,11 +69,6 @@ class CharacterDetailViewModel @Inject constructor(
         started = WhileViewSubscribed,
         initialValue = false
     )
-
-    fun postCharacter(character: Characters) {
-        _selectCharacterSharedFlow.tryEmit(character)
-        _characterEpisodeSharedFlow.tryEmit(character.episode)
-    }
 
     // TODO(change to reactivly)
     fun onClickFavorite() {

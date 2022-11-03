@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
@@ -66,6 +67,10 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
                     }
                 }
             }
+        }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

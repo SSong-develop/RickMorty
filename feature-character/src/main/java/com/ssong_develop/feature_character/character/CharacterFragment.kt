@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_model.Characters
@@ -82,7 +83,9 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     override fun onItemClick(view: View, characters: Characters) {
-        TODO("Not yet implemented")
+        val bundle = Bundle()
+        bundle.putParcelable("character",characters)
+        findNavController().navigate(R.id.action_characterFragment_to_characterDetailFragment,bundle)
     }
 
     private fun initAdapter() {

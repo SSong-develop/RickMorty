@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/character_nav_graph"
     app:startDestination="@id/characterFragment">
-
     <fragment
         android:id="@+id/characterFragment"
         android:name="com.ssong_develop.feature_character.character.CharacterFragment"
@@ -15,5 +14,9 @@
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="com.ssong_develop.feature_character.detail.CharacterDetailFragment"
-        android:label="CharacterDetailFragment" />
+        android:label="CharacterDetailFragment" >
+        <argument
+            android:name="character"
+            app:argType="com.ssong_develop.core_model.Characters" />
+    </fragment>
 </navigation>
