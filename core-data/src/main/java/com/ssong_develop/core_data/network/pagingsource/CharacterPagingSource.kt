@@ -36,11 +36,19 @@ class CharacterPagingSource @Inject constructor(
         val prevKey = if (currentKey == STARTING_KEY) null else currentKey - 1
 
         return runCatching {
-            LoadResult.Page(
-                data = response.results,
-                prevKey = prevKey,
-                nextKey = currentKey + 1
-            )
+            if (response.results.isEmpty()) {
+                LoadResult.Page(
+                    data = emptyList<Characters>(),
+                    prevKey = prevKey,
+                    nextKey = null
+                )
+            } else {
+                LoadResult.Page(
+                    data = response.results,
+                    prevKey = prevKey,
+                    nextKey = currentKey + 1
+                )
+            }
         }.getOrElse { throwable ->
             LoadResult.Error(throwable)
         }

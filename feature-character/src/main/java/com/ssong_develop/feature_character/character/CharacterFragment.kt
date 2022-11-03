@@ -62,6 +62,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                     }
                 }
                 launch {
+                    // TODO (고쳐야함)
                     pagingAdapter.loadStateFlow.collectLatest {
                         when (it.source.append) {
                             is LoadState.Loading -> {

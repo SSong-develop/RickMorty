@@ -38,9 +38,7 @@ class CharacterRepository @Inject constructor(
     fun getCharacterStream(): Flow<PagingData<Characters>> = Pager(
         config = PagingConfig(pageSize = CHARACTER_PAGE_SIZE, enablePlaceholders = true),
         pagingSourceFactory = { CharacterPagingSource(characterServiceNoWrapper) }
-    )
-        .flow
-        .flowOn(ioDispatcher)
+    ).flow.flowOn(ioDispatcher)
 
     /**
      * NoWrapper Function Scope
