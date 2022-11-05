@@ -21,6 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="retry"
+            android:textColor="@color/white"
+            app:backgroundTint="@color/app_bar_color"
             android:onClick="@{_ -> retryEvent.invoke()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
