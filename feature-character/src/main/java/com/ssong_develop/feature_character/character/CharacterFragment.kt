@@ -26,6 +26,11 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterFragment : Fragment(), ItemClickDelegate {
+
+    companion object {
+        private const val CHARACTER_KEY = "character"
+    }
+
     private val viewModel: CharacterViewModel by viewModels()
 
     private lateinit var binding: FragmentCharacterBinding
@@ -72,7 +77,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                 }
                 launch {
                     viewModel.uiEventState.collectLatest { uiEvent ->
-                        when(uiEvent) {
+                        when (uiEvent) {
                             CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
                             CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
                             CharacterViewModel.CharacterUiEvent.Favorite -> navigateToFavoriteCharacter()
@@ -85,8 +90,11 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     override fun onItemClick(view: View, characters: Characters) {
         val bundle = Bundle()
-        bundle.putParcelable("character",characters)
-        findNavController().navigate(R.id.action_characterFragment_to_characterDetailFragment,bundle)
+        bundle.putParcelable(CHARACTER_KEY, characters)
+        findNavController().navigate(
+            R.id.action_characterFragment_to_characterDetailFragment,
+            bundle
+        )
     }
 
     private fun initDataBinding() {
@@ -110,7 +118,10 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     private fun navigateToFavoriteCharacter() {
         val bundle = Bundle()
-        bundle.putParcelable("character",viewModel.favoriteCharacterState.value)
-        findNavController().navigate(R.id.action_characterFragment_to_characterDetailFragment, bundle)
+        bundle.putParcelable(CHARACTER_KEY, viewModel.favoriteCharacterState.value)
+        findNavController().navigate(
+            R.id.action_characterFragment_to_characterDetailFragment,
+            bundle
+        )
     }
 }

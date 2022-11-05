@@ -1,5 +1,6 @@
 package com.ssong_develop.feature_character.detail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,10 +10,9 @@ import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -23,6 +23,10 @@ class CharacterDetailViewModel @Inject constructor(
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
+    companion object {
+        private const val CHARACTER_KEY = "character"
+    }
+
     private val _uiEventState = MutableSharedFlow<CharacterDetailUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val uiEventState = _uiEventState.asSharedFlow()
 
@@ -30,7 +34,7 @@ class CharacterDetailViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        savedStateHandle.get<Characters>("character")?.run {
+        savedStateHandle.get<Characters>(CHARACTER_KEY)?.run {
             updateCharacter(this)
             getCharacterEpisode(episode)
         }
@@ -92,7 +96,7 @@ class CharacterDetailViewModel @Inject constructor(
         if (isFavoriteCharacterState.value) {
             clearFavCharacter()
         } else {
-            uiState.value.character?.let { favCharacter ->
+            _uiState.value.character?.let { favCharacter ->
                 putFavCharacter(favCharacter)
             }
         }
@@ -106,6 +110,5 @@ class CharacterDetailViewModel @Inject constructor(
 data class CharacterDetailUiState(
     val character: Characters? = null,
     val characterEpisode: List<Episode> = emptyList(),
-    val isFavoriteCharacter: Boolean = false,
     val isEpisodeLoading: Boolean = false,
 )
