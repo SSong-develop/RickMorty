@@ -93,7 +93,7 @@
                 android:layout_height="200dp"
                 android:layout_marginBottom="24dp"
                 android:scaleType="centerCrop"
-                android:transitionName="@string/transition_image"
+                android:transitionName="@{@string/characterImageTransition(String.valueOf(vm.uiState.character.id))}"
                 android:translationZ="100dp"
                 app:layout_constraintBottom_toBottomOf="@id/header"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -113,8 +113,8 @@
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                android:transitionName="@string/transition_name"
                 android:translationZ="100dp"
+                android:transitionName="@{@string/characterNameTransition(String.valueOf(vm.uiState.character.name))}"
                 app:layout_constraintBottom_toBottomOf="@id/header"
                 app:layout_constraintStart_toStartOf="@id/header"
                 tools:text="Rick" />
@@ -245,17 +245,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/episode_title" />
-
-            <!--            <ProgressBar-->
-            <!--                android:id="@+id/pb_episode_loading"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:indeterminateTint="@color/app_bar_color"-->
-            <!--                android:visibility="@{vm.uiState.isEpisodeLoading ? View.VISIBLE : View.GONE}"-->
-            <!--                android:layout_marginBottom="8dp"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

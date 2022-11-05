@@ -4,5 +4,11 @@ import android.view.View
 import com.ssong_develop.core_model.Characters
 
 interface ItemClickDelegate {
-    fun onItemClick(view: View, characters: Characters)
+    fun onItemClick(
+        characterImageView: View,
+        characterNameView: View,
+        characterImageTransitionName: String,
+        characterNameTransitionName: String,
+        characters: Characters
+    )
 }

@@ -1,6 +1,7 @@
 package com.ssong_develop.core_model
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -8,6 +9,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Keep
 @Serializable
 @Parcelize
 @Entity(tableName = "characters_table")

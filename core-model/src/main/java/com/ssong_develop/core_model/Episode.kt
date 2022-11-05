@@ -1,5 +1,6 @@
 package com.ssong_develop.core_model
 
+import androidx.annotation.Keep
 import androidx.room.PrimaryKey
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -1,6 +1,7 @@
 package com.ssong_develop.feature_character.detail
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,12 +37,12 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_character_detail, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character_detail, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
         initDataBinding()
         initAdapter()
         initRecyclerView()

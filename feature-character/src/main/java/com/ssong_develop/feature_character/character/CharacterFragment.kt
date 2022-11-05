@@ -1,15 +1,18 @@
 package com.ssong_develop.feature_character.character
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.ssong_develop.core_model.Characters
@@ -42,13 +45,20 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        postponeEnterTransition()
         initDataBinding()
         initAdapter()
         initRecyclerView()
+
+        (binding.root.parent as? ViewGroup)?.doOnPreDraw {
+            startPostponedEnterTransition()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -88,12 +98,24 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         }
     }
 
-    override fun onItemClick(view: View, characters: Characters) {
+    override fun onItemClick(
+        characterImageView: View,
+        characterNameView: View,
+        characterImageTransitionName: String,
+        characterNameTransitionName: String,
+        characters: Characters
+    ) {
         val bundle = Bundle()
         bundle.putParcelable(CHARACTER_KEY, characters)
+        val extras = FragmentNavigatorExtras(
+            characterImageView to characterImageTransitionName,
+            characterNameView to characterNameTransitionName
+        )
         findNavController().navigate(
             R.id.action_characterFragment_to_characterDetailFragment,
-            bundle
+            args = bundle,
+            navOptions = null,
+            navigatorExtras = extras
         )
     }
 

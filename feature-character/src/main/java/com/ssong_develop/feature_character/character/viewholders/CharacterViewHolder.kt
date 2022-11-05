@@ -26,7 +26,13 @@ class CharacterViewHolder(
     }
 
     override fun onClick(view: View) {
-        itemClickDelegate.onItemClick(binding.ivCharacterImage, characters)
+        itemClickDelegate.onItemClick(
+            characterImageView = binding.ivCharacterImage,
+            characterNameView = binding.tvCharacterName,
+            characterImageTransitionName = binding.ivCharacterImage.transitionName,
+            characterNameTransitionName = binding.tvCharacterName.transitionName,
+            characters = characters
+        )
     }
 
     override fun onLongClick(v: View?): Boolean = false
