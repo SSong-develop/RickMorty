@@ -19,6 +19,7 @@
             <option value="$PROJECT_DIR$/core-model" />
             <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/feature-character" />
+            <option value="$PROJECT_DIR$/feature-search" />
           </set>
         </option>
       </GradleProjectSettings>

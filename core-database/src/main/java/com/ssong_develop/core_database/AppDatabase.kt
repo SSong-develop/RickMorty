@@ -8,9 +8,10 @@ import com.ssong_develop.core_database.converter.OriginListConverter
 import com.ssong_develop.core_database.converter.StringListConverter
 import com.ssong_develop.core_model.Characters
 
+// TODO (오토 마이그레이션 적용하기)
 @Database(
-    entities = [Characters::class, RemoteKeys::class],
-    version = 2,
+    entities = [Characters::class],
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(
@@ -23,5 +24,5 @@ import com.ssong_develop.core_model.Characters
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun characterDao(): CharacterDao
-    abstract fun remoteKeysDao(): RemoteKeysDao
+    abstract fun recentSearchKeywordDao(): RecentKeywordDao
 }

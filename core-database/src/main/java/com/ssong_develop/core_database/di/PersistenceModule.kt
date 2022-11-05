@@ -26,4 +26,8 @@ object PersistenceModule {
     @Provides
     @Singleton
     fun provideCharactersDao(database: AppDatabase) = database.characterDao()
+
+    @Provides
+    @Singleton
+    fun provideRecentSearchKeywordDao(database: AppDatabase) = database.recentSearchKeywordDao()
 }
