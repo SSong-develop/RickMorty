@@ -39,9 +39,14 @@ class FooterAdapter(val context: Context) :
                 }
             }.getOrElse {
                 val inflater = LayoutInflater.from(parent.context)
-                inflater.inflate(R.layout.item_loading_footer,parent,false)
+                inflater.inflate(R.layout.item_loading_footer, parent, false)
             }
-        ) ?: DataBindingUtil.inflate(LayoutInflater.from(parent.context),R.layout.item_loading_footer,parent,false)
+        ) ?: DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_loading_footer,
+            parent,
+            false
+        )
         return FooterViewHolder(binding)
     }
 

@@ -20,7 +20,10 @@ class CharacterViewModel @Inject constructor(
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val _uiEventState = MutableSharedFlow<CharacterUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _uiEventState = MutableSharedFlow<CharacterUiEvent>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val uiEventState = _uiEventState.asSharedFlow()
 
     private val _uiState = MutableStateFlow(CharacterUiState())
@@ -55,7 +58,7 @@ class CharacterViewModel @Inject constructor(
     sealed interface CharacterUiEvent {
         object Retry : CharacterUiEvent
         object Refresh : CharacterUiEvent
-        object Favorite: CharacterUiEvent
+        object Favorite : CharacterUiEvent
     }
 }
 

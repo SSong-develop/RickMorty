@@ -50,7 +50,7 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiEventState.collectLatest { uiEvent ->
-                        when(uiEvent) {
+                        when (uiEvent) {
                             CharacterDetailViewModel.CharacterDetailUiEvent.Back -> navigateToBackStack()
                         }
                     }

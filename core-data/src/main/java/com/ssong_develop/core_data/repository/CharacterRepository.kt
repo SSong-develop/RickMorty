@@ -55,7 +55,8 @@ class CharacterRepository @Inject constructor(
         )
     }.flowOn(ioDispatcher)
 
-    suspend fun getEpisodes(urls: List<String>) = characterDataSourceNoWrapper.getCharacterEpisode(urls)
+    suspend fun getEpisodes(urls: List<String>) =
+        characterDataSourceNoWrapper.getCharacterEpisode(urls)
 
     /**
      * Wrapper Function Scope
@@ -79,7 +80,7 @@ class CharacterRepository @Inject constructor(
             }
         }
         if (apiSuccessEpisodes.isEmpty()) {
-            emit(Resource.error("api Error",emptyList<Episode>()))
+            emit(Resource.error("api Error", emptyList<Episode>()))
         } else {
             emit(Resource.success(apiSuccessEpisodes))
         }

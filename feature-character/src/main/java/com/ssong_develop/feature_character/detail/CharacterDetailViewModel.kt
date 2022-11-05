@@ -1,6 +1,5 @@
 package com.ssong_develop.feature_character.detail
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,9 +9,10 @@ import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -27,7 +27,10 @@ class CharacterDetailViewModel @Inject constructor(
         private const val CHARACTER_KEY = "character"
     }
 
-    private val _uiEventState = MutableSharedFlow<CharacterDetailUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _uiEventState = MutableSharedFlow<CharacterDetailUiEvent>(
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
     val uiEventState = _uiEventState.asSharedFlow()
 
     private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())

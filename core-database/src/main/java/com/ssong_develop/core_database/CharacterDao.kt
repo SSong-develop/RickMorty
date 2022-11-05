@@ -17,9 +17,11 @@ interface CharacterDao {
     @Query("SELECT * FROM characters_table WHERE page = :page_")
     fun getCharacters(page_: Int): Flow<List<Characters>>
 
-    @Query("SELECT * FROM characters_table WHERE page = :page_ " +
-            "ORDER BY id DESC")
-    fun getCharactersWithPaging(page_: Int): PagingSource<Int,Characters>
+    @Query(
+        "SELECT * FROM characters_table WHERE page = :page_ " +
+                "ORDER BY id DESC"
+    )
+    fun getCharactersWithPaging(page_: Int): PagingSource<Int, Characters>
 
     @Query("DELETE FROM characters_table")
     suspend fun clearCharacterDatabase()

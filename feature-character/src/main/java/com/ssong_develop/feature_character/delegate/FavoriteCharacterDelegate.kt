@@ -1,7 +1,6 @@
 package com.ssong_develop.feature_character.delegate
 
 import com.ssong_develop.core_common.di.ApplicationScope
-import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.DataStoreRepository
 import com.ssong_develop.core_model.Characters
 import kotlinx.coroutines.CoroutineScope

@@ -3,10 +3,7 @@ package com.ssong_develop.core_data.network.pagingsource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
-import com.ssong_develop.core_data.network.service.CharacterServiceWrapper
 import com.ssong_develop.core_model.Characters
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import javax.inject.Inject
 
 class CharacterPagingSource @Inject constructor(

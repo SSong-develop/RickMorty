@@ -6,7 +6,7 @@
     <fragment
         android:id="@+id/characterFragment"
         android:name="com.ssong_develop.feature_character.character.CharacterFragment"
-        android:label="CharacterFragment" >
+        android:label="CharacterFragment">
         <action
             android:id="@+id/action_characterFragment_to_characterDetailFragment"
             app:destination="@id/characterDetailFragment" />
@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="com.ssong_develop.feature_character.detail.CharacterDetailFragment"
-        android:label="CharacterDetailFragment" >
+        android:label="CharacterDetailFragment">
         <argument
             android:name="character"
             app:argType="com.ssong_develop.core_model.Characters" />

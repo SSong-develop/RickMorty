@@ -8,7 +8,7 @@
 
         <variable
             name="retryEvent"
-            type="kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt;"/>
+            type="kotlin.jvm.functions.Function0&lt;kotlin.Unit&gt;" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

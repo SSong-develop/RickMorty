@@ -3,10 +3,10 @@ package com.ssong_develop.core_database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_database.converter.CharacterLocationListConverter
 import com.ssong_develop.core_database.converter.OriginListConverter
 import com.ssong_develop.core_database.converter.StringListConverter
+import com.ssong_develop.core_model.Characters
 
 @Database(
     entities = [Characters::class, RemoteKeys::class],
