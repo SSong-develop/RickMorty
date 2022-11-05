@@ -12,7 +12,7 @@ import com.ssong_develop.core_model.Characters.Companion.DEAD_CHARACTER
 import com.ssong_develop.core_model.Characters.Companion.EXCEPTIONAL_CHARACTER
 import com.ssong_develop.core_model.Characters.Companion.UNKNOWN_CHARACTER
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.viewholders.character.CharacterListViewHolder
+import com.ssong_develop.feature_character.character.viewholders.character.CharacterViewHolder
 import com.ssong_develop.feature_character.character.viewholders.character.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
 
@@ -26,17 +26,17 @@ private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Character
 
 class CharacterPagingAdapter(
     private val delegate: ItemClickDelegate
-) : PagingDataAdapter<Characters, CharacterListViewHolder>(
+) : PagingDataAdapter<Characters, CharacterViewHolder>(
     characterDiffItemCallback
 ) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemCharacterBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
-        return CharacterListViewHolder(binding, delegate)
+        return CharacterViewHolder(binding, delegate)
     }
 
-    override fun onBindViewHolder(holder: CharacterListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
         getItem(position)?.let {
             holder.bind(it)
         }
