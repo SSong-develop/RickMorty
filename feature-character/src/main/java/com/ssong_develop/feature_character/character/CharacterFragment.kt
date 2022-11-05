@@ -52,13 +52,12 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         postponeEnterTransition()
-        initDataBinding()
-        initAdapter()
-        initRecyclerView()
-
         (binding.root.parent as? ViewGroup)?.doOnPreDraw {
             startPostponedEnterTransition()
         }
+        initDataBinding()
+        initAdapter()
+        initRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
