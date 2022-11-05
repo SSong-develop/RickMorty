@@ -1,26 +1,17 @@
 package com.ssong_develop.feature_character.character.viewholders
 
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.databinding.ItemLoadStateBinding
 
 class LoadStateViewHolder(
-    private val binding: ItemLoadStateBinding,
-    retry: () -> Unit
+    private val binding: ItemLoadStateBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(loadState: LoadState) {
-        when (loadState) {
-            is LoadState.Error -> {
+        binding.test.isVisible = loadState is LoadState.Loading
 
-            }
-            is LoadState.Loading -> {
-                binding.test.visibility = View.VISIBLE
-            }
-            is LoadState.NotLoading -> {
-                binding.test.visibility = View.GONE
-            }
-        }
     }
 }

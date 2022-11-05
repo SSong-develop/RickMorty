@@ -12,11 +12,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.CharacterPagingAdapter
 import com.ssong_develop.feature_character.character.adapters.FooterAdapter
+import com.ssong_develop.feature_character.character.adapters.FooterLoadStateAdapter
 import com.ssong_develop.feature_character.character.viewholders.character.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,16 +29,11 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterFragment : Fragment(), ItemClickDelegate {
-
-    private lateinit var binding: FragmentCharacterBinding
-
     private val viewModel: CharacterViewModel by viewModels()
 
+    private lateinit var binding: FragmentCharacterBinding
     private lateinit var pagingAdapter: CharacterPagingAdapter
-
-    private lateinit var footerAdapter: FooterAdapter
-
-    private val concatAdapter = ConcatAdapter()
+    private lateinit var loadStateAdapter: FooterLoadStateAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,29 +54,37 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.pagingCharacterFlow.collectLatest {
-                        pagingAdapter.submitData(it)
+                    viewModel.pagingCharacterFlow.collectLatest { pagingData ->
+                        pagingAdapter.submitData(pagingData)
                     }
                 }
                 launch {
-                    // TODO (고쳐야함)
-                    pagingAdapter.loadStateFlow.collectLatest {
-                        when (it.source.append) {
-                            is LoadState.Loading -> {
-                                concatAdapter.addAdapter(footerAdapter)
+                    pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                        when (loadStates.refresh) {
+                            is LoadState.NotLoading -> {
+                                viewModel.updateLoadingState(false)
+                                viewModel.updateErrorState(false)
                             }
-                            else -> {
-                                concatAdapter.removeAdapter(footerAdapter)
+                            LoadState.Loading -> {
+                                viewModel.updateLoadingState(true)
+                                viewModel.updateErrorState(false)
+                            }
+                            is LoadState.Error -> {
+                                viewModel.updateLoadingState(false)
+                                viewModel.updateErrorState(true)
                             }
                         }
                     }
                 }
+                launch {
+                    viewModel.uiEventState.collectLatest { uiEvent ->
+                        when(uiEvent) {
+                            CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
+                            CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
+                        }
+                    }
+                }
             }
-        }
-
-        binding.swipeRefresh.setOnRefreshListener {
-            pagingAdapter.refresh()
-            binding.swipeRefresh.isRefreshing = false
         }
     }
 
@@ -91,15 +96,13 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     private fun initAdapter() {
         pagingAdapter = CharacterPagingAdapter(this)
-        footerAdapter = FooterAdapter(requireContext())
-        concatAdapter.addAdapter(pagingAdapter)
+        loadStateAdapter = FooterLoadStateAdapter()
+        pagingAdapter.withLoadStateFooter(
+            footer = loadStateAdapter
+        )
     }
 
     private fun initRecyclerView() {
-        binding.rvCharacter.adapter
-        binding.rvCharacter.apply {
-            adapter = concatAdapter
-            animation = null
-        }
+        binding.rvCharacter.adapter = pagingAdapter
     }
 }

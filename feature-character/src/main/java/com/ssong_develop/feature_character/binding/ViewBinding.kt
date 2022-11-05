@@ -6,11 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
 import com.ssong_develop.feature_character.Status
+import com.ssong_develop.feature_character.character.CharacterViewModel
 
 object ViewBinding {
 
@@ -58,5 +60,14 @@ object ViewBinding {
                         }
                     }.crossfade(true)
             ).into(view)
+    }
+
+    @JvmStatic
+    @BindingAdapter("bindSwipeRefreshLayout")
+    fun bindSwipeRefreshLayout(view: SwipeRefreshLayout, block: () -> Unit) {
+        view.setOnRefreshListener {
+            block()
+            view.isRefreshing = false
+        }
     }
 }
