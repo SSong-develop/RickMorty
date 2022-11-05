@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="@{`#`+ Integer.toString(vm.characterState.id)}"
+                android:text="@{`#`+ Integer.toString(vm.uiState.character.id)}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -70,7 +70,7 @@
                 android:layout_marginTop="6dp"
                 android:foreground="?attr/selectableItemBackground"
                 android:onClick="@{() -> vm.onClickFavorite()}"
-                android:src="@{vm.isFavoriteCharacterStateFlow ? @drawable/ic_filled_favorite : @drawable/ic_empty_favorite }"
+                android:src="@{vm.isFavoriteCharacterState ? @drawable/ic_filled_favorite : @drawable/ic_empty_favorite }"
                 app:layout_constraintEnd_toEndOf="@id/tv_character_index"
                 app:layout_constraintStart_toStartOf="@id/tv_character_index"
                 app:layout_constraintTop_toBottomOf="@id/tv_character_index"
@@ -99,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_app_name"
-                app:paletteImage="@{vm.characterState.image}"
+                app:paletteImage="@{vm.uiState.character.image}"
                 app:paletteView="@{header}" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -109,7 +109,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="40dp"
-                android:text="@{vm.characterState.name}"
+                android:text="@{vm.uiState.character.name}"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 android:textStyle="bold"
@@ -121,7 +121,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/status_dot"
-                bind_dot_color="@{vm.characterState.status}"
+                bind_dot_color="@{vm.uiState.character.status}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bullet"
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="2dp"
-                android:text="@{vm.characterState.status}"
+                android:text="@{vm.uiState.character.status}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -166,7 +166,7 @@
                 android:id="@+id/species"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.characterState.species}"
+                android:text="@{vm.uiState.character.species}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -189,7 +189,7 @@
                 android:id="@+id/gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.characterState.gender}"
+                android:text="@{vm.uiState.character.gender}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -212,7 +212,7 @@
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.characterState.location.locationName}"
+                android:text="@{vm.uiState.character.location.locationName}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -246,15 +246,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/episode_title" />
 
-            <ProgressBar
-                android:id="@+id/pb_episode_loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminateTint="@color/app_bar_color"
-                app:layout_constraintBottom_toBottomOf="@id/episode_list"
-                app:layout_constraintEnd_toEndOf="@id/episode_list"
-                app:layout_constraintStart_toStartOf="@id/episode_list"
-                app:layout_constraintTop_toTopOf="@id/episode_list" />
+<!--            <ProgressBar-->
+<!--                android:id="@+id/pb_episode_loading"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:indeterminateTint="@color/app_bar_color"-->
+<!--                android:visibility="@{vm.uiState.isEpisodeLoading ? View.VISIBLE : View.GONE}"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

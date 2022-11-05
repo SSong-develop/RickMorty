@@ -12,14 +12,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.LoadStateAdapter
-import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.CharacterPagingAdapter
-import com.ssong_develop.feature_character.character.adapters.FooterAdapter
 import com.ssong_develop.feature_character.character.adapters.FooterLoadStateAdapter
-import com.ssong_develop.feature_character.character.viewholders.character.ItemClickDelegate
+import com.ssong_develop.feature_character.character.viewholders.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -44,10 +41,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(binding) {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-        }
+        initDataBinding()
         initAdapter()
         initRecyclerView()
 
@@ -95,6 +89,13 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         findNavController().navigate(R.id.action_characterFragment_to_characterDetailFragment,bundle)
     }
 
+    private fun initDataBinding() {
+        with(binding) {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+        }
+    }
+
     private fun initAdapter() {
         pagingAdapter = CharacterPagingAdapter(this)
         loadStateAdapter = FooterLoadStateAdapter()
@@ -108,6 +109,8 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     private fun navigateToFavoriteCharacter() {
-        findNavController().navigate(R.id.action_characterFragment_to_favoriteCharacterFragment)
+        val bundle = Bundle()
+        bundle.putParcelable("character",viewModel.favoriteCharacterState.value)
+        findNavController().navigate(R.id.action_characterFragment_to_characterDetailFragment, bundle)
     }
 }

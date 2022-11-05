@@ -43,7 +43,7 @@ class CharacterRepository @Inject constructor(
     /**
      * NoWrapper Function Scope
      */
-    fun getEpisodes(urls: List<String>) = flow {
+    fun getEpisodesStream(urls: List<String>) = flow {
         emit(
             runCatching {
                 characterDataSourceNoWrapper.getCharacterEpisode(urls)
@@ -54,6 +54,8 @@ class CharacterRepository @Inject constructor(
             }
         )
     }.flowOn(ioDispatcher)
+
+    suspend fun getEpisodes(urls: List<String>) = characterDataSourceNoWrapper.getCharacterEpisode(urls)
 
     /**
      * Wrapper Function Scope

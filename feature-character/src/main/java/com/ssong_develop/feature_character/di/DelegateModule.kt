@@ -16,5 +16,5 @@ abstract class DelegateModule {
 
     @Binds
     @Singleton
-    internal abstract fun bindFavoriteCharacterDelegate(favoriteCharacterDelegateImpl: com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegateImpl): com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
+    internal abstract fun bindFavoriteCharacterDelegate(favoriteCharacterDelegateImpl: FavoriteCharacterDelegateImpl): FavoriteCharacterDelegate
 }

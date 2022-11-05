@@ -12,8 +12,8 @@ import com.ssong_develop.core_model.Characters.Companion.DEAD_CHARACTER
 import com.ssong_develop.core_model.Characters.Companion.EXCEPTIONAL_CHARACTER
 import com.ssong_develop.core_model.Characters.Companion.UNKNOWN_CHARACTER
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.viewholders.character.CharacterViewHolder
-import com.ssong_develop.feature_character.character.viewholders.character.ItemClickDelegate
+import com.ssong_develop.feature_character.character.viewholders.CharacterViewHolder
+import com.ssong_develop.feature_character.character.viewholders.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
 
 private val characterDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {

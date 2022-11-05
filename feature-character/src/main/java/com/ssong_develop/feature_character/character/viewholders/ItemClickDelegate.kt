@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character.viewholders.character
+package com.ssong_develop.feature_character.character.viewholders
 
 import android.view.View
 import com.ssong_develop.core_model.Characters

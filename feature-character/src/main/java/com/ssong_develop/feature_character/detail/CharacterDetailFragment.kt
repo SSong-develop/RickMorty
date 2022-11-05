@@ -11,11 +11,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.ssong_develop.core_common.Resource
-import com.ssong_develop.core_model.Characters
+import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.viewholders.character.ItemClickDelegate
+import com.ssong_develop.feature_character.character.adapters.FooterAdapter
 import com.ssong_develop.feature_character.databinding.FragmentCharacterDetailBinding
 import com.ssong_develop.feature_character.detail.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.feature_character.detail.viewholders.CharacterEpisodeViewHolder
@@ -27,12 +26,11 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate {
-
-    private lateinit var binding: FragmentCharacterDetailBinding
-
     private val viewModel: CharacterDetailViewModel by viewModels()
-
+    private lateinit var binding: FragmentCharacterDetailBinding
     private lateinit var episodeAdapter: CharacterEpisodeAdapter
+    private lateinit var footerAdapter: FooterAdapter
+    private val concatAdapter = ConcatAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,34 +42,25 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        with(binding) {
-            lifecycleOwner = viewLifecycleOwner
-            vm = viewModel
-        }
+        initDataBinding()
         initAdapter()
+        initRecyclerView()
 
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.characterEpisodesFlow.collectLatest { resources ->
-                        when (resources.status) {
-                            Resource.Status.SUCCESS -> {
-                                binding.pbEpisodeLoading.visibility = View.GONE
-                                episodeAdapter.submitEpisodes(resources.data ?: emptyList())
-                            }
-                            Resource.Status.ERROR -> {
-                                binding.pbEpisodeLoading.visibility = View.VISIBLE
-                            }
-                            Resource.Status.LOADING -> {
-                                binding.pbEpisodeLoading.visibility = View.VISIBLE
-                            }
+                    viewModel.uiEventState.collectLatest { uiEvent ->
+                        when(uiEvent) {
+                            CharacterDetailViewModel.CharacterDetailUiEvent.Back -> navigateToBackStack()
                         }
                     }
                 }
+
                 launch {
-                    viewModel.uiEventState.collectLatest { uiEvent ->
-                        when(uiEvent) {
-                            CharacterDetailViewModel.DetailUiEvent.Back -> navigateToBackStack()
+                    viewModel.uiState.collectLatest { uiState ->
+                        episodeAdapter.submitEpisodes(uiState.characterEpisode)
+                        if (uiState.characterEpisode.isNotEmpty()) {
+                            concatAdapter.removeAdapter(footerAdapter)
                         }
                     }
                 }
@@ -79,14 +68,27 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         }
     }
 
-    override fun onItemClick(view: View, episode: Episode) {
-        TODO("Not yet implemented")
+    override fun onItemClick(view: View, episode: Episode) {}
+
+    private fun initDataBinding() {
+        with(binding) {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+        }
     }
 
     private fun initAdapter() {
         episodeAdapter = CharacterEpisodeAdapter(this)
+        footerAdapter = FooterAdapter(requireContext())
+        concatAdapter.apply {
+            addAdapter(episodeAdapter)
+            addAdapter(footerAdapter)
+        }
+    }
+
+    private fun initRecyclerView() {
         binding.episodeList.apply {
-            this.adapter = episodeAdapter
+            this.adapter = concatAdapter
         }
     }
 

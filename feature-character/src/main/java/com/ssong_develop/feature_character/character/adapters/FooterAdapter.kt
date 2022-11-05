@@ -8,13 +8,14 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.R
+import com.ssong_develop.feature_character.character.viewholders.FooterViewHolder
 import com.ssong_develop.feature_character.databinding.ItemLoadingFooterBinding
 import java.util.*
 
 class FooterAdapter(val context: Context) :
-    RecyclerView.Adapter<com.ssong_develop.feature_character.character.viewholders.FooterViewHolder>() {
+    RecyclerView.Adapter<FooterViewHolder>() {
     companion object {
-        private const val FOOTER_VIEW_COUNT = 2
+        private const val FOOTER_VIEW_COUNT = 1
     }
 
     private val asyncLayoutInflater = AsyncLayoutInflater(context)
@@ -30,26 +31,28 @@ class FooterAdapter(val context: Context) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): com.ssong_develop.feature_character.character.viewholders.FooterViewHolder {
-        val binding = DataBindingUtil.bind<ItemLoadingFooterBinding>(cachedLoadingView.pop().also {
-            createAsynchronousLoadingView()
-        }) ?: DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_loading_footer,
-            parent,
-            false
-        )
-        return com.ssong_develop.feature_character.character.viewholders.FooterViewHolder(binding)
+    ): FooterViewHolder {
+        val binding = DataBindingUtil.bind<ItemLoadingFooterBinding>(
+            runCatching {
+                cachedLoadingView.pop().also {
+                    createAsynchronousLoadingView()
+                }
+            }.getOrElse {
+                val inflater = LayoutInflater.from(parent.context)
+                inflater.inflate(R.layout.item_loading_footer,parent,false)
+            }
+        ) ?: DataBindingUtil.inflate(LayoutInflater.from(parent.context),R.layout.item_loading_footer,parent,false)
+        return FooterViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: com.ssong_develop.feature_character.character.viewholders.FooterViewHolder,
+        holder: FooterViewHolder,
         position: Int
     ) {
         holder.bind()
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = FOOTER_VIEW_COUNT
 
     private fun createAsynchronousLoadingView() {
         asyncLayoutInflater.inflate(

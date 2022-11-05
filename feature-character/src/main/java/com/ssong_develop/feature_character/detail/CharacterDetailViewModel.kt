@@ -3,7 +3,6 @@ package com.ssong_develop.feature_character.detail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_model.Characters
@@ -13,9 +12,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// TODO 이 뷰를 재활용 한다
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
@@ -24,34 +23,27 @@ class CharacterDetailViewModel @Inject constructor(
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val _uiEventState = MutableSharedFlow<DetailUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _uiEventState = MutableSharedFlow<CharacterDetailUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val uiEventState = _uiEventState.asSharedFlow()
 
-    // todo 이건 스트림으로 받는 것이 이상하다
-    // todo 시간의 흐름에 따라 바뀌는 것을 받거나 그런 것들에만 되어야 하는 녀석인데 그러지 않기 때문이다.
-    val characterState = savedStateHandle.getStateFlow<Characters?>("character", null)
+    private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())
+    val uiState = _uiState.asStateFlow()
 
-    val characterEpisodesFlow: StateFlow<Resource<List<Episode>>> =
-        characterState
-            .flatMapLatest { character ->
-                character?.let {
-                    repository.getEpisodes(it.episode)
-                } ?: flowOf(Resource.error("character is null", emptyList()))
-            }
-            .stateIn(
-                scope = viewModelScope,
-                started = WhileViewSubscribed,
-                initialValue = Resource.loading(emptyList())
-            )
+    init {
+        savedStateHandle.get<Characters>("character")?.run {
+            updateCharacter(this)
+            getCharacterEpisode(episode)
+        }
+    }
 
-    val isFavoriteCharacterStateFlow: StateFlow<Boolean> = combine(
-        characterState,
+    val isFavoriteCharacterState: StateFlow<Boolean> = combine(
+        uiState,
         favoriteCharacterState
-    ) { selectCharacter, favCharacter ->
-        if (favCharacter == null || selectCharacter == null) {
+    ) { uiState, favCharacter ->
+        if (favCharacter == null || uiState.character == null) {
             false
         } else {
-            favCharacter.id == selectCharacter.id
+            favCharacter.id == uiState.character.id
         }
     }.stateIn(
         scope = viewModelScope,
@@ -60,20 +52,60 @@ class CharacterDetailViewModel @Inject constructor(
     )
 
     fun postBackEvent() {
-        _uiEventState.tryEmit(DetailUiEvent.Back)
+        _uiEventState.tryEmit(CharacterDetailUiEvent.Back)
+    }
+
+    private fun getCharacterEpisode(episodeUrls: List<String>) {
+        viewModelScope.launch {
+            runCatching {
+                updateEpisodeLoading(true)
+                repository.getEpisodes(episodeUrls)
+            }.onSuccess { resource ->
+                updateCharacterEpisode(resource)
+                updateEpisodeLoading(false)
+            }.onFailure { throwable ->
+                updateCharacterEpisode(emptyList())
+                updateEpisodeLoading(false)
+            }
+        }
+    }
+
+    private fun updateCharacter(character: Characters) {
+        _uiState.value = _uiState.value.copy(
+            character = character
+        )
+    }
+
+    private fun updateCharacterEpisode(resource: List<Episode>) {
+        _uiState.value = _uiState.value.copy(
+            characterEpisode = resource
+        )
+    }
+
+    private fun updateEpisodeLoading(loadingValue: Boolean) {
+        _uiState.value = _uiState.value.copy(
+            isEpisodeLoading = loadingValue
+        )
     }
 
     fun onClickFavorite() {
-        if (isFavoriteCharacterStateFlow.value) {
+        if (isFavoriteCharacterState.value) {
             clearFavCharacter()
         } else {
-            characterState.value?.let { favCharacter ->
+            uiState.value.character?.let { favCharacter ->
                 putFavCharacter(favCharacter)
             }
         }
     }
 
-    sealed interface DetailUiEvent {
-        object Back : DetailUiEvent
+    sealed interface CharacterDetailUiEvent {
+        object Back : CharacterDetailUiEvent
     }
 }
+
+data class CharacterDetailUiState(
+    val character: Characters? = null,
+    val characterEpisode: List<Episode> = emptyList(),
+    val isFavoriteCharacter: Boolean = false,
+    val isEpisodeLoading: Boolean = false,
+)
