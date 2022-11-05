@@ -21,7 +21,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:descendantFocusability="blocksDescendants">
+            android:descendantFocusability="blocksDescendants"
+            tools:context=".detail.CharacterDetailFragment">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iv_back"
@@ -30,6 +31,7 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:padding="12dp"
                 android:translationZ="100dp"
+                android:onClick="@{() -> vm.postBackEvent()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_arrow" />
@@ -52,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="@{`#`+ Integer.toString(vm.selectCharacterStateFlow.id)}"
+                android:text="@{`#`+ Integer.toString(vm.characterState.id)}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -97,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_app_name"
-                app:paletteImage="@{vm.selectCharacterStateFlow.image}"
+                app:paletteImage="@{vm.characterState.image}"
                 app:paletteView="@{header}" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -107,7 +109,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="40dp"
-                android:text="@{vm.selectCharacterStateFlow.name}"
+                android:text="@{vm.characterState.name}"
                 android:textColor="@color/white"
                 android:textSize="26sp"
                 android:textStyle="bold"
@@ -119,7 +121,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/status_dot"
-                bind_dot_color="@{vm.selectCharacterStateFlow.status}"
+                bind_dot_color="@{vm.characterState.status}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bullet"
@@ -139,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="2dp"
-                android:text="@{vm.selectCharacterStateFlow.status}"
+                android:text="@{vm.characterState.status}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -164,7 +166,7 @@
                 android:id="@+id/species"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.selectCharacterStateFlow.species}"
+                android:text="@{vm.characterState.species}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -187,7 +189,7 @@
                 android:id="@+id/gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.selectCharacterStateFlow.gender}"
+                android:text="@{vm.characterState.gender}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -210,7 +212,7 @@
                 android:id="@+id/location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{vm.selectCharacterStateFlow.location.locationName}"
+                android:text="@{vm.characterState.location.locationName}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"

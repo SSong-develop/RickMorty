@@ -45,32 +45,37 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
-            lifecycleOwner = this@CharacterDetailFragment
+            lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
         initAdapter()
 
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.characterEpisodesFlow.collectLatest { resources ->
-                    when (resources.status) {
-                        Resource.Status.SUCCESS -> {
-                            binding.pbEpisodeLoading.visibility = View.GONE
-                            episodeAdapter.submitEpisodes(resources.data ?: emptyList())
+                launch {
+                    viewModel.characterEpisodesFlow.collectLatest { resources ->
+                        when (resources.status) {
+                            Resource.Status.SUCCESS -> {
+                                binding.pbEpisodeLoading.visibility = View.GONE
+                                episodeAdapter.submitEpisodes(resources.data ?: emptyList())
+                            }
+                            Resource.Status.ERROR -> {
+                                binding.pbEpisodeLoading.visibility = View.VISIBLE
+                            }
+                            Resource.Status.LOADING -> {
+                                binding.pbEpisodeLoading.visibility = View.VISIBLE
+                            }
                         }
-                        Resource.Status.ERROR -> {
-                            binding.pbEpisodeLoading.visibility = View.VISIBLE
-                        }
-                        Resource.Status.LOADING -> {
-                            binding.pbEpisodeLoading.visibility = View.VISIBLE
+                    }
+                }
+                launch {
+                    viewModel.uiEventState.collectLatest { uiEvent ->
+                        when(uiEvent) {
+                            CharacterDetailViewModel.DetailUiEvent.Back -> navigateToBackStack()
                         }
                     }
                 }
             }
-        }
-
-        binding.ivBack.setOnClickListener {
-            findNavController().popBackStack()
         }
     }
 
@@ -83,5 +88,9 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         binding.episodeList.apply {
             this.adapter = episodeAdapter
         }
+    }
+
+    private fun navigateToBackStack() {
+        findNavController().popBackStack()
     }
 }

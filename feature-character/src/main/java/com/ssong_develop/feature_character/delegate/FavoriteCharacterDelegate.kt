@@ -16,89 +16,51 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface FavoriteCharacterDelegate {
-    val favCharacterFlow: Flow<Resource<Characters>>
+    val favoriteCharacterState: StateFlow<Characters?>
 
-    val favCharacterSheetVisibilityFlow: StateFlow<Boolean>
+    val favCharacterEpisodeFlow: StateFlow<Resource<List<Episode>>>
 
-    val favCharacterEpisodeFlow: Flow<List<Resource<Episode>>>
+    fun clearFavCharacter()
 
-    fun clearFavCharacterId()
-
-    fun putFavCharacterId(id: Int)
+    fun putFavCharacter(character: Characters)
 }
 
 @ExperimentalCoroutinesApi
 internal class FavoriteCharacterDelegateImpl @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val dataStoreRepository: DataStoreRepository,
-    @ApplicationScope private val applicationScope: CoroutineScope,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-) : FavoriteCharacterDelegate,
-    DataStoreRepository by dataStoreRepository {
-
-    override val favCharacterFlow: SharedFlow<Resource<Characters>> =
-        favoriteCharacterIdFlow
-            .flatMapLatest { id ->
-                id?.let {
-                    characterRepository.getCharacterNetworkResponse(id)
-                } ?: flowOf(
-                    Resource.error(
-                        "Id is Invalid",
-                        null
-                    )
-                )
-            }
-            .flowOn(ioDispatcher)
-            .shareIn(
+    @ApplicationScope private val applicationScope: CoroutineScope
+) : FavoriteCharacterDelegate {
+    override val favoriteCharacterState: StateFlow<Characters?> =
+        dataStoreRepository.favoriteCharacterFlow
+            .stateIn(
                 scope = applicationScope,
-                started = WhileViewSubscribed,
-                replay = 1
+                started = SharingStarted.Eagerly,
+                initialValue = null
             )
 
-    override val favCharacterSheetVisibilityFlow: StateFlow<Boolean> =
-        favCharacterFlow
-            .map { resource ->
-                when (resource.status) {
-                    Resource.Status.SUCCESS -> true
-                    else -> false
-                }
+    override val favCharacterEpisodeFlow: StateFlow<Resource<List<Episode>>> =
+        favoriteCharacterState
+            .flatMapLatest { character ->
+                characterRepository.getEpisodesNetworkResponse(
+                    character?.episode ?: emptyList()
+                )
             }
             .stateIn(
                 scope = applicationScope,
-                started = WhileViewSubscribed,
-                initialValue = false
+                started = SharingStarted.Eagerly,
+                initialValue = Resource.loading(emptyList())
             )
 
-    override val favCharacterEpisodeFlow: Flow<List<Resource<Episode>>> =
-        favCharacterFlow
-            .flatMapLatest { resource ->
-                when (resource.status) {
-                    Resource.Status.SUCCESS -> {
-                        characterRepository.getEpisodesNetworkResponse(
-                            resource.data?.episode ?: emptyList()
-                        )
-                    }
-                    else -> {
-                        flow { emit(listOf(Resource.loading(null))) }
-                    }
-                }
-            }
-            .flowOn(ioDispatcher)
-            .shareIn(
-                scope = applicationScope,
-                started = WhileViewSubscribed,
-                replay = 1
-            )
-
-    override fun clearFavCharacterId() {
+    override fun clearFavCharacter() {
         applicationScope.launch {
-            dataStoreRepository.clearFavoriteCharacterId()
+            dataStoreRepository.clearFavoriteCharacter()
         }
     }
 
-    override fun putFavCharacterId(id: Int) {
+    override fun putFavCharacter(character: Characters) {
         applicationScope.launch {
-            dataStoreRepository.putFavoriteCharacterId(id)
+            dataStoreRepository.putFavoriteCharacter(character)
         }
     }
 }

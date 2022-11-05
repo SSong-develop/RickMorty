@@ -45,7 +45,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
-            lifecycleOwner = this@CharacterFragment
+            lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
         initAdapter()
@@ -81,6 +81,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                         when(uiEvent) {
                             CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
                             CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
+                            CharacterViewModel.CharacterUiEvent.Favorite -> navigateToFavoriteCharacter()
                         }
                     }
                 }
@@ -104,5 +105,9 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     private fun initRecyclerView() {
         binding.rvCharacter.adapter = pagingAdapter
+    }
+
+    private fun navigateToFavoriteCharacter() {
+        findNavController().navigate(R.id.action_characterFragment_to_favoriteCharacterFragment)
     }
 }

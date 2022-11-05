@@ -43,18 +43,6 @@ class CharacterRepository @Inject constructor(
     /**
      * NoWrapper Function Scope
      */
-    fun getCharacter(id: Int) = flow {
-        emit(
-            runCatching {
-                characterDataSourceNoWrapper.getCharacter(id)
-            }.mapCatching { response ->
-                Resource.success(response)
-            }.getOrElse { throwable ->
-                Resource.error(msg = throwable.message.toString(), data = null)
-            }
-        )
-    }.flowOn(ioDispatcher)
-
     fun getEpisodes(urls: List<String>) = flow {
         emit(
             runCatching {
@@ -70,56 +58,28 @@ class CharacterRepository @Inject constructor(
     /**
      * Wrapper Function Scope
      */
-    fun getCharacterNetworkResponse(id: Int) = flow {
-        emit(
-            runCatching {
-                characterDataSourceWrapper.getCharacterNetworkResponse(id)
-            }.mapCatching { wrapperResponse ->
-                when (wrapperResponse) {
-                    is NetworkResponse.ApiEmptyResponse -> {
-                        Resource.success(null)
-                    }
-                    is NetworkResponse.ApiFailureResponse -> {
-                        Resource.error("UnKnown Error", null)
-                    }
-                    is NetworkResponse.ApiSuccessResponse -> {
-                        Resource.success(wrapperResponse.body)
-                    }
-                }
-            }.getOrElse { throwable ->
-                Resource.error(throwable.message.toString(), null)
-            }
-        )
-    }.flowOn(ioDispatcher)
-
     fun getEpisodesNetworkResponse(urls: List<String>) = flow {
-        val apiSuccessEpisodes = mutableListOf<Resource<Episode>>()
-        val apiErrorEpisodes = mutableListOf<Resource<Episode>>()
+        val apiSuccessEpisodes = mutableListOf<Episode>()
         runCatching {
             characterDataSourceWrapper.getCharacterEpisodeNetworkResponse(urls)
-        }.mapCatching { wrapperResponse ->
+        }.onSuccess { wrapperResponse ->
             wrapperResponse.map {
                 when (it) {
-                    is NetworkResponse.ApiEmptyResponse -> {
-                        apiSuccessEpisodes.add(Resource.success(it.body))
-                    }
-                    is NetworkResponse.ApiFailureResponse -> {
-                        apiErrorEpisodes.add(Resource.error("UnKnown Error", null))
-                    }
                     is NetworkResponse.ApiSuccessResponse -> {
-                        apiSuccessEpisodes.add(Resource.success(it.body))
+                        it.body.let { episode ->
+                            apiSuccessEpisodes.add(episode)
+                        }
                     }
+                    is NetworkResponse.ApiEmptyResponse -> {}
+                    is NetworkResponse.ApiFailureResponse -> {}
+
                 }
             }
         }
         if (apiSuccessEpisodes.isEmpty()) {
-            if (apiErrorEpisodes.isEmpty()) {
-                emit(listOf<Resource<Episode>>(element = Resource.success(null)))
-            } else {
-                emit(apiErrorEpisodes)
-            }
+            emit(Resource.error("api Error",emptyList<Episode>()))
         } else {
-            emit(apiSuccessEpisodes)
+            emit(Resource.success(apiSuccessEpisodes))
         }
     }.flowOn(ioDispatcher)
 }

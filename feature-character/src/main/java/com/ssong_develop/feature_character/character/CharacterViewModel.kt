@@ -18,10 +18,9 @@ import javax.inject.Inject
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
-) : ViewModel(),
-    FavoriteCharacterDelegate by favoriteCharacterDelegate {
+) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val _uiEventState = MutableSharedFlow<CharacterUiEvent>(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _uiEventState = MutableSharedFlow<CharacterUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     val uiEventState = _uiEventState.asSharedFlow()
 
     private val _uiState = MutableStateFlow(CharacterUiState())
@@ -47,9 +46,16 @@ class CharacterViewModel @Inject constructor(
         _uiEventState.tryEmit(CharacterUiEvent.Refresh)
     }
 
+    fun postFavoriteEvent() {
+        if (favoriteCharacterState.value != null) {
+            _uiEventState.tryEmit(CharacterUiEvent.Favorite)
+        }
+    }
+
     sealed interface CharacterUiEvent {
         object Retry : CharacterUiEvent
         object Refresh : CharacterUiEvent
+        object Favorite: CharacterUiEvent
     }
 }
 

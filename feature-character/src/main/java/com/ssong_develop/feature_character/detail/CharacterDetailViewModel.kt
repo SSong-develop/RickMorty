@@ -1,47 +1,42 @@
 package com.ssong_develop.feature_character.detail
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssong_develop.core_common.Resource
+import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
-import com.ssong_develop.core_common.WhileViewSubscribed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import javax.inject.Inject
 
+// TODO 이 뷰를 재활용 한다
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: CharacterRepository,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
-) : ViewModel(),
-    FavoriteCharacterDelegate by favoriteCharacterDelegate {
+) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val characterState = savedStateHandle.getStateFlow<Characters?>("character",null)
+    private val _uiEventState = MutableSharedFlow<DetailUiEvent>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    val uiEventState = _uiEventState.asSharedFlow()
 
-    private val characterEpisodeState = characterState.filterNotNull().map { it.episode }
-
-    val selectCharacterStateFlow: StateFlow<Characters?> =
-        characterState
-            .stateIn(
-                scope = viewModelScope,
-                started = Eagerly,
-                initialValue = null
-            )
+    // todo 이건 스트림으로 받는 것이 이상하다
+    // todo 시간의 흐름에 따라 바뀌는 것을 받거나 그런 것들에만 되어야 하는 녀석인데 그러지 않기 때문이다.
+    val characterState = savedStateHandle.getStateFlow<Characters?>("character", null)
 
     val characterEpisodesFlow: StateFlow<Resource<List<Episode>>> =
-        characterEpisodeState
-            .flatMapLatest { episode ->
-                repository.getEpisodes(episode)
+        characterState
+            .flatMapLatest { character ->
+                character?.let {
+                    repository.getEpisodes(it.episode)
+                } ?: flowOf(Resource.error("character is null", emptyList()))
             }
             .stateIn(
                 scope = viewModelScope,
@@ -50,19 +45,13 @@ class CharacterDetailViewModel @Inject constructor(
             )
 
     val isFavoriteCharacterStateFlow: StateFlow<Boolean> = combine(
-        selectCharacterStateFlow,
-        favCharacterFlow
+        characterState,
+        favoriteCharacterState
     ) { selectCharacter, favCharacter ->
-        if (favCharacter.data == null) false
-        else {
-            when (favCharacter.status) {
-                Resource.Status.SUCCESS -> {
-                    selectCharacter?.id?.let {
-                        it == (favCharacter.data?.id ?: false)
-                    } ?: false
-                }
-                else -> false
-            }
+        if (favCharacter == null || selectCharacter == null) {
+            false
+        } else {
+            favCharacter.id == selectCharacter.id
         }
     }.stateIn(
         scope = viewModelScope,
@@ -70,14 +59,21 @@ class CharacterDetailViewModel @Inject constructor(
         initialValue = false
     )
 
-    // TODO(change to reactivly)
+    fun postBackEvent() {
+        _uiEventState.tryEmit(DetailUiEvent.Back)
+    }
+
     fun onClickFavorite() {
         if (isFavoriteCharacterStateFlow.value) {
-            clearFavCharacterId()
+            clearFavCharacter()
         } else {
-            selectCharacterStateFlow.value?.let { favCharacter ->
-                putFavCharacterId(favCharacter.id)
-            } ?: Log.d("ssong-develop", "문제 발생")
+            characterState.value?.let { favCharacter ->
+                putFavCharacter(favCharacter)
+            }
         }
+    }
+
+    sealed interface DetailUiEvent {
+        object Back : DetailUiEvent
     }
 }

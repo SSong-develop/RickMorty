@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_characterFragment_to_characterDetailFragment"
             app:destination="@id/characterDetailFragment" />
+        <action
+            android:id="@+id/action_characterFragment_to_favoriteCharacterFragment"
+            app:destination="@id/favoriteCharacterFragment" />
     </fragment>
     <fragment
         android:id="@+id/characterDetailFragment"
@@ -19,4 +22,8 @@
             android:name="character"
             app:argType="com.ssong_develop.core_model.Characters" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteCharacterFragment"
+        android:name="com.ssong_develop.feature_character.favorite.FavoriteCharacterFragment"
+        android:label="FavoriteCharacterFragment" />
 </navigation>

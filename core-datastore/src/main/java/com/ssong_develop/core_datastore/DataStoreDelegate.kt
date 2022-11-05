@@ -10,21 +10,17 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
 import com.ssong_develop.core_model.Characters
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface DataStoreRepository {
-
-    val favoriteCharacterIdFlow : Flow<Int?>
-
-    val favoriteCharacterFlow : Flow<Characters>
-
-    suspend fun putFavoriteCharacterId(id: Int)
+    val favoriteCharacterFlow : Flow<Characters?>
 
     suspend fun putFavoriteCharacter(characters: Characters)
 
-    suspend fun clearFavoriteCharacterId()
+    suspend fun clearFavoriteCharacter()
 }
 
 internal class DataStoreRepositoryImpl @Inject constructor(
@@ -32,23 +28,19 @@ internal class DataStoreRepositoryImpl @Inject constructor(
 ) : DataStoreRepository {
 
     companion object {
-        private val PREFERENCES_FAVORITE_CHARACTER_ID = intPreferencesKey("favorite_character_id")
         private val PREFERENCES_FAVORITE_CHARACTER = stringPreferencesKey("favorite_character")
-        private const val INVALID_CHARACTER_ID = -1
     }
 
     private val Context.datastore : DataStore<Preferences> by preferencesDataStore(name = "rick_morty_data_store")
 
-    override val favoriteCharacterIdFlow: Flow<Int?> = context.datastore.data.map { preferences ->
-        preferences[PREFERENCES_FAVORITE_CHARACTER_ID]
-    }
-    override val favoriteCharacterFlow: Flow<Characters> = context.datastore.data.map { preferences ->
-        Gson().fromJson(preferences[PREFERENCES_FAVORITE_CHARACTER],Characters::class.java)
-    }
-
-    override suspend fun putFavoriteCharacterId(id: Int) {
-        context.datastore.edit { mutablePreferences ->
-            mutablePreferences[PREFERENCES_FAVORITE_CHARACTER_ID] = id
+    override val favoriteCharacterFlow: Flow<Characters?> = context.datastore.data.map { preferences ->
+        preferences[PREFERENCES_FAVORITE_CHARACTER]?.let { characterJson ->
+            // 여기 구문 고치기
+            if (characterJson.isNotEmpty()) {
+                Gson().fromJson(characterJson, Characters::class.java)
+            } else {
+                null
+            }
         }
     }
 
@@ -58,9 +50,9 @@ internal class DataStoreRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun clearFavoriteCharacterId() {
+    override suspend fun clearFavoriteCharacter() {
         context.datastore.edit { mutablePreferences ->
-            mutablePreferences[PREFERENCES_FAVORITE_CHARACTER_ID] = INVALID_CHARACTER_ID
+            mutablePreferences[PREFERENCES_FAVORITE_CHARACTER] = ""
         }
     }
 }
