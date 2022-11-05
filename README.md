@@ -5,21 +5,27 @@
 ## 💎Preview
 
 <div>
-<img src="https://github.com/SSong-develop/RickAndMorty/blob/mvvm/art/preview1.gif" width="300" height="650"/>
-<img src="https://github.com/SSong-develop/RickAndMorty/blob/mvvm/art/preview2.gif" width="300" height="650"/>
+<img src="https://github.com/SSong-develop/RickMorty/tree/mvvm/art/preview1.gif" width="300" height="650"/>
+<img src="https://github.com/SSong-develop/RickMorty/tree/mvvm/art/preview2.gif" width="300" height="650"/>
 </div>
+
 
 
 
 
 ## ✔Tech Stack & Open-source libraries
 
-- **Kotlin based,** **Coroutines** + **Flow** 
+- **Kotlin,** **Coroutines** 
 - **Hilt** 
+- **Flow**
+- **Multi Module**
 - **JetPack**
   - Lifecycle
   - ViewModel
   - Room
+  - Paging3
+  - AsyncLayoutInflater
+  - DataStore
 - **Architecture**
   - MVVM
 - **OpenSourceLibraries**
@@ -27,18 +33,18 @@
   - Glide , GlidePalette [Link](https://github.com/bumptech/glide)
   - Gson for Room Converter
 
-- **NetworkBoundResource**
-
-  - [NetworkBoundResource LiveData](https://github.com/android/architecture-components-samples/blob/8874799313/GithubBrowserSample/app/src/main/java/com/android/example/github/repository/NetworkBoundResource.kt) 
-
-  - [NetworkBoundResource Flow](https://github.com/SSong-develop/RickMorty/blob/mvvm/app/src/main/java/com/ssong_develop/rickmorty/network/NetworkBoundResource.kt)
-  - Google's NetworkBoundResource class Migration to Flow 
 
 
+###  ❤️Notice
 
-### ❤If you think this project is useful
+-----
 
-------------------
+This Project is for Study **Architecture**, **Jetpack**, **Android** and etc
 
-**Please press star button at upside!!!!👍**
+also, Developing with care about **Reactive Programming** , **Optimizing** 
 
+You can check about Architecture and Android tips in below Links 
+
+ [Architecture](https://developer.android.com/topic/architecture)
+
+Thanks for read and hope this project will help you 👍
