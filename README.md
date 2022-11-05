@@ -5,8 +5,8 @@
 ## 💎Preview
 
 <div>
-<img src="https://github.com/SSong-develop/RickMorty/art/preview1.gif" width="300" height="650"/>
-<img src="https://github.com/SSong-develop/RickMorty/art/preview2.gif" width="300" height="650"/>
+<img src="https://github.com/SSong-develop/RickMorty/blob/mvvm/art/preview1.gif" width="300" height="650"/>
+<img src="https://github.com/SSong-develop/RickMorty/blob/mvvm/art/preview2.gif" width="300" height="650"/>
 </div>
 
 
