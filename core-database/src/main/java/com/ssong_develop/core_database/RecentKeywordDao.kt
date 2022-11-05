@@ -15,7 +15,7 @@ interface RecentKeywordDao {
     suspend fun insertRecentKeyword(recentSearchKeyword: RecentSearchKeyword)
 
     @Delete
-    suspend fun deleteRecentKeyword(keywordId: String)
+    suspend fun deleteRecentKeyword(recentSearchKeyword: RecentSearchKeyword)
 
     @Update
     suspend fun updateRecentKeyword(recentSearchKeyword: RecentSearchKeyword)
