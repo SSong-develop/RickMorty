@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_search
+package com.ssong_develop.feature_search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.ssong_develop.core_model.Characters
+import com.ssong_develop.feature_search.R
+import com.ssong_develop.feature_search.SearchItemClickDelegate
 import com.ssong_develop.feature_search.databinding.ItemSearchResultBinding
 
 private val searchResultDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {

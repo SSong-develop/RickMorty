@@ -1,12 +1,13 @@
-package com.ssong_develop.feature_search
+package com.ssong_develop.feature_search.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ssong_develop.core_model.Characters
+import com.ssong_develop.feature_search.SearchItemClickDelegate
 import com.ssong_develop.feature_search.databinding.ItemSearchResultBinding
 
 class SearchResultViewHolder(
-    private val binding : ItemSearchResultBinding,
+    private val binding: ItemSearchResultBinding,
     private val delegate: SearchItemClickDelegate
 ) : ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 

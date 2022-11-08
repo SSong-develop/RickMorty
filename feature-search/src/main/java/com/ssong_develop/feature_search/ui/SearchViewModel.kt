@@ -18,9 +18,14 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    private val savedStateHandle: SavedStateHandle,
     private val searchRepository: SearchRepository
 ) : ViewModel() {
+
+    companion object {
+        private const val SEARCH_QUERY = "search_query"
+        private const val DEFAULT_DEBOUNCE_TIME = 500L
+    }
 
     private val _searchUiEventBus = MutableSharedFlow<SearchUiEvent>(
         extraBufferCapacity = 1,
@@ -28,11 +33,18 @@ class SearchViewModel @Inject constructor(
     )
     val searchUiEventBus = _searchUiEventBus.asSharedFlow()
 
+    private val _uiState = MutableStateFlow(SearchUiState())
+    val uiState = _uiState.asStateFlow()
+
     // two-way DataBinding
-    var searchQuery = MutableStateFlow("")
+    var searchQuery = MutableStateFlow(savedStateHandle.get(SEARCH_QUERY) ?: "")
+        set(value) {
+            savedStateHandle[SEARCH_QUERY] = value
+            field = value
+        }
 
     val resultStream: Flow<PagingData<Characters>> = searchQuery
-        .debounce(500L)
+        .debounce(DEFAULT_DEBOUNCE_TIME)
         .flatMapLatest { query -> searchRepository.getSearchResultStream(query) }
         .cachedIn(scope = viewModelScope)
 
@@ -40,8 +52,34 @@ class SearchViewModel @Inject constructor(
         _searchUiEventBus.tryEmit(SearchUiEvent.ShowToast(message))
     }
 
-    sealed interface SearchUiEvent {
-        data class ShowToast(val message: String) : SearchUiEvent
+    fun postRetryEvent() {
+        _searchUiEventBus.tryEmit(SearchUiEvent.Retry)
     }
 
+    fun postRefreshEvent() {
+        _searchUiEventBus.tryEmit(SearchUiEvent.Refresh)
+    }
+
+    fun updateLoadingState(isLoading: Boolean) {
+        _uiState.value = _uiState.value.copy(
+            isLoading = isLoading
+        )
+    }
+
+    fun updateErrorState(isError: Boolean) {
+        _uiState.value = _uiState.value.copy(
+            isError = isError
+        )
+    }
+
+    sealed interface SearchUiEvent {
+        data class ShowToast(val message: String) : SearchUiEvent
+        object Retry: SearchUiEvent
+        object Refresh: SearchUiEvent
+    }
 }
+
+data class SearchUiState(
+    val isLoading: Boolean = false,
+    val isError: Boolean = false
+)

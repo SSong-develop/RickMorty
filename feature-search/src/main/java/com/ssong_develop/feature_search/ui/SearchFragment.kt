@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_search
+package com.ssong_develop.feature_search.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +14,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.Characters
+import com.ssong_develop.feature_search.R
+import com.ssong_develop.feature_search.SearchItemClickDelegate
+import com.ssong_develop.feature_search.adapter.SearchResultPagingAdapter
+import com.ssong_develop.feature_search.SearchViewModel
 import com.ssong_develop.feature_search.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,7 +40,7 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_search,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search,container,false)
         return binding.root
     }
 
@@ -56,10 +60,23 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                 launch {
                     searchResultPagingAdapter.loadStateFlow.collectLatest { loadStates ->
                         when (loadStates.refresh) {
-                            is LoadState.NotLoading -> {}
-                            LoadState.Loading -> {}
+                            is LoadState.NotLoading -> {
+                                viewModel.run {
+                                    updateLoadingState(false)
+                                    updateErrorState(false)
+                                }
+                            }
+                            LoadState.Loading -> {
+                                viewModel.run {
+                                    updateLoadingState(true)
+                                    updateErrorState(false)
+                                }
+                            }
                             is LoadState.Error -> {
-                                viewModel.postShowToastEvent("hello")
+                                viewModel.run {
+                                    updateLoadingState(false)
+                                    updateErrorState(true)
+                                }
                             }
                         }
                     }
@@ -69,6 +86,9 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                     viewModel.searchUiEventBus.collectLatest { event ->
                         when (event) {
                             is SearchViewModel.SearchUiEvent.ShowToast -> requireContext().toast(event.message)
+                            SearchViewModel.SearchUiEvent.Retry -> searchResultPagingAdapter.retry()
+                            SearchViewModel.SearchUiEvent.Refresh -> searchResultPagingAdapter.refresh()
+                            else -> {}
                         }
                     }
                 }
