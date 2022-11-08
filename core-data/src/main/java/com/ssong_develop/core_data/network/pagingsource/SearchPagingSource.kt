@@ -2,14 +2,14 @@ package com.ssong_develop.core_data.network.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
+import com.ssong_develop.core_data.network.service.SearchService
 import com.ssong_develop.core_model.Characters
 import javax.inject.Inject
 
-class CharacterPagingSource @Inject constructor(
-    private val characterServiceNoWrapper: CharacterServiceNoWrapper
+class SearchPagingSource @Inject constructor(
+    private val searchService: SearchService,
+    private val query: String
 ) : PagingSource<Int, Characters>() {
-
     companion object {
         private const val STARTING_KEY = 1
     }
@@ -25,7 +25,7 @@ class CharacterPagingSource @Inject constructor(
         val currentKey = params.key ?: STARTING_KEY
 
         val response = runCatching {
-            characterServiceNoWrapper.getCharacters(currentKey)
+            searchService.searchCharacter(currentKey, query)
         }.getOrElse { throwable ->
             return LoadResult.Error(throwable)
         }

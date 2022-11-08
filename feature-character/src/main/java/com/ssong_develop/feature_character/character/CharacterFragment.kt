@@ -85,11 +85,12 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                     }
                 }
                 launch {
-                    viewModel.uiEventState.collectLatest { uiEvent ->
+                    viewModel.characterUiEventBus.collectLatest { uiEvent ->
                         when (uiEvent) {
                             CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
                             CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
                             CharacterViewModel.CharacterUiEvent.Favorite -> navigateToFavoriteCharacter()
+                            CharacterViewModel.CharacterUiEvent.Search -> navigateToSearch()
                         }
                     }
                 }
@@ -144,5 +145,9 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
             R.id.action_characterFragment_to_characterDetailFragment,
             bundle
         )
+    }
+
+    private fun navigateToSearch() {
+        findNavController().navigate(R.id.action_characterFragment_to_search_nav_graph)
     }
 }

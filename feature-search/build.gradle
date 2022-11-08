@@ -1,15 +1,17 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
     namespace 'com.ssong_develop.feature_search'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         minSdk 26
-        targetSdk 32
+        targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -22,20 +24,58 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation(project(":core-ui"))
+    implementation(project(":core-common"))
+    implementation(project(":core-data"))
+    implementation(project(":core-model"))
+
+    // android support
+    implementation "com.google.android.material:material:$versions.materialVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$versions.androidXSwipeRefreshLayoutVersion"
+    implementation "androidx.core:core-ktx:$versions.androidXCoreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.androidXConstraintLayoutVersion"
+
+    // architecture component
+    implementation "androidx.activity:activity-ktx:$versions.androidXActivityKtxVersion"
+    implementation "androidx.fragment:fragment-ktx:$versions.androidXFragmentKtxVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidXLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidXLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidXLifecycleVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.androidXNavigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.androidXNavigationVersion"
+
+    // paging
+    implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"
+
+    // coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
+
+    implementation "androidx.asynclayoutinflater:asynclayoutinflater:$versions.androidXAsyncLayoutInflater"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hiltCoreVersion"
+    kapt "androidx.hilt:hilt-compiler:$versions.hiltVersion"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
+    implementation "com.github.florent37:glidepalette:$versions.glidePaletteVersion"
+
+    // recyclerview
+    implementation "androidx.recyclerview:recyclerview:$versions.recycleViewVersion"
 }

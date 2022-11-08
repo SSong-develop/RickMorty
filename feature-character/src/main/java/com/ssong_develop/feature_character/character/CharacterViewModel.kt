@@ -20,11 +20,11 @@ class CharacterViewModel @Inject constructor(
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val _uiEventState = MutableSharedFlow<CharacterUiEvent>(
+    private val _characterUiEventBus = MutableSharedFlow<CharacterUiEvent>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val uiEventState = _uiEventState.asSharedFlow()
+    val characterUiEventBus = _characterUiEventBus.asSharedFlow()
 
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
@@ -42,23 +42,28 @@ class CharacterViewModel @Inject constructor(
     }
 
     fun postRetryEvent() {
-        _uiEventState.tryEmit(CharacterUiEvent.Retry)
+        _characterUiEventBus.tryEmit(CharacterUiEvent.Retry)
     }
 
     fun postRefreshEvent() {
-        _uiEventState.tryEmit(CharacterUiEvent.Refresh)
+        _characterUiEventBus.tryEmit(CharacterUiEvent.Refresh)
     }
 
     fun postFavoriteEvent() {
         if (favoriteCharacterState.value != null) {
-            _uiEventState.tryEmit(CharacterUiEvent.Favorite)
+            _characterUiEventBus.tryEmit(CharacterUiEvent.Favorite)
         }
+    }
+
+    fun postSearchEvent() {
+        _characterUiEventBus.tryEmit(CharacterUiEvent.Search)
     }
 
     sealed interface CharacterUiEvent {
         object Retry : CharacterUiEvent
         object Refresh : CharacterUiEvent
         object Favorite : CharacterUiEvent
+        object Search : CharacterUiEvent
     }
 }
 
