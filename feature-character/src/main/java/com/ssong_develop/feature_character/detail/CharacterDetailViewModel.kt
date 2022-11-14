@@ -26,6 +26,8 @@ class CharacterDetailViewModel @Inject constructor(
 
     companion object {
         private const val CHARACTER_KEY = "character"
+        private const val SECOND = 1_000L
+        private const val DEFAULT_TIMEOUT_SECOND = 20 * SECOND
     }
 
     private val _uiEventState = MutableSharedFlow<CharacterDetailUiEvent>(
@@ -67,7 +69,9 @@ class CharacterDetailViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 updateEpisodeLoading(true)
-                repository.getEpisodes(episodeUrls)
+                withTimeout(DEFAULT_TIMEOUT_SECOND) {
+                    repository.getEpisodes(episodeUrls)
+                }
             }.onSuccess { resource ->
                 updateCharacterEpisode(resource)
                 updateEpisodeLoading(false)

@@ -91,7 +91,7 @@
 
         <include
             android:id="@+id/view_search_error"
-            layout="@layout/view_search_error"
+            layout="@layout/view_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{vm.uiState.error ? View.VISIBLE : View.GONE}"
