@@ -8,8 +8,7 @@ import androidx.paging.cachedIn
 import com.ssong_develop.core_data.repository.SearchRepository
 import com.ssong_develop.core_model.Characters
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -71,6 +70,7 @@ class SearchViewModel @Inject constructor(
             isError = isError
         )
     }
+
 
     sealed interface SearchUiEvent {
         data class ShowToast(val message: String) : SearchUiEvent
