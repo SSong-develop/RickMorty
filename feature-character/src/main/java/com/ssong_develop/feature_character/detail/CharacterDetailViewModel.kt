@@ -9,11 +9,11 @@ import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
+import java.io.Closeable
+import java.net.Socket
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -21,6 +21,7 @@ import javax.inject.Inject
 class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: CharacterRepository,
+    private val episodeUseCase: EpisodeUseCase,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
@@ -66,18 +67,19 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     private fun getCharacterEpisode(episodeUrls: List<String>) {
-        viewModelScope.launch {
-            runCatching {
-                updateEpisodeLoading(true)
-                withTimeout(DEFAULT_TIMEOUT_SECOND) {
-                    repository.getEpisodes(episodeUrls)
-                }
-            }.onSuccess { resource ->
-                updateCharacterEpisode(resource)
-                updateEpisodeLoading(false)
-            }.onFailure { throwable ->
-                updateCharacterEpisode(emptyList())
-                updateEpisodeLoading(false)
+        episodeUseCase.use { useCase ->
+            viewModelScope.launch {
+                updateCharacterEpisode(
+                    useCase.getEpisode(
+                        episodeUrls = episodeUrls,
+                        startLoading = {
+                            updateEpisodeLoading(true)
+                        },
+                        stopLoading = {
+                            updateEpisodeLoading(false)
+                        }
+                    )
+                )
             }
         }
     }
