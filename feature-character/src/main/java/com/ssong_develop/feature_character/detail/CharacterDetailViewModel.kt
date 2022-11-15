@@ -12,8 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
-import java.io.Closeable
-import java.net.Socket
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -28,13 +26,14 @@ class CharacterDetailViewModel @Inject constructor(
         private const val CHARACTER_KEY = "character"
         private const val SECOND = 1_000L
         private const val DEFAULT_TIMEOUT_SECOND = 20 * SECOND
+        private const val TIME_OUT_ERROR_MESSAGE = "시간초과 됐습니다."
     }
 
-    private val _uiEventState = MutableSharedFlow<CharacterDetailUiEvent>(
+    private val _characterDetailUiEventBus = MutableSharedFlow<CharacterDetailUiEvent>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val uiEventState = _uiEventState.asSharedFlow()
+    val characterDetailUiEventBus = _characterDetailUiEventBus.asSharedFlow()
 
     private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())
     val uiState = _uiState.asStateFlow()
@@ -61,10 +60,6 @@ class CharacterDetailViewModel @Inject constructor(
         initialValue = false
     )
 
-    fun postBackEvent() {
-        _uiEventState.tryEmit(CharacterDetailUiEvent.Back)
-    }
-
     private fun getCharacterEpisode(episodeUrls: List<String>) {
         viewModelScope.launch {
             runCatching {
@@ -80,13 +75,13 @@ class CharacterDetailViewModel @Inject constructor(
                 when (throwable) {
                     is TimeoutCancellationException -> {
                         // TODO 타임 아웃시 어떻게 해야할 지 고민 좀
+                        postShowToastEvent(TIME_OUT_ERROR_MESSAGE)
                         updateCharacterEpisode(emptyList())
                     }
                     else -> {
                         updateCharacterEpisode(emptyList())
                     }
                 }
- 
             }
         }
     }
@@ -109,6 +104,14 @@ class CharacterDetailViewModel @Inject constructor(
         )
     }
 
+    fun postBackEvent() {
+        _characterDetailUiEventBus.tryEmit(CharacterDetailUiEvent.Back)
+    }
+
+    fun postShowToastEvent(message: String) {
+        _characterDetailUiEventBus.tryEmit(CharacterDetailUiEvent.ShowToast(message))
+    }
+
     fun onClickFavorite() {
         if (isFavoriteCharacterState.value) {
             clearFavCharacter()
@@ -121,6 +124,7 @@ class CharacterDetailViewModel @Inject constructor(
 
     sealed interface CharacterDetailUiEvent {
         object Back : CharacterDetailUiEvent
+        data class ShowToast(val message: String): CharacterDetailUiEvent
     }
 }
 

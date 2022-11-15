@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
+import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.FooterAdapter
@@ -52,9 +53,12 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         viewLifecycleOwner.lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.uiEventState.collectLatest { uiEvent ->
+                    viewModel.characterDetailUiEventBus.collectLatest { uiEvent ->
                         when (uiEvent) {
                             CharacterDetailViewModel.CharacterDetailUiEvent.Back -> navigateToBackStack()
+                            is CharacterDetailViewModel.CharacterDetailUiEvent.ShowToast -> {
+                                requireContext().toast(uiEvent.message)
+                            }
                         }
                     }
                 }
