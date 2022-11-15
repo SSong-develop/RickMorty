@@ -21,7 +21,6 @@ import javax.inject.Inject
 class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: CharacterRepository,
-    private val episodeUseCase: EpisodeUseCase,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
@@ -67,19 +66,27 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     private fun getCharacterEpisode(episodeUrls: List<String>) {
-        episodeUseCase.use { useCase ->
-            viewModelScope.launch {
-                updateCharacterEpisode(
-                    useCase.getEpisode(
-                        episodeUrls = episodeUrls,
-                        startLoading = {
-                            updateEpisodeLoading(true)
-                        },
-                        stopLoading = {
-                            updateEpisodeLoading(false)
-                        }
-                    )
-                )
+        viewModelScope.launch {
+            runCatching {
+                updateEpisodeLoading(true)
+                withTimeout(DEFAULT_TIMEOUT_SECOND) {
+                    repository.getEpisodes(episodeUrls)
+                }
+            }.onSuccess { episodes ->
+                updateEpisodeLoading(false)
+                updateCharacterEpisode(episodes)
+            }.onFailure { throwable ->
+                updateEpisodeLoading(false)
+                when (throwable) {
+                    is TimeoutCancellationException -> {
+                        // TODO 타임 아웃시 어떻게 해야할 지 고민 좀
+                        updateCharacterEpisode(emptyList())
+                    }
+                    else -> {
+                        updateCharacterEpisode(emptyList())
+                    }
+                }
+ 
             }
         }
     }
