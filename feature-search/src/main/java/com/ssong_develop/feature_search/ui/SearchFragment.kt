@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_search.R
@@ -25,7 +26,6 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// TODO 에러 뷰 대신에 검색 결과가 없다던지 그런 류로 얘기하는 것이 좋아보입니다.
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -53,8 +53,8 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.resultStream.collectLatest {
-                        searchResultPagingAdapter.submitData(it)
+                    viewModel.searchResultStream.collectLatest { pagingData ->
+                        searchResultPagingAdapter.submitData(pagingData)
                     }
                 }
 

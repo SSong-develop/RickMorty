@@ -36,13 +36,13 @@ class SearchViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     // two-way DataBinding
-    var searchQuery = MutableStateFlow(savedStateHandle.get(SEARCH_QUERY) ?: "")
+    var searchQuery = MutableStateFlow(savedStateHandle[SEARCH_QUERY] ?: "")
         set(value) {
-            savedStateHandle[SEARCH_QUERY] = value
             field = value
+            savedStateHandle[SEARCH_QUERY] = value
         }
 
-    val resultStream: Flow<PagingData<Characters>> = searchQuery
+    val searchResultStream: Flow<PagingData<Characters>> = searchQuery
         .debounce(DEFAULT_DEBOUNCE_TIME)
         .flatMapLatest { query -> searchRepository.getSearchResultStream(query) }
         .cachedIn(scope = viewModelScope)
@@ -70,7 +70,6 @@ class SearchViewModel @Inject constructor(
             isError = isError
         )
     }
-
 
     sealed interface SearchUiEvent {
         data class ShowToast(val message: String) : SearchUiEvent
