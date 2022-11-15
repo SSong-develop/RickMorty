@@ -29,7 +29,7 @@ class CharacterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
 
-    val pagingCharacterFlow: Flow<PagingData<Characters>> =
+    val characterStream: Flow<PagingData<Characters>> =
         characterRepository.getCharacterStream()
             .cachedIn(viewModelScope)
 

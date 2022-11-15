@@ -62,7 +62,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.pagingCharacterFlow.collectLatest { pagingData ->
+                    viewModel.characterStream.collectLatest { pagingData ->
                         pagingAdapter.submitData(pagingData)
                     }
                 }
