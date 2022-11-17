@@ -48,18 +48,6 @@ class SearchViewModel @Inject constructor(
         .flatMapLatest { query -> searchRepository.getSearchResultStream(query) }
         .cachedIn(scope = viewModelScope)
 
-    fun postShowToastEvent(message: String) {
-        _searchUiEventBus.tryEmit(SearchUiEvent.ShowToast(message))
-    }
-
-    fun postRetryEvent() {
-        _searchUiEventBus.tryEmit(SearchUiEvent.Retry)
-    }
-
-    fun postRefreshEvent() {
-        _searchUiEventBus.tryEmit(SearchUiEvent.Refresh)
-    }
-
     fun updateLoadingState(isLoading: Boolean) {
         _uiState.value = _uiState.value.copy(
             isLoading = isLoading

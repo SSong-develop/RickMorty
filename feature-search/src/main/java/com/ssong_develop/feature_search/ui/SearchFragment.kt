@@ -112,7 +112,5 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
         binding.rvSearchResult.adapter = searchResultPagingAdapter
     }
 
-    override fun onItemClick(characters: Characters) {
-        Log.d("ssong-develop","${characters}")
-    }
+    override fun onItemClick(characters: Characters) {}
 }
