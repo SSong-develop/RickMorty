@@ -2,9 +2,6 @@ package com.ssong_develop.core_data.network.calladapter.common
 
 import okhttp3.ResponseBody
 
-/**
- * TODO(ERROR Handling)
- */
 sealed class NetworkResponse<ResponseBody> {
     /**
      * Success response with body

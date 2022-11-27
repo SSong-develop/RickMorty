@@ -9,6 +9,7 @@ import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_search.R
 import com.ssong_develop.feature_search.SearchItemClickDelegate
 import com.ssong_develop.feature_search.databinding.ItemSearchResultBinding
+import com.ssong_develop.feature_search.viewholder.SearchResultViewHolder
 
 private val searchResultDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {
     override fun areItemsTheSame(oldItem: Characters, newItem: Characters): Boolean =

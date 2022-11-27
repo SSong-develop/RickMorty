@@ -9,7 +9,6 @@ import com.ssong_develop.core_database.converter.StringListConverter
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.RecentSearchKeyword
 
-// TODO (오토 마이그레이션 적용하기)
 @Database(
     entities = [Characters::class, RecentSearchKeyword::class],
     version = 3,

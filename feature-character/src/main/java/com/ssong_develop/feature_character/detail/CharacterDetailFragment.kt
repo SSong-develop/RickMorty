@@ -49,30 +49,7 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         initDataBinding()
         initAdapter()
         initRecyclerView()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.characterDetailUiEventBus.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            CharacterDetailViewModel.CharacterDetailUiEvent.Back -> navigateToBackStack()
-                            is CharacterDetailViewModel.CharacterDetailUiEvent.ShowToast -> {
-                                requireContext().toast(uiEvent.message)
-                            }
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.uiState.collectLatest { uiState ->
-                        episodeAdapter.submitEpisodes(uiState.characterEpisode)
-                        if (uiState.characterEpisode.isNotEmpty()) {
-                            concatAdapter.removeAdapter(footerAdapter)
-                        }
-                    }
-                }
-            }
-        }
+        initObserve()
     }
 
     override fun onItemClick(view: View, episode: Episode) {}
@@ -96,6 +73,32 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
     private fun initRecyclerView() {
         binding.episodeList.apply {
             this.adapter = concatAdapter
+        }
+    }
+
+    private fun initObserve() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.characterDetailUiEventBus.collectLatest { uiEvent ->
+                        when (uiEvent) {
+                            CharacterDetailViewModel.CharacterDetailUiEvent.Back -> navigateToBackStack()
+                            is CharacterDetailViewModel.CharacterDetailUiEvent.ShowToast -> {
+                                requireContext().toast(uiEvent.message)
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.uiState.collectLatest { uiState ->
+                        episodeAdapter.submitEpisodes(uiState.characterEpisode)
+                        if (uiState.characterEpisode.isNotEmpty()) {
+                            concatAdapter.removeAdapter(footerAdapter)
+                        }
+                    }
+                }
+            }
         }
     }
 

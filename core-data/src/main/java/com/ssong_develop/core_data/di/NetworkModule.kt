@@ -3,9 +3,9 @@ package com.ssong_develop.core_data.di
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponseAdapterFactory
 import com.ssong_develop.core_data.network.calladapter.flow.FlowCallAdapterFactory
-import com.ssong_develop.core_data.network.service.SearchService
 import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
 import com.ssong_develop.core_data.network.service.CharacterServiceWrapper
+import com.ssong_develop.core_data.network.service.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

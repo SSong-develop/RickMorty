@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_search.adapter
+package com.ssong_develop.feature_search.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder

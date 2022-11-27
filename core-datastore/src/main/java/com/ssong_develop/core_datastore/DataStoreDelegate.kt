@@ -34,7 +34,6 @@ internal class DataStoreRepositoryImpl @Inject constructor(
     override val favoriteCharacterFlow: Flow<Characters?> =
         context.datastore.data.map { preferences ->
             preferences[PREFERENCES_FAVORITE_CHARACTER]?.let { characterJson ->
-                // 여기 구문 고치기
                 if (characterJson.isNotEmpty()) {
                     Gson().fromJson(characterJson, Characters::class.java)
                 } else {

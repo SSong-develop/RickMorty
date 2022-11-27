@@ -9,9 +9,12 @@ import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -74,7 +77,6 @@ class CharacterDetailViewModel @Inject constructor(
                 updateEpisodeLoading(false)
                 when (throwable) {
                     is TimeoutCancellationException -> {
-                        // TODO 타임 아웃시 어떻게 해야할 지 고민 좀
                         postShowToastEvent(TIME_OUT_ERROR_MESSAGE)
                         updateCharacterEpisode(emptyList())
                     }
@@ -124,7 +126,7 @@ class CharacterDetailViewModel @Inject constructor(
 
     sealed interface CharacterDetailUiEvent {
         object Back : CharacterDetailUiEvent
-        data class ShowToast(val message: String): CharacterDetailUiEvent
+        data class ShowToast(val message: String) : CharacterDetailUiEvent
     }
 }
 

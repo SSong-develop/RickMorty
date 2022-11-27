@@ -1,24 +1,22 @@
 package com.ssong_develop.feature_search.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_search.R
 import com.ssong_develop.feature_search.SearchItemClickDelegate
-import com.ssong_develop.feature_search.adapter.SearchResultPagingAdapter
 import com.ssong_develop.feature_search.SearchViewModel
+import com.ssong_develop.feature_search.adapter.SearchResultPagingAdapter
 import com.ssong_develop.feature_search.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -31,17 +29,17 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchFragment : Fragment(), SearchItemClickDelegate {
 
-    private lateinit var binding : FragmentSearchBinding
+    private lateinit var binding: FragmentSearchBinding
 
     private lateinit var searchResultPagingAdapter: SearchResultPagingAdapter
 
-    private val viewModel : SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         return binding.root
     }
 
@@ -49,7 +47,25 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
         initDataBinding()
         initAdapter()
         initRecyclerView()
+        initObserve()
+    }
 
+    private fun initDataBinding() {
+        with(binding) {
+            vm = viewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+    }
+
+    private fun initAdapter() {
+        searchResultPagingAdapter = SearchResultPagingAdapter(this)
+    }
+
+    private fun initRecyclerView() {
+        binding.rvSearchResult.adapter = searchResultPagingAdapter
+    }
+
+    private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -86,7 +102,9 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                 launch {
                     viewModel.searchUiEventBus.collectLatest { event ->
                         when (event) {
-                            is SearchViewModel.SearchUiEvent.ShowToast -> requireContext().toast(event.message)
+                            is SearchViewModel.SearchUiEvent.ShowToast -> requireContext().toast(
+                                event.message
+                            )
                             SearchViewModel.SearchUiEvent.Retry -> searchResultPagingAdapter.retry()
                             SearchViewModel.SearchUiEvent.Refresh -> searchResultPagingAdapter.refresh()
                             else -> {}
@@ -95,21 +113,6 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                 }
             }
         }
-    }
-
-    private fun initDataBinding() {
-        with(binding) {
-            vm = viewModel
-            lifecycleOwner = viewLifecycleOwner
-        }
-    }
-
-    private fun initAdapter() {
-        searchResultPagingAdapter = SearchResultPagingAdapter(this)
-    }
-
-    private fun initRecyclerView() {
-        binding.rvSearchResult.adapter = searchResultPagingAdapter
     }
 
     override fun onItemClick(characters: Characters) {}

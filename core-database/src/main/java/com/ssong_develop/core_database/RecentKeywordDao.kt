@@ -1,10 +1,6 @@
 package com.ssong_develop.core_database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.ssong_develop.core_model.RecentSearchKeyword
 import kotlinx.coroutines.flow.Flow
 

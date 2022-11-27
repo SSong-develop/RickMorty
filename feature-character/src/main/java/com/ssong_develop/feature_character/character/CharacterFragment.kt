@@ -58,44 +58,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         initDataBinding()
         initAdapter()
         initRecyclerView()
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.characterStream.collectLatest { pagingData ->
-                        pagingAdapter.submitData(pagingData)
-                    }
-                }
-                launch {
-                    pagingAdapter.loadStateFlow.collectLatest { loadStates ->
-                        when (loadStates.refresh) {
-                            is LoadState.NotLoading -> {
-                                viewModel.updateLoadingState(false)
-                                viewModel.updateErrorState(false)
-                            }
-                            LoadState.Loading -> {
-                                viewModel.updateLoadingState(true)
-                                viewModel.updateErrorState(false)
-                            }
-                            is LoadState.Error -> {
-                                viewModel.updateLoadingState(false)
-                                viewModel.updateErrorState(true)
-                            }
-                        }
-                    }
-                }
-                launch {
-                    viewModel.characterUiEventBus.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
-                            CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
-                            CharacterViewModel.CharacterUiEvent.Favorite -> navigateToFavoriteCharacter()
-                            CharacterViewModel.CharacterUiEvent.Search -> navigateToSearch()
-                        }
-                    }
-                }
-            }
-        }
+        initObserve()
     }
 
     override fun onItemClick(
@@ -136,6 +99,46 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     private fun initRecyclerView() {
         binding.rvCharacter.adapter = pagingAdapter
+    }
+
+    private fun initObserve() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.characterStream.collectLatest { pagingData ->
+                        pagingAdapter.submitData(pagingData)
+                    }
+                }
+                launch {
+                    pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                        when (loadStates.refresh) {
+                            is LoadState.NotLoading -> {
+                                viewModel.updateLoadingState(false)
+                                viewModel.updateErrorState(false)
+                            }
+                            LoadState.Loading -> {
+                                viewModel.updateLoadingState(true)
+                                viewModel.updateErrorState(false)
+                            }
+                            is LoadState.Error -> {
+                                viewModel.updateLoadingState(false)
+                                viewModel.updateErrorState(true)
+                            }
+                        }
+                    }
+                }
+                launch {
+                    viewModel.characterUiEventBus.collectLatest { uiEvent ->
+                        when (uiEvent) {
+                            CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
+                            CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
+                            CharacterViewModel.CharacterUiEvent.Favorite -> navigateToFavoriteCharacter()
+                            CharacterViewModel.CharacterUiEvent.Search -> navigateToSearch()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun navigateToFavoriteCharacter() {
