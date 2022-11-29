@@ -82,3 +82,14 @@ dependencies {
     // recyclerview
     implementation "androidx.recyclerview:recyclerview:$versions.recycleViewVersion"
 }
+
+dependencies {
+    testImplementation "junit:junit:$versions.jUnitVersion"
+    testImplementation "app.cash.turbine:turbine:$versions.turbinVersion"
+    testImplementation "androidx.test:core:$versions.androidxTestVersion"
+    androidTestImplementation "androidx.test.ext:junit:$versions.androidxTestJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$versions.espressoVersion"
+    androidTestImplementation "com.google.truth:truth:$versions.truthVersion"
+    androidTestImplementation "com.android.support.test:runner:$versions.androidTestRunnerVersion"
+    testImplementation "androidx.arch.core:core-testing:$versions.archComponentVersion"
+}
