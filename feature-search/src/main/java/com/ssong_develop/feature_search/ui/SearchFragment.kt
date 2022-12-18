@@ -15,6 +15,7 @@ import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_search.R
 import com.ssong_develop.feature_search.SearchItemClickDelegate
+import com.ssong_develop.feature_search.SearchUiEvent
 import com.ssong_develop.feature_search.SearchViewModel
 import com.ssong_develop.feature_search.adapter.SearchResultPagingAdapter
 import com.ssong_develop.feature_search.databinding.FragmentSearchBinding
@@ -102,11 +103,11 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                 launch {
                     viewModel.searchUiEventBus.collectLatest { event ->
                         when (event) {
-                            is SearchViewModel.SearchUiEvent.ShowToast -> requireContext().toast(
+                            is SearchUiEvent.ShowToast -> requireContext().toast(
                                 event.message
                             )
-                            SearchViewModel.SearchUiEvent.Retry -> searchResultPagingAdapter.retry()
-                            SearchViewModel.SearchUiEvent.Refresh -> searchResultPagingAdapter.refresh()
+                            SearchUiEvent.Retry -> searchResultPagingAdapter.retry()
+                            SearchUiEvent.Refresh -> searchResultPagingAdapter.refresh()
                             else -> {}
                         }
                     }

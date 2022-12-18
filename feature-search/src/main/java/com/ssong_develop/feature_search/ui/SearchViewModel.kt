@@ -14,6 +14,18 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+sealed interface SearchUiEvent {
+    data class ShowToast(val message: String) : SearchUiEvent
+    object Retry : SearchUiEvent
+    object Refresh : SearchUiEvent
+}
+
+data class SearchUiState(
+    val isLoading: Boolean = false,
+    val isError: Boolean = false
+)
+
+// TODO state 다시 확인하기
 @FlowPreview
 @ExperimentalCoroutinesApi
 @HiltViewModel
@@ -37,6 +49,7 @@ class SearchViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     // two-way DataBinding
+    // TODO 이것도 STATE에 들어가야할 거 같은데..아 될거 같음 ㅇㅇㅇㅇㅇㅇ
     var searchQuery = MutableStateFlow(savedStateHandle[SEARCH_QUERY] ?: "")
         set(value) {
             field = value
@@ -50,25 +63,18 @@ class SearchViewModel @Inject constructor(
         .cachedIn(scope = viewModelScope)
 
     fun updateLoadingState(isLoading: Boolean) {
-        _uiState.value = _uiState.value.copy(
-            isLoading = isLoading
-        )
+        _uiState.update { state ->
+            state.copy(
+                isLoading = isLoading
+            )
+        }
     }
 
     fun updateErrorState(isError: Boolean) {
-        _uiState.value = _uiState.value.copy(
-            isError = isError
-        )
-    }
-
-    sealed interface SearchUiEvent {
-        data class ShowToast(val message: String) : SearchUiEvent
-        object Retry : SearchUiEvent
-        object Refresh : SearchUiEvent
+        _uiState.update { state ->
+            state.copy(
+                isError = isError
+            )
+        }
     }
 }
-
-data class SearchUiState(
-    val isLoading: Boolean = false,
-    val isError: Boolean = false
-)
