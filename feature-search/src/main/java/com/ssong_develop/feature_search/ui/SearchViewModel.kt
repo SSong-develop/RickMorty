@@ -48,7 +48,6 @@ class SearchViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     // two-way DataBinding
-    // TODO 이것도 STATE에 들어가야할 거 같은데..아 될거 같음 ㅇㅇㅇㅇㅇㅇ
     var searchQuery = MutableStateFlow(savedStateHandle[SEARCH_QUERY] ?: "")
         set(value) {
             field = value
