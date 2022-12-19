@@ -82,8 +82,8 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
                 launch {
                     viewModel.characterDetailUiEventBus.collectLatest { uiEvent ->
                         when (uiEvent) {
-                            CharacterDetailViewModel.CharacterDetailUiEvent.Back -> navigateToBackStack()
-                            is CharacterDetailViewModel.CharacterDetailUiEvent.ShowToast -> {
+                            CharacterDetailEvent.Back ->  navigateToBackStack()
+                            is CharacterDetailEvent.ShowToast -> {
                                 requireContext().toast(uiEvent.message)
                             }
                         }

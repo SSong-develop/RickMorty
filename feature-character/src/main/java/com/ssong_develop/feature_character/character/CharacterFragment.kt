@@ -130,10 +130,10 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                 launch {
                     viewModel.characterUiEventBus.collectLatest { uiEvent ->
                         when (uiEvent) {
-                            CharacterViewModel.CharacterUiEvent.Retry -> pagingAdapter.retry()
-                            CharacterViewModel.CharacterUiEvent.Refresh -> pagingAdapter.refresh()
-                            CharacterViewModel.CharacterUiEvent.Favorite -> navigateToFavoriteCharacter()
-                            CharacterViewModel.CharacterUiEvent.Search -> navigateToSearch()
+                            CharacterEvent.Retry -> pagingAdapter.retry()
+                            CharacterEvent.Refresh -> pagingAdapter.refresh()
+                            CharacterEvent.Favorite -> navigateToFavoriteCharacter()
+                            CharacterEvent.Search -> navigateToSearch()
                         }
                     }
                 }

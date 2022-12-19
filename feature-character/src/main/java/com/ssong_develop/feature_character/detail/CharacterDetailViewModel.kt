@@ -17,6 +17,17 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
+data class CharacterDetailUiState(
+    val character: Characters? = null,
+    val characterEpisode: List<Episode> = emptyList(),
+    val isEpisodeLoading: Boolean = false,
+)
+
+sealed class CharacterDetailEvent {
+    object Back : CharacterDetailEvent()
+    data class ShowToast(val message: String) : CharacterDetailEvent()
+}
+
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
@@ -32,11 +43,11 @@ class CharacterDetailViewModel @Inject constructor(
         private const val TIME_OUT_ERROR_MESSAGE = "시간초과 됐습니다."
     }
 
-    private val _characterDetailUiEventBus = MutableSharedFlow<CharacterDetailUiEvent>(
+    private val _characterDetailEventBus = MutableSharedFlow<CharacterDetailEvent>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val characterDetailUiEventBus = _characterDetailUiEventBus.asSharedFlow()
+    val characterDetailUiEventBus = _characterDetailEventBus.asSharedFlow()
 
     private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())
     val uiState = _uiState.asStateFlow()
@@ -107,11 +118,11 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     fun postBackEvent() {
-        _characterDetailUiEventBus.tryEmit(CharacterDetailUiEvent.Back)
+        _characterDetailEventBus.tryEmit(CharacterDetailEvent.Back)
     }
 
     fun postShowToastEvent(message: String) {
-        _characterDetailUiEventBus.tryEmit(CharacterDetailUiEvent.ShowToast(message))
+        _characterDetailEventBus.tryEmit(CharacterDetailEvent.ShowToast(message))
     }
 
     fun onClickFavorite() {
@@ -123,15 +134,6 @@ class CharacterDetailViewModel @Inject constructor(
             }
         }
     }
-
-    sealed interface CharacterDetailUiEvent {
-        object Back : CharacterDetailUiEvent
-        data class ShowToast(val message: String) : CharacterDetailUiEvent
-    }
 }
 
-data class CharacterDetailUiState(
-    val character: Characters? = null,
-    val characterEpisode: List<Episode> = emptyList(),
-    val isEpisodeLoading: Boolean = false,
-)
+

@@ -13,6 +13,18 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
+data class CharacterUiState(
+    val isLoading: Boolean = true,
+    val isError: Boolean = false
+)
+
+sealed class CharacterEvent {
+    object Retry : CharacterEvent()
+    object Refresh : CharacterEvent()
+    object Favorite : CharacterEvent()
+    object Search : CharacterEvent()
+}
+
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
@@ -20,11 +32,11 @@ class CharacterViewModel @Inject constructor(
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    private val _characterUiEventBus = MutableSharedFlow<CharacterUiEvent>(
+    private val _characterEventBus = MutableSharedFlow<CharacterEvent>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val characterUiEventBus = _characterUiEventBus.asSharedFlow()
+    val characterUiEventBus = _characterEventBus.asSharedFlow()
 
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
@@ -42,32 +54,20 @@ class CharacterViewModel @Inject constructor(
     }
 
     fun postRetryEvent() {
-        _characterUiEventBus.tryEmit(CharacterUiEvent.Retry)
+        _characterEventBus.tryEmit(CharacterEvent.Retry)
     }
 
     fun postRefreshEvent() {
-        _characterUiEventBus.tryEmit(CharacterUiEvent.Refresh)
+        _characterEventBus.tryEmit(CharacterEvent.Refresh)
     }
 
     fun postFavoriteEvent() {
         if (favoriteCharacterState.value != null) {
-            _characterUiEventBus.tryEmit(CharacterUiEvent.Favorite)
+            _characterEventBus.tryEmit(CharacterEvent.Favorite)
         }
     }
 
     fun postSearchEvent() {
-        _characterUiEventBus.tryEmit(CharacterUiEvent.Search)
-    }
-
-    sealed interface CharacterUiEvent {
-        object Retry : CharacterUiEvent
-        object Refresh : CharacterUiEvent
-        object Favorite : CharacterUiEvent
-        object Search : CharacterUiEvent
+        _characterEventBus.tryEmit(CharacterEvent.Search)
     }
 }
-
-data class CharacterUiState(
-    val isLoading: Boolean = false,
-    val isError: Boolean = false
-)

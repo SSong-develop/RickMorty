@@ -14,10 +14,10 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
-sealed interface SearchUiEvent {
-    data class ShowToast(val message: String) : SearchUiEvent
-    object Retry : SearchUiEvent
-    object Refresh : SearchUiEvent
+sealed interface SearchEvent {
+    data class ShowToast(val message: String) : SearchEvent
+    object Retry : SearchEvent
+    object Refresh : SearchEvent
 }
 
 data class SearchUiState(
@@ -39,11 +39,11 @@ class SearchViewModel @Inject constructor(
         private const val DEFAULT_DEBOUNCE_TIME = 500L
     }
 
-    private val _searchUiEventBus = MutableSharedFlow<SearchUiEvent>(
+    private val _searchEventBus = MutableSharedFlow<SearchEvent>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
-    val searchUiEventBus = _searchUiEventBus.asSharedFlow()
+    val searchUiEventBus = _searchEventBus.asSharedFlow()
 
     private val _uiState = MutableStateFlow(SearchUiState())
     val uiState = _uiState.asStateFlow()
