@@ -25,7 +25,6 @@ data class SearchUiState(
     val isError: Boolean = false
 )
 
-// TODO state 다시 확인하기
 @FlowPreview
 @ExperimentalCoroutinesApi
 @HiltViewModel
