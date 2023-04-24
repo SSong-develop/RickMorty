@@ -68,7 +68,7 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
 
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.searchResultStream.collectLatest { pagingData ->
                         searchResultPagingAdapter.submitData(pagingData)

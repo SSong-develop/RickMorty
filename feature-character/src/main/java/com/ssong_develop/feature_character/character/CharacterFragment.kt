@@ -102,7 +102,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.characterStream.collectLatest { pagingData ->
                         pagingAdapter.submitData(pagingData)

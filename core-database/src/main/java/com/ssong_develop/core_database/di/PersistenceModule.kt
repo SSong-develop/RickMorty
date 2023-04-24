@@ -19,9 +19,7 @@ object PersistenceModule {
     fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
         AppDatabase::class.java, "rick_and_morty_database"
-    )
-        .fallbackToDestructiveMigration()
-        .build()
+    ).build()
 
     @Provides
     @Singleton

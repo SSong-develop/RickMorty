@@ -11,8 +11,8 @@ import com.ssong_develop.core_model.RecentSearchKeyword
 
 @Database(
     entities = [Characters::class, RecentSearchKeyword::class],
-    version = 3,
-    exportSchema = false
+    version = 1,
+    exportSchema = true
 )
 @TypeConverters(
     value = [

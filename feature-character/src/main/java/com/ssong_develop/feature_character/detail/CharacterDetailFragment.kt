@@ -78,7 +78,7 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
 
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.characterDetailUiEventBus.collectLatest { uiEvent ->
                         when (uiEvent) {
