@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-
     implementation "androidx.core:core-ktx:$versions.androidXCoreKtxVersion"
     implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
     implementation "com.google.android.material:material:$versions.materialVersion"

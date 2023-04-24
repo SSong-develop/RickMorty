@@ -106,6 +106,7 @@ dependencies {
     // lottie
     implementation "com.airbnb.android:lottie:$versions.lottieVersion"
 }
+
 dependencies {
 
     testImplementation "junit:junit:$versions.jUnitVersion"

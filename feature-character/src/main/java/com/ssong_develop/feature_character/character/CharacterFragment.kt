@@ -5,6 +5,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,8 +13,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.paging.LoadState
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_character.R
@@ -29,11 +33,6 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterFragment : Fragment(), ItemClickDelegate {
-
-    companion object {
-        private const val CHARACTER_KEY = "character"
-    }
-
     private val viewModel: CharacterViewModel by viewModels()
 
     private lateinit var binding: FragmentCharacterBinding
@@ -116,10 +115,12 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                                 viewModel.updateLoadingState(false)
                                 viewModel.updateErrorState(false)
                             }
+
                             LoadState.Loading -> {
                                 viewModel.updateLoadingState(true)
                                 viewModel.updateErrorState(false)
                             }
+
                             is LoadState.Error -> {
                                 viewModel.updateLoadingState(false)
                                 viewModel.updateErrorState(true)
@@ -151,6 +152,15 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     private fun navigateToSearch() {
-        findNavController().navigate(R.id.action_characterFragment_to_search_nav_graph)
+        val request = NavDeepLinkRequest.Builder
+            .fromUri(SEARCH_FRAGMENT_DEEP_LINK_URI.toUri())
+            .build()
+        findNavController().navigate(request)
+    }
+
+    companion object {
+        private const val CHARACTER_KEY = "character"
+        private const val SEARCH_FRAGMENT_DEEP_LINK_URI =
+            "android-app://com.ssong-develop.com/rick_morty/search_fragment"
     }
 }

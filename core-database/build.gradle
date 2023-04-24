@@ -35,11 +35,11 @@ android {
 dependencies {
     implementation(project(":core-model"))
 
-
     // room
     kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
     implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
     implementation "androidx.room:room-ktx:$versions.androidXRoomVersion"
+    implementation "androidx.room:room-paging:$versions.androidXRoomVersion"
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"

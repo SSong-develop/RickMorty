@@ -3,7 +3,6 @@ package com.ssong_develop.core_common
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -19,8 +18,8 @@ class AutoClearBinding<T : Any> : ReadWriteProperty<Fragment, T>, LifecycleObser
         thisRef.viewLifecycleOwner.lifecycle.addObserver(this)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun onDestroy() {
-        _binding = null
-    }
+//    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+//    fun onDestroy() {
+//        _binding = null
+//    }
 }
