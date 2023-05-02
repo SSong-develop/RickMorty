@@ -1,6 +1,6 @@
 package com.ssong_develop.core_data.network.service
 
-import com.ssong_develop.core_data.ApiResponse
+import com.ssong_develop.core_data.network.calladapter.flow.ApiResponse
 import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode

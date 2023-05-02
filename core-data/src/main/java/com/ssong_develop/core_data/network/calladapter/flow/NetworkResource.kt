@@ -1,10 +1,6 @@
 package com.ssong_develop.core_data.network.calladapter.flow
 
 import com.ssong_develop.core_common.Resource
-import com.ssong_develop.core_data.ApiEmptyResponse
-import com.ssong_develop.core_data.ApiErrorResponse
-import com.ssong_develop.core_data.ApiResponse
-import com.ssong_develop.core_data.ApiSuccessResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -14,6 +10,7 @@ import kotlinx.coroutines.flow.flow
  */
 abstract class NetworkResource<RequestType> {
 
+    // TODO 이거 뭐냐 뭔 코드가 이러냐
     private fun loadResource() = flow {
         emit(Resource.loading(null))
         fetchFromNetwork().collect { apiResponse ->

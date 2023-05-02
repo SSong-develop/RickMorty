@@ -2,7 +2,7 @@ package com.ssong_develop.core_data.di
 
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceNoWrapper
-import com.ssong_develop.core_data.network.datasource.client.CharacterDataSourceWrapper
+import com.ssong_develop.core_data.network.datasource.CharacterDataSourceWrapper
 import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
 import com.ssong_develop.core_data.network.service.SearchService
 import com.ssong_develop.core_data.repository.CharacterRepository

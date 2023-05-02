@@ -5,7 +5,6 @@ import androidx.paging.PagingConfig
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.pagingsource.SearchPagingSource
 import com.ssong_develop.core_data.network.service.SearchService
-import com.ssong_develop.rickmorty.repository.Repository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject

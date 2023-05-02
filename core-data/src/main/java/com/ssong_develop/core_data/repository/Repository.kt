@@ -1,4 +1,4 @@
-package com.ssong_develop.rickmorty.repository
+package com.ssong_develop.core_data.repository
 
 interface Repository {
 
