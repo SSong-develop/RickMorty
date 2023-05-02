@@ -1,4 +1,4 @@
-package com.ssong_develop.core_database
+package com.ssong_develop.core_database.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
@@ -6,12 +6,14 @@ import androidx.room.TypeConverters
 import com.ssong_develop.core_database.converter.CharacterLocationListConverter
 import com.ssong_develop.core_database.converter.OriginListConverter
 import com.ssong_develop.core_database.converter.StringListConverter
-import com.ssong_develop.core_model.Characters
-import com.ssong_develop.core_model.RecentSearchKeyword
+import com.ssong_develop.core_database.dao.RickMortyCharacterDao
+import com.ssong_develop.core_database.dao.RickMortyRecentSearchQueryDao
+import com.ssong_develop.core_database.entity.LocalEntityCharacters
+import com.ssong_develop.core_database.entity.LocalEntityRecentSearchQuery
 
 @Database(
-    entities = [Characters::class, RecentSearchKeyword::class],
-    version = 1,
+    entities = [LocalEntityCharacters::class, LocalEntityRecentSearchQuery::class],
+    version = 2,
     exportSchema = true
 )
 @TypeConverters(
@@ -23,6 +25,6 @@ import com.ssong_develop.core_model.RecentSearchKeyword
 )
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun characterDao(): CharacterDao
-    abstract fun recentSearchKeywordDao(): RecentKeywordDao
+    abstract fun characterDao(): RickMortyCharacterDao
+    abstract fun recentSearchKeywordDao(): RickMortyRecentSearchQueryDao
 }

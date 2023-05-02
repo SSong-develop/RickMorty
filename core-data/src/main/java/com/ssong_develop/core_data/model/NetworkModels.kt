@@ -34,15 +34,15 @@ data class NetworkCharacters(
 @Serializable
 data class NetworkOrigin(
     @SerialName("name")
-    val originName: String,
+    val name: String,
     @SerialName("url")
-    val originUrl: String
+    val url: String
 )
 
 @Serializable
 data class NetworkLocation(
     @SerialName("name")
-    val locationName: String,
+    val name: String,
     @SerialName("url")
-    val locationUrl: String
+    val url: String
 )

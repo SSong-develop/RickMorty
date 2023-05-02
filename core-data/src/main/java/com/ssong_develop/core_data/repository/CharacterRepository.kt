@@ -10,7 +10,7 @@ import com.ssong_develop.core_data.network.datasource.CharacterDataSourceNoWrapp
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceWrapper
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
 import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
-import com.ssong_develop.core_database.CharacterDao
+import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,7 +22,7 @@ import javax.inject.Inject
 class CharacterRepository @Inject constructor(
     private val characterDataSourceWrapper: CharacterDataSourceWrapper,
     private val characterDataSourceNoWrapper: CharacterDataSourceNoWrapper,
-    private val characterDao: CharacterDao,
+    private val rickMortyCharacterDao: RickMortyCharacterDao,
     private val characterServiceNoWrapper: CharacterServiceNoWrapper,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {

@@ -2,7 +2,7 @@ package com.ssong_develop.core_database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ssong_develop.core_database.AppDatabase
+import com.ssong_develop.core_database.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,9 @@ object PersistenceModule {
     fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
         AppDatabase::class.java, "rick_and_morty_database"
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 
     @Provides
     @Singleton

@@ -7,7 +7,7 @@ import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
 import com.ssong_develop.core_data.network.service.SearchService
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_data.repository.SearchRepository
-import com.ssong_develop.core_database.CharacterDao
+import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,13 +23,13 @@ object RepositoryModule {
     fun provideCharacterRepository(
         characterDataSourceWrapper: CharacterDataSourceWrapper,
         characterDataSourceNoWrapper: CharacterDataSourceNoWrapper,
-        dao: CharacterDao,
+        dao: RickMortyCharacterDao,
         characterServiceNoWrapper: CharacterServiceNoWrapper,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) = CharacterRepository(
         characterDataSourceWrapper = characterDataSourceWrapper,
         characterDataSourceNoWrapper = characterDataSourceNoWrapper,
-        characterDao = dao,
+        rickMortyCharacterDao = dao,
         characterServiceNoWrapper = characterServiceNoWrapper,
         ioDispatcher = ioDispatcher
     )
