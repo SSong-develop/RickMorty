@@ -22,7 +22,6 @@ import javax.inject.Inject
 class CharacterRepository @Inject constructor(
     private val characterDataSourceWrapper: CharacterDataSourceWrapper,
     private val characterDataSourceNoWrapper: CharacterDataSourceNoWrapper,
-    private val rickMortyCharacterDao: RickMortyCharacterDao,
     private val characterServiceNoWrapper: CharacterServiceNoWrapper,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
