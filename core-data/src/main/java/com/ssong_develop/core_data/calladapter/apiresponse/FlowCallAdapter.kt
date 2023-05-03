@@ -1,4 +1,4 @@
-package com.ssong_develop.core_data.network.calladapter.flow
+package com.ssong_develop.core_data.calladapter.apiresponse
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -8,6 +8,7 @@ import retrofit2.CallAdapter
 import retrofit2.awaitResponse
 import java.lang.reflect.Type
 
+@Suppress("unused")
 class FlowCallAdapter<R>(
     private val responseType: Type
 ) : CallAdapter<R, Flow<ApiResponse<R>>> {

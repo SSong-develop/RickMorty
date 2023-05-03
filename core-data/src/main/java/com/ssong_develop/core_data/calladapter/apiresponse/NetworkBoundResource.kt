@@ -1,4 +1,4 @@
-package com.ssong_develop.core_data.network.calladapter.flow
+package com.ssong_develop.core_data.calladapter.apiresponse
 
 import com.ssong_develop.core_common.Resource
 import kotlinx.coroutines.flow.*
@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.*
  * Local Database & Network
  * Created by SSong-develop on 2021.11.07
  */
+@Suppress("unused")
 abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    // TODO 이거 무슨 뭐냐 이딴 코드가 존재해...?
     private fun loadResource() = flow {
         emit(Resource.loading(null))
         val initialLocalData = fetchFromLocal().first()

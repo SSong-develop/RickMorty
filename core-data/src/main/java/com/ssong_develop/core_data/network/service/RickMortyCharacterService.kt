@@ -9,10 +9,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
-interface CharacterServiceNoWrapper {
-    /**
-     * without response wrapper class
-     */
+interface RickMortyCharacterService {
     @GET("character")
     suspend fun getCharacters(
         @Query("page") page: Int

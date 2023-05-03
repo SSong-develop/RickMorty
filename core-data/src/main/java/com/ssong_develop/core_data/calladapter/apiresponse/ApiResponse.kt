@@ -1,4 +1,4 @@
-package com.ssong_develop.core_data.network.calladapter.flow
+package com.ssong_develop.core_data.calladapter.apiresponse
 
 import retrofit2.Response
 

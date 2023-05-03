@@ -1,7 +1,6 @@
-package com.ssong_develop.core_data.network.calladapter.common
+package com.ssong_develop.core_data.calladapter.networkresponse
 
-import okhttp3.ResponseBody
-
+@Suppress("unused")
 sealed class NetworkResponse<ResponseBody> {
     /**
      * Success response with body

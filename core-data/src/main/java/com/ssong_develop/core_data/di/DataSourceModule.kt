@@ -2,8 +2,7 @@ package com.ssong_develop.core_data.di
 
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceNoWrapper
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceWrapper
-import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
-import com.ssong_develop.core_data.network.service.CharacterServiceWrapper
+import com.ssong_develop.core_data.network.service.RickMortyCharacterService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +24,6 @@ object DataSourceModule {
     @Provides
     @Singleton
     fun provideCharacterDataSourceNoWrapper(
-        service: CharacterServiceNoWrapper
+        service: RickMortyCharacterService
     ) = CharacterDataSourceNoWrapper(service)
 }

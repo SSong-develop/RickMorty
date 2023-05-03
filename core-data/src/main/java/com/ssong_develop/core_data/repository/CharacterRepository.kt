@@ -5,12 +5,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.ssong_develop.core_common.Resource
 import com.ssong_develop.core_common.di.IoDispatcher
-import com.ssong_develop.core_data.network.calladapter.common.NetworkResponse
+import com.ssong_develop.core_data.calladapter.networkresponse.NetworkResponse
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceNoWrapper
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceWrapper
 import com.ssong_develop.core_data.network.pagingsource.CharacterPagingSource
-import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
-import com.ssong_develop.core_database.dao.RickMortyCharacterDao
+import com.ssong_develop.core_data.network.service.RickMortyCharacterService
 import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.Episode
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,7 +21,7 @@ import javax.inject.Inject
 class CharacterRepository @Inject constructor(
     private val characterDataSourceWrapper: CharacterDataSourceWrapper,
     private val characterDataSourceNoWrapper: CharacterDataSourceNoWrapper,
-    private val characterServiceNoWrapper: CharacterServiceNoWrapper,
+    private val rickMortyCharacterService: RickMortyCharacterService,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : Repository {
 
@@ -35,7 +34,7 @@ class CharacterRepository @Inject constructor(
      */
     fun getCharacterStream(): Flow<PagingData<Characters>> = Pager(
         config = PagingConfig(pageSize = CHARACTER_PAGE_SIZE, enablePlaceholders = true),
-        pagingSourceFactory = { CharacterPagingSource(characterServiceNoWrapper) }
+        pagingSourceFactory = { CharacterPagingSource(rickMortyCharacterService) }
     ).flow.flowOn(ioDispatcher)
 
     /**
@@ -55,32 +54,4 @@ class CharacterRepository @Inject constructor(
 
     suspend fun getEpisodes(urls: List<String>) =
         characterDataSourceNoWrapper.getCharacterEpisode(urls)
-
-    /**
-     * Wrapper Function Scope
-     */
-    fun getEpisodesNetworkResponse(urls: List<String>) = flow {
-        val apiSuccessEpisodes = mutableListOf<Episode>()
-        runCatching {
-            characterDataSourceWrapper.getCharacterEpisodeNetworkResponse(urls)
-        }.onSuccess { wrapperResponse ->
-            wrapperResponse.map {
-                when (it) {
-                    is NetworkResponse.ApiSuccessResponse -> {
-                        it.body.let { episode ->
-                            apiSuccessEpisodes.add(episode)
-                        }
-                    }
-                    is NetworkResponse.ApiEmptyResponse -> {}
-                    is NetworkResponse.ApiFailureResponse -> {}
-
-                }
-            }
-        }
-        if (apiSuccessEpisodes.isEmpty()) {
-            emit(Resource.error("api Error", emptyList<Episode>()))
-        } else {
-            emit(Resource.success(apiSuccessEpisodes))
-        }
-    }.flowOn(ioDispatcher)
 }

@@ -1,4 +1,4 @@
-package com.ssong_develop.core_data.network.calladapter.common
+package com.ssong_develop.core_data.calladapter.networkresponse
 
 import okhttp3.Request
 import okio.Timeout
@@ -6,6 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+@Suppress("unused")
 internal class NetworkResponseCall<S : Any>(
     private val delegate: Call<S>
 ) : Call<NetworkResponse<S>> {

@@ -3,7 +3,7 @@ package com.ssong_develop.core_data.di
 import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceNoWrapper
 import com.ssong_develop.core_data.network.datasource.CharacterDataSourceWrapper
-import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
+import com.ssong_develop.core_data.network.service.RickMortyCharacterService
 import com.ssong_develop.core_data.network.service.SearchService
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_data.repository.SearchRepository
@@ -24,13 +24,12 @@ object RepositoryModule {
         characterDataSourceWrapper: CharacterDataSourceWrapper,
         characterDataSourceNoWrapper: CharacterDataSourceNoWrapper,
         dao: RickMortyCharacterDao,
-        characterServiceNoWrapper: CharacterServiceNoWrapper,
+        rickMortyCharacterService: RickMortyCharacterService,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ) = CharacterRepository(
         characterDataSourceWrapper = characterDataSourceWrapper,
         characterDataSourceNoWrapper = characterDataSourceNoWrapper,
-        rickMortyCharacterDao = dao,
-        characterServiceNoWrapper = characterServiceNoWrapper,
+        rickMortyCharacterService = rickMortyCharacterService,
         ioDispatcher = ioDispatcher
     )
 

@@ -2,12 +2,12 @@ package com.ssong_develop.core_data.network.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ssong_develop.core_data.network.service.CharacterServiceNoWrapper
+import com.ssong_develop.core_data.network.service.RickMortyCharacterService
 import com.ssong_develop.core_model.Characters
 import javax.inject.Inject
 
 class CharacterPagingSource @Inject constructor(
-    private val characterServiceNoWrapper: CharacterServiceNoWrapper
+    private val rickMortyCharacterService: RickMortyCharacterService
 ) : PagingSource<Int, Characters>() {
 
     companion object {
@@ -25,7 +25,7 @@ class CharacterPagingSource @Inject constructor(
         val currentKey = params.key ?: STARTING_KEY
 
         val response = runCatching {
-            characterServiceNoWrapper.getCharacters(currentKey)
+            rickMortyCharacterService.getCharacters(currentKey)
         }.getOrElse { throwable ->
             return LoadResult.Error(throwable)
         }

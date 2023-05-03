@@ -1,4 +1,4 @@
-package com.ssong_develop.core_data.network.calladapter.flow
+package com.ssong_develop.core_data.calladapter.apiresponse
 
 import kotlinx.coroutines.flow.Flow
 import retrofit2.CallAdapter
@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
+@Suppress("unused")
 class FlowCallAdapterFactory : Factory() {
 
     override fun get(
