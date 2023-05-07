@@ -12,11 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import com.ssong_develop.core_common.toast
-import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_search.R
 import com.ssong_develop.feature_search.SearchItemClickDelegate
-import com.ssong_develop.feature_search.SearchEvent
-import com.ssong_develop.feature_search.SearchViewModel
 import com.ssong_develop.feature_search.adapter.SearchResultPagingAdapter
 import com.ssong_develop.feature_search.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -116,5 +114,5 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
         }
     }
 
-    override fun onItemClick(characters: Characters) {}
+    override fun onItemClick(characters: RickMortyCharacter) {}
 }

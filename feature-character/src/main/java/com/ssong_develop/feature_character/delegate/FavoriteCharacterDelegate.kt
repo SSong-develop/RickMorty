@@ -2,7 +2,6 @@ package com.ssong_develop.feature_character.delegate
 
 import com.ssong_develop.core_common.di.ApplicationScope
 import com.ssong_develop.core_datastore.DataStoreRepository
-import com.ssong_develop.core_model.Characters
 import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import kotlinx.coroutines.CoroutineScope
@@ -14,11 +13,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 interface FavoriteCharacterDelegate {
-    val favoriteCharacterState: StateFlow<RickMortyCharacterUiModel?>
+    val favoriteCharacterState: StateFlow<RickMortyCharacter?>
 
     fun clearFavCharacter()
 
-    fun putFavCharacter(character: RickMortyCharacterUiModel)
+    fun putFavCharacter(character: RickMortyCharacter)
 }
 
 @ExperimentalCoroutinesApi
@@ -26,7 +25,7 @@ internal class FavoriteCharacterDelegateImpl @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
     @ApplicationScope private val applicationScope: CoroutineScope
 ) : FavoriteCharacterDelegate {
-    override val favoriteCharacterState: StateFlow<RickMortyCharacterUiModel?> =
+    override val favoriteCharacterState: StateFlow<RickMortyCharacter?> =
         dataStoreRepository.favoriteCharacterFlow
             .stateIn(
                 scope = applicationScope,

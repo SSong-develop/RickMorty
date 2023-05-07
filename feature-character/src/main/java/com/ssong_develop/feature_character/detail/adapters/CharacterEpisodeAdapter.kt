@@ -1,11 +1,12 @@
 package com.ssong_develop.feature_character.detail.adapters
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.ssong_develop.core_model.Episode
+import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBinding
 import com.ssong_develop.feature_character.detail.viewholders.CharacterEpisodeViewHolder
@@ -14,7 +15,7 @@ class CharacterEpisodeAdapter(
     private val delegate: CharacterEpisodeViewHolder.Delegate
 ) : RecyclerView.Adapter<CharacterEpisodeViewHolder>() {
 
-    private val items: MutableList<Episode> = arrayListOf()
+    private val items: MutableList<RickMortyCharacterEpisode> = mutableListOf()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -40,7 +41,8 @@ class CharacterEpisodeAdapter(
     override fun getItemCount(): Int = items.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitEpisodes(episodes: List<Episode>) {
+    fun submitEpisodes(episodes: List<RickMortyCharacterEpisode>) {
+        Log.d("ssong-develop3","${episodes}")
         items.clear()
         items.addAll(episodes)
         notifyDataSetChanged()

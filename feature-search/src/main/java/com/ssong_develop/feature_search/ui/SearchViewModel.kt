@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_search
+package com.ssong_develop.feature_search.ui
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -6,12 +6,20 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.ssong_develop.core_data.repository.SearchRepository
-import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.RickMortyCharacter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 sealed interface SearchEvent {
@@ -54,7 +62,7 @@ class SearchViewModel @Inject constructor(
             savedStateHandle[SEARCH_QUERY] = value
         }
 
-    val searchResultStream: Flow<PagingData<Characters>> = searchQuery
+    val searchResultStream: Flow<PagingData<RickMortyCharacter>> = searchQuery
         .filter { query -> query.isNotEmpty() }
         .debounce(DEFAULT_DEBOUNCE_TIME)
         .flatMapLatest { query -> searchRepository.getCharacterSearchResultStream(query) }

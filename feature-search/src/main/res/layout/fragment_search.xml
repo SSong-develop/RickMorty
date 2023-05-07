@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.ssong_develop.feature_search.SearchViewModel" />
+            type="com.ssong_develop.feature_search.ui.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

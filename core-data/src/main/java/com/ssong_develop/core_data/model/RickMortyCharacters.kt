@@ -18,7 +18,7 @@ data class NetworkRickMortyCharacterInfo(
     @SerialName("next")
     val next: String,
     @SerialName("prev")
-    val prev: String
+    val prev: String?
 )
 
 @Serializable
@@ -71,7 +71,7 @@ data class NetworkRickMortyCharacterEpisode(
     val id: Int,
     @SerialName("name")
     val name: String,
-    @SerialName("airDate")
+    @SerialName("air_date")
     val airDate: String,
     @SerialName("episode")
     val episode: String,

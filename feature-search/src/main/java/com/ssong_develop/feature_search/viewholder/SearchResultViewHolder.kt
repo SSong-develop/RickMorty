@@ -2,7 +2,7 @@ package com.ssong_develop.feature_search.viewholder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_search.SearchItemClickDelegate
 import com.ssong_develop.feature_search.databinding.ItemSearchResultBinding
 
@@ -11,14 +11,14 @@ class SearchResultViewHolder(
     private val delegate: SearchItemClickDelegate
 ) : ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    private lateinit var character: Characters
+    private lateinit var character: RickMortyCharacter
 
     init {
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)
     }
 
-    fun bind(data: Characters) {
+    fun bind(data: RickMortyCharacter) {
         character = data
         binding.apply {
             this.characters = data

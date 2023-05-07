@@ -5,23 +5,29 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_search.R
 import com.ssong_develop.feature_search.SearchItemClickDelegate
 import com.ssong_develop.feature_search.databinding.ItemSearchResultBinding
 import com.ssong_develop.feature_search.viewholder.SearchResultViewHolder
 
-private val searchResultDiffItemCallback = object : DiffUtil.ItemCallback<Characters>() {
-    override fun areItemsTheSame(oldItem: Characters, newItem: Characters): Boolean =
+private val searchResultDiffItemCallback = object : DiffUtil.ItemCallback<RickMortyCharacter>() {
+    override fun areItemsTheSame(
+        oldItem: RickMortyCharacter,
+        newItem: RickMortyCharacter
+    ): Boolean =
         oldItem.id == newItem.id
 
-    override fun areContentsTheSame(oldItem: Characters, newItem: Characters): Boolean =
+    override fun areContentsTheSame(
+        oldItem: RickMortyCharacter,
+        newItem: RickMortyCharacter
+    ): Boolean =
         oldItem.id == newItem.id
 }
 
 class SearchResultPagingAdapter(
     private val delegate: SearchItemClickDelegate
-) : PagingDataAdapter<Characters, SearchResultViewHolder>(
+) : PagingDataAdapter<RickMortyCharacter, SearchResultViewHolder>(
     searchResultDiffItemCallback
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {

@@ -2,7 +2,7 @@ package com.ssong_develop.feature_character.detail.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.ssong_develop.core_model.Episode
+import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBinding
 
 class CharacterEpisodeViewHolder(
@@ -10,7 +10,7 @@ class CharacterEpisodeViewHolder(
     private val delegate: Delegate
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    private lateinit var episode: Episode
+    private lateinit var episode: RickMortyCharacterEpisode
 
     init {
         binding.root.setOnClickListener(this)
@@ -18,10 +18,10 @@ class CharacterEpisodeViewHolder(
     }
 
     interface Delegate {
-        fun onItemClick(view: View, episode: Episode)
+        fun onItemClick(view: View, episode: RickMortyCharacterEpisode)
     }
 
-    fun bind(_episode: Episode) {
+    fun bind(_episode: RickMortyCharacterEpisode) {
         episode = _episode
         binding.apply {
             episode = _episode

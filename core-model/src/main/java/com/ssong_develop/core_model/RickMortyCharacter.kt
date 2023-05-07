@@ -13,14 +13,15 @@ data class RickMortyCharacter(
     val episode: List<String>,
     val url: String,
     val created: String
-)
+) {
+    data class Origin(
+        val name: String,
+        val url: String
+    )
 
-data class Origin(
-    val name: String,
-    val url: String
-)
+    data class Location(
+        val name: String,
+        val url: String
+    )
 
-data class Location(
-    val name: String,
-    val url: String
-)
+}

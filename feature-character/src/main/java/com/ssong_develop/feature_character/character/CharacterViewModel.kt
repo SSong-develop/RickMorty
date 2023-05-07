@@ -4,13 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.ssong_develop.core_data.model.NetworkRickMortyCharacter
+import androidx.paging.map
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
+import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
+import com.ssong_develop.feature_character.model.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 data class CharacterUiState(
@@ -28,7 +35,7 @@ sealed class CharacterEvent {
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val characterRepository: CharacterRepository,
+    characterRepository: CharacterRepository,
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
@@ -41,8 +48,11 @@ class CharacterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
 
-    val characterStream: Flow<PagingData<NetworkRickMortyCharacter>> =
-        characterRepository.getCharacterStream().cachedIn(viewModelScope)
+    val characterStream: Flow<PagingData<RickMortyCharacterUiModel>> =
+        characterRepository
+            .getCharacterStream()
+            .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
+            .cachedIn(viewModelScope)
 
     fun updateLoadingState(loadingValue: Boolean) {
         _uiState.value = _uiState.value.copy(isLoading = loadingValue)

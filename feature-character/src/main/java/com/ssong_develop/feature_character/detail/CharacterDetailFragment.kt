@@ -2,6 +2,7 @@ package com.ssong_develop.feature_character.detail
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_common.toast
-import com.ssong_develop.core_model.Episode
+import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.FooterAdapter
 import com.ssong_develop.feature_character.databinding.FragmentCharacterDetailBinding
@@ -52,7 +53,7 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         initObserve()
     }
 
-    override fun onItemClick(view: View, episode: Episode) {}
+    override fun onItemClick(view: View, episode: RickMortyCharacterEpisode) {}
 
     private fun initDataBinding() {
         with(binding) {
@@ -79,17 +80,6 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.characterDetailUiEventBus.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            CharacterDetailEvent.Back ->  navigateToBackStack()
-                            is CharacterDetailEvent.ShowToast -> {
-                                requireContext().toast(uiEvent.message)
-                            }
-                        }
-                    }
-                }
-
                 launch {
                     viewModel.uiState.collectLatest { uiState ->
                         episodeAdapter.submitEpisodes(uiState.characterEpisode)

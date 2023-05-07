@@ -2,6 +2,7 @@ package com.ssong_develop.feature_character.character
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,19 +15,17 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDeepLinkRequest
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import androidx.paging.LoadState
-import com.ssong_develop.core_model.Characters
-import com.ssong_develop.core_model.RickMortyCharacter
+import androidx.paging.map
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.CharacterPagingAdapter
 import com.ssong_develop.feature_character.character.adapters.FooterLoadStateAdapter
 import com.ssong_develop.feature_character.character.viewholders.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
+import com.ssong_develop.feature_character.model.asUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -53,9 +52,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         postponeEnterTransition()
-        (binding.root.parent as? ViewGroup)?.doOnPreDraw {
-            startPostponedEnterTransition()
-        }
+        (binding.root.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
         initDataBinding()
         initAdapter()
         initRecyclerView()
@@ -106,8 +103,8 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.characterStream.collectLatest { pagingData ->
-                        pagingAdapter.submitData(pagingData)
+                    viewModel.characterStream.collectLatest { uiModelPagingData ->
+                        pagingAdapter.submitData(uiModelPagingData)
                     }
                 }
                 launch {
@@ -117,12 +114,10 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                                 viewModel.updateLoadingState(false)
                                 viewModel.updateErrorState(false)
                             }
-
                             LoadState.Loading -> {
                                 viewModel.updateLoadingState(true)
                                 viewModel.updateErrorState(false)
                             }
-
                             is LoadState.Error -> {
                                 viewModel.updateLoadingState(false)
                                 viewModel.updateErrorState(true)
@@ -146,7 +141,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
 
     private fun navigateToFavoriteCharacter() {
         val bundle = Bundle()
-        bundle.putParcelable(CHARACTER_KEY, viewModel.favoriteCharacterState.value)
+        bundle.putParcelable(CHARACTER_KEY, viewModel.favoriteCharacterState.value?.asUiModel())
         findNavController().navigate(
             R.id.action_characterFragment_to_characterDetailFragment,
             bundle

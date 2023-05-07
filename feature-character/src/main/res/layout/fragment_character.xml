@@ -113,5 +113,4 @@
             app:layout_constraintTop_toBottomOf="@id/appbar_character" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

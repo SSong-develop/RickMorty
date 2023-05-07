@@ -1,32 +1,34 @@
 package com.ssong_develop.feature_character.detail
 
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssong_develop.core_common.WhileViewSubscribed
+import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.repository.CharacterRepository
-import com.ssong_develop.core_model.Characters
-import com.ssong_develop.core_model.Episode
+import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
+import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
+import com.ssong_develop.feature_character.model.asModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 data class CharacterDetailUiState(
-    val character: Characters? = null,
-    val characterEpisode: List<Episode> = emptyList(),
-    val isEpisodeLoading: Boolean = false,
+    val character: RickMortyCharacterUiModel? = null,
+    val characterEpisode: List<RickMortyCharacterEpisode> = emptyList(),
+    val isLoading: Boolean = false,
 )
-
-sealed class CharacterDetailEvent {
-    object Back : CharacterDetailEvent()
-    data class ShowToast(val message: String) : CharacterDetailEvent()
-}
 
 @ExperimentalCoroutinesApi
 @HiltViewModel
@@ -36,26 +38,16 @@ class CharacterDetailViewModel @Inject constructor(
     private val favoriteCharacterDelegate: FavoriteCharacterDelegate
 ) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
 
-    companion object {
-        private const val CHARACTER_KEY = "character"
-        private const val SECOND = 1_000L
-        private const val DEFAULT_TIMEOUT_SECOND = 20 * SECOND
-        private const val TIME_OUT_ERROR_MESSAGE = "시간초과 됐습니다."
-    }
-
-    private val _characterDetailEventBus = MutableSharedFlow<CharacterDetailEvent>(
-        extraBufferCapacity = 1,
-        onBufferOverflow = BufferOverflow.DROP_OLDEST
-    )
-    val characterDetailUiEventBus = _characterDetailEventBus.asSharedFlow()
-
     private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        savedStateHandle.get<Characters>(CHARACTER_KEY)?.run {
-            updateCharacter(this)
-            getCharacterEpisode(episode)
+        savedStateHandle.get<RickMortyCharacterUiModel>(CHARACTER_KEY)?.let {
+            updateCharacter(it)
+            getCharacterEpisode(it.episode)
+        } ?: run {
+            // can't Update Characters. then we need to show the dummy character or some else
+
         }
     }
 
@@ -76,53 +68,35 @@ class CharacterDetailViewModel @Inject constructor(
 
     private fun getCharacterEpisode(episodeUrls: List<String>) {
         viewModelScope.launch {
+            updateEpisodeLoading(true)
             runCatching {
-                updateEpisodeLoading(true)
-                withTimeout(DEFAULT_TIMEOUT_SECOND) {
-                    repository.getEpisodes(episodeUrls)
-                }
+                repository.getEpisodes(episodeUrls)
             }.onSuccess { episodes ->
                 updateEpisodeLoading(false)
-                updateCharacterEpisode(episodes)
+                updateCharacterEpisode(episodes.map { it.asModel() })
             }.onFailure { throwable ->
                 updateEpisodeLoading(false)
-                when (throwable) {
-                    is TimeoutCancellationException -> {
-                        postShowToastEvent(TIME_OUT_ERROR_MESSAGE)
-                        updateCharacterEpisode(emptyList())
-                    }
-                    else -> {
-                        updateCharacterEpisode(emptyList())
-                    }
-                }
+                updateCharacterEpisode(emptyList())
             }
         }
     }
 
-    private fun updateCharacter(character: Characters) {
-        _uiState.value = _uiState.value.copy(
-            character = character
-        )
+    private fun updateCharacter(character: RickMortyCharacterUiModel) {
+        _uiState.update { uiState ->
+            uiState.copy(character = character)
+        }
     }
 
-    private fun updateCharacterEpisode(resource: List<Episode>) {
-        _uiState.value = _uiState.value.copy(
-            characterEpisode = resource
-        )
+    private fun updateCharacterEpisode(resource: List<RickMortyCharacterEpisode>) {
+        _uiState.update { uiState ->
+            uiState.copy(characterEpisode = resource)
+        }
     }
 
     private fun updateEpisodeLoading(loadingValue: Boolean) {
-        _uiState.value = _uiState.value.copy(
-            isEpisodeLoading = loadingValue
-        )
-    }
-
-    fun postBackEvent() {
-        _characterDetailEventBus.tryEmit(CharacterDetailEvent.Back)
-    }
-
-    fun postShowToastEvent(message: String) {
-        _characterDetailEventBus.tryEmit(CharacterDetailEvent.ShowToast(message))
+        _uiState.update { uiState ->
+            uiState.copy(isLoading = loadingValue)
+        }
     }
 
     fun onClickFavorite() {
@@ -130,9 +104,16 @@ class CharacterDetailViewModel @Inject constructor(
             clearFavCharacter()
         } else {
             _uiState.value.character?.let { favCharacter ->
-                putFavCharacter(favCharacter)
+                putFavCharacter(favCharacter.asModel())
             }
         }
+    }
+
+    companion object {
+        private const val CHARACTER_KEY = "character"
+        private const val SECOND = 1_000L
+        private const val DEFAULT_TIMEOUT_SECOND = 20 * SECOND
+        private const val TIME_OUT_ERROR_MESSAGE = "시간초과 됐습니다."
     }
 }
 
