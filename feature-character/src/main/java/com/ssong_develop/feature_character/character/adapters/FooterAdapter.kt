@@ -12,11 +12,7 @@ import com.ssong_develop.feature_character.character.viewholders.FooterViewHolde
 import com.ssong_develop.feature_character.databinding.ItemLoadingFooterBinding
 import java.util.*
 
-class FooterAdapter(val context: Context) :
-    RecyclerView.Adapter<FooterViewHolder>() {
-    companion object {
-        private const val FOOTER_VIEW_COUNT = 1
-    }
+class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolder>() {
 
     private val asyncLayoutInflater = AsyncLayoutInflater(context)
 
@@ -67,4 +63,9 @@ class FooterAdapter(val context: Context) :
             cachedLoadingView.push(view)
         }
     }
+
+    companion object {
+        private const val FOOTER_VIEW_COUNT = 1
+    }
+
 }

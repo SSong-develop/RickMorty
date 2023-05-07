@@ -57,7 +57,7 @@ class SearchViewModel @Inject constructor(
     val searchResultStream: Flow<PagingData<Characters>> = searchQuery
         .filter { query -> query.isNotEmpty() }
         .debounce(DEFAULT_DEBOUNCE_TIME)
-        .flatMapLatest { query -> searchRepository.getSearchResultStream(query) }
+        .flatMapLatest { query -> searchRepository.getCharacterSearchResultStream(query) }
         .cachedIn(scope = viewModelScope)
 
     fun updateLoadingState(isLoading: Boolean) {

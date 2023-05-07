@@ -1,4 +1,4 @@
-package com.ssong_develop.core_database.entity
+package com.ssong_develop.core_database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

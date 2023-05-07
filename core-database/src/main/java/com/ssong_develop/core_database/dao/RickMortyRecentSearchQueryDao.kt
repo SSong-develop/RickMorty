@@ -1,7 +1,7 @@
 package com.ssong_develop.core_database.dao
 
 import androidx.room.*
-import com.ssong_develop.core_database.entity.LocalEntityRecentSearchQuery
+import com.ssong_develop.core_database.model.LocalEntityRecentSearchQuery
 import kotlinx.coroutines.flow.Flow
 
 @Dao

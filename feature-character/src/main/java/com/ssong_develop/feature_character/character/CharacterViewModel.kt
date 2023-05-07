@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.ssong_develop.core_data.model.NetworkRickMortyCharacter
 import com.ssong_develop.core_data.repository.CharacterRepository
-import com.ssong_develop.core_model.Characters
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,9 +41,8 @@ class CharacterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
 
-    val characterStream: Flow<PagingData<Characters>> =
-        characterRepository.getCharacterStream()
-            .cachedIn(viewModelScope)
+    val characterStream: Flow<PagingData<NetworkRickMortyCharacter>> =
+        characterRepository.getCharacterStream().cachedIn(viewModelScope)
 
     fun updateLoadingState(loadingValue: Boolean) {
         _uiState.value = _uiState.value.copy(isLoading = loadingValue)

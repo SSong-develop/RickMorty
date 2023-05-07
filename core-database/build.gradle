@@ -39,7 +39,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core-model"))
 
     // room
     kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"

@@ -1,8 +1,8 @@
 package com.ssong_develop.core_data.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.ssong_develop.core_data.network.service.RickMortyCharacterService
-import com.ssong_develop.core_data.network.service.SearchService
+import com.ssong_develop.core_data.service.CharacterService
+import com.ssong_develop.core_data.service.SearchService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,20 +19,24 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    @Provides
+    @Singleton
+    fun provideJson(): Json =
+        Json {
+            coerceInputValues = true
+            prettyPrint = true
+        }
 
     @Provides
     @Singleton
-    fun provideJson(): Json = Json {
-        coerceInputValues = true
-        prettyPrint = true
-    }
-
-    private val loggingInterceptor
-        get() = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+    fun provideLoggingInterceptor() =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient() =
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor) =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build()
@@ -40,18 +44,20 @@ object NetworkModule {
     @ExperimentalSerializationApi
     @Provides
     @Singleton
-    fun provideRickMortyRetrofit(json: Json): Retrofit {
-        return Retrofit.Builder()
+    fun provideRickMortyRetrofit(
+        json: Json,
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): Retrofit =
+        Retrofit.Builder()
             .baseUrl("https://rickandmortyapi.com/api/")
             .addConverterFactory(json.asConverterFactory(contentType = "application/json".toMediaType()))
-            .client(provideOkHttpClient())
+            .client(provideOkHttpClient(httpLoggingInterceptor))
             .build()
-    }
 
     @Provides
     @Singleton
-    fun provideRickMortyCharacterService(retrofit: Retrofit): RickMortyCharacterService =
-        retrofit.create(RickMortyCharacterService::class.java)
+    fun provideRickMortyCharacterService(retrofit: Retrofit): CharacterService =
+        retrofit.create(CharacterService::class.java)
 
     @Provides
     @Singleton

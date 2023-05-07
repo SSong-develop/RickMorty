@@ -7,16 +7,16 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
-import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.RickMortyCharacter
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface DataStoreRepository {
-    val favoriteCharacterFlow: Flow<Characters?>
+    val favoriteCharacterFlow: Flow<RickMortyCharacter?>
 
-    suspend fun putFavoriteCharacter(characters: Characters)
+    suspend fun putFavoriteCharacter(characters: RickMortyCharacter)
 
     suspend fun clearFavoriteCharacter()
 }
@@ -31,18 +31,18 @@ internal class DataStoreRepositoryImpl @Inject constructor(
 
     private val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "rick_morty_data_store")
 
-    override val favoriteCharacterFlow: Flow<Characters?> =
+    override val favoriteCharacterFlow: Flow<RickMortyCharacter?> =
         context.datastore.data.map { preferences ->
             preferences[PREFERENCES_FAVORITE_CHARACTER]?.let { characterJson ->
                 if (characterJson.isNotEmpty()) {
-                    Gson().fromJson(characterJson, Characters::class.java)
+                    Gson().fromJson(characterJson, RickMortyCharacter::class.java)
                 } else {
                     null
                 }
             }
         }
 
-    override suspend fun putFavoriteCharacter(characters: Characters) {
+    override suspend fun putFavoriteCharacter(characters: RickMortyCharacter) {
         context.datastore.edit { mutablePreferences ->
             mutablePreferences[PREFERENCES_FAVORITE_CHARACTER] = Gson().toJson(characters)
         }

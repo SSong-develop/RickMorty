@@ -1,13 +1,11 @@
 package com.ssong_develop.core_data.di
 
 import com.ssong_develop.core_common.di.IoDispatcher
-import com.ssong_develop.core_data.network.datasource.CharacterDataSourceNoWrapper
-import com.ssong_develop.core_data.network.datasource.CharacterDataSourceWrapper
-import com.ssong_develop.core_data.network.service.RickMortyCharacterService
-import com.ssong_develop.core_data.network.service.SearchService
+import com.ssong_develop.core_data.datasource.CharacterDataSource
+import com.ssong_develop.core_data.service.CharacterService
+import com.ssong_develop.core_data.service.SearchService
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_data.repository.SearchRepository
-import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,25 +19,18 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideCharacterRepository(
-        characterDataSourceWrapper: CharacterDataSourceWrapper,
-        characterDataSourceNoWrapper: CharacterDataSourceNoWrapper,
-        dao: RickMortyCharacterDao,
-        rickMortyCharacterService: RickMortyCharacterService,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
+        characterDataSource: CharacterDataSource,
+        characterService: CharacterService
     ) = CharacterRepository(
-        characterDataSourceWrapper = characterDataSourceWrapper,
-        characterDataSourceNoWrapper = characterDataSourceNoWrapper,
-        rickMortyCharacterService = rickMortyCharacterService,
-        ioDispatcher = ioDispatcher
+        characterDataSource = characterDataSource,
+        characterService = characterService
     )
 
     @Provides
     @Singleton
     fun provideSearchRepository(
-        searchService: SearchService,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher
+        searchService: SearchService
     ) = SearchRepository(
-        service = searchService,
-        ioDispatcher = ioDispatcher
+        service = searchService
     )
 }

@@ -20,11 +20,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.paging.LoadState
 import com.ssong_develop.core_model.Characters
+import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.CharacterPagingAdapter
 import com.ssong_develop.feature_character.character.adapters.FooterLoadStateAdapter
 import com.ssong_develop.feature_character.character.viewholders.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
+import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -65,7 +67,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         characterNameView: View,
         characterImageTransitionName: String,
         characterNameTransitionName: String,
-        characters: Characters
+        characters: RickMortyCharacterUiModel
     ) {
         val bundle = Bundle()
         bundle.putParcelable(CHARACTER_KEY, characters)

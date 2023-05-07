@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
-import com.ssong_develop.feature_character.Status
+import com.ssong_develop.feature_character.model.Status
 
 object ViewBinding {
 
