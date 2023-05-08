@@ -2,7 +2,7 @@ package com.ssong_develop.core_database.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ssong_develop.core_database.database.AppDatabase
+import com.ssong_develop.core_database.database.RickMortyCharacterDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,16 +18,16 @@ object PersistenceModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context,
-        AppDatabase::class.java, "rick_and_morty_database"
+        RickMortyCharacterDatabase::class.java, "rick_and_morty_database"
     )
         .fallbackToDestructiveMigration()
         .build()
 
     @Provides
     @Singleton
-    fun provideCharactersDao(database: AppDatabase) = database.characterDao()
+    fun provideCharactersDao(database: RickMortyCharacterDatabase) = database.characterDao()
 
     @Provides
     @Singleton
-    fun provideRecentSearchKeywordDao(database: AppDatabase) = database.recentSearchKeywordDao()
+    fun provideRecentSearchKeywordDao(database: RickMortyCharacterDatabase) = database.recentSearchKeywordDao()
 }

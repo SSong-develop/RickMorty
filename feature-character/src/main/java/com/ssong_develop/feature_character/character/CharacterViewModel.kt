@@ -1,10 +1,13 @@
 package com.ssong_develop.feature_character.character
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
@@ -17,7 +20,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CharacterUiState(
@@ -32,6 +37,7 @@ sealed class CharacterEvent {
     object Search : CharacterEvent()
 }
 
+@ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
@@ -53,6 +59,13 @@ class CharacterViewModel @Inject constructor(
             .getCharacterStream()
             .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
             .cachedIn(viewModelScope)
+
+    val tempStream: Flow<PagingData<RickMortyCharacterUiModel>> =
+        characterRepository
+            .databaseCharacterStream()
+            .map { pagingdata -> pagingdata.map { model -> model.asModel().asUiModel() } }
+            .cachedIn(viewModelScope)
+
 
     fun updateLoadingState(loadingValue: Boolean) {
         _uiState.value = _uiState.value.copy(isLoading = loadingValue)

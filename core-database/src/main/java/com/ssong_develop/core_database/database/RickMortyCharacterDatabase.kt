@@ -8,12 +8,12 @@ import com.ssong_develop.core_database.converter.OriginListConverter
 import com.ssong_develop.core_database.converter.StringListConverter
 import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import com.ssong_develop.core_database.dao.RickMortyRecentSearchQueryDao
-import com.ssong_develop.core_database.model.LocalEntityCharacters
+import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 import com.ssong_develop.core_database.model.LocalEntityRecentSearchQuery
 
 @Database(
-    entities = [LocalEntityCharacters::class, LocalEntityRecentSearchQuery::class],
-    version = 2,
+    entities = [LocalEntityRickMortyCharacter::class, LocalEntityRecentSearchQuery::class],
+    version = 3,
     exportSchema = true
 )
 @TypeConverters(
@@ -23,8 +23,7 @@ import com.ssong_develop.core_database.model.LocalEntityRecentSearchQuery
         StringListConverter::class
     ]
 )
-abstract class AppDatabase : RoomDatabase() {
-
+abstract class RickMortyCharacterDatabase : RoomDatabase() {
     abstract fun characterDao(): RickMortyCharacterDao
     abstract fun recentSearchKeywordDao(): RickMortyRecentSearchQueryDao
 }

@@ -6,9 +6,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "rick_morty_characters_table")
-data class LocalEntityCharacters(
+data class LocalEntityRickMortyCharacter(
     @PrimaryKey
     val id: Int,
+    @Embedded
+    val info: LocalEntityRickMortyCharacterInfo,
     @ColumnInfo("character_name")
     val name: String,
     @ColumnInfo("character_status")
@@ -31,6 +33,17 @@ data class LocalEntityCharacters(
     val url: String,
     @ColumnInfo("character_created_date")
     val created: String
+)
+
+data class LocalEntityRickMortyCharacterInfo(
+    @ColumnInfo("character_count")
+    val count: Int,
+    @ColumnInfo("character_pages")
+    val pages: Int,
+    @ColumnInfo("character_next_url")
+    val next: String,
+    @ColumnInfo("character_prev_url")
+    val prev: String?
 )
 
 data class LocalEntityOrigin(

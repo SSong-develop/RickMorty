@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
 import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.repository.CharacterRepository
@@ -30,6 +31,7 @@ data class CharacterDetailUiState(
     val isLoading: Boolean = false,
 )
 
+@ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(

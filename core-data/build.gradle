@@ -45,6 +45,12 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttpVersion"
     implementation "com.squareup.okhttp3:okhttp:$versions.okHttpVersion"
 
+    // room
+    kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
+    implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
+    implementation "androidx.room:room-ktx:$versions.androidXRoomVersion"
+    implementation "androidx.room:room-paging:$versions.androidXRoomVersion"
+
     // coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutineVersion"
 

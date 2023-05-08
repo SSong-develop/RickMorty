@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.map
 import com.ssong_develop.feature_character.R
@@ -31,6 +32,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterFragment : Fragment(), ItemClickDelegate {
@@ -102,8 +104,14 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+//                launch {
+//                    viewModel.characterStream.collectLatest { uiModelPagingData ->
+//                        pagingAdapter.submitData(uiModelPagingData)
+//                    }
+//                }
+
                 launch {
-                    viewModel.characterStream.collectLatest { uiModelPagingData ->
+                    viewModel.tempStream.collectLatest { uiModelPagingData ->
                         pagingAdapter.submitData(uiModelPagingData)
                     }
                 }
