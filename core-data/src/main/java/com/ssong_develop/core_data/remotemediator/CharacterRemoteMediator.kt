@@ -10,7 +10,6 @@ import com.ssong_develop.core_data.service.CharacterService
 import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import com.ssong_develop.core_database.database.RickMortyCharacterDatabase
 import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
-import com.ssong_develop.core_model.RickMortyCharacter
 
 @ExperimentalPagingApi
 class CharacterRemoteMediator(
@@ -28,13 +27,23 @@ class CharacterRemoteMediator(
             LoadType.REFRESH -> INITIAL_PAGE
             LoadType.PREPEND -> {
                 val remoteKey = database.withTransaction {
-                    characterDao.getRecentCharacter().info.pages
-                }
+                    characterDao.getRecentCharacter().last().info.prev
+                        ?.split('/')
+                        ?.first() { it.contains(PAGE_QUERY_URI) }
+                        ?.replace(PAGE_QUERY_URI, "")
+                        ?.toInt()
+                } ?: 1
+
                 remoteKey - 1
             }
+
             LoadType.APPEND -> {
                 val remoteKey = database.withTransaction {
-                    characterDao.getRecentCharacter().info.pages
+                    characterDao.getRecentCharacter().last().info.next
+                        .split('/')
+                        .first { it.contains(PAGE_QUERY_URI) }
+                        .replace(PAGE_QUERY_URI, "")
+                        .toInt()
                 }
                 remoteKey + 1
             }
@@ -58,5 +67,7 @@ class CharacterRemoteMediator(
 
     companion object {
         private const val INITIAL_PAGE = 1
+
+        private const val PAGE_QUERY_URI = "character?page="
     }
 }

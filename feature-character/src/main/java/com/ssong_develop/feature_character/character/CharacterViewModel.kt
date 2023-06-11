@@ -1,6 +1,5 @@
 package com.ssong_develop.feature_character.character
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
@@ -20,9 +19,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CharacterUiState(
@@ -54,13 +51,13 @@ class CharacterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
 
-    val characterStream: Flow<PagingData<RickMortyCharacterUiModel>> =
+    val networkRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
         characterRepository
             .getCharacterStream()
             .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
             .cachedIn(viewModelScope)
 
-    val tempStream: Flow<PagingData<RickMortyCharacterUiModel>> =
+    val localRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
         characterRepository
             .databaseCharacterStream()
             .map { pagingdata -> pagingdata.map { model -> model.asModel().asUiModel() } }

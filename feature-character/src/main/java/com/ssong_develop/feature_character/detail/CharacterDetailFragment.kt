@@ -13,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
@@ -26,6 +27,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate {

@@ -18,8 +18,8 @@ interface RickMortyCharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<LocalEntityRickMortyCharacter>)
 
-    @Query("SELECT * FROM rick_morty_characters_table WHERE 1 = 1 LIMIT 1")
-    suspend fun getRecentCharacter(): LocalEntityRickMortyCharacter
+    @Query("SELECT * FROM rick_morty_characters_table")
+    suspend fun getRecentCharacter(): List<LocalEntityRickMortyCharacter>
 
     @Delete
     suspend fun clearAllCharacters(characters: List<LocalEntityRickMortyCharacter>)

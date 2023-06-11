@@ -2,7 +2,6 @@ package com.ssong_develop.feature_character.character
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +18,6 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
-import androidx.paging.map
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.character.adapters.CharacterPagingAdapter
 import com.ssong_develop.feature_character.character.adapters.FooterLoadStateAdapter
@@ -105,16 +103,17 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
 //                launch {
-//                    viewModel.characterStream.collectLatest { uiModelPagingData ->
+//                    viewModel.networkRickMortyCharacterPagingStream.collectLatest { uiModelPagingData ->
 //                        pagingAdapter.submitData(uiModelPagingData)
 //                    }
 //                }
 
                 launch {
-                    viewModel.tempStream.collectLatest { uiModelPagingData ->
+                    viewModel.localRickMortyCharacterPagingStream.collectLatest { uiModelPagingData ->
                         pagingAdapter.submitData(uiModelPagingData)
                     }
                 }
+
                 launch {
                     pagingAdapter.loadStateFlow.collectLatest { loadStates ->
                         when (loadStates.refresh) {
@@ -133,6 +132,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                         }
                     }
                 }
+
                 launch {
                     viewModel.characterUiEventBus.collectLatest { uiEvent ->
                         when (uiEvent) {
