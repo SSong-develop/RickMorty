@@ -26,24 +26,22 @@ class CharacterRemoteMediator(
         val page = when (loadType) {
             LoadType.REFRESH -> INITIAL_PAGE
             LoadType.PREPEND -> {
-                val remoteKey = database.withTransaction {
-                    characterDao.getRecentCharacter().last().info.prev
-                        ?.split('/')
-                        ?.first() { it.contains(PAGE_QUERY_URI) }
-                        ?.replace(PAGE_QUERY_URI, "")
-                        ?.toInt()
-                } ?: 1
-                remoteKey - 1
-            }
-            LoadType.APPEND -> {
-                val remoteKey = database.withTransaction {
+                database.withTransaction {
                     characterDao.getRecentCharacter().last().info.next
                         .split('/')
                         .first { it.contains(PAGE_QUERY_URI) }
                         .replace(PAGE_QUERY_URI, "")
                         .toInt()
                 }
-                remoteKey + 1
+            }
+            LoadType.APPEND -> {
+                database.withTransaction {
+                    characterDao.getRecentCharacter().last().info.prev
+                        ?.split('/')
+                        ?.first() { it.contains(PAGE_QUERY_URI) }
+                        ?.replace(PAGE_QUERY_URI, "")
+                        ?.toInt()
+                } ?: 1
             }
         }
 
