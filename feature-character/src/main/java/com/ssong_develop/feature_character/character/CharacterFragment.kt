@@ -102,14 +102,8 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                launch {
-//                    viewModel.networkRickMortyCharacterPagingStream.collectLatest { uiModelPagingData ->
-//                        pagingAdapter.submitData(uiModelPagingData)
-//                    }
-//                }
-
                 launch {
-                    viewModel.localRickMortyCharacterPagingStream.collectLatest { uiModelPagingData ->
+                    viewModel.networkRickMortyCharacterPagingStream.collectLatest { uiModelPagingData ->
                         pagingAdapter.submitData(uiModelPagingData)
                     }
                 }
