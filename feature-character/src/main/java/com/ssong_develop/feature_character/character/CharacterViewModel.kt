@@ -51,12 +51,6 @@ class CharacterViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(CharacterUiState())
     val uiState = _uiState.asStateFlow()
 
-    val networkRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
-        characterRepository
-            .getCharacterStream()
-            .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
-            .cachedIn(viewModelScope)
-
     val localRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
         characterRepository
             .databaseCharacterStream()
