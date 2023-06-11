@@ -57,13 +57,6 @@ class CharacterViewModel @Inject constructor(
             .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
             .cachedIn(viewModelScope)
 
-    val localRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
-        characterRepository
-            .databaseCharacterStream()
-            .map { pagingdata -> pagingdata.map { model -> model.asModel().asUiModel() } }
-            .cachedIn(viewModelScope)
-
-
     fun updateLoadingState(loadingValue: Boolean) {
         _uiState.value = _uiState.value.copy(isLoading = loadingValue)
     }
