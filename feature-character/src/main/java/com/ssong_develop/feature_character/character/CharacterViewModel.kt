@@ -57,7 +57,6 @@ class CharacterViewModel @Inject constructor(
             .map { pagingdata -> pagingdata.map { model -> model.asModel().asUiModel() } }
             .cachedIn(viewModelScope)
 
-
     fun updateLoadingState(loadingValue: Boolean) {
         _uiState.value = _uiState.value.copy(isLoading = loadingValue)
     }

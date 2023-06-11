@@ -33,10 +33,8 @@ class CharacterRemoteMediator(
                         ?.replace(PAGE_QUERY_URI, "")
                         ?.toInt()
                 } ?: 1
-
                 remoteKey - 1
             }
-
             LoadType.APPEND -> {
                 val remoteKey = database.withTransaction {
                     characterDao.getRecentCharacter().last().info.next
