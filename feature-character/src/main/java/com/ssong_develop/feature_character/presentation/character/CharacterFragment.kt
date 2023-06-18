@@ -28,7 +28,6 @@ import com.ssong_develop.feature_character.presentation.character.viewholders.It
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
@@ -44,7 +43,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     private val characterPagingAdapter get() = requireNotNull(_characterPagingAdapter) { "[${TAG}] _characterPagingAdapter is null" }
 
     private var _footerLoadStateAdapter: FooterLoadStateAdapter? = null
-    private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${TAG}] _footerLoadStateAdapter is null"}
+    private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${TAG}] _footerLoadStateAdapter is null" }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -147,7 +146,11 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                     characterPagingAdapter.loadStateFlow.collectLatest { loadStates ->
                         when (loadStates.refresh) {
                             is LoadState.NotLoading -> {
-                                viewModel.updateUiState(CharacterUiState.Characters())
+                                viewModel.updateUiState(
+                                    CharacterUiState.Characters(
+                                        favoriteCharacter = viewModel.favoriteCharacterState.value?.asUiModel()
+                                    )
+                                )
                             }
                             LoadState.Loading -> {
                                 viewModel.updateUiState(CharacterUiState.Loading)
@@ -158,30 +161,23 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                         }
                     }
                 }
-
-                launch {
-                    viewModel.favoriteCharacterState
-                        .filterNotNull()
-                        .collectLatest { favoriteCharacter ->
-                            viewModel.updateFavoriteCharacter(favoriteCharacter = favoriteCharacter.asUiModel())
-                        }
-                }
             }
         }
     }
 
     private fun navigateToFavoriteCharacter() {
-        if (viewModel.uiState.value is CharacterUiState.Characters) {
-            (viewModel.uiState.value as CharacterUiState.Characters).favoriteCharacter?.let {
-                val bundle = Bundle()
-                bundle.putParcelable(CHARACTER_KEY, it)
-                findNavController().navigate(
-                    R.id.action_characterFragment_to_characterDetailFragment,
-                    bundle
-                )
-            } ?: run {
-                // No Favorite Character
-            }
+        val favoriteCharacter = when (viewModel.uiState.value) {
+            is CharacterUiState.Characters -> (viewModel.uiState.value as CharacterUiState.Characters).favoriteCharacter
+            else -> viewModel.favoriteCharacterState.value?.asUiModel()
+        }
+
+        if (favoriteCharacter != null) {
+            val bundle = Bundle()
+            bundle.putParcelable(CHARACTER_KEY, favoriteCharacter)
+            findNavController().navigate(
+                R.id.action_characterFragment_to_characterDetailFragment,
+                bundle
+            )
         }
     }
 
