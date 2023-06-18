@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character.adapters
+package com.ssong_develop.feature_character.presentation.character.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.viewholders.FooterViewHolder
+import com.ssong_develop.feature_character.presentation.character.viewholders.FooterViewHolder
 import com.ssong_develop.feature_character.databinding.ItemLoadingFooterBinding
 import java.util.*
 
@@ -67,5 +67,4 @@ class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolde
     companion object {
         private const val FOOTER_VIEW_COUNT = 1
     }
-
 }

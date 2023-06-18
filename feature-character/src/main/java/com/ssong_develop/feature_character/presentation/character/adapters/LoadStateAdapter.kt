@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character.adapters
+package com.ssong_develop.feature_character.presentation.character.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.viewholders.LoadStateViewHolder
+import com.ssong_develop.feature_character.presentation.character.viewholders.LoadStateViewHolder
 import com.ssong_develop.feature_character.databinding.ItemLoadStateBinding
 
 class FooterLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {

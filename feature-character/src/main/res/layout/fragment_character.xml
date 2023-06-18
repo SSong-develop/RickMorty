@@ -9,14 +9,14 @@
 
         <variable
             name="vm"
-            type="com.ssong_develop.feature_character.character.CharacterViewModel" />
+            type="com.ssong_develop.feature_character.presentation.character.CharacterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        tools:context=".character.CharacterFragment">
+        tools:context=".presentation.character.CharacterFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar_character"
@@ -51,7 +51,6 @@
                     android:layout_marginEnd="6dp"
                     android:foreground="?attr/selectableItemBackground"
                     android:src="@drawable/ic_search"
-                    android:onClick="@{() -> vm.postSearchEvent()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/iv_fav"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +60,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:foreground="?attr/selectableItemBackground"
-                    android:onClick="@{() -> vm.postFavoriteEvent()}"
                     android:src="@{vm.favoriteCharacterState != null ? @drawable/ic_filled_favorite : @drawable/ic_empty_favorite }"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -71,9 +69,9 @@
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
-            bindSwipeRefreshLayout="@{() -> vm.postRefreshEvent()}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            bindSwipeRefreshVisibility="@{vm.uiState}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,8 +81,8 @@
                 android:id="@+id/rv_character"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:scrollbarStyle="outsideOverlay"
                 android:overScrollMode="never"
+                android:scrollbarStyle="outsideOverlay"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 tools:listitem="@layout/item_character" />
@@ -92,21 +90,21 @@
 
         <include
             android:id="@+id/view_search_error"
+            bindErrorViewVisibility="@{vm.uiState}"
             layout="@layout/view_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{vm.uiState.error ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_character"
-            app:retryEvent="@{vm.postRetryEvent}" />
+            app:layout_constraintTop_toBottomOf="@id/appbar_character" />
 
         <ProgressBar
+            android:id="@+id/pb_character"
+            bindProgressBarVisibility="@{vm.uiState}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminateTint="@color/app_bar_color"
-            android:visibility="@{vm.uiState.loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

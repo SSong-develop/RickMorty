@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character.adapters
+package com.ssong_develop.feature_character.presentation.character.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.viewholders.CharacterViewHolder
-import com.ssong_develop.feature_character.character.viewholders.ItemClickDelegate
+import com.ssong_develop.feature_character.presentation.character.viewholders.CharacterViewHolder
+import com.ssong_develop.feature_character.presentation.character.viewholders.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 

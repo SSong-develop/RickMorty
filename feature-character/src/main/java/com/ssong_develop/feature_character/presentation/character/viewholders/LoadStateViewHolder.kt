@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character.viewholders
+package com.ssong_develop.feature_character.presentation.character.viewholders
 
 import androidx.core.view.isVisible
 import androidx.paging.LoadState

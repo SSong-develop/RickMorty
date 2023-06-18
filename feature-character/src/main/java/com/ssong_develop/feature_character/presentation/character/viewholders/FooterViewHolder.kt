@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character.viewholders
+package com.ssong_develop.feature_character.presentation.character.viewholders
 
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.databinding.ItemLoadingFooterBinding

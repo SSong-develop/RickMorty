@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.ssong_develop.feature_character.detail.CharacterDetailViewModel" />
+            type="com.ssong_develop.feature_character.presentation.detail.CharacterDetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -177,7 +177,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".detail.CharacterDetailFragment">
+                tools:context=".presentation.detail.CharacterDetailFragment">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/species_title"

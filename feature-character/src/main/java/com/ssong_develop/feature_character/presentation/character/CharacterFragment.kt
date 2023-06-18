@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.character
+package com.ssong_develop.feature_character.presentation.character
 
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -19,15 +19,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.character.adapters.CharacterPagingAdapter
-import com.ssong_develop.feature_character.character.adapters.FooterLoadStateAdapter
-import com.ssong_develop.feature_character.character.viewholders.ItemClickDelegate
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.model.asUiModel
+import com.ssong_develop.feature_character.presentation.character.adapters.CharacterPagingAdapter
+import com.ssong_develop.feature_character.presentation.character.adapters.FooterLoadStateAdapter
+import com.ssong_develop.feature_character.presentation.character.viewholders.ItemClickDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
@@ -36,24 +37,28 @@ import kotlinx.coroutines.launch
 class CharacterFragment : Fragment(), ItemClickDelegate {
     private val viewModel: CharacterViewModel by viewModels()
 
-    private lateinit var binding: FragmentCharacterBinding
-    private lateinit var pagingAdapter: CharacterPagingAdapter
-    private lateinit var loadStateAdapter: FooterLoadStateAdapter
+    private var _binding: FragmentCharacterBinding? = null
+    private val binding get() = requireNotNull(_binding) { "[${TAG}] binding is null" }
+
+    private var _characterPagingAdapter: CharacterPagingAdapter? = null
+    private val characterPagingAdapter get() = requireNotNull(_characterPagingAdapter) { "[${TAG}] _characterPagingAdapter is null" }
+
+    private var _footerLoadStateAdapter: FooterLoadStateAdapter? = null
+    private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${TAG}] _footerLoadStateAdapter is null"}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false)
+        inflateTransition()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        postponeEnterTransition()
-        (binding.root.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
-        initDataBinding()
+        initTransition()
+        initBinding()
+        initListener()
         initAdapter()
         initRecyclerView()
         initObserve()
@@ -80,74 +85,104 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         )
     }
 
-    private fun initDataBinding() {
+    private fun inflateTransition() {
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
+    }
+
+    private fun initTransition() {
+        postponeEnterTransition()
+        (binding.root.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
+    }
+
+    private fun initBinding() {
         with(binding) {
             lifecycleOwner = viewLifecycleOwner
             vm = viewModel
         }
     }
 
+    private fun initListener() {
+        with(binding) {
+            ivSearch.setOnClickListener {
+                navigateToSearch()
+            }
+
+            ivFav.setOnClickListener {
+                navigateToFavoriteCharacter()
+            }
+
+            swipeRefresh.setOnRefreshListener {
+                characterPagingAdapter.refresh()
+            }
+
+            viewSearchError.retryBtn.setOnClickListener {
+                characterPagingAdapter.retry()
+            }
+        }
+    }
+
     private fun initAdapter() {
-        pagingAdapter = CharacterPagingAdapter(this)
-        loadStateAdapter = FooterLoadStateAdapter()
-        pagingAdapter.withLoadStateFooter(
-            footer = loadStateAdapter
+        _characterPagingAdapter = CharacterPagingAdapter(this)
+        _footerLoadStateAdapter = FooterLoadStateAdapter()
+        characterPagingAdapter.withLoadStateFooter(
+            footer = footerLoadStateAdapter
         )
     }
 
     private fun initRecyclerView() {
-        binding.rvCharacter.adapter = pagingAdapter
+        binding.rvCharacter.adapter = characterPagingAdapter
     }
 
     private fun initObserve() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    viewModel.networkRickMortyCharacterPagingStream.collectLatest { uiModelPagingData ->
-                        pagingAdapter.submitData(uiModelPagingData)
+                    viewModel.networkRickMortyCharacterPagingStream.collectLatest { characterPagingData ->
+                        characterPagingAdapter.submitData(characterPagingData)
                     }
                 }
 
                 launch {
-                    pagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                    characterPagingAdapter.loadStateFlow.collectLatest { loadStates ->
                         when (loadStates.refresh) {
                             is LoadState.NotLoading -> {
-                                viewModel.updateLoadingState(false)
-                                viewModel.updateErrorState(false)
+                                viewModel.updateUiState(CharacterUiState.Characters())
                             }
                             LoadState.Loading -> {
-                                viewModel.updateLoadingState(true)
-                                viewModel.updateErrorState(false)
+                                viewModel.updateUiState(CharacterUiState.Loading)
                             }
                             is LoadState.Error -> {
-                                viewModel.updateLoadingState(false)
-                                viewModel.updateErrorState(true)
+                                viewModel.updateUiState(CharacterUiState.Error)
                             }
                         }
                     }
                 }
 
                 launch {
-                    viewModel.characterUiEventBus.collectLatest { uiEvent ->
-                        when (uiEvent) {
-                            CharacterEvent.Retry -> pagingAdapter.retry()
-                            CharacterEvent.Refresh -> pagingAdapter.refresh()
-                            CharacterEvent.Favorite -> navigateToFavoriteCharacter()
-                            CharacterEvent.Search -> navigateToSearch()
+                    viewModel.favoriteCharacterState
+                        .filterNotNull()
+                        .collectLatest { favoriteCharacter ->
+                            viewModel.updateFavoriteCharacter(favoriteCharacter = favoriteCharacter.asUiModel())
                         }
-                    }
                 }
             }
         }
     }
 
     private fun navigateToFavoriteCharacter() {
-        val bundle = Bundle()
-        bundle.putParcelable(CHARACTER_KEY, viewModel.favoriteCharacterState.value?.asUiModel())
-        findNavController().navigate(
-            R.id.action_characterFragment_to_characterDetailFragment,
-            bundle
-        )
+        if (viewModel.uiState.value is CharacterUiState.Characters) {
+            (viewModel.uiState.value as CharacterUiState.Characters).favoriteCharacter?.let {
+                val bundle = Bundle()
+                bundle.putParcelable(CHARACTER_KEY, it)
+                findNavController().navigate(
+                    R.id.action_characterFragment_to_characterDetailFragment,
+                    bundle
+                )
+            } ?: run {
+                // No Favorite Character
+            }
+        }
     }
 
     private fun navigateToSearch() {
@@ -158,6 +193,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     companion object {
+        private const val TAG = "CharacterFragment"
         private const val CHARACTER_KEY = "character"
         private const val SEARCH_FRAGMENT_DEEP_LINK_URI =
             "android-app://com.ssong-develop.com/rick_morty/search_fragment"

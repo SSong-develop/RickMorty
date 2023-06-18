@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_character.detail.viewholders
+package com.ssong_develop.feature_character.presentation.detail.viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
