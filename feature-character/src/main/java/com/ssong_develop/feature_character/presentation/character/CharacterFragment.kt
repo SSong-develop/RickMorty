@@ -37,13 +37,13 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     private val viewModel: CharacterViewModel by viewModels()
 
     private var _binding: FragmentCharacterBinding? = null
-    private val binding get() = requireNotNull(_binding) { "[${TAG}] binding is null" }
+    private val binding get() = requireNotNull(_binding) { "[${this.javaClass.kotlin.simpleName}] binding is null" }
 
     private var _characterPagingAdapter: CharacterPagingAdapter? = null
-    private val characterPagingAdapter get() = requireNotNull(_characterPagingAdapter) { "[${TAG}] _characterPagingAdapter is null" }
+    private val characterPagingAdapter get() = requireNotNull(_characterPagingAdapter) { "[${this.javaClass.kotlin.simpleName}] _characterPagingAdapter is null" }
 
     private var _footerLoadStateAdapter: FooterLoadStateAdapter? = null
-    private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${TAG}] _footerLoadStateAdapter is null" }
+    private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${this.javaClass.kotlin.simpleName}] _footerLoadStateAdapter is null" }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -189,7 +189,6 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     companion object {
-        private const val TAG = "CharacterFragment"
         private const val CHARACTER_KEY = "character"
         private const val SEARCH_FRAGMENT_DEEP_LINK_URI =
             "android-app://com.ssong-develop.com/rick_morty/search_fragment"

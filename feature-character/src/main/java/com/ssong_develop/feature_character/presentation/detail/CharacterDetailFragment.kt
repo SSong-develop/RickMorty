@@ -92,8 +92,8 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
     }
 
     private fun initObserve() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collectLatest { uiState ->
                         characterEpisodeAdapter.submitEpisodes(uiState.characterEpisode)
