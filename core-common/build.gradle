@@ -38,6 +38,9 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
     implementation "com.google.android.material:material:$versions.materialVersion"
 
+    implementation "androidx.activity:activity-ktx:$versions.androidXActivityKtxVersion"
+    implementation "androidx.fragment:fragment-ktx:$versions.androidXFragmentKtxVersion"
+
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"
     kapt "com.google.dagger:hilt-android-compiler:$versions.hiltCoreVersion"
