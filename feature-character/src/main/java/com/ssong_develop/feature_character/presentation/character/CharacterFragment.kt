@@ -18,6 +18,8 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
+import com.ssong_develop.core_common.extension.setupSnackbarManager
+import com.ssong_develop.core_common.manager.SnackbarMessageManager
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
@@ -29,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
@@ -45,6 +48,9 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     private var _footerLoadStateAdapter: FooterLoadStateAdapter? = null
     private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${this.javaClass.kotlin.simpleName}] _footerLoadStateAdapter is null" }
 
+    @Inject
+    lateinit var snackbarMessageManager: SnackbarMessageManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,6 +61,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setupSnackbarManager(snackbarMessageManager, binding.snackBar)
         initTransition()
         initBinding()
         initListener()

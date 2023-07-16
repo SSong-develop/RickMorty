@@ -2,6 +2,7 @@ package com.ssong_develop.core_common.di
 
 import android.app.Application
 import com.ssong_develop.core_common.PixelRatio
+import com.ssong_develop.core_common.manager.SnackbarMessageManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +26,10 @@ object AppModule {
     fun providePixelRatio(
         application: Application
     ) = PixelRatio(application)
+
+    @Provides
+    @Singleton
+    fun provideSnackbarMessageManager(
+        @ApplicationScope coroutineScope: CoroutineScope
+    ): SnackbarMessageManager = SnackbarMessageManager(coroutineScope)
 }

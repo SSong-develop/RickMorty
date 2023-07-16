@@ -1,0 +1,38 @@
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:background="@drawable/fading_snackbar_background">
+
+        <TextView
+            android:id="@+id/snackbar_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:padding="12dp"
+            android:textAlignment="viewStart"
+            android:textColor="#ffffff"
+            tools:text="Look at all the wonderful snack bar text..." />
+
+        <Button
+            android:id="@+id/snackbar_action"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|end"
+            android:paddingEnd="12dp"
+            android:paddingStart="12dp"
+            android:visibility="gone"
+            tools:text="Action"
+            tools:visibility="visible"
+            tools:targetApi="o" />
+    </LinearLayout>
+</merge>

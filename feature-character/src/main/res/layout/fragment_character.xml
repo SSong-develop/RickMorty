@@ -88,6 +88,15 @@
                 tools:listitem="@layout/item_character" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+        <com.ssong_develop.core_common.widget.FadingSnackbar
+            android:id="@+id/snack_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <include
             android:id="@+id/view_search_error"
             bindErrorViewVisibility="@{vm.uiState}"
