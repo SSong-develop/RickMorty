@@ -27,4 +27,8 @@
 
         <deepLink app:uri="android-app://com.ssong-develop.com/rick_morty/search_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.ssong_develop.feature_favorite.FavoriteFragment"
+        android:label="FavoriteFragment" />
 </navigation>

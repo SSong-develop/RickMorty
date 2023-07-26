@@ -8,6 +8,7 @@
       <module name="RickMorty.core-database" target="17" />
       <module name="RickMorty.core-datastore" target="17" />
       <module name="RickMorty.feature-character" target="17" />
+      <module name="RickMorty.feature-favorite" target="17" />
       <module name="RickMorty.feature-search" target="17" />
     </bytecodeTargetLevel>
   </component>

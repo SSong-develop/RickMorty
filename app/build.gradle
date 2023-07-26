@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":core-datastore"))
     implementation(project(":feature-character"))
     implementation(project(":feature-search"))
+    implementation(project(":feature-favorite"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"

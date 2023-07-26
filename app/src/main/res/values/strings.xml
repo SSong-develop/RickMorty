@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">RickMorty</string>
+    <string name="app_name" translatable="false">RickMorty</string>
+
+    <!-- BottomNavigation menu-->
+    <string name="navigation_title_character" translatable="false">Character</string>
+    <string name="navigation_title_search" translatable="false">Search</string>
+    <string name="navigation_title_favorite" translatable="false">Favorite</string>
 </resources>
