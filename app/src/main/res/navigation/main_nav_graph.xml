@@ -2,9 +2,9 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/character_navigation">
+    app:startDestination="@id/navigation_character">
 
-    <navigation android:id="@+id/character_navigation"
+    <navigation android:id="@+id/navigation_character"
         app:startDestination="@id/characterFragment">
         <fragment
             android:id="@+id/characterFragment"
@@ -21,14 +21,14 @@
             android:label="CharacterDetailFragment" />
     </navigation>
     <fragment
-        android:id="@+id/searchFragment"
+        android:id="@+id/navigation_search"
         android:name="com.ssong_develop.feature_search.ui.SearchFragment"
         android:label="SearchFragment">
 
         <deepLink app:uri="android-app://com.ssong-develop.com/rick_morty/search_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/favoriteFragment"
+        android:id="@+id/navigation_favorite"
         android:name="com.ssong_develop.feature_favorite.FavoriteFragment"
         android:label="FavoriteFragment" />
 </navigation>
