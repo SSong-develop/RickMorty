@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.7">
-      <module name="RickMorty.app" target="17" />
-      <module name="RickMorty.core-common" target="17" />
-      <module name="RickMorty.core-data" target="17" />
-      <module name="RickMorty.core-database" target="17" />
-      <module name="RickMorty.core-datastore" target="17" />
-      <module name="RickMorty.feature-character" target="17" />
-      <module name="RickMorty.feature-favorite" target="17" />
-      <module name="RickMorty.feature-search" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>

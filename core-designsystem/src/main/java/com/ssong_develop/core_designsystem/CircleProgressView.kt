@@ -1,0 +1,65 @@
+package com.ssong_develop.core_designsystem
+
+import android.animation.ValueAnimator
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
+import android.util.AttributeSet
+import android.view.View
+import android.view.animation.DecelerateInterpolator
+
+class CircleProgressView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
+
+    private var maxProgress = 30f
+
+    private lateinit var progressBounds: RectF
+    private var sweepAngle: Float = 250f
+    private var centerX: Float = 0f
+    private var centerY: Float = 0f
+
+    private var progressPaint: Paint = Paint()
+    private var progressTextPaint: Paint = Paint()
+    private var backgroundProgressPaint: Paint = Paint()
+
+    private val animationInterpolator by lazy { DecelerateInterpolator() }
+
+    private var radius = 0.0f
+
+    var backgroundColor = Color.parseColor("#EFEFEF")
+    var progressColor = Color.parseColor("#4169e1")
+
+    var default = 0
+
+    var progress: Int = 0
+        set(value) {
+            field = value
+            ValueAnimator.ofFloat(sweepAngle, 360f/ maxProgress * value).apply {
+                interpolator = animationInterpolator
+                duration = 300
+                addUpdateListener { animation ->
+                    sweepAngle = animation.animatedValue as Float
+                    invalidate()
+                }
+                start()
+            }
+        }
+
+    init {
+        isClickable = true
+
+        if (attrs != null) {
+            getStyleableAttr(attrs)
+        }
+
+        progress = default
+    }
+
+    private fun getStyleableAttr(attrs: AttributeSet) {
+
+    }
+}
