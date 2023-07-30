@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -23,9 +24,21 @@ class CircleProgressView @JvmOverloads constructor(
     private var centerX: Float = 0f
     private var centerY: Float = 0f
 
-    private var progressPaint: Paint = Paint()
-    private var textPaint: Paint = Paint()
-    private var backgroundProgressPaint: Paint = Paint()
+    private val progressPaint: Paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+    }
+    private val backgroundProgressPaint: Paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+    }
+    private val textPaint: Paint = Paint().apply {
+        isAntiAlias = true
+        textAlign = Paint.Align.CENTER
+        typeface = Typeface.create("cabin",Typeface.BOLD)
+    }
 
     private val animationInterpolator by lazy { DecelerateInterpolator() }
 
