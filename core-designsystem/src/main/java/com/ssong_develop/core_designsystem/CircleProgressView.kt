@@ -2,6 +2,7 @@ package com.ssong_develop.core_designsystem
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
@@ -23,7 +24,7 @@ class CircleProgressView @JvmOverloads constructor(
     private var centerY: Float = 0f
 
     private var progressPaint: Paint = Paint()
-    private var progressTextPaint: Paint = Paint()
+    private var textPaint: Paint = Paint()
     private var backgroundProgressPaint: Paint = Paint()
 
     private val animationInterpolator by lazy { DecelerateInterpolator() }
@@ -61,5 +62,19 @@ class CircleProgressView @JvmOverloads constructor(
 
     private fun getStyleableAttr(attrs: AttributeSet) {
 
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        // draw progressBar background
+        canvas.drawArc(progressBounds, 90f, 360f, false, backgroundProgressPaint)
+        // draw progress
+        canvas.drawArc(progressBounds, 90f, sweepAngle, false, progressPaint)
+        // draw progress Text
+        canvas.drawText("$progress", centerX, centerY, textPaint)
     }
 }
