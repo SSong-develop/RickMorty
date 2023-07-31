@@ -49,10 +49,9 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         inflateTransition()
         initBinding()
+        initView()
         initListener()
-        initAdapter()
-        initRecyclerView()
-        initObserve()
+        initObserver()
     }
 
     override fun onItemClick(view: View, episode: RickMortyCharacterEpisode) {}
@@ -68,6 +67,19 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         }
     }
 
+    private fun initView() {
+        characterEpisodeAdapter = CharacterEpisodeAdapter(this)
+        footerAdapter = FooterAdapter(requireContext())
+        concatAdapter = ConcatAdapter().apply {
+            addAdapter(characterEpisodeAdapter)
+            addAdapter(footerAdapter)
+        }
+
+        with(binding) {
+            episodeList.adapter = concatAdapter
+        }
+    }
+
     private fun initListener() {
         with(binding) {
             ivBack.setOnClickListener {
@@ -76,22 +88,7 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         }
     }
 
-    private fun initAdapter() {
-        characterEpisodeAdapter = CharacterEpisodeAdapter(this)
-        footerAdapter = FooterAdapter(requireContext())
-        concatAdapter = ConcatAdapter().apply {
-            addAdapter(characterEpisodeAdapter)
-            addAdapter(footerAdapter)
-        }
-    }
-
-    private fun initRecyclerView() {
-        with(binding) {
-            episodeList.adapter = concatAdapter
-        }
-    }
-
-    private fun initObserve() {
+    private fun initObserver() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {

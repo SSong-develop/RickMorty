@@ -21,10 +21,10 @@ class CharacterEpisodeViewHolder(
         fun onItemClick(view: View, episode: RickMortyCharacterEpisode)
     }
 
-    fun bind(_episode: RickMortyCharacterEpisode) {
-        episode = _episode
+    fun bind(episode: RickMortyCharacterEpisode) {
+        this.episode = episode
         binding.apply {
-            episode = _episode
+            this.episode = episode
             executePendingBindings()
         }
     }

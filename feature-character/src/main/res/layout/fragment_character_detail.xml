@@ -13,7 +13,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:id="@+id/coordinator"
+        android:id="@+id/detail_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -7,8 +7,8 @@ import androidx.paging.ExperimentalPagingApi
 import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.repository.CharacterRepository
+import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
-import com.ssong_develop.feature_character.delegate.FavoriteCharacterDelegate
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.model.asModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,8 +34,8 @@ data class CharacterDetailUiState(
 class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: CharacterRepository,
-    private val favoriteCharacterDelegate: FavoriteCharacterDelegate
-) : ViewModel(), FavoriteCharacterDelegate by favoriteCharacterDelegate {
+    private val preferenceStorage: PreferenceStorage
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())
     val uiState = _uiState.asStateFlow()
@@ -52,7 +52,7 @@ class CharacterDetailViewModel @Inject constructor(
 
     val isFavoriteCharacterState: StateFlow<Boolean> = combine(
         uiState,
-        favoriteCharacterState
+        preferenceStorage.favoriteCharacter
     ) { uiState, favCharacter ->
         if (favCharacter == null || uiState.character == null) {
             false
@@ -99,11 +99,13 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     fun onClickFavorite() {
-        if (isFavoriteCharacterState.value) {
-            clearFavCharacter()
-        } else {
-            _uiState.value.character?.let { favCharacter ->
-                putFavCharacter(favCharacter.asModel())
+        viewModelScope.launch {
+            if (isFavoriteCharacterState.value) {
+                preferenceStorage.removeFavoriteCharacter()
+            } else {
+                _uiState.value.character?.let { favCharacter ->
+                    preferenceStorage.addFavoriteCharacter(favCharacter.asModel())
+                }
             }
         }
     }

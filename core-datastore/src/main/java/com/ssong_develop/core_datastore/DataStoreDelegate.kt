@@ -13,17 +13,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-interface DataStoreRepository {
-    val favoriteCharacterFlow: Flow<RickMortyCharacter?>
+interface PreferenceStorage {
+    val favoriteCharacter: Flow<RickMortyCharacter?>
 
-    suspend fun putFavoriteCharacter(characters: RickMortyCharacter)
+    suspend fun addFavoriteCharacter(characters: RickMortyCharacter)
 
-    suspend fun clearFavoriteCharacter()
+    suspend fun removeFavoriteCharacter()
 }
 
-internal class DataStoreRepositoryImpl @Inject constructor(
+internal class DataStorePreferenceStorage @Inject constructor(
     @ApplicationContext private val context: Context
-) : DataStoreRepository {
+) : PreferenceStorage {
 
     companion object {
         private val PREFERENCES_FAVORITE_CHARACTER = stringPreferencesKey("favorite_character")
@@ -31,7 +31,7 @@ internal class DataStoreRepositoryImpl @Inject constructor(
 
     private val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "rick_morty_data_store")
 
-    override val favoriteCharacterFlow: Flow<RickMortyCharacter?> =
+    override val favoriteCharacter: Flow<RickMortyCharacter?> =
         context.datastore.data.map { preferences ->
             preferences[PREFERENCES_FAVORITE_CHARACTER]?.let { characterJson ->
                 if (characterJson.isNotEmpty()) {
@@ -42,13 +42,13 @@ internal class DataStoreRepositoryImpl @Inject constructor(
             }
         }
 
-    override suspend fun putFavoriteCharacter(characters: RickMortyCharacter) {
+    override suspend fun addFavoriteCharacter(characters: RickMortyCharacter) {
         context.datastore.edit { mutablePreferences ->
             mutablePreferences[PREFERENCES_FAVORITE_CHARACTER] = Gson().toJson(characters)
         }
     }
 
-    override suspend fun clearFavoriteCharacter() {
+    override suspend fun removeFavoriteCharacter() {
         context.datastore.edit { mutablePreferences ->
             mutablePreferences[PREFERENCES_FAVORITE_CHARACTER] = ""
         }

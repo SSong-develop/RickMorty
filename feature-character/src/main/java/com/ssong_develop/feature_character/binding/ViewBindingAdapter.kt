@@ -15,7 +15,7 @@ import com.google.android.material.card.MaterialCardView
 import com.ssong_develop.feature_character.model.Status
 import com.ssong_develop.feature_character.presentation.character.CharacterUiState
 
-object ViewBinding {
+object ViewBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("bind_dot_color")
@@ -61,15 +61,6 @@ object ViewBinding {
                         }
                     }.crossfade(true)
             ).into(view)
-    }
-
-    @JvmStatic
-    @BindingAdapter("bindSwipeRefreshLayout")
-    fun bindSwipeRefreshLayout(view: SwipeRefreshLayout, block: () -> Unit) {
-        view.setOnRefreshListener {
-            block()
-            view.isRefreshing = false
-        }
     }
 }
 

@@ -5,7 +5,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
@@ -56,7 +54,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false)
-        inflateTransition()
+        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
         return binding.root
     }
 
@@ -64,10 +62,9 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         setupSnackbarManager(snackbarMessageManager, binding.snackBar)
         initTransition()
         initBinding()
+        initView()
         initListener()
-        initAdapter()
-        initRecyclerView()
-        initObserve()
+        initObserver()
     }
 
     override fun onItemClick(
@@ -91,11 +88,6 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         )
     }
 
-    private fun inflateTransition() {
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
-    }
-
     private fun initTransition() {
         postponeEnterTransition()
         (binding.root.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
@@ -108,18 +100,23 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         }
     }
 
+    private fun initView() {
+        _characterPagingAdapter = CharacterPagingAdapter(this)
+        _footerLoadStateAdapter = FooterLoadStateAdapter()
+        characterPagingAdapter.withLoadStateFooter(
+            footer = footerLoadStateAdapter
+        )
+
+        with(binding) {
+            rvCharacter.adapter = characterPagingAdapter
+        }
+    }
+
     private fun initListener() {
         with(binding) {
-            ivSearch.setOnClickListener {
-                navigateToSearch()
-            }
-
-            ivFav.setOnClickListener {
-                navigateToFavoriteCharacter()
-            }
-
             swipeRefresh.setOnRefreshListener {
                 characterPagingAdapter.refresh()
+                swipeRefresh.isRefreshing = false
             }
 
             viewSearchError.retryBtn.setOnClickListener {
@@ -128,19 +125,7 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         }
     }
 
-    private fun initAdapter() {
-        _characterPagingAdapter = CharacterPagingAdapter(this)
-        _footerLoadStateAdapter = FooterLoadStateAdapter()
-        characterPagingAdapter.withLoadStateFooter(
-            footer = footerLoadStateAdapter
-        )
-    }
-
-    private fun initRecyclerView() {
-        binding.rvCharacter.adapter = characterPagingAdapter
-    }
-
-    private fun initObserve() {
+    private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
@@ -170,29 +155,6 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
                 }
             }
         }
-    }
-
-    private fun navigateToFavoriteCharacter() {
-        val favoriteCharacter = when (viewModel.uiState.value) {
-            is CharacterUiState.Characters -> (viewModel.uiState.value as CharacterUiState.Characters).favoriteCharacter
-            else -> viewModel.favoriteCharacterState.value?.asUiModel()
-        }
-
-        if (favoriteCharacter != null) {
-            val bundle = Bundle()
-            bundle.putParcelable(CHARACTER_KEY, favoriteCharacter)
-            findNavController().navigate(
-                R.id.action_characterFragment_to_characterDetailFragment,
-                bundle
-            )
-        }
-    }
-
-    private fun navigateToSearch() {
-        val request = NavDeepLinkRequest.Builder
-            .fromUri(SEARCH_FRAGMENT_DEEP_LINK_URI.toUri())
-            .build()
-        findNavController().navigate(request)
     }
 
     companion object {

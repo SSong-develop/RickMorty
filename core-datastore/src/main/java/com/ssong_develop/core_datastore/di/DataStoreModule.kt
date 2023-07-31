@@ -1,7 +1,7 @@
 package com.ssong_develop.core_datastore.di
 
-import com.ssong_develop.core_datastore.DataStoreRepository
-import com.ssong_develop.core_datastore.DataStoreRepositoryImpl
+import com.ssong_develop.core_datastore.PreferenceStorage
+import com.ssong_develop.core_datastore.DataStorePreferenceStorage
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,5 +14,5 @@ abstract class DataStoreModule {
 
     @Binds
     @Singleton
-    internal abstract fun bindDataStore(rickMortyDataStoreImpl: DataStoreRepositoryImpl): DataStoreRepository
+    internal abstract fun bindDataStore(dataStorePreferenceStorage: DataStorePreferenceStorage): PreferenceStorage
 }
