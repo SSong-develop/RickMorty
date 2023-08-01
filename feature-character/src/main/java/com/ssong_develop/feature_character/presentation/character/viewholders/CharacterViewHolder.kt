@@ -3,14 +3,15 @@ package com.ssong_develop.feature_character.presentation.character.viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
+import com.ssong_develop.feature_character.model.RickMortyCharacterTransitionModel
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 
 class CharacterViewHolder(
     private val binding: ItemCharacterBinding,
-    private val itemClickDelegate: ItemClickDelegate
+    private val onClickCharacterListener: OnCharacterItemClickListener
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
-    private lateinit var characters: RickMortyCharacterUiModel
+    private lateinit var rickMortyCharacter: RickMortyCharacterUiModel
 
     init {
         binding.root.setOnClickListener(this)
@@ -18,7 +19,7 @@ class CharacterViewHolder(
     }
 
     fun bind(data: RickMortyCharacterUiModel) {
-        characters = data
+        rickMortyCharacter = data
         binding.apply {
             character = data
             executePendingBindings()
@@ -26,12 +27,14 @@ class CharacterViewHolder(
     }
 
     override fun onClick(view: View) {
-        itemClickDelegate.onItemClick(
-            characterImageView = binding.ivCharacterImage,
-            characterNameView = binding.tvCharacterName,
-            characterImageTransitionName = binding.ivCharacterImage.transitionName,
-            characterNameTransitionName = binding.tvCharacterName.transitionName,
-            characters = characters
+        onClickCharacterListener.onClick(
+            RickMortyCharacterTransitionModel(
+                character = rickMortyCharacter,
+                viewAndTransitionNameList = arrayOf(
+                    binding.ivCharacterImage to binding.ivCharacterImage.transitionName,
+                    binding.tvCharacterName to binding.tvCharacterName.transitionName
+                )
+            )
         )
     }
 

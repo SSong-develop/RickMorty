@@ -21,10 +21,10 @@ import com.ssong_develop.core_common.manager.SnackbarMessageManager
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
-import com.ssong_develop.feature_character.model.asUiModel
+import com.ssong_develop.feature_character.model.mapper.asUiModel
 import com.ssong_develop.feature_character.presentation.character.adapters.CharacterPagingAdapter
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterLoadStateAdapter
-import com.ssong_develop.feature_character.presentation.character.viewholders.ItemClickDelegate
+import com.ssong_develop.feature_character.presentation.character.viewholders.OnCharacterItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -34,7 +34,7 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CharacterFragment : Fragment(), ItemClickDelegate {
+class CharacterFragment : Fragment() {
     private val viewModel: CharacterViewModel by viewModels()
 
     private var _binding: FragmentCharacterBinding? = null
@@ -67,27 +67,6 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
         initObserver()
     }
 
-    override fun onItemClick(
-        characterImageView: View,
-        characterNameView: View,
-        characterImageTransitionName: String,
-        characterNameTransitionName: String,
-        characters: RickMortyCharacterUiModel
-    ) {
-        val bundle = Bundle()
-        bundle.putParcelable(CHARACTER_KEY, characters)
-        val extras = FragmentNavigatorExtras(
-            characterImageView to characterImageTransitionName,
-            characterNameView to characterNameTransitionName
-        )
-        findNavController().navigate(
-            R.id.action_characterFragment_to_characterDetailFragment,
-            args = bundle,
-            navOptions = null,
-            navigatorExtras = extras
-        )
-    }
-
     private fun initTransition() {
         postponeEnterTransition()
         (binding.root.parent as? ViewGroup)?.doOnPreDraw { startPostponedEnterTransition() }
@@ -101,7 +80,16 @@ class CharacterFragment : Fragment(), ItemClickDelegate {
     }
 
     private fun initView() {
-        _characterPagingAdapter = CharacterPagingAdapter(this)
+        _characterPagingAdapter = CharacterPagingAdapter { transitionModel ->
+            val bundle = Bundle().apply { putParcelable(CHARACTER_KEY, transitionModel.character) }
+            val extras = FragmentNavigatorExtras(*transitionModel.viewAndTransitionNameList)
+            findNavController().navigate(
+                R.id.action_characterFragment_to_characterDetailFragment,
+                args = bundle,
+                navOptions = null,
+                navigatorExtras = extras
+            )
+        }
         _footerLoadStateAdapter = FooterLoadStateAdapter()
         characterPagingAdapter.withLoadStateFooter(
             footer = footerLoadStateAdapter

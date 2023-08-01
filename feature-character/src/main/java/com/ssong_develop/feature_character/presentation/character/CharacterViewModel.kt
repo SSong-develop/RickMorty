@@ -9,7 +9,7 @@ import androidx.paging.map
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
-import com.ssong_develop.feature_character.model.asUiModel
+import com.ssong_develop.feature_character.model.mapper.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow

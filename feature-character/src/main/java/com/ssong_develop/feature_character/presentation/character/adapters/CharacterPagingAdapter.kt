@@ -7,7 +7,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.presentation.character.viewholders.CharacterViewHolder
-import com.ssong_develop.feature_character.presentation.character.viewholders.ItemClickDelegate
+import com.ssong_develop.feature_character.presentation.character.viewholders.OnCharacterItemClickListener
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 
@@ -26,11 +26,11 @@ private val characterDiffItemCallback =
             oldItem: RickMortyCharacterUiModel,
             newItem: RickMortyCharacterUiModel
         ): Boolean =
-            oldItem.id == newItem.id
+            oldItem == newItem
     }
 
 class CharacterPagingAdapter(
-    private val delegate: ItemClickDelegate
+    private val onRickMortyCharacterClickListener: OnCharacterItemClickListener
 ) : PagingDataAdapter<RickMortyCharacterUiModel, CharacterViewHolder>(
     characterDiffItemCallback
 ) {
@@ -38,7 +38,7 @@ class CharacterPagingAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemCharacterBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
-        return CharacterViewHolder(binding, delegate)
+        return CharacterViewHolder(binding, onRickMortyCharacterClickListener)
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {

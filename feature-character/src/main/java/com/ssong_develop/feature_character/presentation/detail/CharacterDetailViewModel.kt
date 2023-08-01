@@ -10,7 +10,7 @@ import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
-import com.ssong_develop.feature_character.model.asModel
+import com.ssong_develop.feature_character.model.mapper.asModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow

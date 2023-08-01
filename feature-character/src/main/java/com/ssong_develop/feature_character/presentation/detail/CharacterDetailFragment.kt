@@ -2,6 +2,7 @@ package com.ssong_develop.feature_character.presentation.detail
 
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,7 +30,7 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate {
+class CharacterDetailFragment : Fragment() {
     private val viewModel: CharacterDetailViewModel by viewModels()
 
     private var binding: FragmentCharacterDetailBinding by AutoClearedValue(this)
@@ -54,8 +55,6 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
         initObserver()
     }
 
-    override fun onItemClick(view: View, episode: RickMortyCharacterEpisode) {}
-
     private fun inflateTransition() {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
     }
@@ -68,7 +67,9 @@ class CharacterDetailFragment : Fragment(), CharacterEpisodeViewHolder.Delegate 
     }
 
     private fun initView() {
-        characterEpisodeAdapter = CharacterEpisodeAdapter(this)
+        characterEpisodeAdapter = CharacterEpisodeAdapter { _ ->
+            /** no - op **/
+        }
         footerAdapter = FooterAdapter(requireContext())
         concatAdapter = ConcatAdapter().apply {
             addAdapter(characterEpisodeAdapter)

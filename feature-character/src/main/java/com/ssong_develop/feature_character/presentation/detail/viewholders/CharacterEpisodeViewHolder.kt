@@ -7,7 +7,7 @@ import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBindi
 
 class CharacterEpisodeViewHolder(
     val binding: ItemCharacterEpisodeBinding,
-    private val delegate: Delegate
+    private val onEpisodeClickListener: OnEpisodeClickListener
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var episode: RickMortyCharacterEpisode
@@ -15,10 +15,6 @@ class CharacterEpisodeViewHolder(
     init {
         binding.root.setOnClickListener(this)
         binding.root.setOnLongClickListener(this)
-    }
-
-    interface Delegate {
-        fun onItemClick(view: View, episode: RickMortyCharacterEpisode)
     }
 
     fun bind(episode: RickMortyCharacterEpisode) {
@@ -30,7 +26,7 @@ class CharacterEpisodeViewHolder(
     }
 
     override fun onClick(view: View) {
-        delegate.onItemClick(view, episode)
+        onEpisodeClickListener.onClick(episode)
     }
 
     override fun onLongClick(v: View?): Boolean = false

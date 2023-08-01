@@ -1,6 +1,7 @@
-package com.ssong_develop.feature_character.model
+package com.ssong_develop.feature_character.model.mapper
 
 import com.ssong_develop.core_model.RickMortyCharacter
+import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 
 fun RickMortyCharacterUiModel.OriginUiModel.asModel() =
     RickMortyCharacter.Origin(name, url)
