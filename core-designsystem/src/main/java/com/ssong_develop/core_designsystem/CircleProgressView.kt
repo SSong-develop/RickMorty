@@ -44,7 +44,7 @@ class CircleProgressView @JvmOverloads constructor(
 
     private var radius = 0.0f
 
-    var backgroundColor = Color.parseColor("#EFEFEF")
+    var progressBackgroundColor = Color.parseColor("#EFEFEF")
     var progressColor = Color.parseColor("#4169e1")
 
     var default = 0

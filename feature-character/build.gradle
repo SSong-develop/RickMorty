@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":core-database"))
     implementation(project(":core-datastore"))
     implementation(project(":core-model"))
+    implementation(project(":core-designsystem"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"
