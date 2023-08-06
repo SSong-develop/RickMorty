@@ -87,9 +87,6 @@ class CharacterDetailFragment : Fragment() {
             ivBack.setOnClickListener {
                 navigateToBackStack()
             }
-            test.setOnClickCompoundDrawableListener {
-                requireContext().toast("helloWorld!")
-            }
         }
     }
 

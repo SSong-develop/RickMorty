@@ -260,16 +260,6 @@
                     app:layout_constraintTop_toBottomOf="@id/location"
                     tools:text="@string/episode_title" />
 
-                <com.ssong_develop.core_designsystem.CharacterStatusTextView
-                    android:id="@+id/test"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hellohellohkjhjkhkhkhkjhkjhkjhjkhkjhkjhkjhkjhkjhkjjkhkjhkjhyuiiuyiuyiuyiiyu"
-                    android:textColor="@color/alive"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/episode_title"/>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/episode_list"
                     android:layout_width="match_parent"
@@ -285,7 +275,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/test" />
+                    app:layout_constraintTop_toBottomOf="@id/episode_title" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
