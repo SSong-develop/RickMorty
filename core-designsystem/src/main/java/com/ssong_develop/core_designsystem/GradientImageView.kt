@@ -15,7 +15,9 @@ import com.google.android.material.shape.ShapeAppearanceModel
 import kotlin.math.roundToInt
 
 /**
- * 이미지뷰에 Gradient로 Shadow효과를 주는 뷰
+ * Created by SSong-develop on 2023.08.13
+ *
+ * Gradient effected ImageView
  */
 class GradientImageView @JvmOverloads constructor(
     context: Context,
