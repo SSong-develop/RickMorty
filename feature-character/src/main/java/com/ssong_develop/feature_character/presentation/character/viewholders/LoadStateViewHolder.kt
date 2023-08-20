@@ -5,7 +5,7 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.databinding.ItemLoadStateBinding
 
-class LoadStateViewHolder(
+internal class LoadStateViewHolder(
     private val binding: ItemLoadStateBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 

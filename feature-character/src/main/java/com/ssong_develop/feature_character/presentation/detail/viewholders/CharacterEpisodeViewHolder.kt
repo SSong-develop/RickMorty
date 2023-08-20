@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBinding
 
-class CharacterEpisodeViewHolder(
+internal class CharacterEpisodeViewHolder(
     val binding: ItemCharacterEpisodeBinding,
     private val onEpisodeClickListener: OnEpisodeClickListener
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {

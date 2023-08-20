@@ -6,7 +6,7 @@ import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterTransitionModel
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 
-class CharacterViewHolder(
+internal class CharacterViewHolder(
     private val binding: ItemCharacterBinding,
     private val onClickCharacterListener: OnCharacterItemClickListener
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {

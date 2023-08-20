@@ -20,11 +20,9 @@ import com.ssong_develop.core_common.extension.setupSnackbarManager
 import com.ssong_develop.core_common.manager.SnackbarMessageManager
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
-import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.model.mapper.asUiModel
 import com.ssong_develop.feature_character.presentation.character.adapters.CharacterPagingAdapter
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterLoadStateAdapter
-import com.ssong_develop.feature_character.presentation.character.viewholders.OnCharacterItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -34,7 +32,7 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CharacterFragment : Fragment() {
+internal class CharacterFragment : Fragment() {
     private val viewModel: CharacterViewModel by viewModels()
 
     private var _binding: FragmentCharacterBinding? = null
@@ -127,16 +125,16 @@ class CharacterFragment : Fragment() {
                         when (loadStates.refresh) {
                             is LoadState.NotLoading -> {
                                 viewModel.updateUiState(
-                                    CharacterUiState.Characters(
+                                    UiState.Characters(
                                         favoriteCharacter = viewModel.favoriteCharacterState.value?.asUiModel()
                                     )
                                 )
                             }
                             LoadState.Loading -> {
-                                viewModel.updateUiState(CharacterUiState.Loading)
+                                viewModel.updateUiState(UiState.Loading)
                             }
                             is LoadState.Error -> {
-                                viewModel.updateUiState(CharacterUiState.Error)
+                                viewModel.updateUiState(UiState.Error)
                             }
                         }
                     }

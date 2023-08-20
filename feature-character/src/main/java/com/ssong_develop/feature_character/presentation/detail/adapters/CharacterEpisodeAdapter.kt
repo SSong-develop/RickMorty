@@ -11,7 +11,7 @@ import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBindi
 import com.ssong_develop.feature_character.presentation.detail.viewholders.CharacterEpisodeViewHolder
 import com.ssong_develop.feature_character.presentation.detail.viewholders.OnEpisodeClickListener
 
-class CharacterEpisodeAdapter(
+internal class CharacterEpisodeAdapter(
     private val onEpisodeClickListener: OnEpisodeClickListener
 ) : RecyclerView.Adapter<CharacterEpisodeViewHolder>() {
 

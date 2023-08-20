@@ -20,24 +20,24 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-sealed interface CharacterUiState {
-    object Error : CharacterUiState
-    object Loading : CharacterUiState
+sealed interface UiState {
+    object Error : UiState
+    object Loading : UiState
     data class Characters(
         val favoriteCharacter: RickMortyCharacterUiModel? = null
-    ) : CharacterUiState
+    ) : UiState
 }
 
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class CharacterViewModel @Inject constructor(
+internal class CharacterViewModel @Inject constructor(
     characterRepository: CharacterRepository,
     preferenceStorage: PreferenceStorage
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<CharacterUiState> =
-        MutableStateFlow(CharacterUiState.Loading)
+    private val _uiState: MutableStateFlow<UiState> =
+        MutableStateFlow(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     val favoriteCharacterState =
@@ -53,7 +53,7 @@ class CharacterViewModel @Inject constructor(
             .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
             .cachedIn(viewModelScope)
 
-    fun updateUiState(uiState: CharacterUiState) {
+    fun updateUiState(uiState: UiState) {
         _uiState.value = uiState
     }
 }

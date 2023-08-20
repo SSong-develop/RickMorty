@@ -12,7 +12,7 @@ import com.ssong_develop.feature_character.presentation.character.viewholders.Fo
 import com.ssong_develop.feature_character.databinding.ItemLoadingFooterBinding
 import java.util.*
 
-class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolder>() {
+internal class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolder>() {
 
     private val asyncLayoutInflater = AsyncLayoutInflater(context)
 

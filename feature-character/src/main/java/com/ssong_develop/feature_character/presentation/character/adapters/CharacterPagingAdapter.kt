@@ -29,7 +29,7 @@ private val characterDiffItemCallback =
             oldItem == newItem
     }
 
-class CharacterPagingAdapter(
+internal class CharacterPagingAdapter(
     private val onRickMortyCharacterClickListener: OnCharacterItemClickListener
 ) : PagingDataAdapter<RickMortyCharacterUiModel, CharacterViewHolder>(
     characterDiffItemCallback

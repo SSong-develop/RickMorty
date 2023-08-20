@@ -13,7 +13,7 @@ import com.github.florent37.glidepalette.BitmapPalette
 import com.github.florent37.glidepalette.GlidePalette
 import com.google.android.material.card.MaterialCardView
 import com.ssong_develop.feature_character.model.Status
-import com.ssong_develop.feature_character.presentation.character.CharacterUiState
+import com.ssong_develop.feature_character.presentation.character.UiState
 
 object ViewBindingAdapter {
 
@@ -65,25 +65,25 @@ object ViewBindingAdapter {
 }
 
 @BindingAdapter("bindProgressBarVisibility")
-fun ProgressBar.bindProgressBarVisibility(state: CharacterUiState) {
+fun ProgressBar.bindProgressBarVisibility(state: UiState) {
     visibility = when (state) {
-        CharacterUiState.Loading -> View.VISIBLE
+        UiState.Loading -> View.VISIBLE
         else -> View.GONE
     }
 }
 
 @BindingAdapter("bindErrorViewVisibility")
-fun View.bindErrorViewVisibility(state: CharacterUiState) {
+fun View.bindErrorViewVisibility(state: UiState) {
     visibility = when (state) {
-        CharacterUiState.Error -> View.VISIBLE
+        UiState.Error -> View.VISIBLE
         else -> View.GONE
     }
 }
 
 @BindingAdapter("bindSwipeRefreshVisibility")
-fun SwipeRefreshLayout.bindSwipeRefreshVisibility(state: CharacterUiState) {
+fun SwipeRefreshLayout.bindSwipeRefreshVisibility(state: UiState) {
     visibility = when (state) {
-        is CharacterUiState.Characters -> View.VISIBLE
+        is UiState.Characters -> View.VISIBLE
         else -> View.GONE
     }
 }

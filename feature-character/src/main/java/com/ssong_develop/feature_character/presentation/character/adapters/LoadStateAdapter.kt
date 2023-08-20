@@ -9,7 +9,7 @@ import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.presentation.character.viewholders.LoadStateViewHolder
 import com.ssong_develop.feature_character.databinding.ItemLoadStateBinding
 
-class FooterLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {
+internal class FooterLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {
     override fun onBindViewHolder(
         holder: LoadStateViewHolder,
         loadState: LoadState

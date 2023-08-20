@@ -10,6 +10,7 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.withStyledAttributes
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.shape.ShapeAppearanceModel
 import kotlin.math.roundToInt
@@ -51,21 +52,11 @@ class GradientImageView @JvmOverloads constructor(
     }
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
-        context.theme.obtainStyledAttributes(attrs, R.styleable.GradientImageView, 0, 0).use {
-            startColor = it.getColor(
-                R.styleable.GradientImageView_gradient_start_color,
-                startColor
-            )
-            endColor = it.getColor(
-                R.styleable.GradientImageView_gradient_end_color,
-                endColor
-            )
-            gradientAlpha =
-                it.getFloat(R.styleable.GradientImageView_gradient_alpha, gradientAlpha)
-            direction = it.getInt(
-                R.styleable.GradientImageView_gradient_direction,
-                GradientDirection.LEFT_TO_RIGHT.value
-            ).toGradientDirection()
+        context.withStyledAttributes(attrs, R.styleable.GradientImageView) {
+            startColor = getColor(R.styleable.GradientImageView_gradient_start_color, startColor)
+            endColor = getColor(R.styleable.GradientImageView_gradient_end_color, endColor)
+            gradientAlpha = getFloat(R.styleable.GradientImageView_gradient_alpha, gradientAlpha)
+            direction = getInt(R.styleable.GradientImageView_gradient_direction, GradientDirection.LEFT_TO_RIGHT.value).toGradientDirection()
         }
     }
 

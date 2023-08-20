@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class CharacterDetailFragment : Fragment() {
+internal class CharacterDetailFragment : Fragment() {
     private val viewModel: CharacterDetailViewModel by viewModels()
 
     private var binding: FragmentCharacterDetailBinding by AutoClearedValue(this)

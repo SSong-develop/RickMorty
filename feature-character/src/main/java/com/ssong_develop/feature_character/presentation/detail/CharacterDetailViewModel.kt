@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class CharacterDetailUiState(
+internal data class CharacterDetailUiState(
     val character: RickMortyCharacterUiModel? = null,
     val characterEpisode: List<RickMortyCharacterEpisode> = emptyList(),
     val isLoading: Boolean = false,
@@ -31,7 +31,7 @@ data class CharacterDetailUiState(
 @ExperimentalPagingApi
 @ExperimentalCoroutinesApi
 @HiltViewModel
-class CharacterDetailViewModel @Inject constructor(
+internal class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val repository: CharacterRepository,
     private val preferenceStorage: PreferenceStorage
