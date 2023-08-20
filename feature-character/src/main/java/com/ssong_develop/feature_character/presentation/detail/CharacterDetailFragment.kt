@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_common.AutoClearedValue
+import com.ssong_develop.core_common.animateScaleUp
 import com.ssong_develop.core_common.toast
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.R
@@ -83,7 +84,7 @@ internal class CharacterDetailFragment : Fragment() {
     }
 
     private fun initListener() {
-        with(binding) {
+        binding.apply {
             ivBack.setOnClickListener {
                 navigateToBackStack()
             }

@@ -23,6 +23,14 @@ fun Date.isToday(): Boolean {
             todayCalendar.get(Calendar.YEAR) == calendar.get(Calendar.YEAR))
 }
 
+fun Date.isTomorrow(): Boolean {
+    val tomorrow = Calendar.getInstance().apply {
+        time = Date()
+        add(Calendar.DAY_OF_YEAR, 1)
+    }.time
+    return this.isTheSameDay(tomorrow)
+}
+
 fun Date.convertDateToString(): String? {
     val dateFormat = SimpleDateFormat("yyyy.MM.dd")
     return runCatching {

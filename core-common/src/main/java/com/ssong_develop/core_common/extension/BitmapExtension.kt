@@ -9,4 +9,3 @@ fun Bitmap.asByteArray(): ByteArray {
     this.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
     return byteArrayOutputStream.toByteArray()
 }
-

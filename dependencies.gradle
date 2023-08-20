@@ -7,10 +7,10 @@ ext.versions = [
 
         // android support Library
         androidXConstraintLayoutVersion : '2.1.4',
-        androidXCoreKtxVersion : '1.9.0',
+        androidXCoreKtxVersion : '1.10.1',
         androidXAppCompatVersion : '1.5.1',
         androidXSwipeRefreshLayoutVersion : '1.1.0',
-        materialVersion : '1.6.1',
+        materialVersion : '1.9.0',
         androidXSecurityVersion : '1.0.0',
         androidXDataStoreVersion : '1.0.0',
         androidXPagingVersion: '3.1.1',
