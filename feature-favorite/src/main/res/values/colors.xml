@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="transparent">#00FFFFFF</color>
-
-    <!-- duplicate -->
-    <color name="app_bar_color">#a63641</color>
-</resources>

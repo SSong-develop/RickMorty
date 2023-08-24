@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="ShapeAppearanceOverlay.CardView" parent="">
-        <item name="cornerFamilyTopRight">cut</item>
-        <item name="cornerSizeTopRight">30%</item>
-    </style>
-</resources>

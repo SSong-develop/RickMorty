@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">RickMorty</string>
     <string name="character">Character</string>
     <string name="location">Location</string>
     <string name="episode">Episode</string>
@@ -13,4 +14,8 @@
     <string name="transition_image">transition_image</string>
 
     <string name="bullet">●</string>
+
+    <!-- transition strings -->
+    <string name="characterImageTransition">characterImage %s</string>
+    <string name="characterNameTransition">characterName %s</string>
 </resources>
