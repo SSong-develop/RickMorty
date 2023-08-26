@@ -2,12 +2,12 @@ package com.ssong_develop.core_designsystem.calendar.model
 
 /**
  *
- * @property WEEKDAY
+ * @property Day
  * @property DISABLED
  * @property WEEKEND
  */
-enum class DateType {
-    WEEKDAY,
+internal enum class DateType {
+    DAY,
     DISABLED,
     WEEKEND
 }

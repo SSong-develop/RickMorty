@@ -6,14 +6,7 @@ import java.util.Date
  *
  * @param calendarType
  */
-sealed class CalendarDay(
-    val calendarType: CalendarType
-) {
-    /**
-     *
-     */
-    object Week: CalendarDay(CalendarType.WEEK)
-
+internal sealed class CalendarDay(val type: CalendarDayType) {
     /**
      *
      * @param label
@@ -21,18 +14,18 @@ sealed class CalendarDay(
      * @param date
      * @param state
      */
-    data class Day(
+    internal data class Day(
         val label: String,
         val prettyLabel: String,
         val date: Date,
-        val state: DateType = DateType.WEEKDAY
-    ): CalendarDay(CalendarType.DAY)
+        val dateType: DateType = DateType.DAY
+    ): CalendarDay(CalendarDayType.DAY)
 
     /**
      *
      * @param label
      */
-    data class Empty(
+    internal data class Empty(
         val label: String
-    ): CalendarDay(CalendarType.EMPTY)
+    ): CalendarDay(CalendarDayType.EMPTY)
 }

@@ -5,6 +5,8 @@
         <item name="cornerSizeTopRight">30%</item>
     </style>
 
+    <!-- TextAppearance -->
+
     <style name="Widget.Design.AppBarLayout.RickMorty.AppBarLayout" parent="Widget.Design.AppBarLayout">
         <item name="android:backgroundTint">@color/app_bar_color</item>
         <item name="android:padding">@dimen/padding_normal</item>
@@ -22,11 +24,21 @@
         <item name="android:textSize">@dimen/text_size_h3</item>
     </style>
 
-    <!-- TextAppearance AppBar -->
     <style name="TextAppearance.RickMorty.AppBar" parent="TextAppearance.RickMorty.H3">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:elevation">@dimen/cardview_default_elevation</item>
     </style>
+
+    <style name="TextAppearance.RickMorty.Calendar.Day" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextAppearance.RickMorty.Calendar.EmptyDay" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray</item>
+    </style>
+
 
 </resources>

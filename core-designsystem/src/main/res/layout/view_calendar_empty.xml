@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_normal">
 
-        <TextView
-            android:id="@+id/tv_day"
+        <View
+            android:id="@+id/empty_space"
+            style="@style/TextAppearance.RickMorty.Calendar.EmptyDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

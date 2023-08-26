@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sunday_short">일</string>
+    <string name="monday_short">월</string>
+    <string name="tuesday_short">화</string>
+    <string name="wednesday_short">수</string>
+    <string name="thursday_short">목</string>
+    <string name="friday_short">금</string>
+    <string name="saturday_short">토</string>
+    <string name="sunday_long">일요일</string>
+    <string name="monday_long">월요일</string>
+    <string name="tuesday_long">화요일</string>
+    <string name="wednesday_long">수요일</string>
+    <string name="thursday_long">목요일</string>
+    <string name="friday_long">금요일</string>
+    <string name="saturday_long">토요일</string>
+</resources>

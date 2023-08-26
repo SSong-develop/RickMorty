@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingVertical="@dimen/padding_normal">
+
+    <TextView
+        android:id="@+id/tv_sunday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sunday_short" />
+
+    <TextView
+        android:id="@+id/tv_monday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/monday_short" />
+
+    <TextView
+        android:id="@+id/tv_tuesday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tuesday_short" />
+
+    <TextView
+        android:id="@+id/tv_wednesday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wednesday_short" />
+
+    <TextView
+        android:id="@+id/tv_thursday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/thursday_short" />
+
+    <TextView
+        android:id="@+id/tv_friday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/friday_short" />
+
+    <TextView
+        android:id="@+id/tv_saturday_desc"
+        style="@style/TextAppearance.RickMorty.Calendar.WeekDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saturday_short" />
+</LinearLayout>
