@@ -1,5 +1,5 @@
 package com.ssong_develop.core_designsystem.calendar.listener
 
-fun interface BeforeMonthClickListener {
+fun interface OnClickBeforeMonthListener {
     fun onClickBeforeMonth()
 }

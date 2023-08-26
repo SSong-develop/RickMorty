@@ -9,8 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.ssong_develop.core_designsystem.NoRippleRecyclerView
-import com.ssong_develop.core_designsystem.calendar.listener.BeforeMonthClickListener
-import com.ssong_develop.core_designsystem.calendar.listener.NextMonthClickListener
+import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
+import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescriptionBinding
 import java.util.Calendar
 import java.util.Date
@@ -33,8 +33,8 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val calendar = Calendar.getInstance(timeZone, locale)
     var selectDay: Date? = null
 
-    private var beforeMonthClickListener: BeforeMonthClickListener? = null
-    private var nextMonthClickListener: NextMonthClickListener? = null
+    private var onClickBeforeMonthListener: OnClickBeforeMonthListener? = null
+    private var onClickNextMonthListener: OnClickNextMonthListener? = null
 
     private val descriptionView = ViewCalendarWeekDescriptionBinding.inflate(
         LayoutInflater.from(context), this, false
@@ -67,4 +67,19 @@ class RickMortyCalendar @JvmOverloads constructor(
 
     }
 
+    fun setOnBeforeMonthClickListener(listener: OnClickBeforeMonthListener) {
+        this.onClickBeforeMonthListener = listener
+    }
+
+    fun setOnBeforeMonthClickListener(block: () -> Unit) {
+        this.onClickBeforeMonthListener = OnClickBeforeMonthListener(block)
+    }
+
+    fun setOnNextMonthClickListener(listener: OnClickNextMonthListener) {
+        this.onClickNextMonthListener = listener
+    }
+
+    fun setOnNextMonthClickListener(block: () -> Unit) {
+        this.onClickNextMonthListener = OnClickNextMonthListener(block)
+    }
 }

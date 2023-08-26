@@ -1,7 +1,7 @@
 package com.ssong_develop.core_designsystem.calendar.listener
 
-import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
+import java.util.Date
 
-fun interface CalendarDayClickListener {
-    fun onClickCalendarDay(calendarDay: CalendarDay)
+fun interface OnClickCalendarDayListener {
+    fun onClickCalendarDay(date: Date)
 }

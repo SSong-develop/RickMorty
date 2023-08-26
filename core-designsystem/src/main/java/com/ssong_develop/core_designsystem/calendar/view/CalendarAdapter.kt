@@ -5,14 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.ssong_develop.core_designsystem.calendar.listener.CalendarDayClickListener
 import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
 import com.ssong_develop.core_designsystem.calendar.model.CalendarDayType
 import com.ssong_develop.core_designsystem.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarDayBinding
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarEmptyBinding
 import java.lang.IllegalStateException
-import java.util.Calendar
 import java.util.Date
 
 private val calendarItemDiffUtils = object : DiffUtil.ItemCallback<CalendarDay>() {
@@ -32,11 +30,11 @@ internal class CalendarAdapter(
         return when (viewType) {
             CalendarDayType.DAY.ordinal -> {
                 val dayCalendarBinding : ViewCalendarDayBinding = ViewCalendarDayBinding.inflate(layoutInflater)
-                return CalendarDayViewHolder(dayCalendarBinding, onDayClick)
+                CalendarDayViewHolder(dayCalendarBinding, onDayClick)
             }
             CalendarDayType.EMPTY.ordinal -> {
                 val emptyCalendarBinding : ViewCalendarEmptyBinding = ViewCalendarEmptyBinding.inflate(layoutInflater)
-                return CalendarEmptyViewHolder(emptyCalendarBinding)
+                CalendarEmptyViewHolder(emptyCalendarBinding)
             }
             else -> {
                 throw IllegalStateException("Not Valid Type")
