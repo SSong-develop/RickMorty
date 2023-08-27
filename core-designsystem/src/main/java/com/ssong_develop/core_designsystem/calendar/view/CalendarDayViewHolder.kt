@@ -30,14 +30,14 @@ internal class CalendarDayViewHolder(
         binding.executePendingBindings()
     }
 
-    internal fun bindDayState(data: CalendarDay.Day) {
+    fun bindDayState(data: CalendarDay.Day) {
         binding.apply {
             setDayText(data.label)
             setDayTextColor(R.color.black)
         }
     }
 
-    internal fun bindDisabledState(data: CalendarDay.Day) {
+    fun bindDisabledState(data: CalendarDay.Day) {
         binding.apply {
             setDayText(data.label)
             setDayTextColor(R.color.gray)

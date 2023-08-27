@@ -11,8 +11,12 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.ssong_develop.core_designsystem.NoRippleRecyclerView
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
+import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescriptionBinding
 import java.util.Calendar
+import java.util.Calendar.DAY_OF_MONTH
+import java.util.Calendar.MONTH
+import java.util.Calendar.YEAR
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -65,6 +69,18 @@ class RickMortyCalendar @JvmOverloads constructor(
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
 
+    }
+
+    private fun buildCalendarData() : List<CalendarDay> {
+        val proxyCalendar = Calendar.getInstance().apply {
+            this.set(MONTH, calendar.get(MONTH))
+            this.set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))
+            this.set(YEAR, calendar.get(YEAR))
+        }
+
+        val totalDayInMonth = calendar.getActualMaximum(DAY_OF_MONTH)
+        val calendarDayList = mutableListOf<CalendarDay>()
+        return emptyList()
     }
 
     fun setOnBeforeMonthClickListener(listener: OnClickBeforeMonthListener) {

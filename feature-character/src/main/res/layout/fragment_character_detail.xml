@@ -195,14 +195,13 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/species_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.ssong_develop.core_designsystem.FadeInTextView
                     android:id="@+id/species"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.uiState.character.species}"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    app:text="@{vm.uiState.character.species}"
+                    app:textSize="16sp"
+                    app:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/species_title"
                     tools:text="Species" />

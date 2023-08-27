@@ -15,4 +15,10 @@
             <enum name="right_bottom_to_left_top" value="7"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="FadeInTextView">
+        <attr name="text" format="string"/>
+        <attr name="textColor" format="reference|integer"/>
+        <attr name="textSize" format="dimension"/>
+    </declare-styleable>
 </resources>
