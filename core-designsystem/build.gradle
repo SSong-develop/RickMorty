@@ -49,4 +49,6 @@ dependencies {
 
     // recyclerview
     implementation "androidx.recyclerview:recyclerview:$versions.recycleViewVersion"
+
+    implementation "androidx.dynamicanimation:dynamicanimation:$versions.androidXDynamicAnimationVersion"
 }

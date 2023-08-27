@@ -81,10 +81,10 @@ class SlideDownTextView @JvmOverloads constructor(
 
             addView(textView)
 
-            val tickAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_down).apply {
+            val slideDownAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_down).apply {
                 startOffset = (index * 200).toLong()
             }
-            textView.startAnimation(tickAnimation)
+            textView.startAnimation(slideDownAnimation)
         }
     }
 }
