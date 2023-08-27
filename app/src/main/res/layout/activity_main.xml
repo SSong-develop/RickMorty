@@ -37,7 +37,7 @@
                 android:id="@+id/snack_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

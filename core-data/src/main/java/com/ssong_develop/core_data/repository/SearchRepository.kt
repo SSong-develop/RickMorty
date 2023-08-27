@@ -2,10 +2,8 @@ package com.ssong_develop.core_data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.ssong_develop.core_common.di.IoDispatcher
 import com.ssong_develop.core_data.datasource.CharacterSearchResultPagingSource
 import com.ssong_develop.core_data.service.SearchService
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(

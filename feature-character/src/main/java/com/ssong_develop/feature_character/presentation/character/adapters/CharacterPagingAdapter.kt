@@ -6,10 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.presentation.character.viewholders.CharacterViewHolder
-import com.ssong_develop.feature_character.presentation.character.viewholders.OnCharacterItemClickListener
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
+import com.ssong_develop.feature_character.presentation.character.viewholders.CharacterViewHolder
+import com.ssong_develop.feature_character.presentation.character.viewholders.OnCharacterItemClickListener
 
 /**
  * TODO DiffUtil에 대한 주석 작성하기

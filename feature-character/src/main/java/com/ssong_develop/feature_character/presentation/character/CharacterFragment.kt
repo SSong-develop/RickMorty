@@ -52,7 +52,8 @@ internal class CharacterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character, container, false)
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
         return binding.root
     }
 
@@ -130,9 +131,11 @@ internal class CharacterFragment : Fragment() {
                                     )
                                 )
                             }
+
                             LoadState.Loading -> {
                                 viewModel.updateUiState(UiState.Loading)
                             }
+
                             is LoadState.Error -> {
                                 viewModel.updateUiState(UiState.Error)
                             }

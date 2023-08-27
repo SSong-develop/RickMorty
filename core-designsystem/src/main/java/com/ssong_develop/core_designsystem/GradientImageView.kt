@@ -3,7 +3,13 @@ package com.ssong_develop.core_designsystem
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Canvas
-import android.graphics.Color.*
+import android.graphics.Color.BLACK
+import android.graphics.Color.WHITE
+import android.graphics.Color.alpha
+import android.graphics.Color.argb
+import android.graphics.Color.blue
+import android.graphics.Color.green
+import android.graphics.Color.red
 import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.RectF
@@ -24,7 +30,7 @@ class GradientImageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): AppCompatImageView(context, attrs, defStyleAttr) {
+) : AppCompatImageView(context, attrs, defStyleAttr) {
 
     enum class GradientDirection(val value: Int) {
         LEFT_TO_RIGHT(0),
@@ -56,7 +62,10 @@ class GradientImageView @JvmOverloads constructor(
             startColor = getColor(R.styleable.GradientImageView_gradient_start_color, startColor)
             endColor = getColor(R.styleable.GradientImageView_gradient_end_color, endColor)
             gradientAlpha = getFloat(R.styleable.GradientImageView_gradient_alpha, gradientAlpha)
-            direction = getInt(R.styleable.GradientImageView_gradient_direction, GradientDirection.LEFT_TO_RIGHT.value).toGradientDirection()
+            direction = getInt(
+                R.styleable.GradientImageView_gradient_direction,
+                GradientDirection.LEFT_TO_RIGHT.value
+            ).toGradientDirection()
         }
     }
 
@@ -91,6 +100,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.RIGHT_TO_LEFT -> {
                     LinearGradient(
                         width.toFloat(),
@@ -102,6 +112,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.TOP_TO_BOTTOM -> {
                     LinearGradient(
                         0f,
@@ -113,6 +124,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.BOTTOM_TO_TOP -> {
                     LinearGradient(
                         0f,
@@ -124,6 +136,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.LEFT_TOP_TO_RIGHT_BOTTOM -> {
                     LinearGradient(
                         0f,
@@ -135,6 +148,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.LEFT_BOTTOM_TO_RIGHT_TOP -> {
                     LinearGradient(
                         0f,
@@ -146,6 +160,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.RIGHT_TOP_TO_LEFT_BOTTOM -> {
                     LinearGradient(
                         width.toFloat(),
@@ -157,6 +172,7 @@ class GradientImageView @JvmOverloads constructor(
                         Shader.TileMode.CLAMP
                     )
                 }
+
                 GradientDirection.RIGHT_BOTTOM_TO_LEFT_TOP -> {
                     LinearGradient(
                         width.toFloat(),
@@ -180,16 +196,16 @@ class GradientImageView @JvmOverloads constructor(
             }
     }
 
-    private fun Int.toGradientDirection(): GradientImageView.GradientDirection =
+    private fun Int.toGradientDirection(): GradientDirection =
         when (this) {
-            0 -> GradientImageView.GradientDirection.LEFT_TO_RIGHT
-            1 -> GradientImageView.GradientDirection.RIGHT_TO_LEFT
-            2 -> GradientImageView.GradientDirection.TOP_TO_BOTTOM
-            3 -> GradientImageView.GradientDirection.BOTTOM_TO_TOP
-            4 -> GradientImageView.GradientDirection.LEFT_TOP_TO_RIGHT_BOTTOM
-            5 -> GradientImageView.GradientDirection.LEFT_BOTTOM_TO_RIGHT_TOP
-            6 -> GradientImageView.GradientDirection.RIGHT_TOP_TO_LEFT_BOTTOM
-            7 -> GradientImageView.GradientDirection.RIGHT_BOTTOM_TO_LEFT_TOP
+            0 -> GradientDirection.LEFT_TO_RIGHT
+            1 -> GradientDirection.RIGHT_TO_LEFT
+            2 -> GradientDirection.TOP_TO_BOTTOM
+            3 -> GradientDirection.BOTTOM_TO_TOP
+            4 -> GradientDirection.LEFT_TOP_TO_RIGHT_BOTTOM
+            5 -> GradientDirection.LEFT_BOTTOM_TO_RIGHT_TOP
+            6 -> GradientDirection.RIGHT_TOP_TO_LEFT_BOTTOM
+            7 -> GradientDirection.RIGHT_BOTTOM_TO_LEFT_TOP
             else -> throw IllegalArgumentException("This value is not supported for GradientDirection : $this")
         }
 

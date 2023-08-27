@@ -2,7 +2,6 @@ package com.ssong_develop.feature_character.presentation.detail
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,14 +15,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.ConcatAdapter
 import com.ssong_develop.core_common.AutoClearedValue
-import com.ssong_develop.core_common.animateScaleUp
-import com.ssong_develop.core_common.toast
-import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterDetailBinding
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterAdapter
 import com.ssong_develop.feature_character.presentation.detail.adapters.CharacterEpisodeAdapter
-import com.ssong_develop.feature_character.presentation.detail.viewholders.CharacterEpisodeViewHolder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -58,7 +53,8 @@ internal class CharacterDetailFragment : Fragment() {
     }
 
     private fun inflateTransition() {
-        sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.change_bounds)
     }
 
     private fun initBinding() {

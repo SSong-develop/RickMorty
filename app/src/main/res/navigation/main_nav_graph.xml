@@ -4,12 +4,13 @@
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/navigation_character">
 
-    <navigation android:id="@+id/navigation_character"
+    <navigation
+        android:id="@+id/navigation_character"
         app:startDestination="@id/characterFragment">
         <fragment
             android:id="@+id/characterFragment"
             android:name="com.ssong_develop.feature_character.presentation.character.CharacterFragment"
-            android:label="CharacterFragment" >
+            android:label="CharacterFragment">
             <action
                 android:id="@+id/action_characterFragment_to_characterDetailFragment"
                 app:destination="@id/characterDetailFragment" />

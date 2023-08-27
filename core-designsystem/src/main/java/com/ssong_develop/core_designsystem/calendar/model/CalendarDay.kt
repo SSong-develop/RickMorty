@@ -19,7 +19,7 @@ internal sealed class CalendarDay(val type: CalendarDayType) {
         val prettyLabel: String,
         val date: Date,
         val dateType: DateType = DateType.DAY
-    ): CalendarDay(CalendarDayType.DAY)
+    ) : CalendarDay(CalendarDayType.DAY)
 
     /**
      *
@@ -27,5 +27,5 @@ internal sealed class CalendarDay(val type: CalendarDayType) {
      */
     internal data class Empty(
         val label: String
-    ): CalendarDay(CalendarDayType.EMPTY)
+    ) : CalendarDay(CalendarDayType.EMPTY)
 }

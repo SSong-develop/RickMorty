@@ -10,7 +10,6 @@ import com.ssong_develop.core_designsystem.calendar.model.CalendarDayType
 import com.ssong_develop.core_designsystem.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarDayBinding
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarEmptyBinding
-import java.lang.IllegalStateException
 import java.util.Date
 
 private val calendarItemDiffUtils = object : DiffUtil.ItemCallback<CalendarDay>() {
@@ -24,18 +23,22 @@ private val calendarItemDiffUtils = object : DiffUtil.ItemCallback<CalendarDay>(
 
 internal class CalendarAdapter(
     private val onDayClick: (date: Date) -> Unit
-): ListAdapter<CalendarDay, ViewHolder>(calendarItemDiffUtils) {
+) : ListAdapter<CalendarDay, ViewHolder>(calendarItemDiffUtils) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             CalendarDayType.DAY.ordinal -> {
-                val dayCalendarBinding : ViewCalendarDayBinding = ViewCalendarDayBinding.inflate(layoutInflater)
+                val dayCalendarBinding: ViewCalendarDayBinding =
+                    ViewCalendarDayBinding.inflate(layoutInflater)
                 CalendarDayViewHolder(dayCalendarBinding, onDayClick)
             }
+
             CalendarDayType.EMPTY.ordinal -> {
-                val emptyCalendarBinding : ViewCalendarEmptyBinding = ViewCalendarEmptyBinding.inflate(layoutInflater)
+                val emptyCalendarBinding: ViewCalendarEmptyBinding =
+                    ViewCalendarEmptyBinding.inflate(layoutInflater)
                 CalendarEmptyViewHolder(emptyCalendarBinding)
             }
+
             else -> {
                 throw IllegalStateException("Not Valid Type")
             }
@@ -43,7 +46,7 @@ internal class CalendarAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when(holder.itemViewType) {
+        when (holder.itemViewType) {
             CalendarDayType.DAY.ordinal -> {
                 val calendarDayViewHolder = holder as CalendarDayViewHolder
                 val calendarDayItem = getItem(position) as CalendarDay.Day
@@ -54,6 +57,7 @@ internal class CalendarAdapter(
                     DateType.WEEKEND -> calendarDayViewHolder.bindWeekendState(calendarDayItem)
                 }
             }
+
             CalendarDayType.EMPTY.ordinal -> {
                 val emptyCalendarViewHolder = holder as CalendarEmptyViewHolder
                 val calendarEmptyItem = getItem(position) as CalendarDay.Empty

@@ -26,9 +26,11 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                         }
                         emitAll(localData)
                     }
+
                     is ApiEmptyResponse -> {
                         emit(Resource.success(null))
                     }
+
                     is ApiErrorResponse -> {
                         onFetchFailed(apiResponse.errorMessage, apiResponse.statusCode)
                         emitAll(fetchFromLocal().map { dbData ->
@@ -38,6 +40,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
                             )
                         })
                     }
+
                     else -> {}
                 }
             }

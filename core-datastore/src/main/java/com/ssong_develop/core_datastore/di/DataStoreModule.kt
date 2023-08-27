@@ -1,7 +1,7 @@
 package com.ssong_develop.core_datastore.di
 
-import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.core_datastore.DataStorePreferenceStorage
+import com.ssong_develop.core_datastore.PreferenceStorage
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

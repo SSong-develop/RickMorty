@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
-import com.ssong_develop.core_common.toast
+import com.ssong_develop.core_common.extension.shortToast
 import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_search.R
 import com.ssong_develop.feature_search.SearchItemClickDelegate
@@ -83,12 +82,14 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                                     updateErrorState(false)
                                 }
                             }
+
                             LoadState.Loading -> {
                                 viewModel.run {
                                     updateLoadingState(true)
                                     updateErrorState(false)
                                 }
                             }
+
                             is LoadState.Error -> {
                                 viewModel.run {
                                     updateLoadingState(false)
@@ -102,12 +103,9 @@ class SearchFragment : Fragment(), SearchItemClickDelegate {
                 launch {
                     viewModel.searchUiEventBus.collectLatest { event ->
                         when (event) {
-                            is SearchEvent.ShowToast -> requireContext().toast(
-                                event.message
-                            )
+                            is SearchEvent.ShowToast -> requireContext().shortToast(event.message)
                             SearchEvent.Retry -> searchResultPagingAdapter.retry()
                             SearchEvent.Refresh -> searchResultPagingAdapter.refresh()
-                            else -> {}
                         }
                     }
                 }

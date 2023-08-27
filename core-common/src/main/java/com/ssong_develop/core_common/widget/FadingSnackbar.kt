@@ -13,12 +13,12 @@ import com.ssong_develop.core_common.R
 class FadingSnackbar(
     context: Context,
     attrs: AttributeSet
-): FrameLayout(context, attrs) {
-    private val messageView : TextView
+) : FrameLayout(context, attrs) {
+    private val messageView: TextView
     private val action: Button
 
     init {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_fading_snackbar,this, true)
+        val view = LayoutInflater.from(context).inflate(R.layout.view_fading_snackbar, this, true)
         messageView = view.findViewById(R.id.snackbar_text)
         action = view.findViewById(R.id.snackbar_action)
     }

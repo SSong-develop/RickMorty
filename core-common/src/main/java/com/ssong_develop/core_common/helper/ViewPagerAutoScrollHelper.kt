@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager
 
 class ViewPagerAutoScrollHelper(
     private val viewPager: ViewPager
-): AutomaticScrollable {
+) : AutomaticScrollable {
     override val scrollAnimation: Interpolator = AnimationUtils.loadInterpolator(
         viewPager.context, android.R.interpolator.fast_out_slow_in
     )

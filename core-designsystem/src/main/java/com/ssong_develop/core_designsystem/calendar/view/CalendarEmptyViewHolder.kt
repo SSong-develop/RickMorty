@@ -6,7 +6,7 @@ import com.ssong_develop.core_designsystem.databinding.ViewCalendarEmptyBinding
 
 internal class CalendarEmptyViewHolder(
     private val binding: ViewCalendarEmptyBinding
-): ViewHolder(binding.root) {
+) : ViewHolder(binding.root) {
 
     private lateinit var emptyDayData: CalendarDay.Empty
 

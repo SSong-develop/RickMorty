@@ -29,5 +29,6 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun provideRecentSearchKeywordDao(database: RickMortyCharacterDatabase) = database.recentSearchKeywordDao()
+    fun provideRecentSearchKeywordDao(database: RickMortyCharacterDatabase) =
+        database.recentSearchKeywordDao()
 }

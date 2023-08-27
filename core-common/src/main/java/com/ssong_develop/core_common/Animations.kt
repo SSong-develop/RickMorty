@@ -6,6 +6,10 @@ import android.animation.ObjectAnimator
 import android.view.View
 import android.view.animation.BounceInterpolator
 
+const val SHORT_ANIMATION_DURATION = 200L
+const val MEDIUM_ANIMATION_DURATION = 400L
+const val LONG_ANIMATION_DURATION = 500L
+
 fun View.animateSlideUp(animatorListener: Animator.AnimatorListener) {
     this.animate()
         .translationY(-(this.height.toFloat()))
@@ -31,7 +35,7 @@ fun View.animateScaleUp(
     val translationY = ObjectAnimator.ofFloat(this, View.TRANSLATION_Y, 0f, -200f, 0f)
 
     AnimatorSet().apply {
-        duration = 500L
+        duration = LONG_ANIMATION_DURATION
         interpolator = BounceInterpolator()
         play(scaleX).with(scaleY).with(translationY)
         addListener(object : Animator.AnimatorListener {
@@ -63,7 +67,7 @@ fun View.animateScaleDown(
     val translationY = ObjectAnimator.ofFloat(this, View.TRANSLATION_Y, -200f, 0f)
 
     AnimatorSet().apply {
-        duration = 500L
+        duration = LONG_ANIMATION_DURATION
         interpolator = BounceInterpolator()
         play(scaleX).with(scaleY).with(translationY)
         addListener(object : Animator.AnimatorListener {

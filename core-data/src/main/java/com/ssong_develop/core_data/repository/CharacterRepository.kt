@@ -1,14 +1,11 @@
 package com.ssong_develop.core_data.repository
 
-import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.ssong_develop.core_data.datasource.CharacterDataSource
 import com.ssong_develop.core_data.datasource.CharacterPagingSource
-import com.ssong_develop.core_data.model.NetworkRickMortyCharacter
-import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.remotemediator.CharacterRemoteMediator
 import com.ssong_develop.core_data.service.CharacterService
 import com.ssong_develop.core_database.database.RickMortyCharacterDatabase

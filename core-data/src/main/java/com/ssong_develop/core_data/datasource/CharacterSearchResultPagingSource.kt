@@ -2,7 +2,6 @@ package com.ssong_develop.core_data.datasource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.ssong_develop.core_data.model.NetworkRickMortyCharacter
 import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.service.SearchService
 import com.ssong_develop.core_model.RickMortyCharacter

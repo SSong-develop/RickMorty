@@ -6,8 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.presentation.character.viewholders.LoadStateViewHolder
 import com.ssong_develop.feature_character.databinding.ItemLoadStateBinding
+import com.ssong_develop.feature_character.presentation.character.viewholders.LoadStateViewHolder
 
 internal class FooterLoadStateAdapter : LoadStateAdapter<LoadStateViewHolder>() {
     override fun onBindViewHolder(

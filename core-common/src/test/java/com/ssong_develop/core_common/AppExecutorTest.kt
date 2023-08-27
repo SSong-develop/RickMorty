@@ -6,12 +6,12 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.util.concurrent.Executors
-import java.util.concurrent.ThreadFactory
 
 @DelicateCoroutinesApi
 class AppExecutorTest {
 
     lateinit var appExecutors: AppExecutors
+
     // Hilt Mocking 데이터가 있어야 테스트 가능함
     lateinit var injectAppExecutors: AppExecutors
 
@@ -37,17 +37,17 @@ class AppExecutorTest {
             assertEquals("disk_io_thread", Thread.currentThread().name)
         }
         appExecutors.networkIO().execute {
-            assertEquals("network_io_thread",Thread.currentThread().name)
+            assertEquals("network_io_thread", Thread.currentThread().name)
         }
         appExecutors.mainThread().execute {
-            assertEquals("main_thread",Thread.currentThread().name)
+            assertEquals("main_thread", Thread.currentThread().name)
         }
     }
 
     @Test
     fun `생성자 주입 쓰레드 테스트`() {
         injectAppExecutors.networkIO().execute {
-            Log.d("ssong-develop",Thread.currentThread().name)
+            Log.d("ssong-develop", Thread.currentThread().name)
         }
     }
 

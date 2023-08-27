@@ -1,11 +1,11 @@
 package com.ssong_develop.feature_favorite
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -29,7 +29,7 @@ internal class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavoriteBinding.inflate(inflater,container, false)
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,9 +44,11 @@ internal class FavoriteFragment : Fragment() {
                                 showHasFavoriteCharacterView()
                                 configHasFavoriteCharacterView(state.favoriteCharacter)
                             }
+
                             UiState.Loading -> {
                                 showLoadingView()
                             }
+
                             UiState.NoFavoriteCharacter -> {
                                 showNoFavoriteCharacterView()
                             }

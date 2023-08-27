@@ -56,7 +56,10 @@ class RickMortyCalendar @JvmOverloads constructor(
                 override fun getSpanSize(position: Int): Int = 1
             }
         }
-        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         setHasFixedSize(true)
     }
@@ -71,7 +74,7 @@ class RickMortyCalendar @JvmOverloads constructor(
 
     }
 
-    private fun buildCalendarData() : List<CalendarDay> {
+    private fun buildCalendarData(): List<CalendarDay> {
         val proxyCalendar = Calendar.getInstance().apply {
             this.set(MONTH, calendar.get(MONTH))
             this.set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))

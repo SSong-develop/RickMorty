@@ -11,6 +11,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import com.ssong_develop.core_common.SHORT_ANIMATION_DURATION
 
 /**
  * TextView as show fadeIn animation effect
@@ -82,8 +83,8 @@ class FadeInTextView @JvmOverloads constructor(
             addView(textView)
 
             val fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in).apply {
-                duration = 200
-                startOffset = (index * 200).toLong()
+                duration = SHORT_ANIMATION_DURATION
+                startOffset = index * SHORT_ANIMATION_DURATION
             }
 
             textView.startAnimation(fadeInAnimation)

@@ -37,7 +37,7 @@ class CircleProgressView @JvmOverloads constructor(
     private val textPaint: Paint = Paint().apply {
         isAntiAlias = true
         textAlign = Paint.Align.CENTER
-        typeface = Typeface.create("cabin",Typeface.BOLD)
+        typeface = Typeface.create("cabin", Typeface.BOLD)
     }
 
     private val animationInterpolator by lazy { DecelerateInterpolator() }
@@ -52,7 +52,7 @@ class CircleProgressView @JvmOverloads constructor(
     var progress: Int = 0
         set(value) {
             field = value
-            ValueAnimator.ofFloat(sweepAngle, 360f/ maxProgress * value).apply {
+            ValueAnimator.ofFloat(sweepAngle, 360f / maxProgress * value).apply {
                 interpolator = animationInterpolator
                 duration = 300
                 addUpdateListener { animation ->

@@ -20,13 +20,16 @@ abstract class NetworkResource<RequestType> {
                         emit(Resource.success(it))
                     }
                 }
+
                 is ApiErrorResponse -> {
                     onFetchFailed(apiResponse.errorMessage, apiResponse.statusCode)
                     emit(Resource.error(apiResponse.errorMessage, null))
                 }
+
                 is ApiEmptyResponse -> {
                     emit(Resource.success(null))
                 }
+
                 else -> {}
             }
         }

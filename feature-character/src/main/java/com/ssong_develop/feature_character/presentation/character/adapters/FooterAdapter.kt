@@ -8,9 +8,9 @@ import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ssong_develop.feature_character.R
-import com.ssong_develop.feature_character.presentation.character.viewholders.FooterViewHolder
 import com.ssong_develop.feature_character.databinding.ItemLoadingFooterBinding
-import java.util.*
+import com.ssong_develop.feature_character.presentation.character.viewholders.FooterViewHolder
+import java.util.Stack
 
 internal class FooterAdapter(val context: Context) : RecyclerView.Adapter<FooterViewHolder>() {
 

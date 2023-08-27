@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NetworkResult<T,V>(
+data class NetworkResult<T, V>(
     val info: T,
     val results: List<V>
 )

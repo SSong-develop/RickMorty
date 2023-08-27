@@ -1,15 +1,11 @@
 package com.ssong_develop.core_common.manager
 
-import android.util.Log
 import com.ssong_develop.core_common.di.ApplicationScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.LinkedList
-import java.util.Queue
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class SnackbarMessageManager @Inject constructor(
     @ApplicationScope private val coroutineScope: CoroutineScope

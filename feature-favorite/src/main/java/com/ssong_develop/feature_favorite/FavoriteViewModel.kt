@@ -8,7 +8,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -17,9 +16,10 @@ import javax.inject.Inject
 internal sealed interface UiState {
     data class HasFavoriteCharacter(
         val favoriteCharacter: RickMortyCharacter
-    ): UiState
-    object NoFavoriteCharacter: UiState
-    object Loading: UiState
+    ) : UiState
+
+    object NoFavoriteCharacter : UiState
+    object Loading : UiState
 }
 
 @ExperimentalCoroutinesApi

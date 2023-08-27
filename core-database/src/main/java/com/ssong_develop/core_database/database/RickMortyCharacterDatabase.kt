@@ -8,8 +8,8 @@ import com.ssong_develop.core_database.converter.OriginListConverter
 import com.ssong_develop.core_database.converter.StringListConverter
 import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import com.ssong_develop.core_database.dao.RickMortyRecentSearchQueryDao
-import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 import com.ssong_develop.core_database.model.LocalEntityRecentSearchQuery
+import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 
 @Database(
     entities = [LocalEntityRickMortyCharacter::class, LocalEntityRecentSearchQuery::class],

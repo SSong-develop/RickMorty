@@ -11,6 +11,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import com.ssong_develop.core_common.SHORT_ANIMATION_DURATION
 
 /**
  * TextView as show slideDown animation effect
@@ -63,7 +64,8 @@ class SlideDownTextView @JvmOverloads constructor(
     private fun getStyleableAttrs(attrs: AttributeSet) {
         context.withStyledAttributes(attrs, R.styleable.SlideDownTextView) {
             text = this.getString(R.styleable.SlideDownTextView_text) ?: ""
-            textSize = this.getDimensionPixelSize(R.styleable.SlideDownTextView_textSize, 16).toFloat()
+            textSize =
+                this.getDimensionPixelSize(R.styleable.SlideDownTextView_textSize, 16).toFloat()
             textColorId = this.getResourceId(R.styleable.SlideDownTextView_textColor, R.color.white)
         }
     }
@@ -81,9 +83,10 @@ class SlideDownTextView @JvmOverloads constructor(
 
             addView(textView)
 
-            val slideDownAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_down).apply {
-                startOffset = (index * 200).toLong()
-            }
+            val slideDownAnimation =
+                AnimationUtils.loadAnimation(context, R.anim.slide_down).apply {
+                    startOffset = index * SHORT_ANIMATION_DURATION
+                }
             textView.startAnimation(slideDownAnimation)
         }
     }

@@ -7,7 +7,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RickMortyCharacterDao {

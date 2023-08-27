@@ -1,8 +1,8 @@
 package com.ssong_develop.core_data.model
 
-import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 import com.ssong_develop.core_database.model.LocalEntityLocation
 import com.ssong_develop.core_database.model.LocalEntityOrigin
+import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacterInfo
 
 fun NetworkRickMortyCharacter.NetworkOrigin.asLocalEntity(): LocalEntityOrigin =

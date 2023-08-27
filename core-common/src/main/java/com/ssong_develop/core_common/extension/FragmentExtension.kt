@@ -1,6 +1,5 @@
 package com.ssong_develop.core_common.extension
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +15,9 @@ fun Fragment.setupSnackbarManager(
     viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             snackbarMessageManager.currentSnackbar.collect { message ->
-                if (message == null) { return@collect }
+                if (message == null) {
+                    return@collect
+                }
                 fadingSnackbar.show(
                     messageText = message,
                     dismissListener = {
