@@ -13,9 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 
 /**
- * TextView as show fadeIn animation effect
+ * TextView as show slideDown animation effect
  */
-class FadeInTextView @JvmOverloads constructor(
+class SlideDownTextView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -29,14 +29,14 @@ class FadeInTextView @JvmOverloads constructor(
     var text = ""
         set(value) {
             field = value
-            startFadeInAnimation()
+            startSlideDownAnimation()
         }
 
     @Dimension(unit = Dimension.SP)
     var textSize = 16f
         set(value) {
             field = value / resources.displayMetrics.scaledDensity
-            startFadeInAnimation()
+            startSlideDownAnimation()
         }
 
     @ColorRes
@@ -49,7 +49,7 @@ class FadeInTextView @JvmOverloads constructor(
     private var textColor = ContextCompat.getColor(context, R.color.white)
         set(value) {
             field = value
-            startFadeInAnimation()
+            startSlideDownAnimation()
         }
 
     init {
@@ -61,32 +61,30 @@ class FadeInTextView @JvmOverloads constructor(
     }
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
-        context.withStyledAttributes(attrs, R.styleable.FadeInTextView) {
-            text = this.getString(R.styleable.FadeInTextView_text) ?: ""
-            textSize = this.getDimensionPixelSize(R.styleable.FadeInTextView_textSize, 16).toFloat()
-            textColorId = this.getResourceId(R.styleable.FadeInTextView_textColor, R.color.white)
+        context.withStyledAttributes(attrs, R.styleable.SlideDownTextView) {
+            text = this.getString(R.styleable.SlideDownTextView_text) ?: ""
+            textSize = this.getDimensionPixelSize(R.styleable.SlideDownTextView_textSize, 16).toFloat()
+            textColorId = this.getResourceId(R.styleable.SlideDownTextView_textColor, R.color.white)
         }
     }
 
-    private fun startFadeInAnimation() {
+    private fun startSlideDownAnimation() {
         removeAllViewsInLayout()
         text.forEachIndexed { index, char ->
             val textView = TextView(context).apply {
                 text = char.toString()
-                textSize = this@FadeInTextView.textSize
+                textSize = this@SlideDownTextView.textSize
                 typeface = Typeface.defaultFromStyle(Typeface.BOLD)
-                setTextColor(this@FadeInTextView.textColor)
+                setTextColor(this@SlideDownTextView.textColor)
                 layoutParams = textViewParams
             }
 
             addView(textView)
 
-            val fadeInAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in).apply {
-                duration = 200
+            val tickAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_down).apply {
                 startOffset = (index * 200).toLong()
             }
-
-            textView.startAnimation(fadeInAnimation)
+            textView.startAnimation(tickAnimation)
         }
     }
 }

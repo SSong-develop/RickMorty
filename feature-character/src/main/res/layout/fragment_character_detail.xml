@@ -217,14 +217,13 @@
                     app:layout_constraintTop_toBottomOf="@id/species"
                     tools:text="@string/gender_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.ssong_develop.core_designsystem.SlideDownTextView
                     android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.uiState.character.gender}"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    app:text="@{vm.uiState.character.gender}"
+                    app:textSize="16sp"
+                    app:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/gender_title"
                     tools:text="Gender" />
