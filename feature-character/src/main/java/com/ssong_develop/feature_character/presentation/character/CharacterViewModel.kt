@@ -6,6 +6,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
@@ -43,7 +44,7 @@ internal class CharacterViewModel @Inject constructor(
     val favoriteCharacterState =
         preferenceStorage.favoriteCharacter.stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000L),
+            started = WhileViewSubscribed,
             initialValue = null
         )
 

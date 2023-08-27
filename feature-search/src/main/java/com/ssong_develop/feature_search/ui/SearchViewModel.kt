@@ -41,11 +41,6 @@ class SearchViewModel @Inject constructor(
     private val searchRepository: SearchRepository
 ) : ViewModel() {
 
-    companion object {
-        private const val SEARCH_QUERY = "search_query"
-        private const val DEFAULT_DEBOUNCE_TIME = 500L
-    }
-
     private val _searchEventBus = MutableSharedFlow<SearchEvent>(
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -82,5 +77,10 @@ class SearchViewModel @Inject constructor(
                 isError = isError
             )
         }
+    }
+
+    companion object {
+        private const val SEARCH_QUERY = "search_query"
+        private const val DEFAULT_DEBOUNCE_TIME = 500L
     }
 }

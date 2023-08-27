@@ -15,15 +15,14 @@ fun Fragment.setupSnackbarManager(
     viewLifecycleOwner.lifecycleScope.launch {
         viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             snackbarMessageManager.currentSnackbar.collect { message ->
-                if (message == null) {
-                    return@collect
+                if (message != null) {
+                    fadingSnackbar.show(
+                        messageText = message,
+                        dismissListener = {
+                            snackbarMessageManager.removeMessageAndLoadNext(message)
+                        }
+                    )
                 }
-                fadingSnackbar.show(
-                    messageText = message,
-                    dismissListener = {
-                        snackbarMessageManager.removeMessageAndLoadNext(message)
-                    }
-                )
             }
         }
     }

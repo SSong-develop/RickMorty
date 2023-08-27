@@ -46,7 +46,6 @@ internal class CharacterDetailViewModel @Inject constructor(
             getCharacterEpisode(it.episode)
         } ?: run {
             // can't Update Characters. then we need to show the dummy character or some else
-
         }
     }
 
@@ -113,8 +112,6 @@ internal class CharacterDetailViewModel @Inject constructor(
     companion object {
         private const val CHARACTER_KEY = "character"
         private const val SECOND = 1_000L
-        private const val DEFAULT_TIMEOUT_SECOND = 20 * SECOND
-        private const val TIME_OUT_ERROR_MESSAGE = "시간초과 됐습니다."
     }
 }
 

@@ -2,6 +2,7 @@ package com.ssong_develop.feature_favorite
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.core_model.RickMortyCharacter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -45,7 +46,7 @@ internal class FavoriteViewModel @Inject constructor(
         }
     }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000L),
+        started = WhileViewSubscribed,
         initialValue = UiState.Loading
     )
 }
