@@ -84,6 +84,7 @@ class AnimateTextView @JvmOverloads constructor(
     }
 
     private fun startTextAnimation() {
+        clearAnimation()
         removeAllViewsInLayout()
         text.forEachIndexed { index, char ->
             val textView = TextView(context).apply {
