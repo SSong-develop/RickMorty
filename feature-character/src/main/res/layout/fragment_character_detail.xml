@@ -151,17 +151,17 @@
                         app:layout_constraintTop_toTopOf="@id/status"
                         tools:text="●" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <com.ssong_develop.core_designsystem.AnimateTextView
                         android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="2dp"
-                        android:text="@{vm.uiState.character.status}"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
                         android:translationZ="100dp"
+                        app:text="@{vm.uiState.character.status}"
+                        app:textColor="@color/white"
+                        app:textSize="16sp"
+                        app:animType="slide_up"
                         app:layout_constraintBottom_toBottomOf="@id/header"
                         app:layout_constraintStart_toEndOf="@id/status_dot"
                         app:layout_constraintTop_toBottomOf="@id/name"
@@ -253,20 +253,17 @@
                     app:layout_constraintTop_toBottomOf="@id/location_title"
                     tools:text="Location" />
 
-                <com.ssong_develop.core_designsystem.AnimateTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/episode_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    app:text="@string/episode_title"
-                    app:textColor="@color/white_56"
-                    app:textSize="16sp"
-                    app:animType="slide_up"
+                    android:text="@string/episode_title"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/location"
                     tools:text="@string/episode_title" />
 
-                <androidx.recyclerview.widget.RecyclerView
+                <com.ssong_develop.core_designsystem.NoRippleRecyclerView
                     android:id="@+id/episode_list"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
