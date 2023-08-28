@@ -52,7 +52,7 @@ class AnimateTextView @JvmOverloads constructor(
             textColor = ContextCompat.getColor(context, value)
         }
 
-    var animationType: TextAnimation = TextAnimation.FADE_IN
+    private var animationType: TextAnimation = TextAnimation.FADE_IN
         set(value) {
             field = value
             startTextAnimation()
