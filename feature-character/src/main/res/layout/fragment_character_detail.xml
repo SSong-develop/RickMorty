@@ -195,13 +195,14 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/species_title" />
 
-                <com.ssong_develop.core_designsystem.FadeInTextView
+                <com.ssong_develop.core_designsystem.AnimateTextView
                     android:id="@+id/species"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:text="@{vm.uiState.character.species}"
                     app:textSize="16sp"
                     app:textColor="@color/white"
+                    app:animType="fade_in"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/species_title"
                     tools:text="Species" />
@@ -217,13 +218,14 @@
                     app:layout_constraintTop_toBottomOf="@id/species"
                     tools:text="@string/gender_title" />
 
-                <com.ssong_develop.core_designsystem.SlideDownTextView
+                <com.ssong_develop.core_designsystem.AnimateTextView
                     android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:text="@{vm.uiState.character.gender}"
                     app:textSize="16sp"
                     app:textColor="@color/white"
+                    app:animType="fade_out"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/gender_title"
                     tools:text="Gender" />
@@ -239,25 +241,27 @@
                     app:layout_constraintTop_toBottomOf="@id/gender"
                     tools:text="@string/location_title" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.ssong_develop.core_designsystem.AnimateTextView
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.uiState.character.location.name}"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    app:text="@{vm.uiState.character.location.name}"
+                    app:textSize="16sp"
+                    app:textColor="@color/white"
+                    app:animType="slide_down"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/location_title"
                     tools:text="Location" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.ssong_develop.core_designsystem.AnimateTextView
                     android:id="@+id/episode_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:text="@string/episode_title"
-                    android:textColor="@color/white_56"
+                    app:text="@string/episode_title"
+                    app:textColor="@color/white_56"
+                    app:textSize="16sp"
+                    app:animType="slide_up"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/location"
                     tools:text="@string/episode_title" />
