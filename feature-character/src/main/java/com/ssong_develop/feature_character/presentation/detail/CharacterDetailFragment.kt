@@ -19,6 +19,7 @@ import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterDetailBinding
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterAdapter
 import com.ssong_develop.feature_character.presentation.detail.adapters.CharacterEpisodeAdapter
+import com.ssong_develop.feature_character.presentation.detail.adapters.EpisodeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
@@ -32,6 +33,7 @@ internal class CharacterDetailFragment : Fragment() {
 
     private var binding: FragmentCharacterDetailBinding by AutoClearedValue(this)
     private var characterEpisodeAdapter: CharacterEpisodeAdapter by AutoClearedValue(this)
+    private var episodeAdapter: EpisodeAdapter by AutoClearedValue(this)
     private var footerAdapter: FooterAdapter by AutoClearedValue(this)
     private var concatAdapter: ConcatAdapter by AutoClearedValue(this)
 
@@ -68,9 +70,12 @@ internal class CharacterDetailFragment : Fragment() {
         characterEpisodeAdapter = CharacterEpisodeAdapter { _ ->
             /** no - op **/
         }
+        episodeAdapter = EpisodeAdapter { _ ->
+
+        }
         footerAdapter = FooterAdapter(requireContext())
         concatAdapter = ConcatAdapter().apply {
-            addAdapter(characterEpisodeAdapter)
+            addAdapter(episodeAdapter)
             addAdapter(footerAdapter)
         }
 
@@ -92,7 +97,7 @@ internal class CharacterDetailFragment : Fragment() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.uiState.collectLatest { uiState ->
-                        characterEpisodeAdapter.submitEpisodes(uiState.characterEpisode)
+                        episodeAdapter.submitList(uiState.characterEpisode)
                         if (uiState.characterEpisode.isNotEmpty()) {
                             concatAdapter.removeAdapter(footerAdapter)
                         }
