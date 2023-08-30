@@ -8,11 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBinding
-import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.presentation.detail.viewholders.CharacterEpisodeViewHolder
 import com.ssong_develop.feature_character.presentation.detail.viewholders.OnEpisodeClickListener
 
-private val diffUtil = object : DiffUtil.ItemCallback<RickMortyCharacterEpisode>() {
+private val episodeItemDiffUtil = object : DiffUtil.ItemCallback<RickMortyCharacterEpisode>() {
     override fun areItemsTheSame(
         oldItem: RickMortyCharacterEpisode,
         newItem: RickMortyCharacterEpisode
@@ -26,7 +25,7 @@ private val diffUtil = object : DiffUtil.ItemCallback<RickMortyCharacterEpisode>
 
 internal class EpisodeAdapter(
     private val onEpisodeClickListener: OnEpisodeClickListener
-) : ListAdapter<RickMortyCharacterEpisode, CharacterEpisodeViewHolder>(diffUtil) {
+) : ListAdapter<RickMortyCharacterEpisode, CharacterEpisodeViewHolder>(episodeItemDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterEpisodeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemCharacterEpisodeBinding =
