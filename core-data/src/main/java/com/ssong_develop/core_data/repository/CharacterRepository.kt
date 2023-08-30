@@ -20,7 +20,7 @@ class CharacterRepository @Inject constructor(
     private val characterDataSource: CharacterDataSource,
     private val characterService: CharacterService
 ) {
-    fun getCharacterStream(): Flow<PagingData<RickMortyCharacter>> =
+    fun networkCharacterStream(): Flow<PagingData<RickMortyCharacter>> =
         Pager(
             config = PagingConfig(
                 pageSize = CHARACTER_PAGE_SIZE,
@@ -31,7 +31,7 @@ class CharacterRepository @Inject constructor(
             }
         ).flow
 
-    fun databaseCharacterStream(): Flow<PagingData<LocalEntityRickMortyCharacter>> =
+    fun localCharacterStream(): Flow<PagingData<LocalEntityRickMortyCharacter>> =
         Pager(
             config = PagingConfig(
                 pageSize = CHARACTER_PAGE_SIZE,
