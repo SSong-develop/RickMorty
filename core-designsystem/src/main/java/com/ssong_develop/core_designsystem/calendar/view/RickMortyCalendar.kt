@@ -8,13 +8,16 @@ import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.ssong_develop.core_common.extension.isWeekend
 import com.ssong_develop.core_designsystem.NoRippleRecyclerView
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
+import com.ssong_develop.core_designsystem.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescriptionBinding
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
+import java.util.Calendar.DAY_OF_WEEK
 import java.util.Calendar.MONTH
 import java.util.Calendar.YEAR
 import java.util.Date
@@ -43,10 +46,6 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val descriptionView = ViewCalendarWeekDescriptionBinding.inflate(
         LayoutInflater.from(context), this, false
     )
-
-    private val header = LinearLayout(context).apply {
-
-    }
 
     private val calendarView = NoRippleRecyclerView(context).apply {
         id = ViewCompat.generateViewId()
@@ -83,7 +82,24 @@ class RickMortyCalendar @JvmOverloads constructor(
 
         val totalDayInMonth = calendar.getActualMaximum(DAY_OF_MONTH)
         val calendarDayList = mutableListOf<CalendarDay>()
+        (1..totalDayInMonth).forEach { day ->
+            proxyCalendar.set(DAY_OF_MONTH, day)
+            val dayOfWeek = proxyCalendar.get(DAY_OF_WEEK)
+            val dateType = if (proxyCalendar.isWeekend()) {
+                DateType.WEEKEND
+            } else {
+                DateType.DAY
+            }
+        }
         return emptyList()
+    }
+
+    private fun createStartEmptyView() {
+
+    }
+
+    private fun createEndEmptyView() {
+
     }
 
     fun setOnBeforeMonthClickListener(listener: OnClickBeforeMonthListener) {
