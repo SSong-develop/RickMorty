@@ -11,8 +11,8 @@ internal class CalendarEmptyViewHolder(
     private lateinit var emptyDayData: CalendarDay.Empty
 
     fun bind(data: CalendarDay.Empty) {
-        binding.apply {
-
-        }
+        /**
+         * no - op
+         */
     }
 }

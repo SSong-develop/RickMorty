@@ -18,7 +18,14 @@ import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescripti
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
 import java.util.Calendar.DAY_OF_WEEK
+import java.util.Calendar.FRIDAY
+import java.util.Calendar.MONDAY
 import java.util.Calendar.MONTH
+import java.util.Calendar.SATURDAY
+import java.util.Calendar.SUNDAY
+import java.util.Calendar.THURSDAY
+import java.util.Calendar.TUESDAY
+import java.util.Calendar.WEDNESDAY
 import java.util.Calendar.YEAR
 import java.util.Date
 import java.util.Locale
@@ -90,16 +97,74 @@ class RickMortyCalendar @JvmOverloads constructor(
             } else {
                 DateType.DAY
             }
+
+            when (day) {
+                1 -> {}
+                totalDayInMonth -> {}
+                else -> {}
+            }
         }
         return emptyList()
     }
 
-    private fun createStartEmptyView() {
-
+    private fun createStartEmptyView(
+        dayOfWeek: Int,
+        calendar: Calendar
+    ): List<CalendarDay.Empty> {
+        val previousCalendar = Calendar.getInstance().apply {
+            set(MONTH, calendar.get(MONTH))
+            set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))
+            set(YEAR, calendar.get(YEAR))
+        }.also {
+            it.add(MONTH, -1)
+        }
+        val numberOfEmptyView = when (dayOfWeek) {
+            MONDAY -> 1
+            TUESDAY -> 2
+            WEDNESDAY -> 3
+            THURSDAY -> 4
+            FRIDAY -> 5
+            SATURDAY -> 6
+            else -> 0
+        }
+        var startDayInPreviousMonth =
+            previousCalendar.getActualMaximum(DAY_OF_MONTH) - numberOfEmptyView + 1
+        val emptyDayList = mutableListOf<CalendarDay.Empty>()
+        repeat((0 until numberOfEmptyView).count()) {
+            emptyDayList.add(CalendarDay.Empty(startDayInPreviousMonth++.toString()))
+        }
+        return emptyDayList
     }
 
-    private fun createEndEmptyView() {
+    private fun createEndEmptyView(
+        dayOfWeek: Int,
+        calendar: Calendar
+    ): List<CalendarDay.Empty> {
+        val nextCalendar = Calendar.getInstance().apply {
+            set(MONTH, calendar.get(MONTH))
+            set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))
+            set(YEAR, calendar.get(YEAR))
+        }.also {
+            it.add(MONTH, -1)
+        }
+        var totalDayInMonth = nextCalendar.getActualMaximum(DAY_OF_MONTH)
+        val numberOfEmptyView = when (dayOfWeek) {
+            SUNDAY -> 6
+            MONDAY -> 5
+            TUESDAY -> 4
+            WEDNESDAY -> 3
+            THURSDAY -> 2
+            FRIDAY -> 1
+            else -> 0
+        }
 
+        val emptyDayList = mutableListOf<CalendarDay.Empty>()
+        repeat((0 until numberOfEmptyView).count()) {
+            emptyDayList.add(
+                CalendarDay.Empty(totalDayInMonth++.toString())
+            )
+        }
+        return emptyDayList
     }
 
     fun setOnBeforeMonthClickListener(listener: OnClickBeforeMonthListener) {
