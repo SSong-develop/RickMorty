@@ -28,27 +28,20 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/**
- * Calendar.getInstance() -> Calendar임
- *
- * 그렇다면 내가 하고 있는 Calendar는 뭐라고 해야해???
- */
 class RickMortyCalendar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
 ) : LinearLayout(context, attrs, defStyle) {
 
+    /** calendar instance **/
     private val timeZone = TimeZone.getDefault()
     private val locale = Locale.KOREA
     private val calendar = Calendar.getInstance(timeZone, locale)
 
+    /** rickMorty calendar instance **/
     var selectDay: Date? = null
     private val calendarDayAdapter = CalendarDayAdapter { date -> selectDay = date }
-
-    /** Listener **/
-    private var onClickBeforeMonthListener: OnClickBeforeMonthListener? = null
-    private var onClickNextMonthListener: OnClickNextMonthListener? = null
 
     /** Views **/
     private val descriptionView = ViewCalendarWeekDescriptionBinding.inflate(
@@ -59,6 +52,10 @@ class RickMortyCalendar @JvmOverloads constructor(
         id = ViewCompat.generateViewId()
         adapter = calendarDayAdapter
     }
+
+    /** Listener **/
+    private var onClickBeforeMonthListener: OnClickBeforeMonthListener? = null
+    private var onClickNextMonthListener: OnClickNextMonthListener? = null
 
     init {
         if (attrs != null) {
@@ -133,8 +130,11 @@ class RickMortyCalendar @JvmOverloads constructor(
         return calendarDayList
     }
 
-    // 달이 시작하는 날짜를 채워주기 전 비어있는 날들을 채워주는 함수
-    // ex. 9월 1일이 목요일이면 그전 앞에 일,월,화,수 는 비어있는 칸으로 생성되어야 한다.
+    /**
+     * to create current month calendar first week, create previous month day(Calendar.Empty)
+     *
+     * if current month calendar first week contains previous month day (ex. 2023.09.01 is ThurDay then 2023.08's last week Sun, Mon, Tues, Wedn need)
+     */
     private fun createStartEmptyView(dayOfWeek: Int): List<CalendarDay.Empty> {
         val previousCalendar = Calendar.getInstance(timeZone, locale).apply {
             add(MONTH, -1)
@@ -159,8 +159,11 @@ class RickMortyCalendar @JvmOverloads constructor(
         return emptyDayList
     }
 
-    // 달이 끝나는 날짜를 채운 후 비어있는 날을 채워주는 함수
-    // ex. 9월 30일이 수요일이면 그 뒤 목,금,토,일 은 비어있는 칸으로 생성되어야 한다.
+    /**
+     * to create current month calendar last week, create next month day(Calendar.Empty)
+     *
+     * if current month calendar last week contains next month day (ex. 2023.09.30 is WednesDay then 2023.10's first week Thur, Fri, Sat need)
+     */
     private fun createEndEmptyView(dayOfWeek: Int): List<CalendarDay.Empty> {
         var day = 1
         val numberOfEmptyView = when (dayOfWeek) {
