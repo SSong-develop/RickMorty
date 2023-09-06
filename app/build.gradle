@@ -67,6 +67,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$versions.androidXCoreKtxVersion"
     implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$versions.androidXConstraintLayoutVersion"
+    implementation "androidx.startup:startup-runtime:$versions.androidXStartUpVersion"
 
     // architecture component
     implementation "androidx.activity:activity-ktx:$versions.androidXActivityKtxVersion"
@@ -76,6 +77,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidXLifecycleVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.androidXNavigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.androidXNavigationVersion"
+
+    // Firebase
+    implementation platform("com.google.firebase:firebase-bom:$versions.firebaseBomVersion")
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"

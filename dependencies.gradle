@@ -16,6 +16,10 @@ ext.versions = [
         androidXPagingVersion: '3.1.1',
         androidXNavigationVersion: '2.5.3',
         androidXDynamicAnimationVersion : '1.0.0',
+        androidXStartUpVersion : '1.1.1',
+
+        // firebase
+        firebaseBomVersion: '31.0.2',
 
         // Lab Testing Implementation
         androidXAsyncLayoutInflater : '1.0.0',
