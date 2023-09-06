@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_app_name"
                     style="@style/TextAppearance.RickMorty.AppBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -42,17 +43,30 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp2_ad_character"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar_character"
+            tools:layout_width="0dp"
+            tools:visibility="gone" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             bindSwipeRefreshVisibility="@{vm.uiState}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_character">
+            app:layout_constraintTop_toBottomOf="@id/vp2_ad_character">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_character"
@@ -83,7 +97,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_character" />
+            app:layout_constraintTop_toBottomOf="@id/appbar_character"
+            tools:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/pb_character"
@@ -94,7 +109,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_character" />
+            app:layout_constraintTop_toBottomOf="@id/appbar_character"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
