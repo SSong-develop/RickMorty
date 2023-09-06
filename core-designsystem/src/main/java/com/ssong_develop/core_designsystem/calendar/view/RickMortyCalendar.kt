@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
 import com.ssong_develop.core_common.extension.isWeekend
+import com.ssong_develop.core_common.extension.toPrettyDateString
 import com.ssong_develop.core_designsystem.NoRippleRecyclerView
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
@@ -74,12 +75,19 @@ class RickMortyCalendar @JvmOverloads constructor(
         if (attrs != null) {
             getStyleableAttrs(attrs)
         }
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        orientation = LinearLayout.VERTICAL
+
+        addView(descriptionView.root)
+        addView(calendarView)
+        calendarAdapter.submitList(buildCalendarData())
     }
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
-
+        /** no - op **/
     }
 
+    // 리팩토링
     private fun buildCalendarData(): List<CalendarDay> {
         val proxyCalendar = Calendar.getInstance().apply {
             this.set(MONTH, calendar.get(MONTH))
@@ -97,14 +105,44 @@ class RickMortyCalendar @JvmOverloads constructor(
             } else {
                 DateType.DAY
             }
-
             when (day) {
-                1 -> {}
-                totalDayInMonth -> {}
-                else -> {}
+                1 -> {
+                    // 비어있는 날짜 채운 후에 하나 채워야 함
+                    calendarDayList.addAll(createStartEmptyView(dayOfWeek, proxyCalendar))
+                    calendarDayList.add(
+                        CalendarDay.Day(
+                            label = day.toString(),
+                            prettyLabel = proxyCalendar.toPrettyDateString(),
+                            date = proxyCalendar.time,
+                            dateType = dateType
+                        )
+                    )
+                }
+                totalDayInMonth -> {
+                    calendarDayList.add(
+                        CalendarDay.Day(
+                            label = day.toString(),
+                            prettyLabel = proxyCalendar.toPrettyDateString(),
+                            date = proxyCalendar.time,
+                            dateType = dateType
+                        )
+                    )
+                    calendarDayList.addAll(createEndEmptyView(dayOfWeek, calendar))
+                }
+                else -> {
+                    calendarDayList.add(
+                        CalendarDay.Day(
+                            label = day.toString(),
+                            prettyLabel = proxyCalendar.toPrettyDateString(),
+                            date = proxyCalendar.time,
+                            dateType = dateType
+                        )
+                    )
+                }
             }
         }
-        return emptyList()
+
+        return calendarDayList
     }
 
     private fun createStartEmptyView(
