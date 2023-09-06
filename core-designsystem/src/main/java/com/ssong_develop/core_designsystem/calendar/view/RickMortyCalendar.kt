@@ -7,7 +7,6 @@ import android.widget.LinearLayout
 import androidx.core.view.ViewCompat
 import com.ssong_develop.core_common.extension.isWeekend
 import com.ssong_develop.core_common.extension.toPrettyDateString
-import com.ssong_develop.core_designsystem.CalendarDayRecyclerView
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
