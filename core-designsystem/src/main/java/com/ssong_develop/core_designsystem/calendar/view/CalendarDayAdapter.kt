@@ -21,7 +21,7 @@ private val calendarItemDiffUtils = object : DiffUtil.ItemCallback<CalendarDay>(
 
 }
 
-internal class CalendarAdapter(
+internal class CalendarDayAdapter(
     private val onDayClick: (date: Date) -> Unit
 ) : ListAdapter<CalendarDay, ViewHolder>(calendarItemDiffUtils) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,7 +36,7 @@ internal class CalendarAdapter(
             CalendarDayType.EMPTY.ordinal -> {
                 val emptyCalendarBinding: ViewCalendarEmptyBinding =
                     ViewCalendarEmptyBinding.inflate(layoutInflater)
-                CalendarEmptyViewHolder(emptyCalendarBinding)
+                CalendarEmptyDayViewHolder(emptyCalendarBinding)
             }
 
             else -> {
@@ -59,7 +59,7 @@ internal class CalendarAdapter(
             }
 
             CalendarDayType.EMPTY.ordinal -> {
-                val emptyCalendarViewHolder = holder as CalendarEmptyViewHolder
+                val emptyCalendarViewHolder = holder as CalendarEmptyDayViewHolder
                 val calendarEmptyItem = getItem(position) as CalendarDay.Empty
                 emptyCalendarViewHolder.bind(calendarEmptyItem)
             }
