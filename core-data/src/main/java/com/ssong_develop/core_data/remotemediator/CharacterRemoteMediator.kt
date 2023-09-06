@@ -11,6 +11,11 @@ import com.ssong_develop.core_database.dao.RickMortyCharacterDao
 import com.ssong_develop.core_database.database.RickMortyCharacterDatabase
 import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 
+/**
+ * Paging and Cache in LocalDB
+ *
+ * @see (https://developer.android.com/topic/libraries/architecture/paging/v3-network-db)
+ */
 @ExperimentalPagingApi
 class CharacterRemoteMediator(
     private val database: RickMortyCharacterDatabase,
@@ -52,6 +57,21 @@ class CharacterRemoteMediator(
         return MediatorResult.Success(endOfPaginationReached = data.results.isEmpty())
     }
 
+    /**
+     * get previous & next character page number function
+     *
+     * Server do not provide page number in Integer type, just Url type
+     * For example
+     * {
+     *  ....
+     *
+     *  prev : https://rickmorty/character?page=2,
+     *  next : https://rickmorty/character?page=4
+     *
+     *  ....
+     * }
+     * save the page url in DB and extract from url
+     */
     private suspend fun getPrevPageNumFromInfoURL(): Int? =
         characterDao.getRecentCharacter().last().info.prev
             ?.split('/')
@@ -68,7 +88,6 @@ class CharacterRemoteMediator(
 
     companion object {
         private const val INITIAL_PAGE = 1
-
         private const val PAGE_QUERY_URI = "character?page="
     }
 }

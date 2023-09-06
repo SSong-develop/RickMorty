@@ -7,6 +7,11 @@ import com.ssong_develop.core_data.service.CharacterService
 import com.ssong_develop.core_model.RickMortyCharacter
 import javax.inject.Inject
 
+/**
+ * Paging3 DataSource
+ *
+ * @see (https://developer.android.com/topic/libraries/architecture/paging/v3-paged-data)
+ */
 class CharacterPagingSource @Inject constructor(
     private val characterService: CharacterService
 ) : PagingSource<Int, RickMortyCharacter>() {
