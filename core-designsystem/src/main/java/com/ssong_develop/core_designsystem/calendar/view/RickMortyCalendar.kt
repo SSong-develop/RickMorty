@@ -2,11 +2,21 @@ package com.ssong_develop.core_designsystem.calendar.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
+import com.ssong_develop.core_common.extension.dpToPx
 import com.ssong_develop.core_common.extension.isWeekend
 import com.ssong_develop.core_common.extension.toPrettyDateString
+import com.ssong_develop.core_common.widget.HorizontalSpacer
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
@@ -43,6 +53,24 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val calendarDayAdapter = CalendarDayAdapter { date -> selectDay = date }
 
     /** Views **/
+    private val calendarHeaderView = LinearLayout(context).apply {
+        id = ViewCompat.generateViewId()
+        orientation = HORIZONTAL
+        gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
+        layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        setPadding(context.dpToPx(6), context.dpToPx(24), 0, context.dpToPx(24))
+
+//        addView(prevMonthImageView)
+
+        addView(HorizontalSpacer(context))
+
+//        addView(currentDateTextView)
+
+        addView(HorizontalSpacer(context))
+
+//        addView(nextMonthImageView)
+    }
+
     private val descriptionView = ViewCalendarWeekDescriptionBinding.inflate(
         LayoutInflater.from(context), this, false
     )
