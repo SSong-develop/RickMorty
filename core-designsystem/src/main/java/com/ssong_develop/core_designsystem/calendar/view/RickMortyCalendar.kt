@@ -53,22 +53,23 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val calendarDayAdapter = CalendarDayAdapter { date -> selectDay = date }
 
     /** Views **/
+    private val leftImageView = ImageView(context).apply {
+        id = ViewCompat.generateViewId()
+    }
+
+    private val rightImageView = ImageView(context).apply {
+        id = ViewCompat.generateViewId()
+    }
+
     private val calendarHeaderView = LinearLayout(context).apply {
         id = ViewCompat.generateViewId()
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         setPadding(context.dpToPx(6), context.dpToPx(24), 0, context.dpToPx(24))
-
-//        addView(prevMonthImageView)
-
+        /** view section **/
         addView(HorizontalSpacer(context))
-
-//        addView(currentDateTextView)
-
         addView(HorizontalSpacer(context))
-
-//        addView(nextMonthImageView)
     }
 
     private val descriptionView = ViewCalendarWeekDescriptionBinding.inflate(
