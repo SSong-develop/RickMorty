@@ -1,5 +1,6 @@
 package com.ssong_develop.core_common.extension
 
+import android.util.TypedValue
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -49,4 +50,9 @@ fun View.doOnApplyWindowInsets(f: (View, WindowInsetsCompat, ViewPaddingState) -
         insets
     }
     requestApplyInsetsWhenAttached()
+}
+
+fun View.addCircleRipple() = with(TypedValue()) {
+    context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, this, true)
+    setBackgroundResource(resourceId)
 }

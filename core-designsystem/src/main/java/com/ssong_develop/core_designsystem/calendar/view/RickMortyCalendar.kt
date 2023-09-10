@@ -1,23 +1,27 @@
 package com.ssong_develop.core_designsystem.calendar.view
 
 import android.content.Context
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
+import com.ssong_develop.core_common.extension.addCircleRipple
 import com.ssong_develop.core_common.extension.dpToPx
+import com.ssong_develop.core_common.extension.getDrawableOrThrow
 import com.ssong_develop.core_common.extension.isWeekend
 import com.ssong_develop.core_common.extension.toPrettyDateString
+import com.ssong_develop.core_common.extension.toPrettyMonthString
 import com.ssong_develop.core_common.widget.HorizontalSpacer
+import com.ssong_develop.core_designsystem.R
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
+import com.ssong_develop.core_designsystem.calendar.listener.OnClickCalendarDayListener
 import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
 import com.ssong_develop.core_designsystem.calendar.model.DateType
@@ -49,16 +53,55 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val calendar = Calendar.getInstance(timeZone, locale)
 
     /** rickMorty calendar instance **/
-    var selectDay: Date? = null
+    private var selectDay: Date = calendar.time
+        set(value) {
+            field = value
+            onClickCalendarDayListener?.onClick(value)
+        }
+
+    private var currentYearAndMonthText: String = calendar.toPrettyMonthString()
+        set(value) {
+            field = value
+            updateYearMonthText(value)
+        }
+
     private val calendarDayAdapter = CalendarDayAdapter { date -> selectDay = date }
 
     /** Views **/
-    private val leftImageView = ImageView(context).apply {
+    private val leftImageButton = ImageView(context).apply {
         id = ViewCompat.generateViewId()
+        layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_left_arrow_black_24dp))
+        setOnClickListener {
+            calendar.add(MONTH, -1)
+            updateYearMonthText(calendar.toPrettyMonthString())
+            initCalendarData()
+            onClickBeforeMonthListener?.onClick()
+        }
+        addCircleRipple()
     }
 
-    private val rightImageView = ImageView(context).apply {
+    private val yearMonthTexView = TextView(context).apply {
         id = ViewCompat.generateViewId()
+        layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        gravity = Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
+        typeface = Typeface.defaultFromStyle(Typeface.BOLD)
+        setTextColor(ContextCompat.getColor(context, R.color.black))
+        setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16f)
+        text = currentYearAndMonthText
+    }
+
+    private val rightImageButton = ImageView(context).apply {
+        id = ViewCompat.generateViewId()
+        layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_right_arrow_black_24dp))
+        setOnClickListener {
+            calendar.add(MONTH, 1)
+            updateYearMonthText(calendar.toPrettyMonthString())
+            initCalendarData()
+            onClickNextMonthListener?.onClick()
+        }
+        addCircleRipple()
     }
 
     private val calendarHeaderView = LinearLayout(context).apply {
@@ -67,9 +110,11 @@ class RickMortyCalendar @JvmOverloads constructor(
         gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         setPadding(context.dpToPx(6), context.dpToPx(24), 0, context.dpToPx(24))
-        /** view section **/
+        addView(leftImageButton)
         addView(HorizontalSpacer(context))
+        addView(yearMonthTexView)
         addView(HorizontalSpacer(context))
+        addView(rightImageButton)
     }
 
     private val descriptionView = ViewCalendarWeekDescriptionBinding.inflate(
@@ -84,26 +129,33 @@ class RickMortyCalendar @JvmOverloads constructor(
     /** Listener **/
     private var onClickBeforeMonthListener: OnClickBeforeMonthListener? = null
     private var onClickNextMonthListener: OnClickNextMonthListener? = null
+    private var onClickCalendarDayListener: OnClickCalendarDayListener? = null
 
     init {
         if (attrs != null) {
             getStyleableAttrs(attrs)
         }
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        orientation = LinearLayout.VERTICAL
+        orientation = VERTICAL
 
+        addView(calendarHeaderView)
         addView(descriptionView.root)
         addView(calendarDayView)
-        calendarDayAdapter.submitList(getCalendarDayList())
+        initCalendarData()
     }
 
     private fun getStyleableAttrs(attrs: AttributeSet) {
         /** no - op **/
     }
 
+    private fun initCalendarData() {
+        calendarDayAdapter.submitList(getCalendarDayList())
+    }
+
     private fun getCalendarDayList(): List<CalendarDay> {
         val dayOfMonthTargetCalendar = Calendar.getInstance(timeZone, locale).apply {
-            this.set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))
+            set(MONTH, calendar.get(MONTH))
+            set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))
         }
 
         val totalDayInMonth = dayOfMonthTargetCalendar.getActualMaximum(DAY_OF_MONTH)
@@ -211,6 +263,11 @@ class RickMortyCalendar @JvmOverloads constructor(
         return emptyDayList
     }
 
+    private fun updateYearMonthText(yearMonthText: String) {
+        yearMonthTexView.text = yearMonthText
+    }
+
+    /** set listeners **/
     fun setOnBeforeMonthClickListener(listener: OnClickBeforeMonthListener) {
         this.onClickBeforeMonthListener = listener
     }
@@ -225,5 +282,13 @@ class RickMortyCalendar @JvmOverloads constructor(
 
     fun setOnNextMonthClickListener(block: () -> Unit) {
         this.onClickNextMonthListener = OnClickNextMonthListener(block)
+    }
+
+    fun setOnCalendarDayClickListener(listener: OnClickCalendarDayListener) {
+        this.onClickCalendarDayListener = listener
+    }
+
+    fun setOnCalendarDayClickListener(block: (date: Date) -> Unit) {
+        this.onClickCalendarDayListener = OnClickCalendarDayListener(block)
     }
 }

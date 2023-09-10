@@ -13,12 +13,9 @@ import com.ssong_develop.core_designsystem.databinding.ViewCalendarEmptyBinding
 import java.util.Date
 
 private val calendarItemDiffUtils = object : DiffUtil.ItemCallback<CalendarDay>() {
-    override fun areItemsTheSame(oldItem: CalendarDay, newItem: CalendarDay): Boolean =
-        oldItem === newItem
+    override fun areItemsTheSame(oldItem: CalendarDay, newItem: CalendarDay): Boolean = oldItem === newItem
 
-    override fun areContentsTheSame(oldItem: CalendarDay, newItem: CalendarDay): Boolean =
-        oldItem == newItem
-
+    override fun areContentsTheSame(oldItem: CalendarDay, newItem: CalendarDay): Boolean = oldItem == newItem
 }
 
 internal class CalendarDayAdapter(
