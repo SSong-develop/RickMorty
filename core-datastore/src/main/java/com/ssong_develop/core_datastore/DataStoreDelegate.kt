@@ -25,10 +25,6 @@ internal class DataStorePreferenceStorage @Inject constructor(
     @ApplicationContext private val context: Context
 ) : PreferenceStorage {
 
-    companion object {
-        private val PREFERENCES_FAVORITE_CHARACTER = stringPreferencesKey("favorite_character")
-    }
-
     private val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "rick_morty_data_store")
 
     override val favoriteCharacter: Flow<RickMortyCharacter?> =
@@ -52,5 +48,9 @@ internal class DataStorePreferenceStorage @Inject constructor(
         context.datastore.edit { mutablePreferences ->
             mutablePreferences[PREFERENCES_FAVORITE_CHARACTER] = ""
         }
+    }
+
+    companion object {
+        private val PREFERENCES_FAVORITE_CHARACTER = stringPreferencesKey("favorite_character")
     }
 }

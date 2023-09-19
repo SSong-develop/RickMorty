@@ -29,7 +29,7 @@ ext.versions = [
         okHttpVersion : '4.10.0',
         retrofitVersion : '2.9.0',
         serializationConverterVersion : '0.8.0',
-        serializationJsonVersion : '1.2.2',
+        serializationJsonVersion : '1.4.1',
 
         // Glide
         glideVersion : '4.13.2',

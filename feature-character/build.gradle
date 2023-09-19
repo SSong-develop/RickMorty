@@ -45,7 +45,6 @@ dependencies {
     implementation(project(":core-database"))
     implementation(project(":core-datastore"))
     implementation(project(":core-model"))
-    implementation(project(":core-designsystem"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"
@@ -85,6 +84,7 @@ dependencies {
 }
 
 dependencies {
+    implementation implementation(project(':core-uikit',))
     testImplementation "junit:junit:$versions.jUnitVersion"
     testImplementation "app.cash.turbine:turbine:$versions.turbinVersion"
     testImplementation "androidx.test:core:$versions.androidxTestVersion"
