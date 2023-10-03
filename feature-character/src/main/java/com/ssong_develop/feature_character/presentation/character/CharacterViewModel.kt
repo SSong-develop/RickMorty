@@ -48,9 +48,7 @@ internal class CharacterViewModel @Inject constructor(
 
     val networkRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
         characterRepository.networkCharacterStream()
-            .map { pagingData ->
-                pagingData.map { model -> model.asUiModel() }
-            }
+            .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
             .cachedIn(viewModelScope)
 
     fun updateUiState(uiState: UiState) {

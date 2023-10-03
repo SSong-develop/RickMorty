@@ -137,7 +137,6 @@ internal class CharacterFragment : Fragment() {
 
                 launch {
                     characterPagingAdapter.loadStateFlow.collectLatest { loadStates ->
-                        Timber.tag("ssong-develop").d("$loadStates")
                         when (loadStates.refresh) {
                             is LoadState.NotLoading -> viewModel.updateUiState(UiState.Characters(viewModel.favoriteCharacterState.value?.asUiModel()))
                             LoadState.Loading -> viewModel.updateUiState(UiState.Loading)

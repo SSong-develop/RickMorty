@@ -38,10 +38,12 @@ dependencies {
     implementation(project(":core-database"))
     implementation(project(":core-model"))
 
+    // kotlin serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.serializationJsonVersion"
+
     // network
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
     implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$versions.serializationConverterVersion"
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$versions.serializationJsonVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttpVersion"
     implementation "com.squareup.okhttp3:okhttp:$versions.okHttpVersion"
 

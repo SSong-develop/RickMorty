@@ -34,7 +34,6 @@ ext.versions = [
 
         // Glide
         glideVersion : '4.16.0',
-        glidePaletteVersion : '2.1.2',
 
         // Coroutine
         coroutineVersion : '1.7.3',

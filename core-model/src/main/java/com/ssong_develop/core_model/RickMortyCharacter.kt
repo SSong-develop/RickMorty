@@ -1,5 +1,8 @@
 package com.ssong_develop.core_model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RickMortyCharacter(
     val id: Int,
     val name: String,
@@ -14,11 +17,13 @@ data class RickMortyCharacter(
     val url: String,
     val created: String
 ) {
+    @Serializable
     data class Origin(
         val name: String?,
         val url: String?
     )
 
+    @Serializable
     data class Location(
         val name: String?,
         val url: String?

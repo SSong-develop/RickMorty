@@ -1,5 +1,8 @@
 package com.ssong_develop.core_model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class RickMortyCharacterEpisode(
     val id: Int,
     val name: String,

@@ -3,6 +3,7 @@ package com.ssong_develop.feature_character.binding
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,7 @@ object ViewBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("paletteImage", "paletteCard")
-    fun bindLoadImagePalette(view: AppCompatImageView, url: String, paletteCard: MaterialCardView) {
+    fun bindLoadImagePalette(view: ImageView, url: String, paletteCard: MaterialCardView) {
         Glide.with(view.context)
             .load(url)
             .listener(
@@ -61,7 +62,7 @@ object ViewBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("paletteImage", "paletteView")
-    fun bindLoadImagePaletteView(view: AppCompatImageView, url: String?, paletteView: View) {
+    fun bindLoadImagePaletteView(view: ImageView, url: String?, paletteView: View) {
         val context = view.context
         Glide.with(context)
             .load(url)
