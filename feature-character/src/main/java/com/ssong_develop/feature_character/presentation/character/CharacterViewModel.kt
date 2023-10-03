@@ -21,15 +21,14 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 sealed interface UiState {
-    object Error : UiState
-    object Loading : UiState
+    data object Error : UiState
+    data object Loading : UiState
     data class Characters(
         val favoriteCharacter: RickMortyCharacterUiModel? = null
     ) : UiState
 }
 
 @ExperimentalPagingApi
-@ExperimentalCoroutinesApi
 @HiltViewModel
 internal class CharacterViewModel @Inject constructor(
     characterRepository: CharacterRepository,
@@ -48,9 +47,10 @@ internal class CharacterViewModel @Inject constructor(
         )
 
     val networkRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
-        characterRepository
-            .networkCharacterStream()
-            .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
+        characterRepository.networkCharacterStream()
+            .map { pagingData ->
+                pagingData.map { model -> model.asUiModel() }
+            }
             .cachedIn(viewModelScope)
 
     fun updateUiState(uiState: UiState) {

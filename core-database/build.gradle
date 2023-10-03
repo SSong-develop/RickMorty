@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'com.ssong_develop.core_database'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 26
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -43,8 +43,10 @@ dependencies {
     // room
     kapt "androidx.room:room-compiler:$versions.androidXRoomVersion"
     implementation "androidx.room:room-runtime:$versions.androidXRoomVersion"
+    annotationProcessor "androidx.room:room-compiler:$versions.androidXRoomVersion"
     implementation "androidx.room:room-ktx:$versions.androidXRoomVersion"
     implementation "androidx.room:room-paging:$versions.androidXRoomVersion"
+
 
     // hilt
     implementation "com.google.dagger:hilt-android:$versions.hiltCoreVersion"

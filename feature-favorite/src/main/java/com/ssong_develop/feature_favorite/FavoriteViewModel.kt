@@ -19,8 +19,8 @@ internal sealed interface UiState {
         val favoriteCharacter: RickMortyCharacter
     ) : UiState
 
-    object NoFavoriteCharacter : UiState
-    object Loading : UiState
+    data object NoFavoriteCharacter : UiState
+    data object Loading : UiState
 }
 
 @ExperimentalCoroutinesApi

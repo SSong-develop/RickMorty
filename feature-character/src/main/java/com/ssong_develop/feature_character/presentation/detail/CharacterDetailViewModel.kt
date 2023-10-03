@@ -29,7 +29,6 @@ internal data class CharacterDetailUiState(
 )
 
 @ExperimentalPagingApi
-@ExperimentalCoroutinesApi
 @HiltViewModel
 internal class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,

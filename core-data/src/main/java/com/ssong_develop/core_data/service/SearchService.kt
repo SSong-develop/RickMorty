@@ -11,5 +11,5 @@ interface SearchService {
     suspend fun searchCharacter(
         @Query("page") page: Int,
         @Query("name") name: String
-    ): NetworkResult<NetworkRickMortyCharacterInfo, NetworkRickMortyCharacter>
+    ): NetworkResult<NetworkRickMortyCharacterInfo,NetworkRickMortyCharacter>
 }

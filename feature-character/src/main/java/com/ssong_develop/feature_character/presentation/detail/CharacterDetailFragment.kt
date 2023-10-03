@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @ExperimentalPagingApi
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 internal class CharacterDetailFragment : Fragment() {
     private val viewModel: CharacterDetailViewModel by viewModels()

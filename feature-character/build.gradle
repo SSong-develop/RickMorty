@@ -9,11 +9,11 @@ apply from: "$rootDir/dependencies.gradle"
 
 android {
     namespace 'com.ssong_develop.feature_character'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         minSdk 26
-        targetSdk 33
+        targetSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":core-database"))
     implementation(project(":core-datastore"))
     implementation(project(":core-model"))
+    implementation(project(":core-uikit"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"
@@ -52,6 +53,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$versions.androidXCoreKtxVersion"
     implementation "androidx.appcompat:appcompat:$versions.androidXAppCompatVersion"
     implementation "androidx.constraintlayout:constraintlayout:$versions.androidXConstraintLayoutVersion"
+    implementation "androidx.palette:palette-ktx:$versions.androidXPaletteVersion"
 
     // architecture component
     implementation "androidx.activity:activity-ktx:$versions.androidXActivityKtxVersion"
@@ -77,14 +79,15 @@ dependencies {
 
     // glide
     implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
-    implementation "com.github.florent37:glidepalette:$versions.glidePaletteVersion"
 
     // recyclerview
     implementation "androidx.recyclerview:recyclerview:$versions.recycleViewVersion"
+
+    // timber
+    implementation "com.jakewharton.timber:timber:$versions.timberVersion"
 }
 
 dependencies {
-    implementation implementation(project(':core-uikit',))
     testImplementation "junit:junit:$versions.jUnitVersion"
     testImplementation "app.cash.turbine:turbine:$versions.turbinVersion"
     testImplementation "androidx.test:core:$versions.androidxTestVersion"

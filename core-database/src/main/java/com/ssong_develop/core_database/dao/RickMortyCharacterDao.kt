@@ -15,11 +15,11 @@ interface RickMortyCharacterDao {
     fun getCharacterPagingSource(): PagingSource<Int, LocalEntityRickMortyCharacter>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCharacters(characters: List<LocalEntityRickMortyCharacter>)
+    fun insertCharacters(characters: List<LocalEntityRickMortyCharacter>)
 
     @Query("SELECT * FROM rick_morty_characters_table")
-    suspend fun getRecentCharacter(): List<LocalEntityRickMortyCharacter>
+    fun getRecentCharacter(): List<LocalEntityRickMortyCharacter>
 
     @Delete
-    suspend fun clearAllCharacters(characters: List<LocalEntityRickMortyCharacter>)
+    fun clearAllCharacters(characters: List<LocalEntityRickMortyCharacter>)
 }

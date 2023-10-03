@@ -1,5 +1,6 @@
 package com.ssong_develop.core_data.datasource
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ssong_develop.core_data.model.asModel
@@ -37,7 +38,7 @@ class CharacterPagingSource @Inject constructor(
 
         return if (response.isEmpty()) {
             LoadResult.Page(
-                data = emptyList<RickMortyCharacter>(),
+                data = emptyList(),
                 prevKey = prevKey,
                 nextKey = null
             )

@@ -8,13 +8,13 @@ import kotlinx.coroutines.flow.Flow
 interface RickMortyRecentSearchQueryDao {
 
     @Insert
-    suspend fun insertRecentKeyword(entity: LocalEntityRecentSearchQuery)
+    fun insertRecentKeyword(entity: LocalEntityRecentSearchQuery)
 
     @Delete
-    suspend fun deleteRecentKeyword(entity: LocalEntityRecentSearchQuery)
+    fun deleteRecentKeyword(entity: LocalEntityRecentSearchQuery)
 
     @Update
-    suspend fun updateRecentKeyword(entity: LocalEntityRecentSearchQuery)
+    fun updateRecentKeyword(entity: LocalEntityRecentSearchQuery)
 
     @Query("SELECT * FROM rick_morty_recent_search_query_table")
     fun recentSearchQueryStream(): Flow<LocalEntityRecentSearchQuery>

@@ -29,8 +29,6 @@ abstract class NetworkResource<RequestType> {
                 is ApiEmptyResponse -> {
                     emit(Resource.success(null))
                 }
-
-                else -> {}
             }
         }
     }

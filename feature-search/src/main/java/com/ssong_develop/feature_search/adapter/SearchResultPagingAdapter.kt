@@ -22,7 +22,7 @@ private val searchResultDiffItemCallback = object : DiffUtil.ItemCallback<RickMo
         oldItem: RickMortyCharacter,
         newItem: RickMortyCharacter
     ): Boolean =
-        oldItem.id == newItem.id
+        oldItem == newItem
 }
 
 class SearchResultPagingAdapter(

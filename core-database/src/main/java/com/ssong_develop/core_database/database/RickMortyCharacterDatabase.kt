@@ -13,8 +13,7 @@ import com.ssong_develop.core_database.model.LocalEntityRickMortyCharacter
 
 @Database(
     entities = [LocalEntityRickMortyCharacter::class, LocalEntityRecentSearchQuery::class],
-    version = 3,
-    exportSchema = true
+    version = 3
 )
 @TypeConverters(
     value = [

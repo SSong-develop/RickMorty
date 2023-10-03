@@ -28,9 +28,9 @@ import com.ssong_develop.feature_character.presentation.character.adapters.Chara
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -137,22 +137,11 @@ internal class CharacterFragment : Fragment() {
 
                 launch {
                     characterPagingAdapter.loadStateFlow.collectLatest { loadStates ->
+                        Timber.tag("ssong-develop").d("$loadStates")
                         when (loadStates.refresh) {
-                            is LoadState.NotLoading -> {
-                                viewModel.updateUiState(
-                                    UiState.Characters(
-                                        favoriteCharacter = viewModel.favoriteCharacterState.value?.asUiModel()
-                                    )
-                                )
-                            }
-
-                            LoadState.Loading -> {
-                                viewModel.updateUiState(UiState.Loading)
-                            }
-
-                            is LoadState.Error -> {
-                                viewModel.updateUiState(UiState.Error)
-                            }
+                            is LoadState.NotLoading -> viewModel.updateUiState(UiState.Characters(viewModel.favoriteCharacterState.value?.asUiModel()))
+                            LoadState.Loading -> viewModel.updateUiState(UiState.Loading)
+                            is LoadState.Error -> viewModel.updateUiState(UiState.Error)
                         }
                     }
                 }

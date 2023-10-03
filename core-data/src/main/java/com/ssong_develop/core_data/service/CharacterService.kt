@@ -13,12 +13,7 @@ interface CharacterService {
     @GET("character")
     suspend fun getCharacters(
         @Query("page") page: Int
-    ): NetworkResult<NetworkRickMortyCharacterInfo, NetworkRickMortyCharacter>
-
-    @GET("character/{id}")
-    suspend fun getCharacter(
-        @Path("id") characterId: Int
-    ): NetworkRickMortyCharacter
+    ): NetworkResult<NetworkRickMortyCharacterInfo,NetworkRickMortyCharacter>
 
     @GET
     suspend fun getEpisodes(
