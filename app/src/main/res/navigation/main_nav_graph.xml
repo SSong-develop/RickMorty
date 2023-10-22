@@ -30,6 +30,6 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.ssong_develop.feature_favorite.FavoriteFragment"
+        android:name="com.ssong_develop.feature_favorite.presentation.FavoriteFragment"
         android:label="FavoriteFragment" />
 </navigation>

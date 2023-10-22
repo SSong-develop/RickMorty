@@ -76,19 +76,6 @@
                         app:layout_constraintTop_toTopOf="@id/tv_app_name"
                         tools:text="#001" />
 
-                    <ImageView
-                        android:id="@+id/iv_fav"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:onClick="@{() -> vm.onClickFavorite()}"
-                        android:src="@{vm.isFavoriteCharacterState ? @drawable/ic_filled_favorite : @drawable/ic_empty_favorite }"
-                        app:layout_constraintEnd_toEndOf="@id/tv_character_index"
-                        app:layout_constraintStart_toStartOf="@id/tv_character_index"
-                        app:layout_constraintTop_toBottomOf="@id/tv_character_index"
-                        tools:src="@drawable/ic_empty_favorite" />
-
                     <com.ssong_develop.core_designsystem.GradientImageView
                         android:id="@+id/header"
                         android:layout_width="match_parent"
@@ -186,13 +173,25 @@
                     android:id="@+id/species_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginStart="@dimen/margin_normal"
                     android:text="@string/species_title"
                     android:textColor="@color/white_56"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/species_title" />
+
+                <ImageView
+                    android:id="@+id/iv_fav"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:layout_marginEnd="@dimen/margin_normal"
+                    android:onClick="@{() -> vm.onClickFavorite()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/species_title"
+                    app:layout_constraintBottom_toBottomOf="@id/species_title"/>
 
                 <com.ssong_develop.core_designsystem.AnimateTextView
                     android:id="@+id/species"

@@ -1,7 +1,7 @@
 package com.ssong_develop.feature_character.presentation.detail
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
@@ -17,22 +17,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
-import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.ConcatAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.ssong_develop.core_common.AutoClearedValue
-import com.ssong_develop.core_common.extension.asBitmap
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterDetailBinding
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterAdapter
 import com.ssong_develop.feature_character.presentation.detail.adapters.CharacterEpisodeAdapter
 import com.ssong_develop.feature_character.presentation.detail.adapters.EpisodeAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -112,13 +105,44 @@ internal class CharacterDetailFragment : Fragment() {
                             concatAdapter.removeAdapter(footerAdapter)
                         }
                         if (uiState.character != null) {
-                            val dominantColor = uiState.character.dominantColor ?: ContextCompat.getColor(requireContext(), R.color.app_bar_color)
+                            val dominantColor =
+                                uiState.character.dominantColor ?: ContextCompat.getColor(
+                                    requireContext(),
+                                    R.color.app_bar_color
+                                )
                             binding.header.setBackgroundColor(dominantColor)
-                            Glide.with(requireContext()).load(uiState.character.image).into(binding.ivCharacter)
+                            Glide.with(requireContext()).load(uiState.character.image)
+                                .into(binding.ivCharacter)
                             if (requireContext() is AppCompatActivity) {
-                                (requireContext() as AppCompatActivity).window.statusBarColor = dominantColor
+                                (requireContext() as AppCompatActivity).window.statusBarColor =
+                                    dominantColor
                             }
                         }
+                    }
+                }
+
+                launch {
+                    viewModel.isFavoriteCharacterState.collectLatest { isFavCharacterState ->
+                        val favIconDrawable = if (isFavCharacterState) {
+                            ContextCompat.getDrawable(
+                                requireContext(),
+                                R.drawable.ic_filled_favorite
+                            )
+                        } else {
+                            ContextCompat.getDrawable(
+                                requireContext(),
+                                R.drawable.ic_empty_favorite
+                            )
+                        }
+
+                        val color = viewModel.uiState.value.character!!.dominantColor
+                            ?: ContextCompat.getColor(requireContext(), R.color.app_bar_color)
+
+                        favIconDrawable?.mutate()
+                        favIconDrawable?.clearColorFilter()
+                        favIconDrawable?.colorFilter =
+                            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                        binding.ivFav.setImageDrawable(favIconDrawable)
                     }
                 }
             }

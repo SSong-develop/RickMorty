@@ -27,5 +27,6 @@ fun RickMortyCharacter.asUiModel(): RickMortyCharacterUiModel =
         image = image,
         episode = episode,
         url = url,
-        created = created
+        created = created,
+        dominantColor = dominantColor
     )

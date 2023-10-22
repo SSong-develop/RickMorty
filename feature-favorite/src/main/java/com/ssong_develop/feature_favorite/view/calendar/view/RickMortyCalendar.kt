@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_favorite.calendar.view
+package com.ssong_develop.feature_favorite.view.calendar.view
 
 import android.content.Context
 import android.graphics.Typeface
@@ -20,12 +20,13 @@ import com.ssong_develop.core_common.extension.toPrettyDateString
 import com.ssong_develop.core_common.extension.toPrettyMonthString
 import com.ssong_develop.core_common.widget.HorizontalSpacer
 import com.ssong_develop.core_designsystem.R
-import com.ssong_develop.feature_favorite.calendar.listener.OnClickBeforeMonthListener
-import com.ssong_develop.feature_favorite.calendar.listener.OnClickCalendarDayListener
-import com.ssong_develop.feature_favorite.calendar.listener.OnClickNextMonthListener
-import com.ssong_develop.feature_favorite.calendar.model.CalendarDay
-import com.ssong_develop.feature_favorite.calendar.model.DateType
+import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickBeforeMonthListener
+import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickCalendarDayListener
+import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickNextMonthListener
+import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
+import com.ssong_develop.feature_favorite.view.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescriptionBinding
+import com.ssong_develop.core_model.RickMortyCharacter
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
 import java.util.Calendar.DAY_OF_WEEK
@@ -267,7 +268,11 @@ class RickMortyCalendar @JvmOverloads constructor(
         yearMonthTexView.text = yearMonthText
     }
 
-    /** set listeners **/
+    fun initFavCharacter(character: RickMortyCharacter) {
+        calendarDayAdapter.initFavCharacter(character)
+    }
+
+    /** listeners **/
     fun setOnBeforeMonthClickListener(listener: OnClickBeforeMonthListener) {
         this.onClickBeforeMonthListener = listener
     }

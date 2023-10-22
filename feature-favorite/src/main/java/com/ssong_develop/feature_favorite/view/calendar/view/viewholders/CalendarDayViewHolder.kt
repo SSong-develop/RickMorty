@@ -1,13 +1,20 @@
-package com.ssong_develop.feature_favorite.calendar.view.viewholders
+package com.ssong_develop.feature_favorite.view.calendar.view.viewholders
 
 import android.graphics.ColorFilter
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
+import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColor
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.ssong_develop.core_common.extension.dpToPx
+import com.ssong_develop.core_common.extension.toInvertedColor
 import com.ssong_develop.core_designsystem.R
-import com.ssong_develop.feature_favorite.calendar.model.CalendarDay
-import com.ssong_develop.feature_favorite.calendar.model.DateType
+import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
+import com.ssong_develop.feature_favorite.view.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarDayBinding
 import java.util.Date
 
@@ -32,11 +39,17 @@ internal class CalendarDayViewHolder(
         binding.executePendingBindings()
     }
 
-    fun bindDayState(data: CalendarDay.Day) {
+    fun bindDayState(data: CalendarDay.Day, dominantColor: Int?) {
         binding.apply {
+            val indicatorColor = dominantColor ?: ContextCompat.getColor(root.context, R.color.app_bar_color)
+            val airDateIndicateDrawable = ShapeDrawable(OvalShape()).apply {
+                paint.color = indicatorColor
+                intrinsicWidth = root.context.dpToPx(32)
+                intrinsicHeight = root.context.dpToPx(32)
+            }
             tvDay.text = data.label
-            tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.black))
-            ivFavCharacterEpisodeAirDateIndicator.setImageDrawable(ShapeDrawable(OvalShape()))
+            tvDay.setTextColor(indicatorColor.toColor().toInvertedColor())
+            ivFavCharacterEpisodeAirDateIndicator.setImageDrawable(airDateIndicateDrawable)
         }
     }
 

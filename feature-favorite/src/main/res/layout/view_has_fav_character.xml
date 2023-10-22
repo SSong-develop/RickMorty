@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:text="좋아하는 캐릭터 정보" />
 
-    <com.ssong_develop.feature_favorite.calendar.view.RickMortyCalendar
+    <com.ssong_develop.feature_favorite.view.calendar.view.RickMortyCalendar
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
-package com.ssong_develop.feature_favorite
+package com.ssong_develop.feature_favorite.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,8 +42,10 @@ internal class FavoriteFragment : Fragment() {
                     viewModel.uiState.collectLatest { state ->
                         when (state) {
                             is UiState.HasFavoriteCharacter -> {
+                                Log.d("ssong-develop","${state.favoriteCharacter.dominantColor}")
                                 showHasFavoriteCharacterView()
                                 configHasFavoriteCharacterView(state.favoriteCharacter)
+                                binding.hasFavCharacterView.test.initFavCharacter(state.favoriteCharacter)
                             }
 
                             UiState.Loading -> {

@@ -1,4 +1,4 @@
-package com.ssong_develop.feature_favorite.calendar.model
+package com.ssong_develop.feature_favorite.view.calendar.model
 
 import java.util.Date
 
