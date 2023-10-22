@@ -1,11 +1,13 @@
-package com.ssong_develop.core_designsystem.calendar.view
+package com.ssong_develop.feature_favorite.calendar.view.viewholders
 
-import androidx.annotation.ColorRes
+import android.graphics.ColorFilter
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ssong_develop.core_designsystem.R
-import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
-import com.ssong_develop.core_designsystem.calendar.model.DateType
+import com.ssong_develop.feature_favorite.calendar.model.CalendarDay
+import com.ssong_develop.feature_favorite.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarDayBinding
 import java.util.Date
 
@@ -32,30 +34,23 @@ internal class CalendarDayViewHolder(
 
     fun bindDayState(data: CalendarDay.Day) {
         binding.apply {
-            setDayText(data.label)
-            setDayTextColor(R.color.black)
+            tvDay.text = data.label
+            tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.black))
+            ivFavCharacterEpisodeAirDateIndicator.setImageDrawable(ShapeDrawable(OvalShape()))
         }
     }
 
     fun bindDisabledState(data: CalendarDay.Day) {
         binding.apply {
-            setDayText(data.label)
-            setDayTextColor(R.color.gray)
+            tvDay.text = data.label
+            tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.gray))
         }
     }
 
     fun bindWeekendState(data: CalendarDay.Day) {
         binding.apply {
-            setDayText(data.label)
-            setDayTextColor(R.color.app_bar_color)
+            tvDay.text = data.label
+            tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.app_bar_color))
         }
-    }
-
-    private fun ViewCalendarDayBinding.setDayText(dayText: String) {
-        tvDay.text = dayText
-    }
-
-    private fun ViewCalendarDayBinding.setDayTextColor(@ColorRes colorId: Int) {
-        tvDay.setTextColor(ContextCompat.getColor(this@setDayTextColor.root.context, colorId))
     }
 }

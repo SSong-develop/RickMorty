@@ -46,17 +46,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp2_ad_character"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_normal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appbar_character"
-            tools:layout_width="0dp"
-            tools:visibility="gone" />
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             bindSwipeRefreshVisibility="@{vm.uiState}"
@@ -66,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vp2_ad_character">
+            app:layout_constraintTop_toBottomOf="@id/appbar_character">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_character"

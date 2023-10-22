@@ -16,19 +16,20 @@ data class RickMortyCharacterUiModel(
     val image: String,
     val episode: List<String>,
     val url: String,
-    val created: String
+    val created: String,
+    var dominantColor: Int? = null
 ) : Parcelable {
 
     @Parcelize
     data class OriginUiModel(
-        val name: String?,
-        val url: String?
+        val name: String,
+        val url: String
     ) : Parcelable
 
     @Parcelize
     data class LocationUiModel(
-        val name: String?,
-        val url: String?
+        val name: String,
+        val url: String
     ) : Parcelable
 }
 

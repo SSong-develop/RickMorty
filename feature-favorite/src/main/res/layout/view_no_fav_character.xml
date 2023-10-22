@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ssong_develop.core_designsystem.calendar.view.RickMortyCalendar
+    <com.ssong_develop.feature_favorite.calendar.view.RickMortyCalendar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"

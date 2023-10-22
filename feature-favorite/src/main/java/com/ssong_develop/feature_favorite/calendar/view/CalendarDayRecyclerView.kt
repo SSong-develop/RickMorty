@@ -1,4 +1,4 @@
-package com.ssong_develop.core_designsystem.calendar.view
+package com.ssong_develop.feature_favorite.calendar.view
 
 import android.content.Context
 import android.util.AttributeSet

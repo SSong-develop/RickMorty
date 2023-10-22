@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 
@@ -25,9 +26,7 @@ fun Context.getDrawableOrThrow(@DrawableRes resourceId: Int): Drawable {
         ?: throw IllegalArgumentException("Not exist resource id")
 }
 
-/**
- * get Drawable by DrawableResId, wrapping extension function
- */
+/** get Drawable by DrawableResId **/
 fun Context.getDrawableOrNull(@DrawableRes resourceId: Int): Drawable? {
     return ContextCompat.getDrawable(this, resourceId)
 }

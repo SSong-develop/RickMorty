@@ -1,4 +1,4 @@
-package com.ssong_develop.core_designsystem.calendar.view
+package com.ssong_develop.feature_favorite.calendar.view
 
 import android.content.Context
 import android.graphics.Typeface
@@ -20,11 +20,11 @@ import com.ssong_develop.core_common.extension.toPrettyDateString
 import com.ssong_develop.core_common.extension.toPrettyMonthString
 import com.ssong_develop.core_common.widget.HorizontalSpacer
 import com.ssong_develop.core_designsystem.R
-import com.ssong_develop.core_designsystem.calendar.listener.OnClickBeforeMonthListener
-import com.ssong_develop.core_designsystem.calendar.listener.OnClickCalendarDayListener
-import com.ssong_develop.core_designsystem.calendar.listener.OnClickNextMonthListener
-import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
-import com.ssong_develop.core_designsystem.calendar.model.DateType
+import com.ssong_develop.feature_favorite.calendar.listener.OnClickBeforeMonthListener
+import com.ssong_develop.feature_favorite.calendar.listener.OnClickCalendarDayListener
+import com.ssong_develop.feature_favorite.calendar.listener.OnClickNextMonthListener
+import com.ssong_develop.feature_favorite.calendar.model.CalendarDay
+import com.ssong_develop.feature_favorite.calendar.model.DateType
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescriptionBinding
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH

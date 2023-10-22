@@ -1,10 +1,14 @@
 package com.ssong_develop.feature_character.presentation.detail
 
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,8 +17,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
+import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.ConcatAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.ssong_develop.core_common.AutoClearedValue
+import com.ssong_develop.core_common.extension.asBitmap
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterDetailBinding
 import com.ssong_develop.feature_character.presentation.character.adapters.FooterAdapter
@@ -78,7 +89,7 @@ internal class CharacterDetailFragment : Fragment() {
             addAdapter(footerAdapter)
         }
 
-        with(binding) {
+        binding.apply {
             episodeList.adapter = concatAdapter
         }
     }
@@ -99,6 +110,14 @@ internal class CharacterDetailFragment : Fragment() {
                         episodeAdapter.submitList(uiState.characterEpisode)
                         if (uiState.characterEpisode.isNotEmpty()) {
                             concatAdapter.removeAdapter(footerAdapter)
+                        }
+                        if (uiState.character != null) {
+                            val dominantColor = uiState.character.dominantColor ?: ContextCompat.getColor(requireContext(), R.color.app_bar_color)
+                            binding.header.setBackgroundColor(dominantColor)
+                            Glide.with(requireContext()).load(uiState.character.image).into(binding.ivCharacter)
+                            if (requireContext() is AppCompatActivity) {
+                                (requireContext() as AppCompatActivity).window.statusBarColor = dominantColor
+                            }
                         }
                     }
                 }

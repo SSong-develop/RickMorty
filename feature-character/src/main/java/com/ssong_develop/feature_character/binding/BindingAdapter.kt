@@ -2,6 +2,7 @@ package com.ssong_develop.feature_character.binding
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -21,6 +22,7 @@ import com.google.android.material.card.MaterialCardView
 import com.ssong_develop.core_common.extension.asBitmap
 import com.ssong_develop.feature_character.model.Status
 import com.ssong_develop.feature_character.presentation.character.UiState
+import timber.log.Timber
 
 object ViewBindingAdapter {
 
@@ -28,36 +30,6 @@ object ViewBindingAdapter {
     @BindingAdapter("bind_dot_color")
     fun bindDotColor(view: TextView, status: String) {
         view.setTextColor(ContextCompat.getColor(view.context, Status.color(status)!!))
-    }
-
-    @JvmStatic
-    @BindingAdapter("paletteImage", "paletteCard")
-    fun bindLoadImagePalette(view: ImageView, url: String, paletteCard: MaterialCardView) {
-        Glide.with(view.context)
-            .load(url)
-            .listener(
-                object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
-                    ): Boolean = false
-
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        val palette = Palette.from(resource.asBitmap()).generate()
-                        val dominantColor = palette.getDominantColor(Color.BLACK)
-                        paletteCard.setCardBackgroundColor(dominantColor)
-                        return false
-                    }
-                }
-            ).into(view)
     }
 
     @JvmStatic

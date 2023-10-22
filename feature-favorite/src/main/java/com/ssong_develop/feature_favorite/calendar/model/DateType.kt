@@ -1,4 +1,4 @@
-package com.ssong_develop.core_designsystem.calendar.model
+package com.ssong_develop.feature_favorite.calendar.model
 
 /**
  *

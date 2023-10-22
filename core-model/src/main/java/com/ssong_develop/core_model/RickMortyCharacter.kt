@@ -15,17 +15,18 @@ data class RickMortyCharacter(
     val image: String,
     val episode: List<String>,
     val url: String,
-    val created: String
+    val created: String,
+    var dominantColor: Int? = null
 ) {
     @Serializable
     data class Origin(
-        val name: String?,
-        val url: String?
+        val name: String,
+        val url: String
     )
 
     @Serializable
     data class Location(
-        val name: String?,
-        val url: String?
+        val name: String,
+        val url: String
     )
 }

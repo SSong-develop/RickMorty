@@ -2,7 +2,7 @@ package com.ssong_develop.feature_character.model
 
 import android.view.View
 
-data class RickMortyCharacterTransitionModel(
+data class RickMortyCharacterTransitionAnimModel(
     val character: RickMortyCharacterUiModel,
     val viewAndTransitionNameList: Array<Pair<View, String>>
 ) {
@@ -10,7 +10,7 @@ data class RickMortyCharacterTransitionModel(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as RickMortyCharacterTransitionModel
+        other as RickMortyCharacterTransitionAnimModel
 
         if (character != other.character) return false
         if (!viewAndTransitionNameList.contentEquals(other.viewAndTransitionNameList)) return false

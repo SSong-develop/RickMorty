@@ -1,13 +1,15 @@
-package com.ssong_develop.core_designsystem.calendar.view
+package com.ssong_develop.feature_favorite.calendar.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.ssong_develop.core_designsystem.calendar.model.CalendarDay
-import com.ssong_develop.core_designsystem.calendar.model.CalendarDayType
-import com.ssong_develop.core_designsystem.calendar.model.DateType
+import com.ssong_develop.feature_favorite.calendar.model.CalendarDay
+import com.ssong_develop.feature_favorite.calendar.model.CalendarDayType
+import com.ssong_develop.feature_favorite.calendar.model.DateType
+import com.ssong_develop.feature_favorite.calendar.view.viewholders.CalendarDayViewHolder
+import com.ssong_develop.feature_favorite.calendar.view.viewholders.CalendarEmptyDayViewHolder
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarDayBinding
 import com.ssong_develop.core_designsystem.databinding.ViewCalendarEmptyBinding
 import java.util.Date

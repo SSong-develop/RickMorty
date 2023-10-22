@@ -1,4 +1,4 @@
-package com.ssong_develop.core_designsystem.calendar.listener
+package com.ssong_develop.feature_favorite.calendar.listener
 
 fun interface OnClickBeforeMonthListener {
     fun onClick()
