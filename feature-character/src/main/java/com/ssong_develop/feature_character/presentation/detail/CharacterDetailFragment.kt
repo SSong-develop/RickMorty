@@ -7,7 +7,6 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -111,12 +110,9 @@ internal class CharacterDetailFragment : Fragment() {
                                     R.color.app_bar_color
                                 )
                             binding.header.setBackgroundColor(dominantColor)
-                            Glide.with(requireContext()).load(uiState.character.image)
+                            Glide.with(requireContext())
+                                .load(uiState.character.image)
                                 .into(binding.ivCharacter)
-                            if (requireContext() is AppCompatActivity) {
-                                (requireContext() as AppCompatActivity).window.statusBarColor =
-                                    dominantColor
-                            }
                         }
                     }
                 }
@@ -135,7 +131,7 @@ internal class CharacterDetailFragment : Fragment() {
                             )
                         }
 
-                        val color = viewModel.uiState.value.character!!.dominantColor
+                        val color = viewModel.uiState.value.character?.dominantColor
                             ?: ContextCompat.getColor(requireContext(), R.color.app_bar_color)
 
                         favIconDrawable?.mutate()

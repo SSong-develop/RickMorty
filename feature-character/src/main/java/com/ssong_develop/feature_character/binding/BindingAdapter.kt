@@ -31,42 +31,6 @@ object ViewBindingAdapter {
     fun bindDotColor(view: TextView, status: String) {
         view.setTextColor(ContextCompat.getColor(view.context, Status.color(status)!!))
     }
-
-    @JvmStatic
-    @BindingAdapter("paletteImage", "paletteView")
-    fun bindLoadImagePaletteView(view: ImageView, url: String?, paletteView: View) {
-        val context = view.context
-        Glide.with(context)
-            .load(url)
-            .listener(
-                object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
-                    ): Boolean = false
-
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        val palette = Palette.from(resource.asBitmap()).generate()
-                        val dominantColor = palette.getDominantColor(Color.BLACK)
-                        paletteView.setBackgroundColor(dominantColor)
-                        if (context is AppCompatActivity) {
-                            context.window.apply {
-                                statusBarColor = dominantColor
-                            }
-                        }
-                        return false
-                    }
-                }
-            ).into(view)
-    }
 }
 
 @BindingAdapter("bindProgressBarVisibility")
