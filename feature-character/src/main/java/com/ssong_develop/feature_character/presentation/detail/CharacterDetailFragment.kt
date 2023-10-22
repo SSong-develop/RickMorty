@@ -89,7 +89,7 @@ internal class CharacterDetailFragment : Fragment() {
     private fun initListener() {
         binding.apply {
             ivBack.setOnClickListener {
-                navigateToBackStack()
+                findNavController().popBackStack()
             }
         }
     }
@@ -143,9 +143,5 @@ internal class CharacterDetailFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun navigateToBackStack() {
-        findNavController().popBackStack()
     }
 }
