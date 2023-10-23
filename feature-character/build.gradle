@@ -86,6 +86,11 @@ dependencies {
 
     // timber
     implementation "com.jakewharton.timber:timber:$versions.timberVersion"
+
+    // Firebase
+    implementation platform("com.google.firebase:firebase-bom:$versions.firebaseBomVersion")
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }
 
 dependencies {
