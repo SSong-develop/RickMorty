@@ -21,7 +21,6 @@
             <option value="$PROJECT_DIR$/core-uikit" />
             <option value="$PROJECT_DIR$/feature-character" />
             <option value="$PROJECT_DIR$/feature-favorite" />
-            <option value="$PROJECT_DIR$/feature-search" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -27,6 +27,10 @@ import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickCalendar
 import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
 import com.ssong_develop.feature_favorite.view.calendar.model.DateType
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
 import java.util.Calendar.DAY_OF_WEEK
@@ -72,11 +76,18 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val leftImageButton = ImageView(context).apply {
         id = ViewCompat.generateViewId()
         layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        setPadding(
+            context.dpToPx(6),
+            context.dpToPx(6),
+            context.dpToPx(6),
+            context.dpToPx(6)
+        )
         setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_left_arrow_white_24dp))
         setOnClickListener {
             calendar.add(MONTH, -1)
             updateYearMonthText(calendar.toPrettyMonthString())
             initCalendarData()
+            calendarDayView.scheduleLayoutAnimation()
             onClickBeforeMonthListener?.onClick()
         }
         addCircleRipple()
@@ -96,10 +107,17 @@ class RickMortyCalendar @JvmOverloads constructor(
         id = ViewCompat.generateViewId()
         layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_right_arrow_white_24dp))
+        setPadding(
+            context.dpToPx(6),
+            context.dpToPx(6),
+            context.dpToPx(6),
+            context.dpToPx(6)
+        )
         setOnClickListener {
             calendar.add(MONTH, 1)
             updateYearMonthText(calendar.toPrettyMonthString())
             initCalendarData()
+            calendarDayView.scheduleLayoutAnimation()
             onClickNextMonthListener?.onClick()
         }
         addCircleRipple()

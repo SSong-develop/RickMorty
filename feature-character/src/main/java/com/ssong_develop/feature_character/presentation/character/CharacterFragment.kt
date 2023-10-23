@@ -5,6 +5,7 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.view.doOnPreDraw
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -98,8 +99,10 @@ internal class CharacterFragment : Fragment() {
             footer = footerLoadStateAdapter
         )
 
-        with(binding) {
+        binding.apply {
             rvCharacter.adapter = characterPagingAdapter
+            val scaleUpAnimation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.character_anim)
+            rvCharacter.layoutAnimation = scaleUpAnimation
         }
     }
 
@@ -108,6 +111,7 @@ internal class CharacterFragment : Fragment() {
             swipeRefresh.setOnRefreshListener {
                 characterPagingAdapter.refresh()
                 swipeRefresh.isRefreshing = false
+                rvCharacter.scheduleLayoutAnimation()
             }
 
             viewSearchError.retryBtn.setOnClickListener {

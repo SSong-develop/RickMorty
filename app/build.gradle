@@ -59,7 +59,6 @@ dependencies {
     implementation(project(":core-data"))
     implementation(project(":core-datastore"))
     implementation(project(":feature-character"))
-    implementation(project(":feature-search"))
     implementation(project(":feature-favorite"))
 
     // android support
