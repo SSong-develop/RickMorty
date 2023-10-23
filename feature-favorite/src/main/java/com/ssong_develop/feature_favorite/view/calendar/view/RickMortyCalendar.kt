@@ -168,7 +168,7 @@ class RickMortyCalendar @JvmOverloads constructor(
     }
 
     private fun initCalendarData() {
-        calendarDayAdapter.submitList(getCalendarDayList())
+        calendarDayAdapter.submitCalendarDayList(getCalendarDayList())
     }
 
     private fun getCalendarDayList(): List<CalendarDay> {

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ssong_develop.core_common.extension.isTheSameDay
 import com.ssong_develop.core_model.RickMortyCharacter
@@ -20,18 +21,12 @@ import com.ssong_develop.feature_favorite.view.calendar.view.viewholders.Calenda
 import java.util.Date
 import kotlin.properties.Delegates
 
-private val calendarItemDiffUtils = object : DiffUtil.ItemCallback<CalendarDay>() {
-    override fun areItemsTheSame(oldItem: CalendarDay, newItem: CalendarDay): Boolean =
-        oldItem === newItem
-
-    override fun areContentsTheSame(oldItem: CalendarDay, newItem: CalendarDay): Boolean =
-        oldItem == newItem
-}
-
 @SuppressLint("NotifyDataSetChanged")
 internal class CalendarDayAdapter(
     private val onDayClick: (date: Date) -> Unit
-) : ListAdapter<CalendarDay, ViewHolder>(calendarItemDiffUtils) {
+) : RecyclerView.Adapter<ViewHolder>() {
+
+    private val calendarDayList: MutableList<CalendarDay> = mutableListOf()
 
     private var favCharacter: RickMortyCharacter? by Delegates.observable(null) { property, oldValue, newValue ->
         if (oldValue != newValue) {
@@ -66,7 +61,7 @@ internal class CalendarDayAdapter(
         when (holder.itemViewType) {
             CalendarDayType.DAY.ordinal -> {
                 val calendarDayViewHolder = holder as CalendarDayViewHolder
-                val calendarDayItem = getItem(position) as CalendarDay.Day
+                val calendarDayItem = calendarDayList[position] as CalendarDay.Day
 
                 when (calendarDayItem.dateType) {
                     DateType.DAY -> {
@@ -94,13 +89,15 @@ internal class CalendarDayAdapter(
 
             CalendarDayType.EMPTY.ordinal -> {
                 val emptyCalendarViewHolder = holder as CalendarEmptyDayViewHolder
-                val calendarEmptyItem = getItem(position) as CalendarDay.Empty
+                val calendarEmptyItem = calendarDayList[position] as CalendarDay.Empty
                 emptyCalendarViewHolder.bind(calendarEmptyItem)
             }
         }
     }
 
-    override fun getItemViewType(position: Int): Int = getItem(position).type.ordinal
+    override fun getItemViewType(position: Int): Int = calendarDayList[position].type.ordinal
+
+    override fun getItemCount(): Int = calendarDayList.size
 
     fun initFavCharacter(character: RickMortyCharacter) {
         favCharacter = character
@@ -109,6 +106,12 @@ internal class CalendarDayAdapter(
     fun submitEpisodeAirDates(airDates: List<Date>) {
         episodeAirDates.clear()
         episodeAirDates.addAll(airDates)
+        notifyDataSetChanged()
+    }
+
+    fun submitCalendarDayList(list: List<CalendarDay>) {
+        calendarDayList.clear()
+        calendarDayList.addAll(list)
         notifyDataSetChanged()
     }
 }
