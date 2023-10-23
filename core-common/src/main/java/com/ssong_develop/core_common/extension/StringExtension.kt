@@ -1,9 +1,12 @@
 package com.ssong_develop.core_common.extension
 
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 fun String.dayNameParseToKorea(): String = when (this) {
     "SUNDAY" -> "일"
@@ -14,6 +17,26 @@ fun String.dayNameParseToKorea(): String = when (this) {
     "FRIDAY" -> "금"
     "SATURDAY" -> "토"
     else -> throw IllegalStateException("This is not day String")
+}
+
+fun String.parseToYYYYmmDD(): String {
+    val (month, day, year) = this.split(' ')
+    val monthNumberString = when (month) {
+        "January" -> "01"
+        "February" -> "02"
+        "March" -> "03"
+        "April" -> "04"
+        "May" -> "05"
+        "June" -> "06"
+        "July" -> "07"
+        "August" -> "08"
+        "September" -> "09"
+        "October" -> "10"
+        "November" -> "11"
+        "December" -> "12"
+        else -> throw java.lang.IllegalStateException("not valid")
+    }
+    return "${year}-${monthNumberString}-${day.dropLast(1)}"
 }
 
 fun String.convertStringToDate(): Date? {

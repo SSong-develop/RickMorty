@@ -84,8 +84,8 @@
                         android:elevation="10dp"
                         app:gradient_alpha="0.4"
                         app:gradient_direction="top_to_bottom"
-                        app:gradient_start_color="@color/white"
                         app:gradient_end_color="@color/black"
+                        app:gradient_start_color="@color/white"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -144,13 +144,13 @@
                         android:layout_marginStart="6dp"
                         android:layout_marginTop="2dp"
                         android:translationZ="100dp"
-                        app:text="@{vm.uiState.character.status}"
-                        app:textColor="@color/white"
-                        app:textSize="16sp"
                         app:animType="slide_up"
                         app:layout_constraintBottom_toBottomOf="@id/header"
                         app:layout_constraintStart_toEndOf="@id/status_dot"
                         app:layout_constraintTop_toBottomOf="@id/name"
+                        app:text="@{vm.uiState.character.status}"
+                        app:textColor="@color/white"
+                        app:textSize="16sp"
                         tools:text="Status" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -162,7 +162,8 @@
             android:background="@color/background"
             android:fillViewport="true"
             android:overScrollMode="never"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout_height="0dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -173,8 +174,8 @@
                     android:id="@+id/species_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
                     android:layout_marginStart="@dimen/margin_normal"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:text="@string/species_title"
                     android:textColor="@color/white_56"
                     app:layout_constraintStart_toStartOf="parent"
@@ -186,23 +187,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:foreground="?attr/selectableItemBackground"
                     android:layout_marginEnd="@dimen/margin_normal"
+                    android:foreground="?attr/selectableItemBackground"
                     android:onClick="@{() -> vm.onClickFavorite()}"
+                    app:layout_constraintBottom_toBottomOf="@id/species_title"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/species_title"
-                    app:layout_constraintBottom_toBottomOf="@id/species_title"/>
+                    app:layout_constraintTop_toTopOf="@id/species_title" />
 
                 <com.ssong_develop.core_designsystem.AnimateTextView
                     android:id="@+id/species"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:text="@{vm.uiState.character.species}"
-                    app:textSize="16sp"
-                    app:textColor="@color/white"
                     app:animType="fade_in"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/species_title"
+                    app:text="@{vm.uiState.character.species}"
+                    app:textColor="@color/white"
+                    app:textSize="16sp"
                     tools:text="Species" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -220,12 +221,12 @@
                     android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:text="@{vm.uiState.character.gender}"
-                    app:textSize="16sp"
-                    app:textColor="@color/white"
                     app:animType="fade_out"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/gender_title"
+                    app:text="@{vm.uiState.character.gender}"
+                    app:textColor="@color/white"
+                    app:textSize="16sp"
                     tools:text="Gender" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -243,12 +244,12 @@
                     android:id="@+id/location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:text="@{vm.uiState.character.location.name}"
-                    app:textSize="16sp"
-                    app:textColor="@color/white"
                     app:animType="slide_down"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/location_title"
+                    app:text="@{vm.uiState.character.location.name}"
+                    app:textColor="@color/white"
+                    app:textSize="16sp"
                     tools:text="Location" />
 
                 <TextView
@@ -256,8 +257,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:textColor="@color/white"
                     android:text="@string/episode_title"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="@id/species_title"
                     app:layout_constraintTop_toBottomOf="@id/location"
                     tools:text="@string/episode_title" />
@@ -270,14 +271,14 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="24dp"
-                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="true"
-                    app:layout_constraintVertical_bias="0"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/episode_title" />
+                    app:layout_constraintTop_toBottomOf="@id/episode_title"
+                    app:layout_constraintVertical_bias="0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

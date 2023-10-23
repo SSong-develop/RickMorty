@@ -59,6 +59,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.androidXLifecycleVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.androidXNavigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$versions.androidXNavigationVersion"
+    implementation "com.google.android.flexbox:flexbox:$versions.flexboxLayoutVersion"
 
     // paging
     implementation "androidx.paging:paging-runtime-ktx:$versions.androidXPagingVersion"

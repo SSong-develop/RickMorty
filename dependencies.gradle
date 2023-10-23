@@ -51,6 +51,8 @@ ext.versions = [
         // lottie
         lottieVersion : '6.1.0',
 
+        flexboxLayoutVersion : '3.0.0',
+
         // Unit Test
         truthVersion : '1.1.5',
         jUnitVersion : '4.13.2',

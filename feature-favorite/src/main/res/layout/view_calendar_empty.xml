@@ -13,11 +13,12 @@
         android:background="@color/background800"
         android:padding="@dimen/padding_normal">
 
-        <View
-            android:id="@+id/empty_space"
-            style="@style/TextAppearance.RickMorty.Calendar.EmptyDay"
+        <TextView
+            android:id="@+id/tv_empty_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:textColor="@color/gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

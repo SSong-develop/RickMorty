@@ -4,6 +4,7 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ssong_develop.core_common.extension.dpToPx
 import com.ssong_develop.core_common.extension.toInvertedColor
@@ -34,18 +35,25 @@ internal class CalendarDayViewHolder(
         binding.executePendingBindings()
     }
 
-    fun bindDayState(data: CalendarDay.Day, dominantColor: Int?) {
+    fun bindDayState(data: CalendarDay.Day) {
         binding.apply {
-            val indicatorColor =
-                dominantColor ?: ContextCompat.getColor(root.context, R.color.app_bar_color)
+            tvDay.text = data.label
+            tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.white))
+            ivFavCharacterEpisodeAirDateIndicator.isVisible = false
+        }
+    }
+
+    fun bindEpisodeAirDayState(data: CalendarDay.Day, dominantColor: Int) {
+        binding.apply {
             val airDateIndicateDrawable = ShapeDrawable(OvalShape()).apply {
-                paint.color = indicatorColor
+                paint.color = dominantColor
                 intrinsicWidth = root.context.dpToPx(32)
                 intrinsicHeight = root.context.dpToPx(32)
             }
             tvDay.text = data.label
-            tvDay.setTextColor(indicatorColor.toColor().toInvertedColor())
+            tvDay.setTextColor(dominantColor.toColor().toInvertedColor())
             ivFavCharacterEpisodeAirDateIndicator.setImageDrawable(airDateIndicateDrawable)
+            ivFavCharacterEpisodeAirDateIndicator.isVisible = true
         }
     }
 
@@ -53,6 +61,7 @@ internal class CalendarDayViewHolder(
         binding.apply {
             tvDay.text = data.label
             tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.gray))
+            ivFavCharacterEpisodeAirDateIndicator.isVisible = false
         }
     }
 
@@ -60,6 +69,7 @@ internal class CalendarDayViewHolder(
         binding.apply {
             tvDay.text = data.label
             tvDay.setTextColor(ContextCompat.getColor(root.context, R.color.app_bar_color))
+            ivFavCharacterEpisodeAirDateIndicator.isVisible = false
         }
     }
 }

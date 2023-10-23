@@ -3,6 +3,7 @@ package com.ssong_develop.feature_favorite.view.calendar.view
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -27,9 +28,6 @@ import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickCalendar
 import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
 import com.ssong_develop.feature_favorite.view.calendar.model.DateType
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
@@ -42,6 +40,7 @@ import java.util.Calendar.SUNDAY
 import java.util.Calendar.THURSDAY
 import java.util.Calendar.TUESDAY
 import java.util.Calendar.WEDNESDAY
+import java.util.Calendar.YEAR
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -174,6 +173,7 @@ class RickMortyCalendar @JvmOverloads constructor(
 
     private fun getCalendarDayList(): List<CalendarDay> {
         val dayOfMonthTargetCalendar = Calendar.getInstance(timeZone, locale).apply {
+            set(YEAR, calendar.get(YEAR))
             set(MONTH, calendar.get(MONTH))
             set(DAY_OF_MONTH, calendar.get(DAY_OF_MONTH))
         }
@@ -289,6 +289,10 @@ class RickMortyCalendar @JvmOverloads constructor(
 
     fun initFavCharacter(character: RickMortyCharacter) {
         calendarDayAdapter.initFavCharacter(character)
+    }
+
+    fun submitEpisodeAirDates(airDates: List<Date>) {
+        calendarDayAdapter.submitEpisodeAirDates(airDates)
     }
 
     /** listeners **/

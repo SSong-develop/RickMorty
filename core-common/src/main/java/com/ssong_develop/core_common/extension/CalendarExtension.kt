@@ -72,7 +72,7 @@ fun Calendar.isAfter(otherCalendar: Calendar): Boolean {
 
 // 주말을 알려주는 함수
 fun Calendar.isWeekend(): Boolean {
-    return get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY
+    return get(DAY_OF_WEEK) == SUNDAY || get(DAY_OF_WEEK) == SATURDAY
 }
 
 // 총 달수의 차이

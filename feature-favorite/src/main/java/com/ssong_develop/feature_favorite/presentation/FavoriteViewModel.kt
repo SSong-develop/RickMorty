@@ -1,31 +1,51 @@
 package com.ssong_develop.feature_favorite.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.log
 import com.ssong_develop.core_common.WhileViewSubscribed
+import com.ssong_develop.core_common.di.MainDispatcher
+import com.ssong_develop.core_common.extension.convertStringToDate
+import com.ssong_develop.core_common.extension.parseToYYYYmmDD
+import com.ssong_develop.core_data.model.asModel
+import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.core_model.RickMortyCharacter
+import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal sealed interface UiState {
     data class HasFavoriteCharacter(
-        val favoriteCharacter: RickMortyCharacter
-    ) : UiState
+        val favoriteCharacter: RickMortyCharacter,
+        val episode: List<RickMortyCharacterEpisode>
+    ) : UiState {
+        val episodeAirDates
+            get() = episode.mapNotNull {
+                it.airDate.parseToYYYYmmDD().convertStringToDate()
+            }
+    }
 
     data object NoFavoriteCharacter : UiState
     data object Loading : UiState
 }
 
+@OptIn(ExperimentalPagingApi::class)
 @ExperimentalCoroutinesApi
 @HiltViewModel
 internal class FavoriteViewModel @Inject constructor(
-    private val preferenceStorage: PreferenceStorage
+    @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
+    private val preferenceStorage: PreferenceStorage,
+    private val repository: CharacterRepository
 ) : ViewModel() {
 
     private val hasFavoriteCharacterState: Flow<Pair<Boolean, RickMortyCharacter?>> =
@@ -39,7 +59,12 @@ internal class FavoriteViewModel @Inject constructor(
 
     val uiState = hasFavoriteCharacterState.mapLatest {
         if (it.first) {
-            UiState.HasFavoriteCharacter(favoriteCharacter = it.second!!)
+            val favCharacter = it.second!!
+            val episodes = getFavCharacterEpisodes(it.second!!.episode)
+            UiState.HasFavoriteCharacter(
+                favoriteCharacter = favCharacter,
+                episode = episodes
+            )
         } else {
             UiState.NoFavoriteCharacter
         }
@@ -48,4 +73,13 @@ internal class FavoriteViewModel @Inject constructor(
         started = WhileViewSubscribed,
         initialValue = UiState.Loading
     )
+
+    private suspend fun getFavCharacterEpisodes(episodeUrls: List<String>) =
+        withContext(mainDispatcher) {
+            runCatching {
+                repository.getEpisodes(episodeUrls)
+            }.mapCatching { episodes ->
+                episodes?.map { episode -> episode.asModel() } ?: emptyList()
+            }.getOrDefault(emptyList())
+        }
 }

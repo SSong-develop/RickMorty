@@ -1,7 +1,6 @@
 package com.ssong_develop.feature_favorite.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +11,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.ssong_develop.core_common.AutoClearedValue
-import com.ssong_develop.core_model.RickMortyCharacter
+import com.ssong_develop.core_common.extension.convertStringToDate
 import com.ssong_develop.feature_favorite.databinding.FragmentFavoriteBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.Date
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
@@ -42,10 +42,9 @@ internal class FavoriteFragment : Fragment() {
                     viewModel.uiState.collectLatest { state ->
                         when (state) {
                             is UiState.HasFavoriteCharacter -> {
-                                Log.d("ssong-develop","${state.favoriteCharacter.dominantColor}")
                                 showHasFavoriteCharacterView()
-                                configHasFavoriteCharacterView(state.favoriteCharacter)
-                                binding.hasFavCharacterView.test.initFavCharacter(state.favoriteCharacter)
+                                binding.hasFavCharacterView.calendarFavEpisodeAirDate.initFavCharacter(state.favoriteCharacter)
+                                binding.hasFavCharacterView.calendarFavEpisodeAirDate.submitEpisodeAirDates(state.episodeAirDates)
                             }
 
                             UiState.Loading -> {
@@ -68,10 +67,6 @@ internal class FavoriteFragment : Fragment() {
             loadingView.root.isVisible = false
             hasFavCharacterView.root.isVisible = true
         }
-    }
-
-    private fun configHasFavoriteCharacterView(favoriteCharacter: RickMortyCharacter) {
-        binding.hasFavCharacterView.tvFavCharacterInfo.text = favoriteCharacter.toString()
     }
 
     private fun showNoFavoriteCharacterView() {
