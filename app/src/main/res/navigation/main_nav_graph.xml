@@ -22,13 +22,6 @@
             android:label="CharacterDetailFragment" />
     </navigation>
     <fragment
-        android:id="@+id/navigation_search"
-        android:name="com.ssong_develop.feature_search.ui.SearchFragment"
-        android:label="SearchFragment">
-
-        <deepLink app:uri="android-app://com.ssong-develop.com/rick_morty/search_fragment" />
-    </fragment>
-    <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.ssong_develop.feature_favorite.presentation.FavoriteFragment"
         android:label="FavoriteFragment" />

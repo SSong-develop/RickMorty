@@ -1,21 +1,16 @@
 package com.ssong_develop.feature_favorite.view.calendar.view.viewholders
 
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColor
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.ssong_develop.core_common.extension.dpToPx
 import com.ssong_develop.core_common.extension.toInvertedColor
 import com.ssong_develop.core_designsystem.R
+import com.ssong_develop.feature_favorite.databinding.ViewCalendarDayBinding
 import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
 import com.ssong_develop.feature_favorite.view.calendar.model.DateType
-import com.ssong_develop.core_designsystem.databinding.ViewCalendarDayBinding
 import java.util.Date
 
 internal class CalendarDayViewHolder(
@@ -41,7 +36,8 @@ internal class CalendarDayViewHolder(
 
     fun bindDayState(data: CalendarDay.Day, dominantColor: Int?) {
         binding.apply {
-            val indicatorColor = dominantColor ?: ContextCompat.getColor(root.context, R.color.app_bar_color)
+            val indicatorColor =
+                dominantColor ?: ContextCompat.getColor(root.context, R.color.app_bar_color)
             val airDateIndicateDrawable = ShapeDrawable(OvalShape()).apply {
                 paint.color = indicatorColor
                 intrinsicWidth = root.context.dpToPx(32)

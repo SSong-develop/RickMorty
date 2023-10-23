@@ -10,20 +10,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background800"
         android:padding="@dimen/padding_normal">
 
-        <ImageView
-            android:id="@+id/iv_fav_character_episode_air_date_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            app:layout_constraintBottom_toBottomOf="@id/tv_day"
-            app:layout_constraintEnd_toEndOf="@id/tv_day"
-            app:layout_constraintStart_toStartOf="@id/tv_day"
-            app:layout_constraintTop_toTopOf="@id/tv_day" />
-
-        <TextView
-            android:id="@+id/tv_day"
+        <View
+            android:id="@+id/empty_space"
+            style="@style/TextAppearance.RickMorty.Calendar.EmptyDay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

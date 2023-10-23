@@ -12,7 +12,6 @@ import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.model.mapper.asModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 internal data class CharacterDetailUiState(
@@ -37,15 +35,13 @@ internal class CharacterDetailViewModel @Inject constructor(
     private val preferenceStorage: PreferenceStorage
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<CharacterDetailUiState>(CharacterDetailUiState())
+    private val _uiState = MutableStateFlow(CharacterDetailUiState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        savedStateHandle.get<RickMortyCharacterUiModel>(CHARACTER_KEY)?.let {
+        savedStateHandle.get<RickMortyCharacterUiModel>(CHARACTER)?.let {
             updateCharacter(it)
             getCharacterEpisode(it.episode)
-        } ?: run {
-            // can't Update Characters. then we need to show the dummy character or some else
         }
     }
 
@@ -112,8 +108,7 @@ internal class CharacterDetailViewModel @Inject constructor(
     }
 
     companion object {
-        private const val CHARACTER_KEY = "character"
-        private const val SECOND = 1_000L
+        private const val CHARACTER = "character"
     }
 }
 

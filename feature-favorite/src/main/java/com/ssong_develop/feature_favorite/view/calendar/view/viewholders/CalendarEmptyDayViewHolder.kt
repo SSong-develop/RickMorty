@@ -1,8 +1,8 @@
 package com.ssong_develop.feature_favorite.view.calendar.view.viewholders
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.ssong_develop.feature_favorite.databinding.ViewCalendarEmptyBinding
 import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
-import com.ssong_develop.core_designsystem.databinding.ViewCalendarEmptyBinding
 
 internal class CalendarEmptyDayViewHolder(
     private val binding: ViewCalendarEmptyBinding

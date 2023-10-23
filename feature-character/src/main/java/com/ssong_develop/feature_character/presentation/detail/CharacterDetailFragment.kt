@@ -39,6 +39,10 @@ internal class CharacterDetailFragment : Fragment() {
     private var footerAdapter: FooterAdapter by AutoClearedValue(this)
     private var concatAdapter: ConcatAdapter by AutoClearedValue(this)
 
+    private val defaultColor by lazy {
+        ContextCompat.getColor(requireContext(), R.color.app_bar_color)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,11 +108,7 @@ internal class CharacterDetailFragment : Fragment() {
                             concatAdapter.removeAdapter(footerAdapter)
                         }
                         if (uiState.character != null) {
-                            val dominantColor =
-                                uiState.character.dominantColor ?: ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.app_bar_color
-                                )
+                            val dominantColor = uiState.character.dominantColor ?: defaultColor
                             binding.header.setBackgroundColor(dominantColor)
                             Glide.with(requireContext())
                                 .load(uiState.character.image)
@@ -131,14 +131,15 @@ internal class CharacterDetailFragment : Fragment() {
                             )
                         }
 
-                        val color = viewModel.uiState.value.character?.dominantColor
-                            ?: ContextCompat.getColor(requireContext(), R.color.app_bar_color)
+                        val color = viewModel.uiState.value.character?.dominantColor ?: defaultColor
 
-                        favIconDrawable?.mutate()
-                        favIconDrawable?.clearColorFilter()
-                        favIconDrawable?.colorFilter =
-                            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-                        binding.ivFav.setImageDrawable(favIconDrawable)
+                        favIconDrawable?.apply {
+                            mutate()
+                            clearColorFilter()
+                            colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+                        }?.also { favDrawable ->
+                            binding.ivFav.setImageDrawable(favDrawable)
+                        }
                     }
                 }
             }

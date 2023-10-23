@@ -20,13 +20,13 @@ import com.ssong_develop.core_common.extension.toPrettyDateString
 import com.ssong_develop.core_common.extension.toPrettyMonthString
 import com.ssong_develop.core_common.widget.HorizontalSpacer
 import com.ssong_develop.core_designsystem.R
+import com.ssong_develop.core_model.RickMortyCharacter
+import com.ssong_develop.feature_favorite.databinding.ViewCalendarWeekDescriptionBinding
 import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickBeforeMonthListener
 import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickCalendarDayListener
 import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
 import com.ssong_develop.feature_favorite.view.calendar.model.DateType
-import com.ssong_develop.core_designsystem.databinding.ViewCalendarWeekDescriptionBinding
-import com.ssong_develop.core_model.RickMortyCharacter
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
 import java.util.Calendar.DAY_OF_WEEK
@@ -72,7 +72,7 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val leftImageButton = ImageView(context).apply {
         id = ViewCompat.generateViewId()
         layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_left_arrow_black_24dp))
+        setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_left_arrow_white_24dp))
         setOnClickListener {
             calendar.add(MONTH, -1)
             updateYearMonthText(calendar.toPrettyMonthString())
@@ -87,7 +87,7 @@ class RickMortyCalendar @JvmOverloads constructor(
         layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         gravity = Gravity.CENTER_VERTICAL or Gravity.CENTER_HORIZONTAL
         typeface = Typeface.defaultFromStyle(Typeface.BOLD)
-        setTextColor(ContextCompat.getColor(context, R.color.black))
+        setTextColor(ContextCompat.getColor(context, R.color.white))
         setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16f)
         text = currentYearAndMonthText
     }
@@ -95,7 +95,7 @@ class RickMortyCalendar @JvmOverloads constructor(
     private val rightImageButton = ImageView(context).apply {
         id = ViewCompat.generateViewId()
         layoutParams = ViewGroup.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-        setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_right_arrow_black_24dp))
+        setImageDrawable(context.getDrawableOrThrow(R.drawable.ic_right_arrow_white_24dp))
         setOnClickListener {
             calendar.add(MONTH, 1)
             updateYearMonthText(calendar.toPrettyMonthString())
@@ -110,6 +110,7 @@ class RickMortyCalendar @JvmOverloads constructor(
         orientation = HORIZONTAL
         gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        setBackgroundColor(ContextCompat.getColor(context, R.color.background800))
         setPadding(context.dpToPx(6), context.dpToPx(24), 0, context.dpToPx(24))
         addView(leftImageButton)
         addView(HorizontalSpacer(context))
