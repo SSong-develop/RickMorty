@@ -1,10 +1,8 @@
 package com.ssong_develop.feature_favorite.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
-import androidx.paging.log
 import com.ssong_develop.core_common.WhileViewSubscribed
 import com.ssong_develop.core_common.di.MainDispatcher
 import com.ssong_develop.core_common.extension.convertStringToDate
