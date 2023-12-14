@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import com.ssong_develop.core_common.WhileViewSubscribed
-import com.ssong_develop.core_common.di.MainDispatcher
 import com.ssong_develop.core_common.extension.convertStringToDate
 import com.ssong_develop.core_common.extension.parseToYYYYmmDD
 import com.ssong_develop.core_data.model.asModel
@@ -13,17 +12,16 @@ import com.ssong_develop.core_datastore.PreferenceStorage
 import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal sealed interface UiState {
     data class HasFavoriteCharacter(
+        val isLoading: Boolean = true,
         val favoriteCharacter: RickMortyCharacter,
         val episode: List<RickMortyCharacterEpisode>
     ) : UiState {
@@ -41,8 +39,7 @@ internal sealed interface UiState {
 @ExperimentalCoroutinesApi
 @HiltViewModel
 internal class FavoriteViewModel @Inject constructor(
-    @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
-    private val preferenceStorage: PreferenceStorage,
+    preferenceStorage: PreferenceStorage,
     private val repository: CharacterRepository
 ) : ViewModel() {
 
@@ -73,11 +70,11 @@ internal class FavoriteViewModel @Inject constructor(
     )
 
     private suspend fun getFavCharacterEpisodes(episodeUrls: List<String>) =
-        withContext(mainDispatcher) {
-            runCatching {
-                repository.getEpisodes(episodeUrls)
-            }.mapCatching { episodes ->
-                episodes?.map { episode -> episode.asModel() } ?: emptyList()
-            }.getOrDefault(emptyList())
-        }
+        runCatching {
+            repository.getEpisodes(episodeUrls)
+        }.onSuccess {
+
+        }.mapCatching { episodes ->
+            episodes?.map { episode -> episode.asModel() } ?: emptyList()
+        }.getOrDefault(emptyList())
 }

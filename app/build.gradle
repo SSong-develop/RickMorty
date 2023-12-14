@@ -6,8 +6,6 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs.kotlin'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.9.0'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 apply from: "$rootDir/dependencies.gradle"
 

@@ -1,67 +1,67 @@
 ext.versions = [
         // architecture library
-        androidXActivityKtxVersion : '1.7.2',
-        androidXFragmentKtxVersion : '1.6.1',
-        androidXLifecycleVersion : '2.6.2',
-        androidXRoomVersion : '2.5.2',
+        androidXActivityKtxVersion       : '1.8.2',
+        androidXFragmentKtxVersion       : '1.6.2',
+        androidXLifecycleVersion         : '2.6.2',
+        androidXRoomVersion              : '2.5.2',
 
         // android support Library
-        androidXConstraintLayoutVersion : '2.1.4',
-        androidXCoreKtxVersion : '1.12.0',
-        androidXAppCompatVersion : '1.6.1',
-        androidXSwipeRefreshLayoutVersion : '1.1.0',
-        materialVersion : '1.9.0',
-        androidXSecurityVersion : '1.0.0',
-        androidXDataStoreVersion : '1.0.0',
-        androidXPagingVersion: '3.2.1',
-        androidXNavigationVersion: '2.7.3',
-        androidXDynamicAnimationVersion : '1.0.0',
-        androidXStartUpVersion : '1.1.1',
-        androidXPaletteVersion : '1.0.0',
+        androidXConstraintLayoutVersion  : '2.1.4',
+        androidXCoreKtxVersion           : '1.12.0',
+        androidXAppCompatVersion         : '1.6.1',
+        androidXSwipeRefreshLayoutVersion: '1.1.0',
+        materialVersion                  : '1.11.0',
+        androidXSecurityVersion          : '1.0.0',
+        androidXDataStoreVersion         : '1.0.0',
+        androidXPagingVersion            : '3.2.1',
+        androidXNavigationVersion        : '2.7.6',
+        androidXDynamicAnimationVersion  : '1.0.0',
+        androidXStartUpVersion           : '1.1.1',
+        androidXPaletteVersion           : '1.0.0',
 
         // firebase
-        firebaseBomVersion: '32.3.1',
+        firebaseBomVersion               : '32.3.1',
 
         // Lab Testing Implementation
-        androidXAsyncLayoutInflater : '1.0.0',
+        androidXAsyncLayoutInflater      : '1.0.0',
 
         // network
-        gsonVersion : '2.9.0',
-        okHttpVersion : '4.10.0',
-        retrofitVersion : '2.9.0',
-        serializationConverterVersion : '0.8.0',
-        serializationJsonVersion : '1.4.1',
+        gsonVersion                      : '2.9.0',
+        okHttpVersion                    : '4.10.0',
+        retrofitVersion                  : '2.9.0',
+        serializationConverterVersion    : '0.8.0',
+        serializationJsonVersion         : '1.4.1',
 
         // Glide
-        glideVersion : '4.16.0',
+        glideVersion                     : '4.16.0',
 
         // Coroutine
-        coroutineVersion : '1.7.3',
+        coroutineVersion                 : '1.7.3',
 
         // di
-        hiltVersion : '1.0.0',
-        hiltCoreVersion : '2.48',
+        hiltVersion                      : '1.0.0',
+        hiltCoreVersion                  : '2.48',
 
         // timber
-        timberVersion : '5.0.1',
+        timberVersion                    : '5.0.1',
 
         // recyclerView
-        recycleViewVersion : '1.3.1',
+        recycleViewVersion               : '1.3.2',
 
         // lottie
-        lottieVersion : '6.1.0',
+        lottieVersion                    : '6.1.0',
 
-        flexboxLayoutVersion : '3.0.0',
+        flexboxLayoutVersion             : '3.0.0',
 
         // Unit Test
-        truthVersion : '1.1.5',
-        jUnitVersion : '4.13.2',
-        turbinVersion : '1.0.0',
-        androidxTestVersion : '1.5.0',
-        androidxTestJunitVersion : '1.1.5',
-        androidTestRunnerVersion : '1.3.0-beta01',
-        espressoVersion : '3.5.1',
-        mockitoKotlinVersion : '2.2.0',
-        mockitoInlineVersion : '5.2.0',
-        archComponentVersion : '2.2.0'
+        truthVersion                     : '1.1.5',
+        jUnitVersion                     : '4.13.2',
+        turbinVersion                    : '1.0.0',
+        androidxTestVersion              : '1.5.0',
+        androidxTestJunitVersion         : '1.1.5',
+        androidTestRunnerVersion         : '1.3.0-beta01',
+        espressoVersion                  : '3.5.1',
+        mockitoKotlinVersion             : '2.2.0',
+        mockitoInlineVersion             : '5.2.0',
+        archComponentVersion             : '2.2.0'
 ]
