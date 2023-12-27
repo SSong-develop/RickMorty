@@ -5,7 +5,6 @@ import com.ssong_develop.core_data.model.NetworkRickMortyCharacter
 import com.ssong_develop.core_data.model.NetworkRickMortyCharacterEpisode
 import com.ssong_develop.core_data.model.NetworkRickMortyCharacterInfo
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Url
 
@@ -13,7 +12,7 @@ interface CharacterService {
     @GET("character")
     suspend fun getCharacters(
         @Query("page") page: Int
-    ): NetworkResult<NetworkRickMortyCharacterInfo,NetworkRickMortyCharacter>
+    ): NetworkResult<NetworkRickMortyCharacterInfo, NetworkRickMortyCharacter>
 
     @GET
     suspend fun getEpisodes(

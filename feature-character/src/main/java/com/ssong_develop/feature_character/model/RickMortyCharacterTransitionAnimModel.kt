@@ -13,14 +13,20 @@ data class RickMortyCharacterTransitionAnimModel(
         other as RickMortyCharacterTransitionAnimModel
 
         if (character != other.character) return false
-        if (!viewAndTransitionNameList.contentEquals(other.viewAndTransitionNameList)) return false
-
-        return true
+        return viewAndTransitionNameList.contentEquals(other.viewAndTransitionNameList)
     }
 
     override fun hashCode(): Int {
         var result = character.hashCode()
         result = 31 * result + viewAndTransitionNameList.contentHashCode()
         return result
+    }
+
+    companion object {
+        fun of(
+            character: RickMortyCharacterUiModel,
+            viewAndTransitionNameList: Array<Pair<View, String>>
+        ): RickMortyCharacterTransitionAnimModel =
+            RickMortyCharacterTransitionAnimModel(character, viewAndTransitionNameList)
     }
 }

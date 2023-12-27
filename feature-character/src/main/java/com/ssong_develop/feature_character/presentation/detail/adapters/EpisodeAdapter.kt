@@ -9,7 +9,6 @@ import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBinding
 import com.ssong_develop.feature_character.presentation.detail.viewholders.CharacterEpisodeViewHolder
-import com.ssong_develop.feature_character.presentation.detail.viewholders.OnEpisodeClickListener
 
 private val episodeItemDiffUtil = object : DiffUtil.ItemCallback<RickMortyCharacterEpisode>() {
     override fun areItemsTheSame(
@@ -24,13 +23,13 @@ private val episodeItemDiffUtil = object : DiffUtil.ItemCallback<RickMortyCharac
 }
 
 internal class EpisodeAdapter(
-    private val onEpisodeClickListener: OnEpisodeClickListener
+    private val onEpisodeClick: (episode: RickMortyCharacterEpisode) -> Unit
 ) : ListAdapter<RickMortyCharacterEpisode, CharacterEpisodeViewHolder>(episodeItemDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterEpisodeViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemCharacterEpisodeBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_character_episode, parent, false)
-        return CharacterEpisodeViewHolder(binding, onEpisodeClickListener)
+        return CharacterEpisodeViewHolder(binding, onEpisodeClick)
     }
 
     override fun onBindViewHolder(holder: CharacterEpisodeViewHolder, position: Int) {

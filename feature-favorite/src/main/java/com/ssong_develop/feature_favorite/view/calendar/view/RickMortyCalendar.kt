@@ -3,7 +3,6 @@ package com.ssong_develop.feature_favorite.view.calendar.view
 import android.content.Context
 import android.graphics.Typeface
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -28,7 +27,6 @@ import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickCalendar
 import com.ssong_develop.feature_favorite.view.calendar.listener.OnClickNextMonthListener
 import com.ssong_develop.feature_favorite.view.calendar.model.CalendarDay
 import com.ssong_develop.feature_favorite.view.calendar.model.DateType
-import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Calendar.DAY_OF_MONTH
 import java.util.Calendar.DAY_OF_WEEK

@@ -4,7 +4,7 @@ import android.view.View
 
 typealias OnClickListener = (View) -> Unit
 
-class OnDebounceClickListener(private val listener: OnClickListener): View.OnClickListener {
+class OnDebounceClickListener(private val listener: OnClickListener) : View.OnClickListener {
     override fun onClick(view: View?) {
         val now = System.currentTimeMillis()
         if (now < lastTime + INTERVAL) return

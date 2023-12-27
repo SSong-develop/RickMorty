@@ -13,7 +13,7 @@ class CalendarDayRecyclerView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyle: Int = 0
-): RecyclerView(context, attrs, defStyle) {
+) : RecyclerView(context, attrs, defStyle) {
 
     init {
         overScrollMode = OVER_SCROLL_NEVER
@@ -25,7 +25,10 @@ class CalendarDayRecyclerView @JvmOverloads constructor(
                 override fun getSpanSize(position: Int): Int = 1
             }
         }
-        layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
         setHasFixedSize(true)
     }

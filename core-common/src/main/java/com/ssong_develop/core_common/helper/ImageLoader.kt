@@ -13,7 +13,7 @@ import javax.inject.Inject
 class ImageLoader @Inject constructor(
     @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
-){
+) {
     private val cache = LruCache<String, Bitmap>(5)
 
     suspend fun getImage(url: String, block: (Bitmap?) -> Unit) {

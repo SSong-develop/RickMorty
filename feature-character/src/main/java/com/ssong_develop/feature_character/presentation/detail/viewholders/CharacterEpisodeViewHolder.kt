@@ -6,8 +6,8 @@ import com.ssong_develop.core_model.RickMortyCharacterEpisode
 import com.ssong_develop.feature_character.databinding.ItemCharacterEpisodeBinding
 
 internal class CharacterEpisodeViewHolder(
-    val binding: ItemCharacterEpisodeBinding,
-    private val onEpisodeClickListener: OnEpisodeClickListener
+    private val binding: ItemCharacterEpisodeBinding,
+    private val onEpisodeClick: (episode: RickMortyCharacterEpisode) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var episode: RickMortyCharacterEpisode
@@ -26,7 +26,7 @@ internal class CharacterEpisodeViewHolder(
     }
 
     override fun onClick(view: View) {
-        onEpisodeClickListener.onClick(episode)
+        onEpisodeClick.invoke(episode)
     }
 
     override fun onLongClick(v: View?): Boolean = false

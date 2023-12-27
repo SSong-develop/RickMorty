@@ -17,7 +17,7 @@ import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 
 internal class CharacterViewHolder(
     private val binding: ItemCharacterBinding,
-    private val onClickCharacterListener: OnCharacterItemClickListener
+    private val onCharacterClick: (model: RickMortyCharacterTransitionAnimModel) -> Unit
 ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener {
 
     private lateinit var rickMortyCharacter: RickMortyCharacterUiModel
@@ -51,7 +51,8 @@ internal class CharacterViewHolder(
                         ): Boolean {
                             val palette = Palette.from(resource.asBitmap()).generate()
                             val dominantColor = palette.getDominantColor(Color.BLACK)
-                            rickMortyCharacter = rickMortyCharacter.copy(dominantColor = dominantColor)
+                            rickMortyCharacter =
+                                rickMortyCharacter.copy(dominantColor = dominantColor)
                             cardView.setCardBackgroundColor(dominantColor)
                             return false
                         }
@@ -61,8 +62,8 @@ internal class CharacterViewHolder(
     }
 
     override fun onClick(view: View) {
-        onClickCharacterListener.onClick(
-            RickMortyCharacterTransitionAnimModel(
+        onCharacterClick.invoke(
+            RickMortyCharacterTransitionAnimModel.of(
                 character = rickMortyCharacter,
                 viewAndTransitionNameList = arrayOf(
                     binding.ivCharacterImage to binding.ivCharacterImage.transitionName,

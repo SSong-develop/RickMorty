@@ -1,6 +1,5 @@
 package com.ssong_develop.core_data.datasource
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.ssong_develop.core_data.model.asModel

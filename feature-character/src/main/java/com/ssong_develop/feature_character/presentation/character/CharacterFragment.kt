@@ -17,11 +17,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 import com.ssong_develop.core_common.extension.setupSnackbarManager
-import com.ssong_develop.core_common.helper.ViewPager2AutoScrollHelper
 import com.ssong_develop.core_common.manager.SnackbarMessageManager
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.FragmentCharacterBinding
@@ -32,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -49,8 +44,6 @@ internal class CharacterFragment : Fragment() {
 
     private var _footerLoadStateAdapter: FooterLoadStateAdapter? = null
     private val footerLoadStateAdapter get() = requireNotNull(_footerLoadStateAdapter) { "[${this.javaClass.kotlin.simpleName}] _footerLoadStateAdapter is null" }
-
-    private lateinit var advertiseAutoScrollHelper: ViewPager2AutoScrollHelper
 
     @Inject
     lateinit var snackbarMessageManager: SnackbarMessageManager
@@ -105,7 +98,8 @@ internal class CharacterFragment : Fragment() {
 
         binding.apply {
             rvCharacter.adapter = characterPagingAdapter
-            val scaleUpAnimation = AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.character_anim)
+            val scaleUpAnimation =
+                AnimationUtils.loadLayoutAnimation(requireContext(), R.anim.character_anim)
             rvCharacter.layoutAnimation = scaleUpAnimation
         }
     }
@@ -136,7 +130,12 @@ internal class CharacterFragment : Fragment() {
                 launch {
                     characterPagingAdapter.loadStateFlow.collectLatest { loadStates ->
                         when (loadStates.refresh) {
-                            is LoadState.NotLoading -> viewModel.updateUiState(UiState.Characters(viewModel.favoriteCharacterState.value?.asUiModel()))
+                            is LoadState.NotLoading -> viewModel.updateUiState(
+                                UiState.Characters(
+                                    viewModel.favoriteCharacterState.value?.asUiModel()
+                                )
+                            )
+
                             LoadState.Loading -> viewModel.updateUiState(UiState.Loading)
                             is LoadState.Error -> viewModel.updateUiState(UiState.Error)
                         }

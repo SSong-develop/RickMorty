@@ -7,13 +7,10 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.ssong_develop.feature_character.R
 import com.ssong_develop.feature_character.databinding.ItemCharacterBinding
+import com.ssong_develop.feature_character.model.RickMortyCharacterTransitionAnimModel
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.presentation.character.viewholders.CharacterViewHolder
-import com.ssong_develop.feature_character.presentation.character.viewholders.OnCharacterItemClickListener
 
-/**
- * TODO DiffUtil에 대한 주석 작성하기
- */
 private val characterDiffItemCallback =
     object : DiffUtil.ItemCallback<RickMortyCharacterUiModel>() {
         override fun areItemsTheSame(
@@ -30,7 +27,7 @@ private val characterDiffItemCallback =
     }
 
 internal class CharacterPagingAdapter(
-    private val onRickMortyCharacterClickListener: OnCharacterItemClickListener
+    private val onCharacterClick: (model: RickMortyCharacterTransitionAnimModel) -> Unit
 ) : PagingDataAdapter<RickMortyCharacterUiModel, CharacterViewHolder>(
     characterDiffItemCallback
 ) {
@@ -38,7 +35,7 @@ internal class CharacterPagingAdapter(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemCharacterBinding =
             DataBindingUtil.inflate(layoutInflater, R.layout.item_character, parent, false)
-        return CharacterViewHolder(binding, onRickMortyCharacterClickListener)
+        return CharacterViewHolder(binding, onCharacterClick)
     }
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {

@@ -75,7 +75,8 @@ class AnimateTextView @JvmOverloads constructor(
     private fun getStyleableAttrs(attrs: AttributeSet) {
         context.withStyledAttributes(attrs, R.styleable.AnimateTextView) {
             text = this.getString(R.styleable.AnimateTextView_text) ?: ""
-            textSize = this.getDimensionPixelSize(R.styleable.AnimateTextView_textSize, 16).toFloat()
+            textSize =
+                this.getDimensionPixelSize(R.styleable.AnimateTextView_textSize, 16).toFloat()
             textColorId = this.getResourceId(R.styleable.AnimateTextView_textColor, R.color.white)
             animationType =
                 this.getInt(R.styleable.AnimateTextView_animType, TextAnimation.FADE_IN.ordinal)

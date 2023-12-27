@@ -8,7 +8,7 @@ import com.ssong_develop.core_common.extension.dpToPx
 
 class HorizontalSpacer(
     context: Context
-): View(context) {
+) : View(context) {
 
     init {
         layoutParams = LinearLayout.LayoutParams(context.dpToPx(12f), MATCH_PARENT)
