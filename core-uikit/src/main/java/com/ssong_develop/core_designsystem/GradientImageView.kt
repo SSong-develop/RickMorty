@@ -1,7 +1,6 @@
 package com.ssong_develop.core_designsystem
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.Color.BLACK
 import android.graphics.Color.WHITE
@@ -17,8 +16,6 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.withStyledAttributes
-import com.google.android.material.shape.MaterialShapeDrawable
-import com.google.android.material.shape.ShapeAppearanceModel
 import kotlin.math.roundToInt
 
 /**
@@ -187,13 +184,6 @@ class GradientImageView @JvmOverloads constructor(
             }
             alpha = (gradientAlpha * 255).toInt()
         }
-    }
-
-    private fun updateBackground() {
-        background =
-            MaterialShapeDrawable(ShapeAppearanceModel().withCornerSize(0f)).apply {
-                fillColor = ColorStateList.valueOf(WHITE)
-            }
     }
 
     private fun Int.toGradientDirection(): GradientDirection =
