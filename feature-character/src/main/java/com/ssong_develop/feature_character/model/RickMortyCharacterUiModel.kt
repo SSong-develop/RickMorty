@@ -22,14 +22,14 @@ data class RickMortyCharacterUiModel(
 
     @Parcelize
     data class OriginUiModel(
-        val name: String,
-        val url: String
+        val name: String? = null,
+        val url: String? = null
     ) : Parcelable
 
     @Parcelize
     data class LocationUiModel(
-        val name: String,
-        val url: String
+        val name: String? = null,
+        val url: String? = null
     ) : Parcelable
 }
 
