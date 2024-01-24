@@ -44,4 +44,11 @@
             <enum name="slide_up" value="3" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="MbtiGaugeView">
+        <attr name="top_gauge" format="float" />
+        <attr name="bottom_gauge" format="float" />
+        <attr name="left_gauge" format="float" />
+        <attr name="right_gauge" format="float" />
+    </declare-styleable>
 </resources>

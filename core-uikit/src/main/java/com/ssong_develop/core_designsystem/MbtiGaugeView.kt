@@ -1,8 +1,13 @@
 package com.ssong_develop.core_designsystem
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import androidx.core.content.ContextCompat
+import androidx.core.content.withStyledAttributes
 import kotlin.math.max
 import kotlin.math.min
 
@@ -12,55 +17,81 @@ class MbtiGaugeView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    var topGauge: Int = 0
+    private val paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeWidth = 32f
+        color = ContextCompat.getColor(context, R.color.app_bar_color)
+    }
+    private val path = Path()
 
-    var bottomGauge: Int = 0
-
-    var leftGauge: Int = 0
-
-    var rightGauge: Int = 0
-
-    var topPoint: Point = Point(0, 0)
+    var topGauge: Float = 0f
         set(value) {
-            val oldValue = field
-            if (oldValue != value) {
-                // TODO start Animate
+            field = if (value < 0) {
+                0f
+            } else {
+                value
             }
-
-            field = value
+            updateTopPoint()
+            invalidate()
         }
 
-    var bottomPoint: Point = Point(0, 0)
+    var bottomGauge: Float = 0f
         set(value) {
-            val oldValue = field
-            if (oldValue != value) {
-                // TODO start Animate
+            field = if (value < 0) {
+                0f
+            } else {
+                value
             }
-
-            field = value
+            updateBottomPoint()
+            invalidate()
         }
 
-    var leftPoint: Point = Point(0, 0)
+    var leftGauge: Float = 0f
         set(value) {
-            val oldValue = field
-            if (oldValue != value) {
-                // TODO start Animate
+            field = if (value < 0) {
+                0f
+            } else {
+                value
             }
-
-            field = value
+            updateLeftPoint()
+            invalidate()
         }
 
-    var rightPoint: Point = Point(0, 0)
+    var rightGauge: Float = 0f
         set(value) {
-            val oldValue = field
-            if (oldValue != value) {
-                // TODO start Animate
+            field = if (value < 0) {
+                0f
+            } else {
+                value
             }
-
-            field = value
+            updateRightPoint()
+            invalidate()
         }
 
-    var centerPoint: Point = Point(0, 0)
+    private var centerPoint: Point = Point(0f, 0f)
+        set(value) {
+            field = value
+            // 각 4방향 포인트 update
+            update4wayPoint()
+            // Path 갱신
+            updatePath()
+            invalidate()
+        }
+
+    private var topPoint: Point = Point(0f, 0f)
+
+    private var bottomPoint: Point = Point(0f, 0f)
+
+    private var leftPoint: Point = Point(0f, 0f)
+
+    private var rightPoint: Point = Point(0f, 0f)
+
+    init {
+        if (attrs != null) {
+            getStyleableAttr(attrs)
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
@@ -88,37 +119,68 @@ class MbtiGaugeView @JvmOverloads constructor(
             }
         }
 
-        // TODO : center Position 값 구해서 넣어줘야 합니다.
+        updateCenterPoint()
         setMeasuredDimension(width, height)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        updateCenterPoint()
     }
 
-    fun updateCenterPoint(x: Int, y: Int) {
-        centerPoint = Point(x, y)
+    override fun onDraw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
     }
 
-    fun updateTopPoint(x: Int, y: Int) {
-        topPoint = Point(x, y)
+    private fun getStyleableAttr(attrs: AttributeSet) {
+        context.withStyledAttributes(attrs, R.styleable.MbtiGaugeView) {
+            topGauge = getFloat(R.styleable.MbtiGaugeView_top_gauge, 0f)
+            bottomGauge = getFloat(R.styleable.MbtiGaugeView_bottom_gauge, 0f)
+            leftGauge = getFloat(R.styleable.MbtiGaugeView_left_gauge, 0f)
+            rightGauge = getFloat(R.styleable.MbtiGaugeView_right_gauge, 0f)
+        }
     }
 
-    fun updateBottomPoint(x: Int, y: Int) {
-        bottomPoint = Point(x, y)
+    private fun updateCenterPoint() {
+        centerPoint = Point((width / 2).toFloat(), (height / 2).toFloat())
     }
 
-    fun updateLeftPoint(x: Int, y: Int) {
-        leftPoint = Point(x, y)
+    private fun update4wayPoint() {
+        updateTopPoint()
+        updateBottomPoint()
+        updateLeftPoint()
+        updateRightPoint()
     }
 
-    fun updateRightPoint(x: Int, y: Int) {
-        rightPoint = Point(x, y)
+    private fun updateTopPoint() {
+        topPoint = Point(centerPoint.x, centerPoint.y - topGauge)
     }
 
+    private fun updateBottomPoint() {
+        bottomPoint = Point(centerPoint.x, centerPoint.y + bottomGauge)
+    }
+
+    private fun updateLeftPoint() {
+        leftPoint = Point(centerPoint.x + leftGauge, centerPoint.y)
+    }
+
+    private fun updateRightPoint() {
+        rightPoint = Point(centerPoint.x - rightGauge, centerPoint.y)
+    }
+
+    private fun updatePath() {
+        path.apply {
+            reset()
+            moveTo(topPoint.x, topPoint.y)
+            lineTo(rightPoint.x, rightPoint.y)
+            lineTo(bottomPoint.x, bottomPoint.y)
+            lineTo(leftPoint.x, leftPoint.y)
+            lineTo(topPoint.x, topPoint.y)
+        }
+    }
 
     data class Point(
-        val x: Int,
-        val y: Int
+        val x: Float,
+        val y: Float
     )
 }
