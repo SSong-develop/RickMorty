@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import kotlin.math.max
@@ -19,39 +20,41 @@ class MbtiGaugeView @JvmOverloads constructor(
     private val paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
-        strokeWidth = 32f
+        strokeWidth = 8f
         color = ContextCompat.getColor(context, R.color.app_bar_color)
     }
     private val path = Path()
-    private val pathAnimator: ValueAnimator? = null
-    // TODO 애니메이터를 list로 관리해서 묶고 있을까..?
+    private var topPathAnimator: ValueAnimator? = null
+    private var bottomPathAnimator: ValueAnimator? = null
+    private var leftPathAnimator: ValueAnimator? = null
+    private var rightPathAnimator: ValueAnimator? = null
 
     var topGauge: Float = 0f
         set(value) {
+            updateTopPathAnimator(field, value)
             field = value
             updateTopPoint()
-            startPathAnimation()
         }
 
     var bottomGauge: Float = 0f
         set(value) {
+            updateBottomPathAnimator(field, value)
             field = value
             updateBottomPoint()
-            startPathAnimation()
         }
 
     var leftGauge: Float = 0f
         set(value) {
+            updateLeftPathAnimator(field, value)
             field = value
             updateLeftPoint()
-            startPathAnimation()
         }
 
     var rightGauge: Float = 0f
         set(value) {
+            updateRightPathAnimator(field, value)
             field = value
             updateRightPoint()
-            startPathAnimation()
         }
 
     private var centerPoint = Point(0.0, 0.0)
@@ -128,7 +131,7 @@ class MbtiGaugeView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        drawGaugePath(canvas)
     }
 
     private fun getStyleableAttr(attrs: AttributeSet) {
@@ -171,8 +174,81 @@ class MbtiGaugeView @JvmOverloads constructor(
         rightPoint = Point(centerPoint.x + (rightGauge / 100.0) * centerPoint.x, centerPoint.y)
     }
 
-    private fun startPathAnimation() {
+    private fun updateTopPathAnimator(prev: Float, current: Float) {
+        if (topPathAnimator?.isRunning == true) {
+            topPathAnimator?.cancel()
+            topPathAnimator = null
+        }
+        topPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1000L
+            interpolator = AccelerateInterpolator()
+            addUpdateListener {
+                val percent = it.animatedValue as Float
+                val gauge = prev + ((current - prev) * percent)
+                topPoint = Point(centerPoint.x, centerPoint.y - (gauge / 100.0) * centerPoint.y)
+                invalidate()
+            }
+        }
+        topPathAnimator?.start()
+    }
 
+    private fun updateBottomPathAnimator(prev: Float, current: Float) {
+        if (bottomPathAnimator?.isRunning == true) {
+            bottomPathAnimator?.cancel()
+            bottomPathAnimator = null
+        }
+        bottomPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1000L
+            interpolator = AccelerateInterpolator()
+            addUpdateListener {
+                val percent = it.animatedValue as Float
+                val gauge = prev + ((current - prev) * percent)
+                bottomPoint = Point(centerPoint.x, centerPoint.y + (gauge / 100.0) * centerPoint.y)
+                invalidate()
+            }
+        }
+        bottomPathAnimator?.start()
+    }
+
+    private fun updateLeftPathAnimator(prev: Float, current: Float) {
+        if (leftPathAnimator?.isRunning == true) {
+            leftPathAnimator?.cancel()
+            leftPathAnimator = null
+        }
+        leftPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1000L
+            interpolator = AccelerateInterpolator()
+            addUpdateListener {
+                val percent = it.animatedValue as Float
+                val gauge = prev + ((current - prev) * percent)
+                leftPoint = Point(centerPoint.x - (gauge / 100.0) * centerPoint.x, centerPoint.y)
+                invalidate()
+            }
+        }
+        leftPathAnimator?.start()
+    }
+
+    private fun updateRightPathAnimator(prev: Float, current: Float) {
+        if (rightPathAnimator?.isRunning == true) {
+            rightPathAnimator?.cancel()
+            rightPathAnimator = null
+        }
+        rightPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = 1000L
+            interpolator = AccelerateInterpolator()
+            addUpdateListener {
+                val percent = it.animatedValue as Float
+                val gauge = prev + ((current - prev) * percent)
+                rightPoint = Point(centerPoint.x + (gauge / 100.0) * centerPoint.x, centerPoint.y)
+                invalidate()
+            }
+        }
+        rightPathAnimator?.start()
+    }
+
+    private fun drawGaugePath(canvas: Canvas) {
+        updatePath()
+        canvas.drawPath(path, paint)
     }
 
     data class Point(
