@@ -20,6 +20,7 @@
   - AnimateTextView
   - GradientImageView
   - RhombusChartView
+  - Calendar
 - **OpenSourceLibraries**
   - retrofit2 (with Serialization-converter) [Link](https://github.com/JakeWharton/retrofit2-kotlinx-serialization-converter)
   - Glide , GlidePalette [Link](https://github.com/bumptech/glide)
