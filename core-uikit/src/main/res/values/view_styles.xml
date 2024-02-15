@@ -45,10 +45,12 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="MbtiGaugeView">
-        <attr name="top_gauge" format="float" />
-        <attr name="bottom_gauge" format="float" />
-        <attr name="left_gauge" format="float" />
-        <attr name="right_gauge" format="float" />
+    <declare-styleable name="RhombusChartView">
+        <attr name="top_percent" format="float" />
+        <attr name="bottom_percent" format="float" />
+        <attr name="left_percent" format="float" />
+        <attr name="right_percent" format="float" />
+        <attr name="chart_color" format="color" />
+        <attr name="chart_width" format="dimension" />
     </declare-styleable>
 </resources>

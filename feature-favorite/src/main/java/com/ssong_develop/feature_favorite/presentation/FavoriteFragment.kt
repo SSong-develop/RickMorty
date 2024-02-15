@@ -1,5 +1,6 @@
 package com.ssong_develop.feature_favorite.presentation
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -14,6 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.ssong_develop.core_common.AutoClearedValue
 import com.ssong_develop.core_common.extension.convertDateToString
@@ -51,9 +53,24 @@ internal class FavoriteFragment : Fragment() {
                                 binding.hasFavCharacterView.calendarFavEpisodeAirDate.initFavCharacter(
                                     state.favoriteCharacter
                                 )
+
                                 binding.hasFavCharacterView.calendarFavEpisodeAirDate.submitEpisodeAirDates(
                                     state.episodeAirDates
                                 )
+
+                                Glide.with(requireContext())
+                                    .load(state.favoriteCharacter.image)
+                                    .into(binding.hasFavCharacterView.ivFavCharacter)
+
+                                binding.hasFavCharacterView.rhombusChart.apply {
+                                    topPercent = (30..100).random().toFloat()
+                                    bottomPercent = (40..100).random().toFloat()
+                                    leftPercent = (10..100).random().toFloat()
+                                    rightPercent = (50..100).random().toFloat()
+                                    chartColor =
+                                        state.favoriteCharacter.dominantColor ?: Color.BLACK
+                                }
+
                                 state.episodeAirDates.forEach {
                                     binding.hasFavCharacterView.flexBoxChip.addView(
                                         Chip(requireContext()).apply {

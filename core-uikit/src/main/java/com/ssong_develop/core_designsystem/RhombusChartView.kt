@@ -3,60 +3,79 @@ package com.ssong_develop.core_designsystem
 import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateInterpolator
-import androidx.core.content.ContextCompat
+import androidx.annotation.ColorInt
+import androidx.annotation.Px
 import androidx.core.content.withStyledAttributes
+import com.ssong_develop.core_common.extension.dpToPx
 import kotlin.math.max
 import kotlin.math.min
+import kotlin.math.roundToInt
 
-class MbtiGaugeView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+class RhombusChartView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.STROKE
-        strokeWidth = 8f
-        color = ContextCompat.getColor(context, R.color.app_bar_color)
-    }
-    private val path = Path()
-    private var topPathAnimator: ValueAnimator? = null
-    private var bottomPathAnimator: ValueAnimator? = null
-    private var leftPathAnimator: ValueAnimator? = null
-    private var rightPathAnimator: ValueAnimator? = null
-
-    var topGauge: Float = 0f
+    var topPercent: Float = 0f
         set(value) {
-            updateTopPathAnimator(field, value)
+            updateTopPointAnimator(field, value)
             field = value
             updateTopPoint()
         }
 
-    var bottomGauge: Float = 0f
+    var bottomPercent: Float = 0f
         set(value) {
-            updateBottomPathAnimator(field, value)
+            updateBottomPointAnimator(field, value)
             field = value
             updateBottomPoint()
         }
 
-    var leftGauge: Float = 0f
+    var leftPercent: Float = 0f
         set(value) {
-            updateLeftPathAnimator(field, value)
+            updateLeftPointAnimator(field, value)
             field = value
             updateLeftPoint()
         }
 
-    var rightGauge: Float = 0f
+    var rightPercent: Float = 0f
         set(value) {
-            updateRightPathAnimator(field, value)
+            updateRightPointAnimator(field, value)
             field = value
             updateRightPoint()
         }
 
+    @ColorInt
+    var chartColor = Color.BLACK
+        set(value) {
+            field = value
+            updateChartPaint()
+        }
+
+    @Px
+    var chartWidth = context.dpToPx(4f)
+        set(value) {
+            field = value
+            updateChartPaint()
+        }
+
+    /* paint & path */
+    private val chartPaint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeWidth = chartWidth.toFloat()
+        color = chartColor
+    }
+
+    private val chartPath = Path()
+
+    /* points */
     private var centerPoint = Point(0.0, 0.0)
         set(value) {
             field = value
@@ -70,6 +89,15 @@ class MbtiGaugeView @JvmOverloads constructor(
     private var leftPoint = Point(0.0, 0.0)
 
     private var rightPoint = Point(0.0, 0.0)
+
+    /* animator */
+    private var topPointAnimator: ValueAnimator? = null
+
+    private var bottomPointAnimator: ValueAnimator? = null
+
+    private var leftPointAnimator: ValueAnimator? = null
+
+    private var rightPointAnimator: ValueAnimator? = null
 
     init {
         if (attrs != null) {
@@ -126,31 +154,44 @@ class MbtiGaugeView @JvmOverloads constructor(
         updateBottomPoint()
         updateLeftPoint()
         updateRightPoint()
-        updatePath()
+        updateChartPath()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawGaugePath(canvas)
+        drawChart(canvas)
     }
 
     private fun getStyleableAttr(attrs: AttributeSet) {
-        context.withStyledAttributes(attrs, R.styleable.MbtiGaugeView) {
-            topGauge = getFloat(R.styleable.MbtiGaugeView_top_gauge, 0f)
-            bottomGauge = getFloat(R.styleable.MbtiGaugeView_bottom_gauge, 0f)
-            leftGauge = getFloat(R.styleable.MbtiGaugeView_left_gauge, 0f)
-            rightGauge = getFloat(R.styleable.MbtiGaugeView_right_gauge, 0f)
+        context.withStyledAttributes(attrs, R.styleable.RhombusChartView) {
+            topPercent = getFloat(R.styleable.RhombusChartView_top_percent, 0f)
+            bottomPercent = getFloat(R.styleable.RhombusChartView_bottom_percent, 0f)
+            leftPercent = getFloat(R.styleable.RhombusChartView_left_percent, 0f)
+            rightPercent = getFloat(R.styleable.RhombusChartView_right_percent, 0f)
+            chartColor = getColor(R.styleable.RhombusChartView_chart_color, Color.BLACK)
+            chartWidth = getDimension(
+                R.styleable.RhombusChartView_chart_width,
+                context.dpToPx(4f).toFloat()
+            ).roundToInt()
         }
     }
 
-    private fun updatePath() {
-        path.apply {
+    private fun updateChartPaint() {
+        chartPaint.apply {
+            strokeWidth = chartWidth.toFloat()
+            color = chartColor
+        }
+    }
+
+    private fun updateChartPath() {
+        chartPath.apply {
             reset()
             moveTo(topPoint.x.toFloat(), topPoint.y.toFloat())
             lineTo(rightPoint.x.toFloat(), rightPoint.y.toFloat())
             lineTo(bottomPoint.x.toFloat(), bottomPoint.y.toFloat())
             lineTo(leftPoint.x.toFloat(), leftPoint.y.toFloat())
             lineTo(topPoint.x.toFloat(), topPoint.y.toFloat())
+            lineTo(rightPoint.x.toFloat(), rightPoint.y.toFloat())
         }
     }
 
@@ -159,27 +200,27 @@ class MbtiGaugeView @JvmOverloads constructor(
     }
 
     private fun updateTopPoint() {
-        topPoint = Point(centerPoint.x, centerPoint.y - (topGauge / 100.0) * centerPoint.y)
+        topPoint = Point(centerPoint.x, centerPoint.y - (topPercent / 100.0) * centerPoint.y)
     }
 
     private fun updateBottomPoint() {
-        bottomPoint = Point(centerPoint.x, centerPoint.y + (bottomGauge / 100.0) * centerPoint.y)
+        bottomPoint = Point(centerPoint.x, centerPoint.y + (bottomPercent / 100.0) * centerPoint.y)
     }
 
     private fun updateLeftPoint() {
-        leftPoint = Point(centerPoint.x - (leftGauge / 100.0) * centerPoint.x, centerPoint.y)
+        leftPoint = Point(centerPoint.x - (leftPercent / 100.0) * centerPoint.x, centerPoint.y)
     }
 
     private fun updateRightPoint() {
-        rightPoint = Point(centerPoint.x + (rightGauge / 100.0) * centerPoint.x, centerPoint.y)
+        rightPoint = Point(centerPoint.x + (rightPercent / 100.0) * centerPoint.x, centerPoint.y)
     }
 
-    private fun updateTopPathAnimator(prev: Float, current: Float) {
-        if (topPathAnimator?.isRunning == true) {
-            topPathAnimator?.cancel()
-            topPathAnimator = null
+    private fun updateTopPointAnimator(prev: Float, current: Float) {
+        if (topPointAnimator?.isRunning == true) {
+            topPointAnimator?.cancel()
+            topPointAnimator = null
         }
-        topPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        topPointAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 1000L
             interpolator = AccelerateInterpolator()
             addUpdateListener {
@@ -189,15 +230,15 @@ class MbtiGaugeView @JvmOverloads constructor(
                 invalidate()
             }
         }
-        topPathAnimator?.start()
+        topPointAnimator?.start()
     }
 
-    private fun updateBottomPathAnimator(prev: Float, current: Float) {
-        if (bottomPathAnimator?.isRunning == true) {
-            bottomPathAnimator?.cancel()
-            bottomPathAnimator = null
+    private fun updateBottomPointAnimator(prev: Float, current: Float) {
+        if (bottomPointAnimator?.isRunning == true) {
+            bottomPointAnimator?.cancel()
+            bottomPointAnimator = null
         }
-        bottomPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        bottomPointAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 1000L
             interpolator = AccelerateInterpolator()
             addUpdateListener {
@@ -207,15 +248,15 @@ class MbtiGaugeView @JvmOverloads constructor(
                 invalidate()
             }
         }
-        bottomPathAnimator?.start()
+        bottomPointAnimator?.start()
     }
 
-    private fun updateLeftPathAnimator(prev: Float, current: Float) {
-        if (leftPathAnimator?.isRunning == true) {
-            leftPathAnimator?.cancel()
-            leftPathAnimator = null
+    private fun updateLeftPointAnimator(prev: Float, current: Float) {
+        if (leftPointAnimator?.isRunning == true) {
+            leftPointAnimator?.cancel()
+            leftPointAnimator = null
         }
-        leftPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        leftPointAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 1000L
             interpolator = AccelerateInterpolator()
             addUpdateListener {
@@ -225,15 +266,15 @@ class MbtiGaugeView @JvmOverloads constructor(
                 invalidate()
             }
         }
-        leftPathAnimator?.start()
+        leftPointAnimator?.start()
     }
 
-    private fun updateRightPathAnimator(prev: Float, current: Float) {
-        if (rightPathAnimator?.isRunning == true) {
-            rightPathAnimator?.cancel()
-            rightPathAnimator = null
+    private fun updateRightPointAnimator(prev: Float, current: Float) {
+        if (rightPointAnimator?.isRunning == true) {
+            rightPointAnimator?.cancel()
+            rightPointAnimator = null
         }
-        rightPathAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        rightPointAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             duration = 1000L
             interpolator = AccelerateInterpolator()
             addUpdateListener {
@@ -243,12 +284,12 @@ class MbtiGaugeView @JvmOverloads constructor(
                 invalidate()
             }
         }
-        rightPathAnimator?.start()
+        rightPointAnimator?.start()
     }
 
-    private fun drawGaugePath(canvas: Canvas) {
-        updatePath()
-        canvas.drawPath(path, paint)
+    private fun drawChart(canvas: Canvas) {
+        updateChartPath()
+        canvas.drawPath(chartPath, chartPaint)
     }
 
     data class Point(
