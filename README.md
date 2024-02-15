@@ -14,6 +14,7 @@
   - Paging3
   - AsyncLayoutInflater
   - DataStore
+  - Palette
 - **Architecture**
   - MVVM
 - **MyOwn CustomView**
@@ -23,7 +24,7 @@
   - Calendar [Link](https://github.com/SSong-develop/RickMorty/tree/mvvm/art/Calendar) | [Code](https://github.com/SSong-develop/RickMorty/tree/mvvm/feature-favorite/src/main/java/com/ssong_develop/feature_favorite/view/calendar)
 - **OpenSourceLibraries**
   - retrofit2 (with Serialization-converter) [Link](https://github.com/JakeWharton/retrofit2-kotlinx-serialization-converter)
-  - Glide , GlidePalette [Link](https://github.com/bumptech/glide)
+  - Glide [Link](https://github.com/bumptech/glide)
   - Gson for Room Converter
 
 
