@@ -1,12 +1,8 @@
 # RickMorty
 
------
-
 **RickMorty** is a simple app that information from [The Rick And Morty API](https://github.com/afuh/rick-and-morty-api)
 
 ## ✔ Tech Stack & Open-source libraries
-
------
 
 - **Kotlin**, **Coroutines** 
 - **Hilt** 
@@ -30,9 +26,7 @@
   - Gson for Room Converter
 
 
-###  ❤️Notice
-
------
+##  ❤️ Notice
 
 This Project is for Study **Architecture**, **Jetpack**, **Android** and etc
 
