@@ -1,25 +1,16 @@
 # RickMorty
 
+-----
+
 **RickMorty** is a simple app that information from [The Rick And Morty API](https://github.com/afuh/rick-and-morty-api)
 
-## 💎Preview
+## ✔ Tech Stack & Open-source libraries
 
-<div>
-<img src="https://github.com/SSong-develop/RickMorty/blob/mvvm/art/preview1.gif" width="300" height="650"/>
-<img src="https://github.com/SSong-develop/RickMorty/blob/mvvm/art/preview2.gif" width="300" height="650"/>
-</div>
+-----
 
-
-
-
-
-
-## ✔Tech Stack & Open-source libraries
-
-- **Kotlin,** **Coroutines** 
+- **Kotlin**, **Coroutines** 
 - **Hilt** 
 - **Flow**
-- **Multi Module**
 - **JetPack**
   - Lifecycle
   - ViewModel
@@ -29,11 +20,14 @@
   - DataStore
 - **Architecture**
   - MVVM
+- **MyOwn CustomView**
+  - AnimateTextView
+  - GradientImageView
+  - RhombusChartView
 - **OpenSourceLibraries**
   - retrofit2 (with Serialization-converter) [Link](https://github.com/JakeWharton/retrofit2-kotlinx-serialization-converter)
   - Glide , GlidePalette [Link](https://github.com/bumptech/glide)
   - Gson for Room Converter
-
 
 
 ###  ❤️Notice
@@ -48,4 +42,3 @@ You can check about Architecture and Android tips in below Links
 
  [Architecture](https://developer.android.com/topic/architecture)
 
-Thanks for read and hope this project will help you 👍
