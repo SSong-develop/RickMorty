@@ -106,13 +106,9 @@ class RhombusChartView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        // 가로 길이 측정 모드 값
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
-        // 세로 길이 측정 모드 값
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        // 가로 길이
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-        // 세로 길이
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
         var width = paddingLeft + paddingRight
         var height = paddingTop + paddingBottom
