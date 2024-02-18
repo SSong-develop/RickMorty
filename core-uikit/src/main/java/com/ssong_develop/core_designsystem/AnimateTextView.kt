@@ -42,7 +42,7 @@ class AnimateTextView @JvmOverloads constructor(
     var textSize = 16f
         set(value) {
             field = value / resources.displayMetrics.scaledDensity
-            startTextAnimation()
+            invalidate()
         }
 
     @ColorRes
@@ -55,13 +55,13 @@ class AnimateTextView @JvmOverloads constructor(
     private var animationType: TextAnimation = TextAnimation.FADE_IN
         set(value) {
             field = value
-            startTextAnimation()
+            invalidate()
         }
 
     private var textColor = ContextCompat.getColor(context, R.color.white)
         set(value) {
             field = value
-            startTextAnimation()
+            invalidate()
         }
 
     init {
@@ -86,14 +86,14 @@ class AnimateTextView @JvmOverloads constructor(
 
     private fun startTextAnimation() {
         clearAnimation()
-        removeAllViewsInLayout()
         text.forEachIndexed { index, char ->
-            val textView = TextView(context).apply {
+            val textView = findViewWithTag(index) ?: TextView(context).apply {
                 text = char.toString()
                 textSize = this@AnimateTextView.textSize
                 typeface = Typeface.defaultFromStyle(Typeface.BOLD)
                 setTextColor(this@AnimateTextView.textColor)
                 layoutParams = textViewParams
+                tag = index
             }
 
             addView(textView)
