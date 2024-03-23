@@ -50,11 +50,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.ssong_develop.core_designsystem.GradientImageView
                 android:id="@+id/iv_fav_character"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_margin="@dimen/margin_normal"
+                app:gradient_direction="top_to_bottom"
+                app:gradient_alpha="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

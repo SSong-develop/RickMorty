@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":core-datastore"))
     implementation(project(":feature-character"))
     implementation(project(":feature-favorite"))
+    implementation(project(":feature-chatmemo"))
 
     // android support
     implementation "com.google.android.material:material:$versions.materialVersion"

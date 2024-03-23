@@ -40,17 +40,29 @@
                 android:visibility="gone" />
         </FrameLayout>
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/ext_floating_action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:text="ChatMemo"
+            android:textColor="@color/gray"
+            app:backgroundTint="@color/background800"
+            app:icon="@drawable/ic_pen"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/background800"
-            app:menu="@menu/bottom_navigation"
             app:itemIconTint="@drawable/selector_bottom_nav_menu"
             app:itemTextColor="@drawable/selector_bottom_nav_menu"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_navigation" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
