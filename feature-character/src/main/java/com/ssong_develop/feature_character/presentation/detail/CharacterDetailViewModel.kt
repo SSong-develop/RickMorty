@@ -24,7 +24,7 @@ import javax.inject.Inject
 internal data class CharacterDetailUiState(
     val character: RickMortyCharacterUiModel? = null,
     val characterEpisode: List<RickMortyCharacterEpisode> = emptyList(),
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = false
 )
 
 @ExperimentalPagingApi

@@ -27,6 +27,7 @@ import com.ssong_develop.feature_character.presentation.detail.adapters.EpisodeA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 @ExperimentalPagingApi
 @AndroidEntryPoint

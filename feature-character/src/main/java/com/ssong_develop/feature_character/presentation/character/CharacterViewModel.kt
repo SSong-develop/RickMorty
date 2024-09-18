@@ -7,8 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.ssong_develop.core_common.WhileViewSubscribed
+import com.ssong_develop.core_data.model.asModel
 import com.ssong_develop.core_data.repository.CharacterRepository
 import com.ssong_develop.core_datastore.PreferenceStorage
+import com.ssong_develop.core_model.RickMortyCharacter
 import com.ssong_develop.feature_character.model.RickMortyCharacterUiModel
 import com.ssong_develop.feature_character.model.mapper.asUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,6 +50,11 @@ internal class CharacterViewModel @Inject constructor(
     val networkRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacterUiModel>> =
         characterRepository.networkCharacterStream()
             .map { pagingData -> pagingData.map { model -> model.asUiModel() } }
+            .cachedIn(viewModelScope)
+
+    val localRickMortyCharacterPagingStream: Flow<PagingData<RickMortyCharacter>> =
+        characterRepository.localCharacterStream()
+            .map { pagingData -> pagingData.map { model -> model.asModel() } }
             .cachedIn(viewModelScope)
 
     fun updateUiState(uiState: UiState) {

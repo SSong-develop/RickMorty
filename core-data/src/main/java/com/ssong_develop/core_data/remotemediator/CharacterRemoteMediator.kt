@@ -72,14 +72,14 @@ class CharacterRemoteMediator(
      * }
      * save the page url in DB and extract from url
      */
-    private suspend fun getPrevPageNumFromInfoURL(): Int? =
+    private fun getPrevPageNumFromInfoURL(): Int? =
         characterDao.getRecentCharacter().last().info.prev
             ?.split('/')
-            ?.first() { it.contains(PAGE_QUERY_URI) }
+            ?.first { it.contains(PAGE_QUERY_URI) }
             ?.replace(PAGE_QUERY_URI, "")
             ?.toInt()
 
-    private suspend fun getNextPageNumFromInfoURL(): Int =
+    private fun getNextPageNumFromInfoURL(): Int =
         characterDao.getRecentCharacter().last().info.next
             .split('/')
             .first { it.contains(PAGE_QUERY_URI) }

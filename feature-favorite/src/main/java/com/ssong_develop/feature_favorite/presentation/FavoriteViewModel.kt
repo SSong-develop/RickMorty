@@ -72,8 +72,6 @@ internal class FavoriteViewModel @Inject constructor(
     private suspend fun getFavCharacterEpisodes(episodeUrls: List<String>) =
         runCatching {
             repository.getEpisodes(episodeUrls)
-        }.onSuccess {
-
         }.mapCatching { episodes ->
             episodes?.map { episode -> episode.asModel() } ?: emptyList()
         }.getOrDefault(emptyList())
