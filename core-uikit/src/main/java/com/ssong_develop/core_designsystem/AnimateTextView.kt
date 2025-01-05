@@ -12,6 +12,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.Dimension
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
+import androidx.core.view.postDelayed
 import com.ssong_develop.core_common.SHORT_ANIMATION_DURATION
 
 class AnimateTextView @JvmOverloads constructor(
@@ -52,6 +53,12 @@ class AnimateTextView @JvmOverloads constructor(
             textColor = ContextCompat.getColor(context, value)
         }
 
+    private var textStyle: Int = Typeface.NORMAL
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     private var animationType: TextAnimation = TextAnimation.FADE_IN
         set(value) {
             field = value
@@ -78,6 +85,7 @@ class AnimateTextView @JvmOverloads constructor(
             textSize =
                 this.getDimensionPixelSize(R.styleable.AnimateTextView_textSize, 16).toFloat()
             textColorId = this.getResourceId(R.styleable.AnimateTextView_textColor, R.color.white)
+            textStyle = this.getInt(R.styleable.AnimateTextView_textStyle, Typeface.NORMAL)
             animationType =
                 this.getInt(R.styleable.AnimateTextView_animType, TextAnimation.FADE_IN.ordinal)
                     .toTextAnimation()
@@ -86,24 +94,26 @@ class AnimateTextView @JvmOverloads constructor(
 
     private fun startTextAnimation() {
         clearAnimation()
-        text.forEachIndexed { index, char ->
-            val textView = findViewWithTag(index) ?: TextView(context).apply {
-                text = char.toString()
-                textSize = this@AnimateTextView.textSize
-                typeface = Typeface.defaultFromStyle(Typeface.BOLD)
-                setTextColor(this@AnimateTextView.textColor)
-                layoutParams = textViewParams
-                tag = index
+        postDelayed(500L) {
+            text.forEachIndexed { index, char ->
+                val textView = findViewWithTag(index) ?: TextView(context).apply {
+                    text = char.toString()
+                    textSize = this@AnimateTextView.textSize
+                    typeface = Typeface.defaultFromStyle(textStyle)
+                    setTextColor(this@AnimateTextView.textColor)
+                    layoutParams = textViewParams
+                    tag = index
+                }
+
+                addView(textView)
+
+                val animation = createTextAnimation().apply {
+                    duration = SHORT_ANIMATION_DURATION
+                    startOffset = index * SHORT_ANIMATION_DURATION
+                }
+
+                textView.startAnimation(animation)
             }
-
-            addView(textView)
-
-            val animation = createTextAnimation().apply {
-                duration = SHORT_ANIMATION_DURATION
-                startOffset = index * SHORT_ANIMATION_DURATION
-            }
-
-            textView.startAnimation(animation)
         }
     }
 

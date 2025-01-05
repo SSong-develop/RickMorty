@@ -37,6 +37,10 @@
         <attr name="text" />
         <attr name="textColor" />
         <attr name="textSize" />
+        <attr name="textStyle" forma="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+        </attr>
         <attr name="animType" format="enum">
             <enum name="fade_in" value="0" />
             <enum name="fade_out" value="1" />
