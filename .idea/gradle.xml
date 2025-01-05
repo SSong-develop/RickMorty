@@ -4,6 +4,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
@@ -18,7 +19,6 @@
             <option value="$PROJECT_DIR$/core-sharedpreference" />
             <option value="$PROJECT_DIR$/core-uikit" />
             <option value="$PROJECT_DIR$/feature-character" />
-            <option value="$PROJECT_DIR$/feature-chatmemo" />
             <option value="$PROJECT_DIR$/feature-favorite" />
           </set>
         </option>
