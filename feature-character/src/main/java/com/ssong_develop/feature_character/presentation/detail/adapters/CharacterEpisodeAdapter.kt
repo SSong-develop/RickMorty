@@ -1,6 +1,5 @@
 package com.ssong_develop.feature_character.presentation.detail.adapters
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -31,11 +30,4 @@ internal class CharacterEpisodeAdapter(
     }
 
     override fun getItemCount(): Int = items.size
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun submitEpisodes(episodes: List<RickMortyCharacterEpisode>) {
-        items.clear()
-        items.addAll(episodes)
-        notifyDataSetChanged()
-    }
 }

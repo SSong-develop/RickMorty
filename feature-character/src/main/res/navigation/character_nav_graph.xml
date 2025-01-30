@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/character_nav_graph"
     app:startDestination="@id/characterFragment">
 
@@ -16,5 +17,21 @@
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="com.ssong_develop.feature_character.presentation.detail.CharacterDetailFragment"
-        android:label="CharacterDetailFragment" />
+        android:label="CharacterDetailFragment">
+        <action
+            android:id="@+id/action_characterDetailFragment_to_characterCardFragment"
+            app:destination="@id/characterCardFragment">
+
+            <argument
+                android:name="image"
+                android:defaultValue="@null"
+                app:nullable="true" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterCardFragment"
+        android:name="com.ssong_develop.feature_character.presentation.card.CharacterCardFragment"
+        android:label="fragment_character_card"
+        tools:layout="@layout/fragment_character_card" />
 </navigation>

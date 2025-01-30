@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,7 +28,6 @@ import com.ssong_develop.feature_character.presentation.detail.adapters.EpisodeA
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 @ExperimentalPagingApi
 @AndroidEntryPoint
@@ -86,16 +86,20 @@ internal class CharacterDetailFragment : Fragment() {
             addAdapter(footerAdapter)
         }
 
-        binding.apply {
-            episodeList.adapter = concatAdapter
-        }
+        binding.episodeList.adapter = concatAdapter
     }
 
     private fun initListener() {
-        binding.apply {
-            ivBack.setOnClickListener {
-                findNavController().popBackStack()
-            }
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        binding.header.setOnClickListener {
+            val bundle = bundleOf("image" to viewModel.uiState.value.character?.image)
+            findNavController().navigate(
+                R.id.action_characterDetailFragment_to_characterCardFragment,
+                bundle
+            )
         }
     }
 
